@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ProfileList from '@/components/ProfileList.astro';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Verified academic and professional profile links for Bodhi McNally, including ORCID, University of Sydney and LinkedIn."
+>
+  <PageHeader
+    eyebrow="Contact"
+    title="Professional links"
+    introduction="For academic and professional context, the verified profiles below are the most direct points of reference. A public professional email address will be added when available."
+    folio="06"
+  />
+
+  <section class="section" aria-labelledby="contact-links-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">01</span>
+        <span id="contact-links-title">Profiles</span>
+      </h2>
+      <ProfileList includeUnavailable={true} />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+
+const resources = (await getCollection('resources', ({ data }) => !data.draft)).sort(
+  (a, b) =>
+    Number(b.data.featured) - Number(a.data.featured) ||
+    (b.data.updated ?? b.data.published).getTime() -
+      (a.data.updated ?? a.data.published).getTime() ||
+    b.data.published.getTime() - a.data.published.getTime(),
+);
+
+const categories = [...new Set(resources.map((resource) => resource.data.category))].sort();
+const tags = [...new Set(resources.flatMap((resource) => resource.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Resources"
+  description="Original teaching resources by Bodhi McNally in statistics, data science, statistical reasoning and reproducible research."
+>
+  <PageHeader
+    eyebrow="Resources"
+    title="Notes for learning with data"
+    introduction="A growing library of original explanations, worked examples and practical material for students learning statistics, data science and reproducible analysis."
+    folio="04"
+  />
+
+  <section class="section section--compact" aria-labelledby="browse-title">
+    <div class="container">
+      <h2 class="eyebrow" id="browse-title">Browse the library</h2>
+
+      <div class="resource-toolbar" data-resource-toolbar>
+        <div class="resource-toolbar__fields">
+          <div class="field">
+            <label for="resource-search">Search</label>
+            <input
+              id="resource-search"
+              type="search"
+              placeholder="Search titles, descriptions and tags"
+              autocomplete="off"
+              data-resource-search
+            />
+          </div>
+          <div class="field">
+            <label for="resource-category">Category</label>
+            <select id="resource-category" data-resource-category>
+              <option value="">All categories</option>
+              {categories.map((category) => <option value={category.toLowerCase()}>{category}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="resource-tag">Tag</label>
+            <select id="resource-tag" data-resource-tag>
+              <option value="">All tags</option>
+              {tags.map((tag) => <option value={tag.toLowerCase()}>{tag}</option>)}
+            </select>
+          </div>
+          <button class="button button--quiet" type="button" data-resource-reset>Reset</button>
+        </div>
+        <p class="resource-toolbar__status" aria-live="polite" data-resource-status>
+          {resources.length} {resources.length === 1 ? 'resource' : 'resources'}
+        </p>
+      </div>
+
+      <ol class="resource-list" data-resource-list>
+        {
+          resources.map((resource) => (
+            <li
+              class="resource-row"
+              data-resource
+              data-search={`${resource.data.title} ${resource.data.description} ${resource.data.category} ${resource.data.tags.join(' ')} ${resource.data.software.join(' ')}`.toLowerCase()}
+              data-category={resource.data.category.toLowerCase()}
+              data-tags={resource.data.tags.map((tag) => tag.toLowerCase()).join('|')}
+            >
+              <div>
+                <h3 class="resource-row__title">
+                  <a href={`/resources/${resource.id}/`}>{resource.data.title}</a>
+                </h3>
+                <p class="resource-row__description">{resource.data.description}</p>
+              </div>
+              <div class="resource-row__meta">
+                <p>{resource.data.category} · {resource.data.estimatedMinutes} min</p>
+                {resource.data.template && <span class="badge">Example template</span>}
+                <ul class="tag-list" aria-label="Tags">
+                  {resource.data.tags.map((tag) => <li class="tag">{tag}</li>)}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <p class="empty-state" data-resource-empty data-visible="false">
+        No resources match those filters. Try a broader search or reset the library.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="resource-note-title">
+    <div class="container disclaimer">
+      <h2 id="resource-note-title">A note for students</h2>
+      <p>
+        <strong>These resources are independently prepared and are not official University of Sydney course materials.</strong>
+        Use them alongside your course guidance, and remain responsible for meeting the academic-integrity requirements that apply to your work.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const search = document.querySelector<HTMLInputElement>('[data-resource-search]');
+    const category = document.querySelector<HTMLSelectElement>('[data-resource-category]');
+    const tag = document.querySelector<HTMLSelectElement>('[data-resource-tag]');
+    const reset = document.querySelector<HTMLButtonElement>('[data-resource-reset]');
+    const status = document.querySelector<HTMLElement>('[data-resource-status]');
+    const empty = document.querySelector<HTMLElement>('[data-resource-empty]');
+    const items = [...document.querySelectorAll<HTMLElement>('[data-resource]')];
+
+    const applyFilters = () => {
+      const query = search?.value.trim().toLowerCase() ?? '';
+      const selectedCategory = category?.value ?? '';
+      const selectedTag = tag?.value ?? '';
+      let visible = 0;
+
+      items.forEach((item) => {
+        const haystack = item.dataset.search ?? '';
+        const itemCategory = item.dataset.category ?? '';
+        const itemTags = (item.dataset.tags ?? '').split('|');
+        const matches =
+          (!query || haystack.includes(query)) &&
+          (!selectedCategory || itemCategory === selectedCategory) &&
+          (!selectedTag || itemTags.includes(selectedTag));
+
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      if (status) status.textContent = `${visible} ${visible === 1 ? 'resource' : 'resources'}`;
+      if (empty) empty.dataset.visible = String(visible === 0);
+    };
+
+    search?.addEventListener('input', applyFilters);
+    category?.addEventListener('change', applyFilters);
+    tag?.addEventListener('change', applyFilters);
+    reset?.addEventListener('click', () => {
+      if (search) search.value = '';
+      if (category) category.value = '';
+      if (tag) tag.value = '';
+      applyFilters();
+      search?.focus();
+    });
+  </script>
+</BaseLayout>

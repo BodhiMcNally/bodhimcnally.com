@@ -1,0 +1,174 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import { projects, publications, presentations } from '@/data/research';
+
+const sortedProjects = [...projects].sort((a, b) =>
+  Number(b.selected) - Number(a.selected) ||
+  (b.startYear ?? 0) - (a.startYear ?? 0),
+);
+const sortedPublications = [...publications].sort((a, b) =>
+  Number(b.selected) - Number(a.selected) || b.year - a.year,
+);
+const sortedPresentations = [...presentations].sort((a, b) =>
+  Number(b.selected) - Number(a.selected) ||
+  new Date(b.date).getTime() - new Date(a.date).getTime(),
+);
+const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length > 0;
+---
+
+<BaseLayout
+  title="Research"
+  description="Bodhi McNally’s developing research interests in academic urology, surgical outcomes and quantitative clinical research."
+>
+  <PageHeader
+    eyebrow="Research"
+    title="Clinical questions, quantitative methods"
+    introduction="My developing research direction brings quantitative training to questions in academic urology: how treatments are selected, how surgical care is delivered, and how outcomes and recovery are measured."
+    folio="02"
+  />
+
+  <section class="section section--compact" aria-labelledby="themes-title">
+    <div class="container">
+      <h2 class="eyebrow" id="themes-title">Research themes</h2>
+      <ol class="theme-list">
+        <li>
+          <span class="theme-list__number">01</span>
+          <h3>Urological oncology</h3>
+          <p>
+            A developing interest in prostate and renal cancer, including how clinical evidence can inform treatment selection and patient-centred decisions.
+          </p>
+        </li>
+        <li>
+          <span class="theme-list__number">02</span>
+          <h3>Surgical outcomes</h3>
+          <p>
+            Perioperative, functional and patient-reported outcomes following robotic and minimally invasive surgery, with close attention to recovery over time.
+          </p>
+        </li>
+        <li>
+          <span class="theme-list__number">03</span>
+          <h3>Clinical data</h3>
+          <p>
+            The careful use of real-world data, clinical prediction and health-services methods to understand pathways, variation and outcomes in care.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="current-research-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">01</span>
+        <span id="current-research-title">Current research</span>
+      </h2>
+      <div class="section-copy">
+        <p class="section-copy__lead">
+          I am a Surgical Research Scholar with RISE, where I am developing experience in collaborative surgical research.
+        </p>
+        <p>
+          I have been matched to a surgical mentor and a research project aligned with urology. The mentor, institution, project scope, methods and results are intentionally not listed until they are confirmed and suitable for public description.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {
+    sortedProjects.length > 0 && (
+      <section class="section" aria-labelledby="projects-title">
+        <div class="container section-grid">
+          <h2 class="section-label">
+            <span class="section-label__number">02</span>
+            <span id="projects-title">Projects</span>
+          </h2>
+          <ul class="output-list">
+            {sortedProjects.map((project) => (
+              <li>
+                <div>
+                  <p class="output-list__title">{project.title}</p>
+                  <p class="output-list__meta">
+                    {[project.researchArea, project.role, project.institution]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </p>
+                  <p>{project.shortDescription}</p>
+                </div>
+                <span class="badge">{project.status}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" aria-labelledby="outputs-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">{sortedProjects.length > 0 ? '03' : '02'}</span>
+        <span id="outputs-title">Research outputs</span>
+      </h2>
+
+      <div>
+        {
+          !hasOutputs && (
+            <div class="notice">
+              <p class="notice__label">Record in development</p>
+              <p>
+                Publications and presentations will appear here when work becomes publicly available. No placeholder citations have been added.
+              </p>
+            </div>
+          )
+        }
+
+        {
+          sortedPublications.length > 0 && (
+            <div class="output-group">
+              <h3>Publications</h3>
+              <ol class="output-list">
+                {sortedPublications.map((publication) => (
+                  <li>
+                    <div>
+                      <p class="output-list__title">{publication.title}</p>
+                      <p class="output-list__meta">{publication.citation}</p>
+                    </div>
+                    <div class="output-list__links">
+                      {publication.doi && (
+                        <a href={`https://doi.org/${publication.doi}`}>DOI</a>
+                      )}
+                      {publication.pubmedUrl && (
+                        <a href={publication.pubmedUrl}>PubMed</a>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )
+        }
+
+        {
+          sortedPresentations.length > 0 && (
+            <div class="output-group">
+              <h3>Presentations</h3>
+              <ol class="output-list">
+                {sortedPresentations.map((presentation) => (
+                  <li>
+                    <div>
+                      <p class="output-list__title">{presentation.title}</p>
+                      <p class="output-list__meta">
+                        {presentation.presentationType} · {presentation.conference}
+                      </p>
+                    </div>
+                    {presentation.link && <a href={presentation.link}>Details</a>}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

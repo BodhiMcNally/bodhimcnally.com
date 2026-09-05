@@ -1,0 +1,68 @@
+@media print {
+  :root {
+    --paper: #fff;
+    --paper-deep: #f4f4f4;
+    --paper-light: #fff;
+    --ink: #000;
+    --ink-soft: #111;
+    --muted: #444;
+    --line: #ccc;
+    --line-strong: #999;
+    --wine: #000;
+    --wine-dark: #000;
+  }
+
+  @page {
+    margin: 18mm;
+  }
+
+  html,
+  body {
+    background: #fff;
+    font-size: 10.5pt;
+  }
+
+  .site-header,
+  .site-footer,
+  .resource-layout__aside,
+  .resource-actions,
+  .breadcrumbs,
+  .skip-link {
+    display: none !important;
+  }
+
+  .resource-header,
+  .resource-layout {
+    width: 100%;
+    max-width: none;
+    padding-block: 0 1rem;
+  }
+
+  .resource-layout {
+    display: block;
+    border-top: 1px solid #999;
+  }
+
+  .prose {
+    max-width: none;
+    font-size: 10.5pt;
+  }
+
+  .prose h2,
+  .prose h3 {
+    break-after: avoid;
+  }
+
+  .prose pre,
+  .prose blockquote,
+  .prose table {
+    break-inside: avoid;
+  }
+
+  .prose a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-family: var(--font-sans);
+    font-size: 8.5pt;
+    word-break: break-all;
+  }
+}

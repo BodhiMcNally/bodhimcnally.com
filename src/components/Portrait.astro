@@ -1,0 +1,35 @@
+---
+import { Picture } from 'astro:assets';
+import portrait from '@/assets/images/Bodhi_McNally_Portrait.jpg';
+
+interface Props {
+  variant?: 'hero' | 'about';
+  eager?: boolean;
+  caption?: boolean;
+}
+
+const { variant = 'hero', eager = false, caption = true } = Astro.props;
+---
+
+<figure class:list={['portrait', `portrait--${variant}`]}>
+  <div class="portrait__frame">
+    <Picture
+      src={portrait}
+      formats={['avif', 'webp']}
+      widths={[240, 320, 400]}
+      sizes="(max-width: 720px) min(82vw, 25rem), 25rem"
+      alt="Professional portrait of Bodhi McNally"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      quality={88}
+    />
+  </div>
+  {
+    caption && (
+      <figcaption>
+        <span>Bodhi McNally</span>
+        <span>Sydney, Australia</span>
+      </figcaption>
+    )
+  }
+</figure>

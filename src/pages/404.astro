@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The requested page could not be found."
+  noindex={true}
+>
+  <section class="page-header container" aria-labelledby="not-found-title">
+    <div class="page-header__copy">
+      <p class="eyebrow">404</p>
+      <h1 id="not-found-title">Page not found</h1>
+      <p class="page-header__introduction">
+        The page may have moved or the address may be incomplete.
+      </p>
+      <p><a class="arrow-link" href="/">Return home</a></p>
+    </div>
+    <p class="page-header__folio" aria-hidden="true">404</p>
+  </section>
+</BaseLayout>

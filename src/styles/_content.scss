@@ -1,0 +1,174 @@
+.prose {
+  max-width: 48rem;
+  color: var(--ink-soft);
+  font-family: var(--font-serif);
+  font-size: clamp(1.02rem, 0.98rem + 0.16vw, 1.12rem);
+  line-height: 1.78;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+.prose h2 {
+  margin: 3.8rem 0 1.15rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--step-2);
+}
+
+.prose h3 {
+  margin: 2.4rem 0 0.85rem;
+  font-size: var(--step-1);
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose blockquote,
+.prose pre,
+.prose .katex-display {
+  margin-bottom: 1.45rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.35rem;
+}
+
+.prose li {
+  padding-left: 0.3rem;
+}
+
+.prose li + li {
+  margin-top: 0.38rem;
+}
+
+.prose a {
+  color: var(--wine);
+  text-decoration-thickness: 0.06em;
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 670;
+}
+
+.prose blockquote {
+  padding: 1.2rem 1.4rem;
+  border-left: 3px solid var(--wine);
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+}
+
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.prose th,
+.prose td {
+  min-width: 9rem;
+  padding: 0.8rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  border-top: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-weight: 660;
+}
+
+.prose code {
+  padding: 0.12em 0.32em;
+  background: var(--paper-deep);
+  color: var(--wine-dark);
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.84em;
+}
+
+.prose pre {
+  max-width: 100%;
+  padding: 1.25rem;
+  overflow-x: auto;
+  border: 1px solid #343033;
+  border-radius: 0;
+  background: #191719 !important;
+  color: #f7f4ee;
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+.prose pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+}
+
+.code-block {
+  position: relative;
+  margin-bottom: 1.45rem;
+}
+
+.code-block pre {
+  margin-bottom: 0;
+  padding-top: 3.1rem;
+}
+
+.code-copy {
+  position: absolute;
+  z-index: 2;
+  top: 0.65rem;
+  right: 0.65rem;
+  min-width: 3.8rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid #5f5960;
+  background: #252225;
+  color: #f7f4ee;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 620;
+}
+
+.code-copy:hover {
+  border-color: #b996a0;
+  background: #302b30;
+}
+
+.katex-display {
+  max-width: 100%;
+  padding-block: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.katex {
+  color: var(--ink);
+}

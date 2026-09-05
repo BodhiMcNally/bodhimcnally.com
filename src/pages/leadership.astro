@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+
+const roles = await getCollection('leadership');
+---
+
+<BaseLayout
+  title="Leadership & Service"
+  description="Selected student leadership, academic governance and service experience of Bodhi McNally at the University of Sydney."
+>
+  <PageHeader
+    eyebrow="Leadership & service"
+    title="Contributing to academic communities"
+    introduction="My leadership and governance work has focused on student participation in academic life: building sound organisations, improving engagement and widening access to opportunities."
+    folio="05"
+  />
+
+  <section class="section" aria-labelledby="approach-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">01</span>
+        <span id="approach-title">Approach</span>
+      </h2>
+      <div class="section-copy">
+        <p class="section-copy__lead">
+          Good student leadership should leave institutions clearer, fairer and easier for the next group to inherit.
+        </p>
+        <p>
+          Across student organisations and University governance, I have been most interested in durable structures: transparent decision-making, meaningful student input, thoughtful academic programming and initiatives that broaden participation without becoming symbolic.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--compact" aria-labelledby="roles-title">
+    <div class="container">
+      <h2 class="eyebrow" id="roles-title">Selected roles</h2>
+      <ol class="role-list">
+        {
+          roles.map((entry) => (
+            <li>
+              <div>
+                <p class="role-list__period">{entry.data.period}</p>
+                <p class="role-list__role">{entry.data.role}</p>
+              </div>
+              <div>
+                <h3>{entry.data.organisation}</h3>
+                <p class="role-list__description">{entry.data.description}</p>
+                <ul class="tag-list" aria-label="Themes">
+                  {entry.data.themes.map((theme) => <li class="tag">{theme}</li>)}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pathways-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">02</span>
+        <span id="pathways-title">Research pathways</span>
+      </h2>
+      <div class="section-copy">
+        <p class="section-copy__lead">
+          One continuing interest is how institutions can make early research participation both substantive and accessible.
+        </p>
+        <p>
+          I am particularly interested in strengthening pathways into research during medical school and the prevocational years, giving students and junior doctors opportunities to contribute meaningfully to academic work while developing the next generation of clinician-scientists.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

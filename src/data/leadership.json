@@ -1,0 +1,34 @@
+[
+  {
+    "id": "science-society-president",
+    "organisation": "Sydney University Science Society",
+    "role": "President",
+    "period": "2023–2024",
+    "description": "Led the society’s governance, academic engagement and student initiatives, with a focus on durable organisational structures and broader participation.",
+    "themes": ["Student leadership", "Governance", "Equity"]
+  },
+  {
+    "id": "academic-board",
+    "organisation": "University of Sydney Academic Board",
+    "role": "Student member",
+    "period": "2022–present",
+    "description": "Contribute a student perspective to University-level discussion of academic policy, quality and student experience.",
+    "themes": ["Academic governance", "Student voice"]
+  },
+  {
+    "id": "md-admissions-reference-group",
+    "organisation": "MD Admissions Student Reference Group",
+    "role": "Member",
+    "period": "2026–present",
+    "description": "Contribute to student consultation on the admissions experience and the pathways through which future medical students enter the program.",
+    "themes": ["Medical education", "Student consultation"]
+  },
+  {
+    "id": "faculty-science-board",
+    "organisation": "University of Sydney Faculty of Science Board",
+    "role": "Student representative",
+    "period": "2022–2023",
+    "description": "Represented students in faculty academic governance during my undergraduate degree.",
+    "themes": ["Faculty governance", "Representation"]
+  }
+]

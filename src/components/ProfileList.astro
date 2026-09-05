@@ -1,0 +1,66 @@
+---
+import { site } from '@/data/site';
+
+interface Props {
+  includeUnavailable?: boolean;
+}
+
+const { includeUnavailable = false } = Astro.props;
+const github = site.optionalProfiles.github;
+const scholar = site.optionalProfiles.googleScholar;
+---
+
+<ul class="profile-list">
+  {
+    site.profiles.map((profile) => (
+      <li>
+        <a href={profile.href} rel="me">
+          <span class="profile-list__label">{profile.label}</span>
+          <span class="profile-list__detail">{profile.detail}</span>
+          <span class="profile-list__arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    ))
+  }
+  {
+    github && (
+      <li>
+        <a href={github} rel="me">
+          <span class="profile-list__label">GitHub</span>
+          <span class="profile-list__detail">Code and repositories</span>
+          <span class="profile-list__arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    )
+  }
+  {
+    scholar && (
+      <li>
+        <a href={scholar} rel="me">
+          <span class="profile-list__label">Google Scholar</span>
+          <span class="profile-list__detail">Research profile</span>
+          <span class="profile-list__arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    )
+  }
+  {
+    site.email && (
+      <li>
+        <a href={`mailto:${site.email}`}>
+          <span class="profile-list__label">Email</span>
+          <span class="profile-list__detail">{site.email}</span>
+          <span class="profile-list__arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    )
+  }
+  {
+    includeUnavailable && !site.email && (
+      <li class="profile-list__unavailable">
+        <span class="profile-list__label">Email</span>
+        <span class="profile-list__detail">Not currently published</span>
+      </li>
+    )
+  }
+</ul>

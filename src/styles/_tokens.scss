@@ -1,0 +1,41 @@
+:root {
+  color-scheme: light;
+
+  --paper: #f7f4ee;
+  --paper-deep: #eee8df;
+  --paper-light: #fcfaf6;
+  --ink: #1c1918;
+  --ink-soft: #403b38;
+  --muted: #6a645f;
+  --line: #d6cfc5;
+  --line-strong: #aaa198;
+  --wine: #6e2538;
+  --wine-dark: #4d1725;
+  --wine-wash: #efe2e5;
+  --focus: #a53b58;
+
+  --font-serif: 'Source Serif 4 Variable', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-sans: 'Inter Variable', Inter, Aptos, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --step--1: clamp(0.82rem, 0.79rem + 0.12vw, 0.9rem);
+  --step-0: clamp(1rem, 0.97rem + 0.14vw, 1.08rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.35vw, 1.42rem);
+  --step-2: clamp(1.48rem, 1.31rem + 0.72vw, 1.9rem);
+  --step-3: clamp(1.85rem, 1.55rem + 1.2vw, 2.6rem);
+  --step-4: clamp(2.45rem, 1.8rem + 2.5vw, 4.15rem);
+  --step-5: clamp(3.45rem, 2.25rem + 4.9vw, 7.25rem);
+
+  --space-1: 0.45rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --space-8: 6.5rem;
+  --space-9: 9rem;
+
+  --container: 76rem;
+  --measure: 42rem;
+  --header-height: 5.15rem;
+}

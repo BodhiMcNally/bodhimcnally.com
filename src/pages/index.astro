@@ -1,0 +1,114 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Portrait from '@/components/Portrait.astro';
+import ProfileList from '@/components/ProfileList.astro';
+import { site } from '@/data/site';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: site.canonicalUrl,
+    jobTitle: site.currentRole,
+    affiliation: {
+      '@type': 'CollegeOrUniversity',
+      name: site.institution,
+      url: 'https://www.sydney.edu.au/',
+    },
+    alumniOf: {
+      '@type': 'CollegeOrUniversity',
+      name: site.institution,
+      url: 'https://www.sydney.edu.au/',
+    },
+    sameAs: site.profiles.map((profile) => profile.href),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.canonicalUrl,
+    description: site.defaultDescription,
+  },
+];
+---
+
+<BaseLayout structuredData={structuredData}>
+  <section class="home-hero container" aria-labelledby="home-title">
+    <div class="home-hero__copy">
+      <p class="home-hero__descriptor">{site.descriptor}</p>
+      <h1 id="home-title">Bodhi <br />McNally</h1>
+      <p class="home-hero__intro">{site.introduction}</p>
+      <div class="home-hero__links" aria-label="Explore the website">
+        <a class="arrow-link" href="/research/">Research direction</a>
+        <a class="arrow-link" href="/teaching/">Teaching</a>
+        <a class="arrow-link" href="/about/">About me</a>
+      </div>
+    </div>
+    <Portrait eager={true} />
+  </section>
+
+  <section class="section" aria-labelledby="focus-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">01</span>
+        <span id="focus-title">Current focus</span>
+      </h2>
+      <div class="section-copy">
+        <p class="home-focus-statement">
+          I am interested in clinical questions that require both careful evidence and attention to the outcomes patients experience.
+        </p>
+        <p>
+          My quantitative training informs how I approach study design, data quality and interpretation. Through RISE, I am developing experience in collaborative surgical research aligned with urology.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--compact" aria-labelledby="work-title">
+    <div class="container">
+      <h2 class="eyebrow" id="work-title">Research, education and service</h2>
+      <div class="editorial-feature-list">
+        <article class="editorial-feature">
+          <h3>Research</h3>
+          <div class="editorial-feature__copy">
+            <p>
+              My developing interests centre on academic urology, with particular attention to urological oncology, robotic and minimally invasive surgery, perioperative and functional outcomes, and the responsible use of clinical data.
+            </p>
+            <a class="arrow-link" href="/research/">View research themes</a>
+          </div>
+        </article>
+
+        <article class="editorial-feature">
+          <h3>Teaching & resources</h3>
+          <div class="editorial-feature__copy">
+            <p>
+              I teach undergraduate data science and statistics as a Casual Academic at the University of Sydney. My teaching emphasises analytical reasoning, reproducible work and clear interpretation rather than mechanical use of methods.
+            </p>
+            <a class="arrow-link" href="/resources/">Browse student resources</a>
+          </div>
+        </article>
+
+        <article class="editorial-feature">
+          <h3>Leadership & service</h3>
+          <div class="editorial-feature__copy">
+            <p>
+              Alongside research and teaching, I have held senior leadership and governance roles across major student organisations and University structures. I am especially interested in strengthening pathways into research during medical school and the prevocational years.
+            </p>
+            <a class="arrow-link" href="/leadership/">Selected service</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="profiles-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">02</span>
+        <span id="profiles-title">Academic profiles</span>
+      </h2>
+      <ProfileList />
+    </div>
+  </section>
+</BaseLayout>
