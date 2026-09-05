@@ -61,7 +61,7 @@
 .footer-links,
 .profile-list,
 .theme-list,
-.role-list,
+.trajectory,
 .resource-list,
 .output-list,
 .toc ol {
@@ -183,6 +183,11 @@
   color: var(--wine);
 }
 
+.page-header-shell {
+  border-bottom: 1px solid var(--mineral-line);
+  background: var(--mineral-faint);
+}
+
 .page-header {
   display: grid;
   min-height: 33rem;
@@ -218,7 +223,7 @@
   font-weight: 450;
   letter-spacing: -0.07em;
   line-height: 0.72;
-  -webkit-text-stroke: 1px var(--line);
+  -webkit-text-stroke: 1px var(--mineral-line);
   user-select: none;
 }
 
@@ -262,6 +267,12 @@
   gap: 1rem 1.7rem;
 }
 
+.inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.6rem;
+}
+
 .portrait {
   width: min(100%, 25rem);
   margin: 0;
@@ -276,8 +287,8 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  transform: translate(0.75rem, 0.75rem);
-  border: 1px solid var(--wine);
+  transform: translate(0.9rem, 0.9rem);
+  background: var(--mineral);
   content: '';
 }
 
@@ -346,6 +357,59 @@
 .editorial-feature__copy p {
   margin-bottom: 1.4rem;
   color: var(--ink-soft);
+}
+
+.trajectory-section {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-light);
+}
+
+.trajectory {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.trajectory li {
+  min-width: 0;
+  padding: 2rem clamp(1rem, 2.4vw, 2.2rem) 2.15rem;
+  border-right: 1px solid var(--line);
+}
+
+.trajectory li:first-child {
+  padding-left: 0;
+}
+
+.trajectory li:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.trajectory span {
+  display: block;
+  margin-bottom: 1.6rem;
+  color: var(--wine);
+  font-size: 0.76rem;
+  font-weight: 680;
+  letter-spacing: 0.1em;
+}
+
+.trajectory li:nth-child(even) span {
+  color: var(--mineral);
+}
+
+.trajectory p {
+  margin-bottom: 0.35rem;
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-weight: 550;
+  line-height: 1.25;
+}
+
+.trajectory small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 .about-opening {
@@ -618,6 +682,13 @@
   border-bottom: 1px solid var(--line);
 }
 
+.library-note {
+  max-width: 44rem;
+  margin: 1.6rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 .resource-row {
   display: grid;
   padding-block: clamp(1.6rem, 3vw, 2.4rem);
@@ -827,46 +898,6 @@
   text-underline-offset: 0.17em;
 }
 
-.role-list {
-  border-top: 1px solid var(--line);
-}
-
-.role-list li {
-  display: grid;
-  padding-block: clamp(1.6rem, 3.5vw, 2.6rem);
-  border-bottom: 1px solid var(--line);
-  grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 1.45fr);
-  gap: clamp(1.5rem, 5vw, 5rem);
-}
-
-.role-list__period {
-  margin: 0 0 0.35rem;
-  color: var(--wine);
-  font-size: 0.8rem;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.role-list__role {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: var(--step-1);
-  font-weight: 540;
-  line-height: 1.35;
-}
-
-.role-list h2,
-.role-list h3 {
-  margin-bottom: 0.7rem;
-  font-size: var(--step-2);
-}
-
-.role-list__description {
-  margin-bottom: 1rem;
-  color: var(--ink-soft);
-}
-
 .profile-list {
   border-top: 1px solid var(--line);
 }
@@ -975,6 +1006,24 @@
 }
 
 @include tablet {
+  .trajectory {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trajectory li:nth-child(2) {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .trajectory li:nth-child(3),
+  .trajectory li:nth-child(4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .trajectory li:nth-child(3) {
+    padding-left: 0;
+  }
+
   .theme-list {
     grid-template-columns: 1fr;
   }
@@ -1040,7 +1089,6 @@
   .about-opening,
   .resource-row,
   .resource-layout,
-  .role-list li,
   .disclaimer {
     grid-template-columns: 1fr;
   }
@@ -1055,6 +1103,28 @@
 
   .about-opening .portrait {
     width: min(90%, 25rem);
+  }
+
+  .trajectory {
+    grid-template-columns: 1fr;
+  }
+
+  .trajectory li,
+  .trajectory li:first-child,
+  .trajectory li:nth-child(2),
+  .trajectory li:nth-child(3),
+  .trajectory li:last-child {
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--line);
+    border-right: 0;
+  }
+
+  .trajectory li:first-child {
+    border-top: 0;
+  }
+
+  .trajectory span {
+    margin-bottom: 0.7rem;
   }
 
   .cv-panel {

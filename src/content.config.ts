@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { file, glob } from 'astro/loaders';
+import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const resources = defineCollection({
@@ -45,18 +45,6 @@ const resources = defineCollection({
   }),
 });
 
-const leadership = defineCollection({
-  loader: file('./src/data/leadership.json'),
-  schema: z.object({
-    organisation: z.string(),
-    role: z.string(),
-    period: z.string(),
-    description: z.string(),
-    themes: z.array(z.string()).default([]),
-  }),
-});
-
 export const collections = {
   resources,
-  leadership,
 };

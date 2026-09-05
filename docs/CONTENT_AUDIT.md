@@ -12,7 +12,7 @@ The initial public copy is limited to information supplied or previously confirm
 - Surgical Research Scholar with RISE, matched to a mentor and urology-aligned project.
 - Developing interests in academic urology, urological oncology, robotic and minimally invasive surgery, surgical and functional outcomes, clinical data and health-services research.
 - A carefully phrased aspiration to pursue a future career as an academic surgeon.
-- Selected, previously confirmed student leadership and University governance roles.
+- A high-level statement that senior student leadership and University governance roles have been held; individual positions are not itemised.
 - Verified ORCID, LinkedIn and University teaching-profile URLs.
 
 ## Intentionally omitted or unavailable
@@ -33,5 +33,6 @@ The initial public copy is limited to information supplied or previously confirm
 - Analytics and contact form: omitted for privacy and because neither is needed initially.
 - Social-preview image: omitted because no dedicated approved card was requested.
 - AI-generated or stock imagery: omitted; only the supplied portrait is used.
+- Dedicated Leadership & Service page: removed for the present version so the public structure stays centred on research, teaching and useful resources.
 
 Before publishing a new claim, confirm its title, dates, spelling, status and whether collaborators or institutions are comfortable with public identification.

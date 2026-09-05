@@ -11,9 +11,10 @@
 ## Design system
 
 - `src/styles/global.scss` loads focused SCSS partials for tokens, base rules, layout, components, long-form content and print output.
-- CSS custom properties hold the palette, typography scale, spacing and layout measurements.
+- CSS custom properties hold the palette, typography scale, spacing and layout measurements. Warm paper and oxblood remain the base identity; a mineral blue is used for one strong homepage band, inner-page headers and the portrait offset.
 - Source Serif 4 and Inter are installed as local package assets, so the site does not depend on a third-party font request at runtime.
 - Motion is a single quiet page-entry transition and small interaction feedback. All motion is neutralised under `prefers-reduced-motion: reduce`.
+- The About-page trajectory is semantic HTML rather than an image, so it remains readable, responsive and editable.
 
 ## Profile data
 
@@ -31,9 +32,9 @@
 
 Projects, publications and presentations use explicit TypeScript types and arrays in `src/data/research.ts`. Empty arrays render no invented entries. Adding the first verified record automatically exposes the relevant section on the Research page.
 
-## Leadership data
+## Leadership and service
 
-Selected roles live in `src/data/leadership.json` and are loaded through an Astro content collection with a validation schema. The page markup does not duplicate role data.
+Leadership and service are currently kept at a high level within the About page rather than presented as a separate portfolio category. A dedicated route can be restored later if there is a clear public purpose for selected roles.
 
 ## SEO and deployment
 

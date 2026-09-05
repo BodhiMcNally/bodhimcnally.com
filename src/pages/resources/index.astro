@@ -14,6 +14,7 @@ const resources = (await getCollection('resources', ({ data }) => !data.draft)).
 
 const categories = [...new Set(resources.map((resource) => resource.data.category))].sort();
 const tags = [...new Set(resources.flatMap((resource) => resource.data.tags))].sort();
+const showBrowseTools = resources.length >= 4;
 ---
 
 <BaseLayout
@@ -22,47 +23,59 @@ const tags = [...new Set(resources.flatMap((resource) => resource.data.tags))].s
 >
   <PageHeader
     eyebrow="Resources"
-    title="Notes for learning with data"
-    introduction="A growing library of original explanations, worked examples and practical material for students learning statistics, data science and reproducible analysis."
+    title="A small library for learning with data"
+    introduction="Original explanations, worked examples and practical material for students learning statistics, data science and reproducible analysis. The aim is clarity and usefulness, not volume."
     folio="04"
   />
 
   <section class="section section--compact" aria-labelledby="browse-title">
     <div class="container">
-      <h2 class="eyebrow" id="browse-title">Browse the library</h2>
+      <h2 class="eyebrow" id="browse-title">Available notes</h2>
 
-      <div class="resource-toolbar" data-resource-toolbar>
-        <div class="resource-toolbar__fields">
-          <div class="field">
-            <label for="resource-search">Search</label>
-            <input
-              id="resource-search"
-              type="search"
-              placeholder="Search titles, descriptions and tags"
-              autocomplete="off"
-              data-resource-search
-            />
+      {
+        showBrowseTools && (
+          <div class="resource-toolbar" data-resource-toolbar>
+            <div class="resource-toolbar__fields">
+              <div class="field">
+                <label for="resource-search">Search</label>
+                <input
+                  id="resource-search"
+                  type="search"
+                  placeholder="Search titles, descriptions and tags"
+                  autocomplete="off"
+                  data-resource-search
+                />
+              </div>
+              <div class="field">
+                <label for="resource-category">Category</label>
+                <select id="resource-category" data-resource-category>
+                  <option value="">All categories</option>
+                  {categories.map((category) => <option value={category.toLowerCase()}>{category}</option>)}
+                </select>
+              </div>
+              <div class="field">
+                <label for="resource-tag">Tag</label>
+                <select id="resource-tag" data-resource-tag>
+                  <option value="">All tags</option>
+                  {tags.map((tag) => <option value={tag.toLowerCase()}>{tag}</option>)}
+                </select>
+              </div>
+              <button class="button button--quiet" type="button" data-resource-reset>Reset</button>
+            </div>
+            <p class="resource-toolbar__status" aria-live="polite" data-resource-status>
+              {resources.length} {resources.length === 1 ? 'resource' : 'resources'}
+            </p>
           </div>
-          <div class="field">
-            <label for="resource-category">Category</label>
-            <select id="resource-category" data-resource-category>
-              <option value="">All categories</option>
-              {categories.map((category) => <option value={category.toLowerCase()}>{category}</option>)}
-            </select>
-          </div>
-          <div class="field">
-            <label for="resource-tag">Tag</label>
-            <select id="resource-tag" data-resource-tag>
-              <option value="">All tags</option>
-              {tags.map((tag) => <option value={tag.toLowerCase()}>{tag}</option>)}
-            </select>
-          </div>
-          <button class="button button--quiet" type="button" data-resource-reset>Reset</button>
-        </div>
-        <p class="resource-toolbar__status" aria-live="polite" data-resource-status>
-          {resources.length} {resources.length === 1 ? 'resource' : 'resources'}
-        </p>
-      </div>
+        )
+      }
+
+      {
+        resources.some((resource) => resource.data.template) && (
+          <p class="library-note">
+            The first entry is a worked template showing the format of future notes. It is clearly marked and can be replaced when the first finished resource is ready.
+          </p>
+        )
+      }
 
       <ol class="resource-list" data-resource-list>
         {

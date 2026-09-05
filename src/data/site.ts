@@ -16,9 +16,9 @@ export const site = {
   currentRole: 'Doctor of Medicine student',
   institution: 'University of Sydney',
   clinicalSchool: 'Westmead Clinical School',
-  descriptor: 'Medicine · Quantitative research · Teaching',
+  descriptor: 'Medicine · Quantitative science · Teaching',
   introduction:
-    'I am a Doctor of Medicine student at the University of Sydney, based at Westmead Clinical School, with a background in data science and healthcare analytics. My developing academic interests lie in urology, surgical outcomes and quantitative clinical research.',
+    'I am a Doctor of Medicine student at the University of Sydney, based at Westmead Clinical School. I came to medicine through data science and healthcare analytics, and I am now developing an academic direction in urology, surgical outcomes and quantitative clinical research.',
   cv: {
     href: null as string | null,
     expectedPath: '/cv/Bodhi_McNally_CV.pdf',
@@ -56,6 +56,5 @@ export const navigation = [
   { label: 'Research', href: '/research/' },
   { label: 'Teaching', href: '/teaching/' },
   { label: 'Resources', href: '/resources/' },
-  { label: 'Leadership & Service', href: '/leadership/' },
   { label: 'Contact', href: '/contact/' },
 ] as const;

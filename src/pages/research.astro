@@ -23,8 +23,8 @@ const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length >
 >
   <PageHeader
     eyebrow="Research"
-    title="Clinical questions, quantitative methods"
-    introduction="My developing research direction brings quantitative training to questions in academic urology: how treatments are selected, how surgical care is delivered, and how outcomes and recovery are measured."
+    title="Treatment, surgery and recovery"
+    introduction="My developing interests lie in academic urology, surgical outcomes and quantitative clinical research. I am especially drawn to questions that connect clinical decisions with what happens before, during and after treatment."
     folio="02"
   />
 
@@ -36,39 +36,56 @@ const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length >
           <span class="theme-list__number">01</span>
           <h3>Urological oncology</h3>
           <p>
-            A developing interest in prostate and renal cancer, including how clinical evidence can inform treatment selection and patient-centred decisions.
+            How can evidence support treatment selection in prostate and renal cancer while preserving clinical context and patient priorities?
           </p>
         </li>
         <li>
           <span class="theme-list__number">02</span>
-          <h3>Surgical outcomes</h3>
+          <h3>Outcomes & recovery</h3>
           <p>
-            Perioperative, functional and patient-reported outcomes following robotic and minimally invasive surgery, with close attention to recovery over time.
+            How should perioperative, functional and patient-reported outcomes be defined and followed after robotic and minimally invasive surgery?
           </p>
         </li>
         <li>
           <span class="theme-list__number">03</span>
-          <h3>Clinical data</h3>
+          <h3>Clinical data in practice</h3>
           <p>
-            The careful use of real-world data, clinical prediction and health-services methods to understand pathways, variation and outcomes in care.
+            When can real-world data and clinical prediction clarify variation in care—and when do limits in measurement make stronger claims unsafe?
           </p>
         </li>
       </ol>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="current-research-title">
+  <section class="section" aria-labelledby="approach-title">
     <div class="container section-grid">
       <h2 class="section-label">
         <span class="section-label__number">01</span>
-        <span id="current-research-title">Current research</span>
+        <span id="approach-title">Approach</span>
       </h2>
       <div class="section-copy">
         <p class="section-copy__lead">
-          I am a Surgical Research Scholar with RISE, where I am developing experience in collaborative surgical research.
+          My background in data science is a method base, not the subject of the work.
         </p>
         <p>
-          I have been matched to a surgical mentor and a research project aligned with urology. The mentor, institution, project scope, methods and results are intentionally not listed until they are confirmed and suitable for public description.
+          Across these areas, I am most interested in research that begins with a clinically useful question, defines exposures and outcomes carefully, and makes uncertainty visible. Sophisticated analysis cannot rescue a poorly formed question or weak measurement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="current-research-title">
+    <div class="container section-grid">
+      <h2 class="section-label">
+        <span class="section-label__number">02</span>
+        <span id="current-research-title">Current activity</span>
+      </h2>
+      <div class="section-copy">
+        <p class="section-copy__lead">
+          I am a Surgical Research Scholar with RISE, where I have been matched to a surgical mentor and a research project aligned with urology.
+        </p>
+        <p>
+          At this stage, the value is practical: learning how a team turns a clinically relevant question into feasible collaborative research and communicates its conclusions at the right level of certainty.
         </p>
       </div>
     </div>
@@ -79,7 +96,7 @@ const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length >
       <section class="section" aria-labelledby="projects-title">
         <div class="container section-grid">
           <h2 class="section-label">
-            <span class="section-label__number">02</span>
+            <span class="section-label__number">03</span>
             <span id="projects-title">Projects</span>
           </h2>
           <ul class="output-list">
@@ -103,27 +120,17 @@ const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length >
     )
   }
 
-  <section class="section" aria-labelledby="outputs-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">{sortedProjects.length > 0 ? '03' : '02'}</span>
-        <span id="outputs-title">Research outputs</span>
-      </h2>
+  {
+    hasOutputs && (
+      <section class="section" aria-labelledby="outputs-title">
+        <div class="container section-grid">
+          <h2 class="section-label">
+            <span class="section-label__number">{sortedProjects.length > 0 ? '04' : '03'}</span>
+            <span id="outputs-title">Research outputs</span>
+          </h2>
 
-      <div>
-        {
-          !hasOutputs && (
-            <div class="notice">
-              <p class="notice__label">Record in development</p>
-              <p>
-                Publications and presentations will appear here when work becomes publicly available. No placeholder citations have been added.
-              </p>
-            </div>
-          )
-        }
-
-        {
-          sortedPublications.length > 0 && (
+          <div>
+            {sortedPublications.length > 0 && (
             <div class="output-group">
               <h3>Publications</h3>
               <ol class="output-list">
@@ -145,11 +152,9 @@ const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length >
                 ))}
               </ol>
             </div>
-          )
-        }
+            )}
 
-        {
-          sortedPresentations.length > 0 && (
+            {sortedPresentations.length > 0 && (
             <div class="output-group">
               <h3>Presentations</h3>
               <ol class="output-list">
@@ -166,9 +171,10 @@ const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length >
                 ))}
               </ol>
             </div>
-          )
-        }
-      </div>
-    </div>
-  </section>
+            )}
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

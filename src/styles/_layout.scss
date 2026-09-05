@@ -13,6 +13,35 @@
   padding-block: var(--space-7);
 }
 
+.section--soft {
+  border-color: var(--mineral-line);
+  background: var(--mineral-faint);
+}
+
+.section--ink {
+  border-color: var(--mineral-dark);
+  background: var(--mineral);
+  color: #edf3f2;
+}
+
+.section--ink h2,
+.section--ink h3,
+.section--ink .home-focus-statement {
+  color: var(--paper-light);
+}
+
+.section--ink .section-label {
+  color: #f0cdd5;
+}
+
+.section--ink .section-label__number {
+  color: #a8c3c7;
+}
+
+.section--ink .section-copy > p:not(.home-focus-statement) {
+  color: #dce8e8;
+}
+
 .section-grid {
   display: grid;
   grid-template-columns: minmax(10rem, 0.72fr) minmax(0, 1.7fr);

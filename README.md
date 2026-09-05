@@ -42,10 +42,9 @@ src/
 ├── assets/images/                 Headshot source image
 ├── components/                    Shared page components
 ├── content/resources/             Teaching resources in Markdown or MDX
-├── content.config.ts              Resource and leadership schemas
+├── content.config.ts              Teaching-resource schema
 ├── data/site.ts                   Bio, current details, links and navigation
 ├── data/research.ts               Projects, publications and presentations
-├── data/leadership.json           Selected leadership and service roles
 ├── layouts/BaseLayout.astro       Metadata, header and footer shell
 ├── pages/                          Routes
 └── styles/                         SCSS design system
@@ -58,6 +57,8 @@ public/
 ```
 
 The generated `dist/`, `.astro/` and `node_modules/` folders are ignored by Git.
+
+The reasoning behind the site's current information architecture and colour direction is recorded in `docs/DESIGN_RESEARCH.md`.
 
 ## Update the bio, titles or current roles
 
@@ -74,7 +75,6 @@ Longer narrative copy is intentionally page-specific:
 - `src/pages/about.astro`
 - `src/pages/research.astro`
 - `src/pages/teaching.astro`
-- `src/pages/leadership.astro`
 
 Search those pages for any time-sensitive wording when your role or training stage changes.
 
@@ -165,6 +165,8 @@ src/content/resources/understanding-confidence-intervals.md
 
 The available categories and validated metadata fields are defined in `src/content.config.ts`. Add a new category there only when at least one real resource needs it.
 
+The search and filter controls appear automatically once four or more published resources are available. With a smaller library, the page keeps a simpler editorial list.
+
 ### Equations, code, tables and callouts
 
 - Use `$...$` for inline equations and `$$...$$` for display equations.
@@ -250,29 +252,6 @@ Add a verified object to the `projects` array in `src/data/research.ts`:
 ```
 
 Confirm that the project title, collaborators, institution and status are suitable to publish before adding them. Keep the RISE description general until the specific project details are verified and shareable.
-
-## Add or update leadership entries
-
-Edit:
-
-```text
-src/data/leadership.json
-```
-
-Each object needs a unique `id`:
-
-```json
-{
-  "id": "short-stable-slug",
-  "organisation": "Verified organisation name",
-  "role": "Verified role title",
-  "period": "2027–present",
-  "description": "A concise, factual account of the contribution.",
-  "themes": ["Governance", "Student engagement"]
-}
-```
-
-Avoid membership figures, budgets or superlatives unless they are necessary, current and auditable.
 
 ## Deploy with GitHub and Vercel
 
