@@ -59,6 +59,38 @@ The teaching portfolio is:
 public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf
 ```
 
+## Homepage posts
+
+Posts shown on the homepage live in `src/content/updates/` and are ordered by their published date. Ordinary website posts use Markdown:
+
+```md
+---
+title: Post title
+summary: One-sentence description.
+published: 2026-09-06
+source: site
+draft: false
+---
+
+Write the post here.
+```
+
+LinkedIn supports embedding individual public posts rather than an unrestricted profile feed. In LinkedIn, open the public post, choose **Embed this post**, and copy the `src` URL from the supplied iframe code. Then add an entry using:
+
+```md
+---
+title: Post title
+summary: One-sentence description.
+published: 2026-09-06
+source: linkedin
+linkedinUrl: https://www.linkedin.com/feed/update/...
+linkedinEmbedUrl: https://www.linkedin.com/embed/feed/update/...
+draft: false
+---
+```
+
+Website and LinkedIn entries are sorted together, so either type can appear between the other.
+
 ## Publications
 
 Publication records live in `src/data/research.ts`.
@@ -94,6 +126,8 @@ To add another resource:
 The available metadata fields and categories are defined in `src/content.config.ts`. Equations use standard `$...$` or `$$...$$` notation. Fenced code blocks receive syntax highlighting and a copy button.
 
 R code blocks also receive a **Run R** button. The site loads webR 0.6.0 from its official distribution only when that button is used, and the calculation runs in the reader's browser.
+
+The exact Ubuntu font files used by the plotting environment are stored in `public/fonts/`. Keep their filenames unchanged: the resource runner copies them into webR and registers them with its plotting worker when a code block uses Ubuntu.
 
 Files offered for download from a resource belong under `public/resources/` and can be linked through the resource's `downloadableAssets` frontmatter.
 

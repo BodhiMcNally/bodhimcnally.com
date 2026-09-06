@@ -59,6 +59,18 @@ const structuredData = {
   publishedTime={entry.data.published.toISOString()}
   modifiedTime={updated.toISOString()}
 >
+  <div
+    class="reading-progress"
+    role="progressbar"
+    aria-label="Reading progress"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+    data-reading-progress
+  >
+    <span data-reading-progress-bar></span>
+  </div>
+
   <article>
     <header class="resource-header container">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
@@ -139,12 +151,49 @@ const structuredData = {
   </article>
 
   <script is:inline type="module">
+    const progress = document.querySelector('[data-reading-progress]');
+    const progressBar = document.querySelector('[data-reading-progress-bar]');
+    const resourceArticle = document.querySelector('article');
+
+    if (progress && progressBar && resourceArticle) {
+      let progressFrame;
+      const updateReadingProgress = () => {
+        progressFrame = undefined;
+        const articleTop = resourceArticle.getBoundingClientRect().top + window.scrollY;
+        const distance = Math.max(resourceArticle.offsetHeight - window.innerHeight, 1);
+        const value = Math.min(1, Math.max(0, (window.scrollY - articleTop) / distance));
+        progressBar.style.transform = `scaleX(${value})`;
+        progress.setAttribute('aria-valuenow', String(Math.round(value * 100)));
+      };
+
+      const requestProgressUpdate = () => {
+        if (progressFrame) return;
+        progressFrame = window.requestAnimationFrame(updateReadingProgress);
+      };
+
+      updateReadingProgress();
+      window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+      window.addEventListener('resize', requestProgressUpdate);
+    }
+
     document.querySelector('[data-print-resource]')?.addEventListener('click', () => {
       window.print();
     });
 
     let webRInstancePromise;
     let ggplotInstallPromise;
+    let ubuntuInstallPromise;
+
+    const ubuntuFonts = [
+      { file: 'Ubuntu-Light.ttf', weight: '300', style: 'normal' },
+      { file: 'Ubuntu-LightItalic.ttf', weight: '300', style: 'italic' },
+      { file: 'Ubuntu-Regular.ttf', weight: '400', style: 'normal' },
+      { file: 'Ubuntu-Italic.ttf', weight: '400', style: 'italic' },
+      { file: 'Ubuntu-Medium.ttf', weight: '500', style: 'normal' },
+      { file: 'Ubuntu-MediumItalic.ttf', weight: '500', style: 'italic' },
+      { file: 'Ubuntu-Bold.ttf', weight: '700', style: 'normal' },
+      { file: 'Ubuntu-BoldItalic.ttf', weight: '700', style: 'italic' },
+    ];
 
     const loadWebR = async () => {
       if (!webRInstancePromise) {
@@ -157,6 +206,54 @@ const structuredData = {
       }
 
       return webRInstancePromise;
+    };
+
+    const ensureUbuntu = async (webR) => {
+      if (!ubuntuInstallPromise) {
+        ubuntuInstallPromise = (async () => {
+          const fontDirectory = '/home/web_user/fonts';
+          try {
+            await webR.FS.mkdir(fontDirectory);
+          } catch {
+            // The standard webR distribution may already provide this directory.
+          }
+
+          await Promise.all(
+            ubuntuFonts.map(async ({ file }) => {
+              const response = await fetch(`/fonts/${file}`);
+              if (!response.ok) throw new Error(`Could not load ${file}.`);
+              const bytes = new Uint8Array(await response.arrayBuffer());
+              await webR.FS.writeFile(`${fontDirectory}/${file}`, bytes);
+            }),
+          );
+
+          const workerFontInstaller = `(() => {
+            if (typeof FontFace === 'undefined' || !globalThis.fonts) {
+              throw new Error('This browser cannot install fonts in the plotting worker.');
+            }
+
+            const specifications = ${JSON.stringify(ubuntuFonts)};
+            for (const specification of specifications) {
+              const path = '/home/web_user/fonts/' + specification.file;
+              const bytes = Module.FS.readFile(path);
+              const data = Uint8Array.from(bytes).buffer;
+              const face = new FontFace('Ubuntu', data, {
+                weight: specification.weight,
+                style: specification.style
+              });
+              globalThis.fonts.add(face);
+            }
+            if (!globalThis.fonts.check('16px Ubuntu')) {
+              throw new Error('Ubuntu was not registered with the plotting worker.');
+            }
+            return 1;
+          })()`;
+
+          await webR.evalRVoid(`webr::eval_js(${JSON.stringify(workerFontInstaller)})`);
+        })();
+      }
+
+      await ubuntuInstallPromise;
     };
 
     const ensurePackages = async (webR, code) => {
@@ -237,7 +334,8 @@ const structuredData = {
         showOutputMessage(output, 'Starting R in your browser…');
 
         try {
-          if ('fonts' in document) {
+          const usesUbuntu = /["']Ubuntu["']|theme_bodhi/i.test(code);
+          if (usesUbuntu && 'fonts' in document) {
             await Promise.all([
               document.fonts.load('400 16px Ubuntu'),
               document.fonts.load('700 16px Ubuntu'),
@@ -245,6 +343,11 @@ const structuredData = {
           }
 
           const webR = await loadWebR();
+          if (usesUbuntu) {
+            runButton.textContent = 'Loading Ubuntu…';
+            showOutputMessage(output, 'Installing Ubuntu in the plotting environment…');
+            await ensureUbuntu(webR);
+          }
           if (/(?:library|require)\s*\(\s*["']?ggplot2["']?\s*\)|ggplot2::/i.test(code)) {
             runButton.textContent = 'Loading ggplot2…';
             showOutputMessage(output, 'Loading ggplot2 and its dependencies…');

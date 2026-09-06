@@ -45,6 +45,28 @@ const resources = defineCollection({
   }),
 });
 
+const updates = defineCollection({
+  loader: glob({
+    base: './src/content/updates',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: z
+    .object({
+      title: z.string(),
+      summary: z.string(),
+      published: z.coerce.date(),
+      source: z.enum(['site', 'linkedin']).default('site'),
+      linkedinUrl: z.url().optional(),
+      linkedinEmbedUrl: z.url().optional(),
+      draft: z.boolean().default(false),
+    })
+    .refine(
+      (entry) => entry.source !== 'linkedin' || Boolean(entry.linkedinUrl),
+      'LinkedIn updates require a linkedinUrl.',
+    ),
+});
+
 export const collections = {
   resources,
+  updates,
 };

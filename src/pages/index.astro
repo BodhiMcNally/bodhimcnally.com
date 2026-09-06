@@ -1,8 +1,29 @@
 ---
+import { getCollection, render } from 'astro:content';
+
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Portrait from '@/components/Portrait.astro';
 import ProfileList from '@/components/ProfileList.astro';
 import { site } from '@/data/site';
+
+const updates = await getCollection('updates', ({ data }) => !data.draft);
+const homepageUpdates = await Promise.all(
+  updates
+    .sort((a, b) => b.data.published.getTime() - a.data.published.getTime())
+    .slice(0, 6)
+    .map(async (entry) => {
+      const { Content } = await render(entry);
+      return { entry, Content };
+    }),
+);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('en-AU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
 
 const structuredData = [
   {
@@ -68,6 +89,56 @@ const structuredData = [
       <p><em>One of my university students?</em></p>
       <p>You may be looking for the <a href="/resources/">teaching resources page</a>.</p>
     </div>
+  </section>
+
+  <section class="home-updates container" aria-labelledby="updates-title">
+    <header class="home-updates__header">
+      <p class="eyebrow">Updates</p>
+      <h2 id="updates-title">Recent posts</h2>
+    </header>
+
+    <ol class="update-stream">
+      {
+        homepageUpdates.map(({ entry, Content }) => (
+          <li class="update-entry">
+            <div class="update-entry__meta">
+              <time datetime={entry.data.published.toISOString()}>
+                {formatDate(entry.data.published)}
+              </time>
+              <span>{entry.data.source === 'linkedin' ? 'LinkedIn' : 'Website'}</span>
+            </div>
+
+            <article class="update-entry__content">
+              <h3>{entry.data.title}</h3>
+              {entry.data.source === 'linkedin' && entry.data.linkedinEmbedUrl ? (
+                <iframe
+                  class="linkedin-embed"
+                  src={entry.data.linkedinEmbedUrl}
+                  title={`LinkedIn post: ${entry.data.title}`}
+                  loading="lazy"
+                  allowfullscreen
+                />
+              ) : (
+                <div class="update-entry__body">
+                  <Content />
+                </div>
+              )}
+
+              {entry.data.linkedinUrl && (
+                <a
+                  class="text-link update-entry__link"
+                  href={entry.data.linkedinUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View on LinkedIn
+                </a>
+              )}
+            </article>
+          </li>
+        ))
+      }
+    </ol>
   </section>
 
   <section class="home-profiles container" aria-labelledby="profiles-title">

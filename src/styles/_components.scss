@@ -355,6 +355,93 @@
   padding-block: var(--space-8);
 }
 
+.home-updates {
+  padding-block: var(--space-8);
+}
+
+.home-updates__header {
+  display: grid;
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--line-strong);
+  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr);
+  align-items: end;
+  gap: clamp(1.5rem, 5vw, 5rem);
+}
+
+.home-updates__header p,
+.home-updates__header h2 {
+  margin: 0;
+}
+
+.home-updates__header h2 {
+  font-size: var(--step-3);
+}
+
+.update-stream {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.update-entry {
+  display: grid;
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--line);
+  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr);
+  align-items: start;
+  gap: clamp(1.5rem, 5vw, 5rem);
+}
+
+.update-entry__meta {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.045em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.update-entry__meta span {
+  color: var(--wine);
+  font-weight: 670;
+}
+
+.update-entry__content {
+  max-width: 48rem;
+}
+
+.update-entry__content h3 {
+  margin-bottom: 1.2rem;
+  font-size: var(--step-2);
+}
+
+.update-entry__body {
+  color: var(--ink-soft);
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 0.97rem + 0.12vw, 1.08rem);
+  line-height: 1.72;
+}
+
+.update-entry__body > :last-child {
+  margin-bottom: 0;
+}
+
+.update-entry__link {
+  display: inline-block;
+  margin-top: 1.35rem;
+  font-size: 0.88rem;
+}
+
+.linkedin-embed {
+  display: block;
+  width: 100%;
+  height: min(42rem, 75vh);
+  min-height: 28rem;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
 .about-opening {
   display: grid;
   padding-block: var(--space-8);
@@ -958,6 +1045,28 @@
   padding-block: clamp(4rem, 9vw, 7.5rem) var(--space-6);
 }
 
+.reading-progress {
+  position: fixed;
+  z-index: 51;
+  top: calc(var(--header-height) - 3px);
+  right: 0;
+  left: 0;
+  height: 3px;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: none;
+}
+
+.reading-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--wine);
+  will-change: transform;
+}
+
 .breadcrumbs {
   display: flex;
   flex-wrap: wrap;
@@ -1234,6 +1343,16 @@
     padding-block: var(--space-7);
     grid-template-columns: 1fr;
     gap: var(--space-6);
+  }
+
+  .home-updates__header,
+  .update-entry {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .update-entry {
+    padding-block: var(--space-5);
   }
 
   .home-introduction h1 {
