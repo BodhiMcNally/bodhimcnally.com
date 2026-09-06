@@ -439,7 +439,7 @@
   margin: 0;
   list-style: none;
   align-items: stretch;
-  gap: clamp(1.15rem, 2.5vw, 2rem);
+  gap: clamp(1rem, 2vw, 1.5rem);
   transform: translate3d(0, 0, 0);
   transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -449,7 +449,7 @@
   min-width: 0;
   padding: var(--space-6) 0 var(--space-5);
   border-bottom: 1px solid var(--line);
-  flex: 0 0 calc(100% - clamp(3.75rem, 10vw, 7.5rem));
+  flex: 0 0 min(48rem, calc(100% - clamp(3.75rem, 10vw, 7.5rem)));
   flex-direction: column;
 }
 
