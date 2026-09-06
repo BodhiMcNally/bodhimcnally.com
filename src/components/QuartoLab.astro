@@ -1,0 +1,663 @@
+---
+const presets = [
+  {
+    id: 'first-report',
+    label: 'A complete first report',
+    source: `---
+title: "Weekly data summary"
+subtitle: "A reproducible Quarto report"
+author:
+  - name: "Student Name"
+    affiliation: "School or Faculty"
+date: today
+date-format: "D MMMM YYYY"
+format:
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    code-copy: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Research question
+
+What does the sample tell us about the population?
+
+## Descriptive summary
+
+The sample mean is calculated below.
+
+\`\`\`{r}
+#| label: descriptive-summary
+
+observations <- c(12, 15, 11, 18, 15)
+mean(observations)
+\`\`\`
+
+## Interpretation
+
+The estimate should be interpreted alongside its uncertainty.`,
+  },
+  {
+    id: 'code-options',
+    label: 'Code display and output',
+    source: `---
+title: "Showing the right amount of code"
+author: "Student Name"
+format:
+  html:
+    code-fold: show
+    code-summary: "Show the R code"
+    code-copy: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Analysis
+
+Document options provide defaults. A cell can override them.
+
+\`\`\`{r}
+#| label: hidden-setup
+#| include: false
+
+set.seed(42)
+x <- rnorm(100)
+\`\`\`
+
+\`\`\`{r}
+#| label: visible-result
+#| echo: false
+
+mean(x)
+\`\`\``,
+  },
+  {
+    id: 'callouts',
+    label: 'Callouts',
+    source: `---
+title: "Interpreting an analysis"
+author: "Student Name"
+format:
+  html:
+    toc: true
+    callout-appearance: simple
+---
+
+## Confidence intervals
+
+A confidence interval describes uncertainty in an estimate.
+
+::: {.callout-important}
+## Avoid this interpretation
+
+Do not say that 95% of observed values lie inside a 95% confidence interval for a mean.
+:::
+
+::: {.callout-tip collapse="false"}
+## A useful habit
+
+State the estimate, interval and practical interpretation together.
+:::`,
+  },
+  {
+    id: 'figures',
+    label: 'Figures and cross-references',
+    source: `---
+title: "Figures with purpose"
+author: "Student Name"
+format:
+  html:
+    toc: true
+    lightbox: true
+execute:
+  warning: false
+  message: false
+---
+
+## A static image
+
+Figure @fig-study-flow summarises participant flow.
+
+![Participant flow through the study.](images/study-flow.png){#fig-study-flow fig-alt="A flow chart showing participants from recruitment to analysis." width="75%"}
+
+## A figure made with R
+
+Figure @fig-distribution shows the observed values.
+
+\`\`\`{r}
+#| label: fig-distribution
+#| fig-cap: "Distribution of the observed values."
+#| fig-alt: "A histogram with most values near the centre."
+#| fig-width: 7
+#| fig-height: 4
+
+hist(rnorm(500), col = "#214c57", border = "white")
+\`\`\``,
+  },
+  {
+    id: 'appearance',
+    label: 'Navigation and appearance',
+    source: `---
+title: "A customised report"
+subtitle: "Structure before decoration"
+author: "Student Name"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: true
+    smooth-scroll: true
+    theme: flatly
+    css: styles.css
+    title-block-banner: "#214c57"
+    title-block-banner-color: "#ffffff"
+---
+
+## Background
+
+Use a theme for broad visual decisions and a small CSS file for deliberate adjustments.
+
+### Aim
+
+Keep the document hierarchy clear and the line length readable.
+
+## Methods
+
+Describe enough detail for another person to reproduce the work.`,
+  },
+];
+const initialSource = presets[0]?.source ?? '';
+---
+
+<section class="quarto-lab" aria-labelledby="quarto-lab-title" data-quarto-lab>
+  <div class="quarto-lab__introduction">
+    <div>
+      <p class="eyebrow">Interactive</p>
+      <h2 id="quarto-lab-title">QMD laboratory</h2>
+    </div>
+    <div>
+      <p>
+        Edit the source and watch the guided preview respond. It recognises the Quarto features taught in this lesson, but it is not the Quarto compiler and does not execute arbitrary code.
+      </p>
+      <p class="quarto-lab__note">
+        Use RStudio's <strong>Render</strong> button for the authoritative result. Runnable R examples later in this resource execute separately in your browser.
+      </p>
+    </div>
+  </div>
+
+  <div class="quarto-lab__toolbar">
+    <div class="quarto-lab__field">
+      <label for="quarto-example">Example</label>
+      <select id="quarto-example" data-quarto-example>
+        {presets.map((preset) => <option value={preset.id}>{preset.label}</option>)}
+      </select>
+    </div>
+    <div class="quarto-lab__actions">
+      <button type="button" data-quarto-copy>Copy source</button>
+      <button type="button" data-quarto-reset>Reset</button>
+      <button type="button" data-quarto-download>Download .qmd</button>
+    </div>
+  </div>
+
+  <div class="quarto-lab__workspace">
+    <section class="quarto-lab__pane quarto-lab__pane--source" aria-labelledby="quarto-source-title">
+      <div class="quarto-lab__pane-header">
+        <h3 id="quarto-source-title">QMD source</h3>
+        <span>report.qmd</span>
+      </div>
+      <label class="visually-hidden" for="quarto-source">Editable Quarto source</label>
+      <textarea
+        id="quarto-source"
+        data-quarto-source
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >{initialSource}</textarea>
+    </section>
+
+    <section class="quarto-lab__pane quarto-lab__pane--preview" aria-labelledby="quarto-preview-title">
+      <div class="quarto-lab__pane-header">
+        <h3 id="quarto-preview-title">Guided HTML preview</h3>
+        <span data-quarto-status aria-live="polite">Preview ready</span>
+      </div>
+      <div class="quarto-preview" data-quarto-preview></div>
+    </section>
+  </div>
+
+  <script is:inline type="application/json" data-quarto-presets set:html={JSON.stringify(presets)}></script>
+</section>
+
+<script>
+  const booleanValue = (value: string | undefined, fallback = false) => {
+    if (value === undefined) return fallback;
+    return ['true', 'yes', 'on', 'show'].includes(value.trim().toLowerCase());
+  };
+
+  const cleanYamlValue = (value: string | undefined, fallback = '') => {
+    if (!value) return fallback;
+    const trimmed = value.trim();
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
+      return trimmed.slice(1, -1);
+    }
+    return trimmed;
+  };
+
+  const yamlValue = (yaml: string, key: string) => {
+    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = yaml.match(new RegExp(`^\\s*${escaped}:\\s*(.*?)\\s*$`, 'm'));
+    return match?.[1];
+  };
+
+  const appendInline = (parent: HTMLElement, source: string) => {
+    const tokenPattern = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)]+\)|@(?:fig|tbl|sec)-[\w-]+)/g;
+    let cursor = 0;
+
+    for (const match of source.matchAll(tokenPattern)) {
+      const index = match.index ?? 0;
+      parent.append(document.createTextNode(source.slice(cursor, index)));
+      const token = match[0];
+
+      if (token.startsWith('**')) {
+        const strong = document.createElement('strong');
+        strong.textContent = token.slice(2, -2);
+        parent.append(strong);
+      } else if (token.startsWith('*')) {
+        const emphasis = document.createElement('em');
+        emphasis.textContent = token.slice(1, -1);
+        parent.append(emphasis);
+      } else if (token.startsWith('`')) {
+        const code = document.createElement('code');
+        code.textContent = token.slice(1, -1);
+        parent.append(code);
+      } else if (token.startsWith('[')) {
+        const linkMatch = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (linkMatch) {
+          const link = document.createElement('a');
+          const label = linkMatch[1] ?? '';
+          const href = linkMatch[2] ?? '';
+          link.textContent = label;
+          link.href = /^(https?:\/\/|\/|#)/.test(href) ? href : '#';
+          parent.append(link);
+        }
+      } else {
+        const reference = document.createElement('span');
+        reference.className = 'quarto-preview__reference';
+        reference.textContent = token.startsWith('@fig-') ? 'Figure 1' : token.replace('@', '');
+        parent.append(reference);
+      }
+
+      cursor = index + token.length;
+    }
+
+    parent.append(document.createTextNode(source.slice(cursor)));
+  };
+
+  const makeParagraph = (text: string, className?: string) => {
+    const paragraph = document.createElement('p');
+    if (className) paragraph.className = className;
+    appendInline(paragraph, text);
+    return paragraph;
+  };
+
+  const renderQmd = (source: string, target: HTMLElement) => {
+    target.replaceChildren();
+
+    const frontMatter = source.match(/^---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/);
+    const yaml = frontMatter?.[1] ?? '';
+    const body = frontMatter ? source.slice(frontMatter[0].length) : source;
+    const title = cleanYamlValue(yamlValue(yaml, 'title'), 'Untitled document');
+    const subtitle = cleanYamlValue(yamlValue(yaml, 'subtitle'));
+    const author = cleanYamlValue(yamlValue(yaml, 'name') ?? yamlValue(yaml, 'author'));
+    const rawDate = cleanYamlValue(yamlValue(yaml, 'date'));
+    const date = rawDate === 'today'
+      ? new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())
+      : rawDate;
+    const toc = booleanValue(yamlValue(yaml, 'toc'));
+    const numbered = booleanValue(yamlValue(yaml, 'number-sections'));
+    const globalEcho = booleanValue(yamlValue(yaml, 'echo'), true);
+    const codeFoldValue = cleanYamlValue(yamlValue(yaml, 'code-fold'));
+    const codeFold = ['true', 'show'].includes(codeFoldValue.toLowerCase());
+    const codeOpen = codeFoldValue.toLowerCase() === 'show';
+    const codeSummary = cleanYamlValue(yamlValue(yaml, 'code-summary'), 'Code');
+    const theme = cleanYamlValue(yamlValue(yaml, 'theme'), 'default').toLowerCase();
+    const banner = cleanYamlValue(yamlValue(yaml, 'title-block-banner'));
+
+    target.dataset.theme = theme;
+    const documentShell = document.createElement('div');
+    documentShell.className = 'quarto-preview__document';
+
+    const titleBlock = document.createElement('header');
+    titleBlock.className = 'quarto-preview__title-block';
+    if (banner && banner !== 'false') {
+      titleBlock.classList.add('quarto-preview__title-block--banner');
+      if (/^#[0-9a-f]{3,8}$/i.test(banner)) titleBlock.style.backgroundColor = banner;
+    }
+
+    const previewTitle = document.createElement('p');
+    previewTitle.className = 'quarto-preview__title';
+    previewTitle.textContent = title;
+    titleBlock.append(previewTitle);
+    if (subtitle) titleBlock.append(makeParagraph(subtitle, 'quarto-preview__subtitle'));
+
+    if (author || date) {
+      const byline = document.createElement('div');
+      byline.className = 'quarto-preview__byline';
+      if (author) byline.append(makeParagraph(author));
+      if (date) byline.append(makeParagraph(date));
+      titleBlock.append(byline);
+    }
+    documentShell.append(titleBlock);
+
+    const contentRow = document.createElement('div');
+    contentRow.className = 'quarto-preview__content-row';
+    const content = document.createElement('div');
+    content.className = 'quarto-preview__body';
+    const tocEntries: string[] = [];
+    const lines = body.split('\n');
+    let index = 0;
+    let sectionNumber = 0;
+
+    while (index < lines.length) {
+      const rawLine = lines[index] ?? '';
+      const line = rawLine.trim();
+      if (!line) {
+        index += 1;
+        continue;
+      }
+
+      const heading = line.match(/^(#{2,4})\s+(.+)$/);
+      if (heading) {
+        const depth = (heading[1] ?? '').length;
+        const text = heading[2] ?? '';
+        const headingElement = document.createElement(depth === 2 ? 'h4' : 'h5');
+        if (depth === 2) {
+          sectionNumber += 1;
+          tocEntries.push(text);
+        }
+        headingElement.textContent = numbered && depth === 2 ? `${sectionNumber} ${text}` : text;
+        content.append(headingElement);
+        index += 1;
+        continue;
+      }
+
+      const calloutStart = line.match(/^:::\s*\{\.callout-(note|tip|warning|caution|important)([^}]*)\}/);
+      if (calloutStart) {
+        const calloutLines: string[] = [];
+        index += 1;
+        while (index < lines.length && (lines[index] ?? '').trim() !== ':::') {
+          calloutLines.push(lines[index] ?? '');
+          index += 1;
+        }
+        index += 1;
+        const type = calloutStart[1] ?? 'note';
+        const collapsed = /collapse\s*=\s*["']?true/i.test(calloutStart[2] ?? '');
+        const titleLine = calloutLines.find((entry) => /^##\s+/.test(entry.trim()));
+        const calloutTitle =
+          titleLine?.trim().replace(/^##\s+/, '') ??
+          type.charAt(0).toUpperCase() + type.slice(1);
+        const calloutText = calloutLines
+          .filter((entry) => entry !== titleLine)
+          .map((entry) => entry.trim())
+          .filter(Boolean)
+          .join(' ');
+        const callout = document.createElement(collapsed ? 'details' : 'aside');
+        callout.className = `quarto-preview__callout quarto-preview__callout--${type}`;
+        if (collapsed) {
+          const summary = document.createElement('summary');
+          summary.textContent = calloutTitle;
+          callout.append(summary);
+        } else {
+          const calloutHeading = document.createElement('p');
+          calloutHeading.className = 'quarto-preview__callout-title';
+          calloutHeading.textContent = calloutTitle;
+          callout.append(calloutHeading);
+        }
+        if (calloutText) callout.append(makeParagraph(calloutText));
+        content.append(callout);
+        continue;
+      }
+
+      if (/^```/.test(line)) {
+        const codeLines: string[] = [];
+        index += 1;
+        while (index < lines.length && !/^```\s*$/.test((lines[index] ?? '').trim())) {
+          codeLines.push(lines[index] ?? '');
+          index += 1;
+        }
+        index += 1;
+
+        const optionMap = new Map<string, string>();
+        for (const optionLine of codeLines) {
+          const option = optionLine.match(/^\s*#\|\s*([\w-]+):\s*(.*?)\s*$/);
+          if (option) optionMap.set(option[1] ?? '', cleanYamlValue(option[2]));
+        }
+        const visibleCode = codeLines.filter((entry) => !/^\s*#\|/.test(entry)).join('\n').trim();
+        const include = booleanValue(optionMap.get('include'), true);
+        if (!include) continue;
+        const echo = booleanValue(optionMap.get('echo'), globalEcho);
+
+        if (echo && visibleCode) {
+          const pre = document.createElement('pre');
+          const code = document.createElement('code');
+          code.textContent = visibleCode;
+          pre.append(code);
+          if (codeFold) {
+            const details = document.createElement('details');
+            details.className = 'quarto-preview__code-fold';
+            details.open = codeOpen;
+            const summary = document.createElement('summary');
+            summary.textContent = codeSummary;
+            details.append(summary, pre);
+            content.append(details);
+          } else {
+            content.append(pre);
+          }
+        }
+
+        const outputEnabled = booleanValue(optionMap.get('output'), true);
+        if (outputEnabled) {
+          const figureCaption = optionMap.get('fig-cap');
+          if (figureCaption || /\b(?:plot|hist|barplot|ggplot)\s*\(/.test(visibleCode)) {
+            const figure = document.createElement('figure');
+            figure.className = 'quarto-preview__figure';
+            const chart = document.createElement('div');
+            chart.className = 'quarto-preview__chart';
+            chart.setAttribute('role', 'img');
+            chart.setAttribute('aria-label', optionMap.get('fig-alt') ?? 'Illustrative chart output');
+            for (const height of [48, 72, 57, 89, 66, 42, 76]) {
+              const bar = document.createElement('span');
+              bar.style.height = `${height}%`;
+              chart.append(bar);
+            }
+            figure.append(chart);
+            if (figureCaption) {
+              const caption = document.createElement('figcaption');
+              caption.textContent = `Figure 1: ${figureCaption}`;
+              figure.append(caption);
+            }
+            content.append(figure);
+          } else if (visibleCode) {
+            const output = document.createElement('pre');
+            output.className = 'quarto-preview__output';
+            output.textContent = /mean\s*\(/.test(visibleCode)
+              ? '## [1] 14.2'
+              : '## R output appears here after rendering';
+            content.append(output);
+          }
+        }
+        continue;
+      }
+
+      const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)(?:\{([^}]*)\})?$/);
+      if (image) {
+        const attributes = image[3] ?? '';
+        const captionText = image[1] ?? '';
+        const imagePath = image[2] ?? '';
+        const altMatch = attributes.match(/fig-alt=["']([^"']+)["']/);
+        const figure = document.createElement('figure');
+        figure.className = 'quarto-preview__figure';
+        const placeholder = document.createElement('div');
+        placeholder.className = 'quarto-preview__image-placeholder';
+        placeholder.setAttribute('role', 'img');
+        placeholder.setAttribute('aria-label', altMatch?.[1] ?? (captionText || 'Image placeholder'));
+        const fileName = imagePath.split('/').pop() ?? imagePath;
+        placeholder.textContent = fileName;
+        figure.append(placeholder);
+        if (captionText) {
+          const caption = document.createElement('figcaption');
+          caption.textContent = `Figure 1: ${captionText}`;
+          figure.append(caption);
+        }
+        content.append(figure);
+        index += 1;
+        continue;
+      }
+
+      if (/^[-*]\s+/.test(line)) {
+        const list = document.createElement('ul');
+        while (index < lines.length && /^\s*[-*]\s+/.test(lines[index] ?? '')) {
+          const item = document.createElement('li');
+          appendInline(item, (lines[index] ?? '').replace(/^\s*[-*]\s+/, ''));
+          list.append(item);
+          index += 1;
+        }
+        content.append(list);
+        continue;
+      }
+
+      if (/^\d+\.\s+/.test(line)) {
+        const list = document.createElement('ol');
+        while (index < lines.length && /^\s*\d+\.\s+/.test(lines[index] ?? '')) {
+          const item = document.createElement('li');
+          appendInline(item, (lines[index] ?? '').replace(/^\s*\d+\.\s+/, ''));
+          list.append(item);
+          index += 1;
+        }
+        content.append(list);
+        continue;
+      }
+
+      if (line.startsWith('>')) {
+        const quote = document.createElement('blockquote');
+        appendInline(quote, line.replace(/^>\s?/, ''));
+        content.append(quote);
+        index += 1;
+        continue;
+      }
+
+      const paragraphLines = [line];
+      index += 1;
+      while (
+        index < lines.length &&
+        (lines[index] ?? '').trim() &&
+        !/^(#{2,4})\s+|^```|^:::\s*\{|^!\[|^[-*]\s+|^\d+\.\s+|^>/.test((lines[index] ?? '').trim())
+      ) {
+        paragraphLines.push((lines[index] ?? '').trim());
+        index += 1;
+      }
+      content.append(makeParagraph(paragraphLines.join(' ')));
+    }
+
+    contentRow.append(content);
+    if (toc && tocEntries.length) {
+      const navigation = document.createElement('nav');
+      navigation.className = 'quarto-preview__toc';
+      navigation.setAttribute('aria-label', 'Illustrative table of contents');
+      const tocTitle = document.createElement('p');
+      tocTitle.textContent = 'On this page';
+      navigation.append(tocTitle);
+      const list = document.createElement('ol');
+      tocEntries.forEach((entry, entryIndex) => {
+        const item = document.createElement('li');
+        item.textContent = numbered ? `${entryIndex + 1} ${entry}` : entry;
+        list.append(item);
+      });
+      navigation.append(list);
+      contentRow.append(navigation);
+    }
+
+    documentShell.append(contentRow);
+    target.append(documentShell);
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-quarto-lab]').forEach((lab) => {
+    const presetData = lab.querySelector<HTMLScriptElement>('[data-quarto-presets]');
+    const select = lab.querySelector<HTMLSelectElement>('[data-quarto-example]');
+    const source = lab.querySelector<HTMLTextAreaElement>('[data-quarto-source]');
+    const preview = lab.querySelector<HTMLElement>('[data-quarto-preview]');
+    const status = lab.querySelector<HTMLElement>('[data-quarto-status]');
+    const copyButton = lab.querySelector<HTMLButtonElement>('[data-quarto-copy]');
+    const resetButton = lab.querySelector<HTMLButtonElement>('[data-quarto-reset]');
+    const downloadButton = lab.querySelector<HTMLButtonElement>('[data-quarto-download]');
+    if (!presetData || !select || !source || !preview || !status) return;
+
+    const examples = JSON.parse(presetData.textContent ?? '[]') as Array<{
+      id: string;
+      label: string;
+      source: string;
+    }>;
+    let timer: number | undefined;
+
+    const currentExample = () =>
+      examples.find((example) => example.id === select.value) ??
+      examples[0] ??
+      { id: 'report', label: 'Report', source: '' };
+    const update = () => {
+      renderQmd(source.value, preview);
+      status.textContent = 'Preview updated';
+    };
+
+    update();
+    source.addEventListener('input', () => {
+      status.textContent = 'Updating…';
+      window.clearTimeout(timer);
+      timer = window.setTimeout(update, 220);
+    });
+
+    select.addEventListener('change', () => {
+      source.value = currentExample().source;
+      update();
+    });
+
+    resetButton?.addEventListener('click', () => {
+      source.value = currentExample().source;
+      update();
+      source.focus();
+    });
+
+    copyButton?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(source.value);
+        copyButton.textContent = 'Copied';
+        window.setTimeout(() => {
+          copyButton.textContent = 'Copy source';
+        }, 1600);
+      } catch {
+        source.select();
+        copyButton.textContent = 'Source selected';
+      }
+    });
+
+    downloadButton?.addEventListener('click', () => {
+      const blob = new Blob([source.value], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${select.value}.qmd`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+  });
+</script>

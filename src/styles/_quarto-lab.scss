@@ -1,0 +1,521 @@
+.quarto-lab {
+  margin: 0 0 var(--space-7);
+  border-block: 1px solid var(--mineral-line);
+  background: var(--mineral-faint);
+}
+
+.quarto-lab__introduction {
+  display: grid;
+  padding: clamp(1.5rem, 3vw, 2.2rem);
+  grid-template-columns: minmax(10rem, 0.42fr) minmax(0, 1.58fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.quarto-lab__introduction h2 {
+  margin: 0.55rem 0 0;
+  font-size: var(--step-2);
+}
+
+.quarto-lab__introduction p {
+  max-width: 46rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.quarto-lab__introduction .quarto-lab__note {
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.quarto-lab__toolbar {
+  display: flex;
+  min-height: 4.6rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--mineral-line);
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--paper-light);
+}
+
+.quarto-lab__field {
+  width: min(23rem, 100%);
+}
+
+.quarto-lab__field label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+  font-size: 0.69rem;
+  font-weight: 680;
+  letter-spacing: 0.085em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.quarto-lab__field select {
+  width: 100%;
+  min-height: 2.55rem;
+  padding: 0.42rem 2.25rem 0.42rem 0.65rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--paper-light);
+  color: var(--ink);
+  font-size: 0.82rem;
+}
+
+.quarto-lab__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.quarto-lab__actions button {
+  min-height: 2.55rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 640;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.quarto-lab__actions button:hover {
+  border-color: var(--mineral);
+  background: var(--mineral);
+  color: #fff;
+}
+
+.quarto-lab__workspace {
+  display: grid;
+  border-top: 1px solid var(--mineral-line);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: var(--paper-light);
+}
+
+.quarto-lab__pane {
+  min-width: 0;
+}
+
+.quarto-lab__pane + .quarto-lab__pane {
+  border-left: 1px solid var(--mineral-line);
+}
+
+.quarto-lab__pane-header {
+  display: flex;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--mineral-line);
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #e1eae9;
+}
+
+.quarto-lab__pane-header h3,
+.quarto-lab__pane-header span {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.quarto-lab__pane-header h3 {
+  font-weight: 700;
+}
+
+.quarto-lab__pane-header span {
+  color: var(--muted);
+  font-weight: 580;
+}
+
+.quarto-lab__pane--source {
+  background: #191719;
+}
+
+.quarto-lab__pane--source .quarto-lab__pane-header {
+  border-color: #423e42;
+  background: #252225;
+  color: #f7f4ee;
+}
+
+.quarto-lab__pane--source .quarto-lab__pane-header h3 {
+  color: #f7f4ee;
+}
+
+.quarto-lab__pane--source .quarto-lab__pane-header span {
+  color: #bdb5bd;
+}
+
+.quarto-lab textarea {
+  display: block;
+  width: 100%;
+  height: 39rem;
+  padding: 1rem;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  outline-offset: -4px;
+  background: #191719;
+  color: #f7f4ee;
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.74rem;
+  line-height: 1.58;
+  tab-size: 2;
+  white-space: pre;
+}
+
+.quarto-preview {
+  height: 39rem;
+  overflow: auto;
+  background: #fff;
+  color: #2a2928;
+  container-type: inline-size;
+}
+
+.quarto-preview__document {
+  --preview-accent: #406b8c;
+  min-height: 100%;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.quarto-preview[data-theme='flatly'] .quarto-preview__document {
+  --preview-accent: #176b61;
+  font-family: system-ui, sans-serif;
+}
+
+.quarto-preview[data-theme='cosmo'] .quarto-preview__document {
+  --preview-accent: #2780e3;
+  font-family: system-ui, sans-serif;
+}
+
+.quarto-preview__title-block {
+  padding: 2.2rem 2rem 1.6rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.quarto-preview__title-block--banner {
+  background: var(--preview-accent);
+  color: #fff;
+}
+
+.quarto-preview__title-block--banner .quarto-preview__title,
+.quarto-preview__title-block--banner .quarto-preview__subtitle,
+.quarto-preview__title-block--banner .quarto-preview__byline p {
+  color: inherit;
+}
+
+.quarto-preview__title {
+  margin: 0;
+  color: #242322;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.62rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.quarto-preview__subtitle {
+  margin: 0.42rem 0 0;
+  color: #555;
+  font-size: 0.86rem;
+}
+
+.quarto-preview__byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.2rem;
+  margin-top: 1.1rem;
+}
+
+.quarto-preview__byline p {
+  margin: 0;
+  color: #555;
+  font-size: 0.68rem;
+}
+
+.quarto-preview__content-row {
+  display: grid;
+  padding: 1.7rem 2rem 3rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.quarto-preview__body {
+  min-width: 0;
+}
+
+.quarto-preview__body h4,
+.quarto-preview__body h5 {
+  margin: 1.7rem 0 0.7rem;
+  color: #292827;
+  font-family: system-ui, sans-serif;
+  font-weight: 610;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+}
+
+.quarto-preview__body h4:first-child,
+.quarto-preview__body h5:first-child {
+  margin-top: 0;
+}
+
+.quarto-preview__body h4 {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.02rem;
+}
+
+.quarto-preview__body h5 {
+  font-size: 0.88rem;
+}
+
+.quarto-preview__body p,
+.quarto-preview__body ul,
+.quarto-preview__body ol,
+.quarto-preview__body blockquote {
+  margin: 0 0 0.85rem;
+}
+
+.quarto-preview__body ul,
+.quarto-preview__body ol {
+  padding-left: 1.2rem;
+}
+
+.quarto-preview__body a,
+.quarto-preview__reference {
+  color: var(--preview-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.quarto-preview__body code {
+  padding: 0.06rem 0.2rem;
+  background: #f1f1f1;
+  color: #8b2340;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.88em;
+}
+
+.quarto-preview__body pre {
+  padding: 0.75rem;
+  margin: 0 0 0.8rem;
+  overflow-x: auto;
+  border: 1px solid #dadada;
+  background: #f6f6f6;
+  color: #262626;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.66rem;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.quarto-preview__body pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.quarto-preview__body .quarto-preview__output {
+  border-left: 3px solid #b8b8b8;
+  background: #fff;
+  color: #555;
+}
+
+.quarto-preview__code-fold {
+  margin-bottom: 0.85rem;
+  border: 1px solid #dadada;
+}
+
+.quarto-preview__code-fold summary {
+  padding: 0.42rem 0.6rem;
+  cursor: pointer;
+  color: #4d4d4d;
+  font-size: 0.68rem;
+  font-weight: 650;
+}
+
+.quarto-preview__code-fold pre {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #dadada;
+}
+
+.quarto-preview__toc {
+  position: sticky;
+  top: 0;
+  width: 7.6rem;
+  padding-left: 0.85rem;
+  border-left: 1px solid #ddd;
+  color: #666;
+  font-size: 0.6rem;
+  line-height: 1.4;
+}
+
+.quarto-preview__toc p {
+  margin: 0 0 0.45rem;
+  color: #3f3f3f;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.quarto-preview__toc ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.quarto-preview__toc li + li {
+  margin-top: 0.38rem;
+}
+
+.quarto-preview__callout {
+  padding: 0.7rem 0.8rem;
+  margin: 1rem 0;
+  border-left: 4px solid var(--preview-accent);
+  background: #eef5f8;
+}
+
+.quarto-preview__callout--important,
+.quarto-preview__callout--warning,
+.quarto-preview__callout--caution {
+  border-left-color: #a33b39;
+  background: #fbefef;
+}
+
+.quarto-preview__callout--tip {
+  border-left-color: #357b56;
+  background: #eef7f1;
+}
+
+.quarto-preview__callout-title,
+.quarto-preview__callout summary {
+  margin: 0 0 0.28rem;
+  color: #292827;
+  font-size: 0.7rem;
+  font-weight: 720;
+}
+
+.quarto-preview__callout summary {
+  cursor: pointer;
+}
+
+.quarto-preview__callout p:last-child {
+  margin-bottom: 0;
+}
+
+.quarto-preview__figure {
+  margin: 1rem 0 1.25rem;
+}
+
+.quarto-preview__image-placeholder {
+  display: grid;
+  min-height: 8rem;
+  padding: 1rem;
+  border: 1px solid #c9d5d4;
+  background:
+    linear-gradient(145deg, transparent 49.5%, #b9cecb 50%, transparent 50.5%),
+    #edf4f3;
+  color: #496462;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.65rem;
+  place-items: center;
+}
+
+.quarto-preview__chart {
+  display: flex;
+  height: 9rem;
+  padding: 0.7rem 0.7rem 0;
+  border-bottom: 1px solid #555;
+  border-left: 1px solid #555;
+  align-items: end;
+  justify-content: center;
+  gap: 0.3rem;
+  background: repeating-linear-gradient(to top, #fff 0 2.2rem, #eee 2.25rem 2.3rem);
+}
+
+.quarto-preview__chart span {
+  width: 8%;
+  max-width: 1.25rem;
+  background: var(--preview-accent);
+}
+
+.quarto-preview__figure figcaption {
+  margin-top: 0.42rem;
+  color: #555;
+  font-size: 0.64rem;
+  line-height: 1.45;
+}
+
+@container (max-width: 26rem) {
+  .quarto-preview__content-row {
+    grid-template-columns: 1fr;
+  }
+
+  .quarto-preview__toc {
+    position: static;
+    width: 100%;
+    padding: 0.7rem 0 0;
+    border-top: 1px solid #ddd;
+    border-left: 0;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 62rem) {
+  .quarto-lab__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .quarto-lab__pane + .quarto-lab__pane {
+    border-top: 1px solid var(--mineral-line);
+    border-left: 0;
+  }
+
+  .quarto-lab textarea,
+  .quarto-preview {
+    height: 31rem;
+  }
+}
+
+@media (max-width: 43rem) {
+  .quarto-lab__introduction {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .quarto-lab__toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .quarto-lab__field {
+    width: 100%;
+  }
+
+  .quarto-lab__actions {
+    justify-content: flex-start;
+  }
+
+  .quarto-lab__actions button {
+    flex: 1 1 auto;
+  }
+
+  .quarto-preview__title-block,
+  .quarto-preview__content-row {
+    padding-right: 1.15rem;
+    padding-left: 1.15rem;
+  }
+}

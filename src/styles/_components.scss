@@ -1273,6 +1273,15 @@
   text-transform: uppercase;
 }
 
+.toc {
+  max-height: calc(100svh - var(--header-height) - 4rem);
+  padding-right: 0.65rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-width: thin;
+}
+
 .toc li + li {
   margin-top: 0.35rem;
 }
@@ -1561,8 +1570,10 @@
   }
 
   .toc {
+    max-height: none;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--line);
+    overflow: visible;
   }
 
   .profile-list a {

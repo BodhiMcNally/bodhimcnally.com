@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import 'katex/dist/katex.min.css';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import QuartoLab from '@/components/QuartoLab.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import { site } from '@/data/site';
 
@@ -116,6 +117,8 @@ const structuredData = {
         <TableOfContents headings={headings} />
       </aside>
       <div>
+        {entry.id === 'quarto-documents-in-rstudio' && <QuartoLab />}
+
         <div class="prose">
           <Content />
         </div>

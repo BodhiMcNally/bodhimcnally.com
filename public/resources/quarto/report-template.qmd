@@ -1,0 +1,88 @@
+---
+title: "Analysis title"
+subtitle: "A concise description of the report"
+author:
+  - name: "Your name"
+    affiliation: "Your school, faculty or organisation"
+date: today
+date-format: "D MMMM YYYY"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    css: styles.css
+    code-fold: true
+    code-summary: "Show the R code"
+    code-copy: true
+    code-overflow: wrap
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Research question
+
+State the question before presenting the analysis. Name the population, variables and comparison as precisely as the available data allow.
+
+## Setup
+
+The setup cell loads packages and defines document-wide objects. `include: false` runs the cell without placing its code, messages or output in the report.
+
+```{r}
+#| label: setup
+#| include: false
+
+set.seed(42)
+```
+
+## Data
+
+Describe where the data came from, what one row represents and any important exclusions or transformations.
+
+```{r}
+#| label: inspect-data
+
+analysis_data <- mtcars
+head(analysis_data)
+```
+
+## Results
+
+Report the estimate and its uncertainty, then explain what they mean in the context of the question.
+
+```{r}
+#| label: fig-outcome-distribution
+#| fig-cap: "Distribution of miles per gallon in the example data."
+#| fig-alt: "A histogram of miles per gallon values, with most observations between 15 and 25."
+#| fig-width: 7
+#| fig-height: 4
+
+hist(
+  analysis_data$mpg,
+  col = "#214c57",
+  border = "white",
+  main = NULL,
+  xlab = "Miles per gallon"
+)
+```
+
+Figure @fig-outcome-distribution shows the outcome distribution before modelling.
+
+::: {.callout-note}
+## Interpretation
+
+Replace this note with the main conclusion, expressed in ordinary language and with appropriate limits.
+:::
+
+## Reproducibility
+
+```{r}
+#| label: session-information
+#| echo: false
+
+sessionInfo()
+```
