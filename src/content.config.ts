@@ -54,10 +54,12 @@ const updates = defineCollection({
     .object({
       title: z.string(),
       summary: z.string(),
-      published: z.coerce.date(),
+      published: z.coerce.date().optional(),
+      sortOrder: z.number().int().default(0),
       source: z.enum(['site', 'linkedin']).default('site'),
       linkedinUrl: z.url().optional(),
       linkedinEmbedUrl: z.url().optional(),
+      collapsed: z.boolean().default(false),
       draft: z.boolean().default(false),
     })
     .refine(

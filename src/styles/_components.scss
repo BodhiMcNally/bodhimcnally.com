@@ -427,6 +427,38 @@
   margin-bottom: 0;
 }
 
+.update-entry__summary {
+  max-width: 42rem;
+  color: var(--ink-soft);
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 0.97rem + 0.12vw, 1.08rem);
+  line-height: 1.72;
+}
+
+.update-entry__details {
+  margin-top: 1.2rem;
+}
+
+.update-entry__details summary {
+  width: fit-content;
+  color: var(--wine);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 670;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+  text-underline-offset: 0.24em;
+}
+
+.update-entry__details[open] summary {
+  margin-bottom: 1.35rem;
+}
+
+.update-entry__details summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0.3rem;
+}
+
 .update-entry__link {
   display: inline-block;
   margin-top: 1.35rem;

@@ -61,13 +61,14 @@ public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf
 
 ## Homepage posts
 
-Posts shown on the homepage live in `src/content/updates/` and are ordered by their published date. Ordinary website posts use Markdown:
+Posts shown on the homepage live in `src/content/updates/`. `sortOrder` controls their position: higher numbers appear first. Add `published` only when the exact date is known. Ordinary website posts use Markdown:
 
 ```md
 ---
 title: Post title
 summary: One-sentence description.
 published: 2026-09-06
+sortOrder: 400
 source: site
 draft: false
 ---
@@ -82,6 +83,7 @@ LinkedIn supports embedding individual public posts rather than an unrestricted 
 title: Post title
 summary: One-sentence description.
 published: 2026-09-06
+sortOrder: 300
 source: linkedin
 linkedinUrl: https://www.linkedin.com/feed/update/...
 linkedinEmbedUrl: https://www.linkedin.com/embed/feed/update/...
@@ -89,7 +91,7 @@ draft: false
 ---
 ```
 
-Website and LinkedIn entries are sorted together, so either type can appear between the other.
+The embed fields are optional. If LinkedIn does not provide an embed URL, omit `linkedinEmbedUrl`; the post will be rendered from the Markdown file and retain its link to LinkedIn. Add `collapsed: true` to a long entry to show a short introduction with an expandable full post.
 
 ## Publications
 

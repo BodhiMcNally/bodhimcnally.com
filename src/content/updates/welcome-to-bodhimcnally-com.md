@@ -2,6 +2,7 @@
 title: Welcome to bodhimcnally.com
 summary: An introduction to the new site and why I have brought my academic work together here.
 published: 2026-09-06
+sortOrder: 400
 source: site
 draft: false
 ---

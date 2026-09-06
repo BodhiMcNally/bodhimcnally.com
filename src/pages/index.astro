@@ -9,7 +9,10 @@ import { site } from '@/data/site';
 const updates = await getCollection('updates', ({ data }) => !data.draft);
 const homepageUpdates = await Promise.all(
   updates
-    .sort((a, b) => b.data.published.getTime() - a.data.published.getTime())
+    .sort((a, b) => {
+      if (a.data.sortOrder !== b.data.sortOrder) return b.data.sortOrder - a.data.sortOrder;
+      return (b.data.published?.getTime() ?? 0) - (a.data.published?.getTime() ?? 0);
+    })
     .slice(0, 6)
     .map(async (entry) => {
       const { Content } = await render(entry);
@@ -102,9 +105,11 @@ const structuredData = [
         homepageUpdates.map(({ entry, Content }) => (
           <li class="update-entry">
             <div class="update-entry__meta">
-              <time datetime={entry.data.published.toISOString()}>
-                {formatDate(entry.data.published)}
-              </time>
+              {entry.data.published && (
+                <time datetime={entry.data.published.toISOString()}>
+                  {formatDate(entry.data.published)}
+                </time>
+              )}
               <span>{entry.data.source === 'linkedin' ? 'LinkedIn' : 'Website'}</span>
             </div>
 
@@ -118,6 +123,16 @@ const structuredData = [
                   loading="lazy"
                   allowfullscreen
                 />
+              ) : entry.data.collapsed ? (
+                <>
+                  <p class="update-entry__summary">{entry.data.summary}</p>
+                  <details class="update-entry__details">
+                    <summary>Read the full post</summary>
+                    <div class="update-entry__body">
+                      <Content />
+                    </div>
+                  </details>
+                </>
               ) : (
                 <div class="update-entry__body">
                   <Content />
