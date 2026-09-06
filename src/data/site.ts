@@ -40,7 +40,7 @@ export const site = {
       '/cv/pages/bodhi-cv-page-3.webp',
       '/cv/pages/bodhi-cv-page-4.webp',
     ],
-    updated: 'September 2026',
+    updated: '6 September 2026',
   },
   teachingPortfolio: {
     href: '/teaching/Bodhi_McNally_Teaching_Portfolio.pdf',
