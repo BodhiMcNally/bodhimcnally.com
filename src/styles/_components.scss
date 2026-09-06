@@ -360,12 +360,12 @@
 }
 
 .home-updates__header {
-  display: grid;
+  display: flex;
   padding-bottom: var(--space-5);
   border-bottom: 1px solid var(--line-strong);
-  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr);
   align-items: end;
-  gap: clamp(1.5rem, 5vw, 5rem);
+  justify-content: space-between;
+  gap: var(--space-4);
 }
 
 .home-updates__header p,
@@ -377,23 +377,81 @@
   font-size: var(--step-3);
 }
 
+.update-carousel__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.update-carousel__controls p {
+  min-width: 3.8rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.update-carousel__controls button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  place-items: center;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.update-carousel__controls button:hover {
+  border-color: var(--wine);
+  background: var(--wine);
+  color: var(--paper-light);
+}
+
+.update-carousel__controls button:focus-visible,
+.update-carousel__pagination button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0.25rem;
+}
+
+.update-carousel {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  scroll-snap-type: inline mandatory;
+}
+
+.update-carousel::-webkit-scrollbar {
+  display: none;
+}
+
 .update-stream {
+  display: flex;
   padding: 0;
   margin: 0;
   list-style: none;
+  align-items: stretch;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .update-entry {
-  display: grid;
-  padding-block: var(--space-6);
+  display: flex;
+  min-width: 0;
+  padding: var(--space-6) 0 var(--space-5);
   border-bottom: 1px solid var(--line);
-  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1.58fr);
-  align-items: start;
-  gap: clamp(1.5rem, 5vw, 5rem);
+  flex: 0 0 min(34rem, calc(100% - 4rem));
+  flex-direction: column;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .update-entry__meta {
-  display: grid;
+  display: flex;
+  min-height: 1.2rem;
+  margin-bottom: 1.1rem;
+  align-items: center;
   gap: 0.3rem;
   color: var(--muted);
   font-size: 0.78rem;
@@ -402,13 +460,19 @@
   text-transform: uppercase;
 }
 
+.update-entry__meta time + span::before {
+  margin-inline: 0.45rem;
+  color: var(--line-strong);
+  content: '·';
+}
+
 .update-entry__meta span {
   color: var(--wine);
   font-weight: 670;
 }
 
 .update-entry__content {
-  max-width: 48rem;
+  width: min(100%, 48rem);
 }
 
 .update-entry__content h3 {
@@ -468,10 +532,41 @@
 .linkedin-embed {
   display: block;
   width: 100%;
-  height: min(42rem, 75vh);
+  height: min(46rem, 78vh);
   min-height: 28rem;
   border: 1px solid var(--line);
   background: #fff;
+}
+
+.update-carousel__pagination {
+  display: flex;
+  padding-top: 1.1rem;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.update-carousel__pagination button {
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  place-items: center;
+}
+
+.update-carousel__pagination span {
+  width: 100%;
+  height: 2px;
+  background: var(--line-strong);
+  transition: width 160ms ease, background-color 160ms ease;
+}
+
+.update-carousel__pagination button[aria-pressed='true'] span {
+  width: 100%;
+  height: 4px;
+  background: var(--wine);
 }
 
 .about-opening {
@@ -1079,13 +1174,13 @@
 
 .reading-progress {
   position: fixed;
-  z-index: 51;
-  top: calc(var(--header-height) - 3px);
+  z-index: 100;
+  top: 0;
   right: 0;
   left: 0;
-  height: 3px;
+  height: 4px;
   overflow: hidden;
-  background: transparent;
+  background: color-mix(in srgb, var(--wine) 16%, var(--paper));
   pointer-events: none;
 }
 
@@ -1379,12 +1474,16 @@
 
   .home-updates__header,
   .update-entry {
-    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
+  .home-updates__header {
+    align-items: flex-end;
+  }
+
   .update-entry {
-    padding-block: var(--space-5);
+    padding: var(--space-5) 0;
+    flex-basis: calc(100% - 1.25rem);
   }
 
   .home-introduction h1 {

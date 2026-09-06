@@ -96,14 +96,30 @@ const structuredData = [
 
   <section class="home-updates container" aria-labelledby="updates-title">
     <header class="home-updates__header">
-      <p class="eyebrow">Updates</p>
-      <h2 id="updates-title">Recent posts</h2>
+      <div>
+        <p class="eyebrow">Updates</p>
+        <h2 id="updates-title">Recent posts</h2>
+      </div>
+      <div class="update-carousel__controls" aria-label="Post navigation">
+        <button type="button" data-update-previous aria-controls="recent-posts">
+          <span aria-hidden="true">←</span>
+          <span class="visually-hidden">Previous post</span>
+        </button>
+        <p aria-live="polite" aria-atomic="true" data-update-status>
+          1 of {homepageUpdates.length}
+        </p>
+        <button type="button" data-update-next aria-controls="recent-posts">
+          <span aria-hidden="true">→</span>
+          <span class="visually-hidden">Next post</span>
+        </button>
+      </div>
     </header>
 
-    <ol class="update-stream">
+    <div class="update-carousel" data-update-carousel>
+    <ol class="update-stream" id="recent-posts" data-update-track>
       {
-        homepageUpdates.map(({ entry, Content }) => (
-          <li class="update-entry">
+        homepageUpdates.map(({ entry, Content }, index) => (
+          <li class="update-entry" data-update-slide data-update-index={index}>
             <div class="update-entry__meta">
               {entry.data.published && (
                 <time datetime={entry.data.published.toISOString()}>
@@ -154,10 +170,86 @@ const structuredData = [
         ))
       }
     </ol>
+    </div>
+
+    <div class="update-carousel__pagination" aria-label="Choose a post">
+      {
+        homepageUpdates.map(({ entry }, index) => (
+          <button
+            type="button"
+            aria-label={`Show post ${index + 1}: ${entry.data.title}`}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+            data-update-page={index}
+          >
+            <span aria-hidden="true"></span>
+          </button>
+        ))
+      }
+    </div>
   </section>
 
   <section class="home-profiles container" aria-labelledby="profiles-title">
     <h2 class="visually-hidden" id="profiles-title">Professional links</h2>
     <ProfileList />
   </section>
+
+  <script is:inline>
+    const updateCarousel = document.querySelector('[data-update-carousel]');
+    const updateSlides = Array.from(document.querySelectorAll('[data-update-slide]'));
+    const updatePages = Array.from(document.querySelectorAll('[data-update-page]'));
+    const updateStatus = document.querySelector('[data-update-status]');
+    const previousUpdate = document.querySelector('[data-update-previous]');
+    const nextUpdate = document.querySelector('[data-update-next]');
+
+    if (updateCarousel && updateSlides.length > 0) {
+      let activeUpdate = 0;
+      let updateFrame;
+
+      const showUpdate = (index) => {
+        activeUpdate = (index + updateSlides.length) % updateSlides.length;
+        const slide = updateSlides[activeUpdate];
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        updateCarousel.scrollTo({
+          left: slide.offsetLeft,
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+
+        updatePages.forEach((page, pageIndex) => {
+          page.setAttribute('aria-pressed', String(pageIndex === activeUpdate));
+        });
+        if (updateStatus) updateStatus.textContent = `${activeUpdate + 1} of ${updateSlides.length}`;
+      };
+
+      const updateActiveSlide = () => {
+        updateFrame = undefined;
+        const left = updateCarousel.scrollLeft;
+        let closestIndex = 0;
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        updateSlides.forEach((slide, index) => {
+          const distance = Math.abs(slide.offsetLeft - left);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        if (closestIndex !== activeUpdate) {
+          activeUpdate = closestIndex;
+          updatePages.forEach((page, pageIndex) => {
+            page.setAttribute('aria-pressed', String(pageIndex === activeUpdate));
+          });
+          if (updateStatus) updateStatus.textContent = `${activeUpdate + 1} of ${updateSlides.length}`;
+        }
+      };
+
+      previousUpdate?.addEventListener('click', () => showUpdate(activeUpdate - 1));
+      nextUpdate?.addEventListener('click', () => showUpdate(activeUpdate + 1));
+      updatePages.forEach((page, index) => page.addEventListener('click', () => showUpdate(index)));
+      updateCarousel.addEventListener('scroll', () => {
+        if (updateFrame) return;
+        updateFrame = window.requestAnimationFrame(updateActiveSlide);
+      }, { passive: true });
+    }
+  </script>
 </BaseLayout>
