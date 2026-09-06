@@ -138,18 +138,17 @@ const structuredData = {
     </div>
   </article>
 
-  <script>
-    document.querySelector<HTMLButtonElement>('[data-print-resource]')?.addEventListener('click', () => {
+  <script is:inline type="module">
+    document.querySelector('[data-print-resource]')?.addEventListener('click', () => {
       window.print();
     });
 
-    let webRInstancePromise: Promise<any> | undefined;
+    let webRInstancePromise;
 
     const loadWebR = async () => {
       if (!webRInstancePromise) {
         webRInstancePromise = (async () => {
-          const moduleUrl = 'https://webr.r-wasm.org/v0.6.0/webr.mjs';
-          const { WebR } = await import(/* @vite-ignore */ moduleUrl);
+          const { WebR } = await import('https://webr.r-wasm.org/v0.6.0/webr.mjs');
           const webR = new WebR();
           await webR.init();
           return webR;
@@ -159,7 +158,7 @@ const structuredData = {
       return webRInstancePromise;
     };
 
-    document.querySelectorAll<HTMLElement>('.prose pre').forEach((pre) => {
+    document.querySelectorAll('.prose pre').forEach((pre) => {
       if (pre.parentElement?.classList.contains('code-block')) return;
 
       const wrapper = document.createElement('div');

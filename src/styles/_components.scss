@@ -458,6 +458,25 @@
   gap: 1.2rem;
 }
 
+.cv-embed {
+  margin-top: var(--space-6);
+}
+
+.cv-embed iframe {
+  display: block;
+  width: 100%;
+  height: min(78vh, 64rem);
+  min-height: 42rem;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.cv-embed p {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .button {
   display: inline-flex;
   min-height: 3rem;
@@ -494,7 +513,6 @@
 
 .research-overview__introduction {
   display: grid;
-  padding-bottom: var(--space-7);
   grid-template-columns: minmax(12rem, 0.62fr) minmax(0, 1.38fr);
   gap: clamp(2rem, 7vw, 7rem);
 }
@@ -511,29 +529,6 @@
   font-family: var(--font-serif);
   font-size: var(--step-2);
   line-height: 1.5;
-}
-
-.research-areas {
-  border-top: 1px solid var(--line-strong);
-}
-
-.research-areas section {
-  display: grid;
-  padding-block: clamp(2rem, 4vw, 3.3rem);
-  border-bottom: 1px solid var(--line);
-  grid-template-columns: minmax(12rem, 0.62fr) minmax(0, 1.38fr);
-  gap: clamp(2rem, 7vw, 7rem);
-}
-
-.research-areas h3 {
-  margin: 0;
-  font-size: var(--step-1);
-}
-
-.research-areas p {
-  max-width: 45rem;
-  margin: 0;
-  color: var(--ink-soft);
 }
 
 .publications-section {
@@ -1243,11 +1238,10 @@
     width: min(82%, 21rem);
   }
 
-  .student-prompt__inner,
-  .about-opening,
-  .research-overview__introduction,
-  .research-areas section,
-  .reading-section__inner,
+    .student-prompt__inner,
+    .about-opening,
+    .research-overview__introduction,
+    .reading-section__inner,
   .student-resources-section__inner,
   .contact-page__inner,
   .resource-purpose__inner,
@@ -1276,9 +1270,13 @@
     flex-direction: column;
   }
 
-  .research-overview__introduction,
-  .research-areas section {
+  .research-overview__introduction {
     gap: 1.2rem;
+  }
+
+  .cv-embed iframe {
+    height: 70vh;
+    min-height: 32rem;
   }
 
   .publication-list li,

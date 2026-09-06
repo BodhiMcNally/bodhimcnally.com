@@ -1,338 +1,135 @@
 # bodhimcnally.com
 
-The source for [bodhimcnally.com](https://bodhimcnally.com), Bodhi McNally's personal academic website.
+Source code for my personal academic website, [bodhimcnally.com](https://bodhimcnally.com).
 
-The site is built with Astro 7, strict TypeScript and SCSS. It is deliberately static, has no database, analytics, tracking, contact form or required environment secrets, and can be hosted on Vercel, Netlify, Cloudflare Pages or any ordinary static host.
+The site is built with Astro, TypeScript and SCSS and deployed as a static site through Vercel. It has no database, analytics, contact form or environment secrets.
 
-## Run locally
+## Running the site locally
 
-You need Node.js 22 or later. If you use `nvm`, run `nvm use` from this folder.
+Install [Node.js](https://nodejs.org/) 22 or later, open this folder in VS Code and run:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Astro will print the local address, normally `http://localhost:4321`.
+Astro will print a local address, usually `http://localhost:4321`.
 
-## Apply this revision to an existing repository
-
-This download is a complete clean source tree. If an earlier version of the site is already connected to GitHub and Vercel:
-
-1. Keep the existing repository folder and its hidden `.git` directory.
-2. Copy the contents of this download's `bodhimcnally.com` folder into that repository, allowing matching files to be replaced.
-3. Delete the following three files from the existing repository if they remain. They are intentionally absent from this revision, but extracting an archive over an old folder may not remove them:
-
-   ```text
-   src/pages/leadership.astro
-   src/data/leadership.json
-   src/content/resources/how-to-interpret-a-regression-coefficient.md
-   ```
-
-4. Run `npm install`, then `npm run verify`.
-5. Review `git status`, commit the changes and push `main`. The connected Vercel project should deploy the push automatically.
-
-## Build and verify
-
-```bash
-npm run build
-```
-
-The production site is written to `dist/`.
-
-For a production build followed by internal-link, metadata and baseline accessibility audits:
+Before pushing a change, run:
 
 ```bash
 npm run verify
 ```
 
-To inspect the built site locally:
+This builds the site and checks its internal links and basic metadata.
 
-```bash
-npm run preview
-```
+## Editing the main details
 
-## Where things live
+Most information that changes over time is kept in `src/data/site.ts`, including:
 
-```text
-src/
-├── assets/images/                 Headshot source image
-├── components/                    Shared page components
-├── content/resources/             Teaching resources in Markdown or MDX
-├── content.config.ts              Teaching-resource schema
-├── data/site.ts                   Bio, current details, links and navigation
-├── data/research.ts               Projects, publications and presentations
-├── layouts/BaseLayout.astro       Metadata, header and footer shell
-├── pages/                          Routes
-└── styles/                         SCSS design system
-public/
-├── cv/                             Downloadable CV PDF
-├── favicon.svg                     BM favicon
-├── robots.txt                      Search-engine instructions
-├── resources/                      Downloadable teaching attachments
-├── teaching/                       Teaching portfolio PDF
-└── site.webmanifest                Basic site manifest
-```
+- my current role and institution;
+- the homepage introduction;
+- email addresses and profile links;
+- CV and teaching portfolio links; and
+- the conference list on the About page.
 
-The generated `dist/`, `.astro/` and `node_modules/` folders are ignored by Git.
-
-The reasoning behind the site's current information architecture and colour direction is recorded in `docs/DESIGN_RESEARCH.md`.
-
-## Update the bio, titles or current roles
-
-Edit:
-
-```text
-src/data/site.ts
-```
-
-This is the central profile file. It contains the site name, current role, institution, clinical school, homepage introduction, research summary, contact details, document links, conference appearances and external profiles. Update current information there before editing individual pages.
-
-Longer narrative copy is intentionally page-specific:
+Longer text is kept on the page where it appears:
 
 - `src/pages/about.astro`
 - `src/pages/research.astro`
 - `src/pages/teaching.astro`
 
-Search those pages for any time-sensitive wording when your role or training stage changes.
+The headshot is `src/assets/images/Bodhi_McNally_Portrait.jpg`. Replacing that file without changing its name is enough; Astro creates the web-sized versions automatically.
 
-## Update profile links and contact details
+## CV and teaching portfolio
 
-Edit `src/data/site.ts`.
-
-- Update either address in `emails`.
-- Update a verified profile in `profiles`.
-- Add a verified Google Scholar URL to `optionalProfiles.googleScholar` when one exists.
-
-Keep the Google Scholar field as `null` until the exact profile is public.
-
-## Update the conference list
-
-Edit the `appearances` array in `src/data/site.ts`. Each entry requires only a year, event name and location. Keep the entries in chronological order.
-
-## Replace the headshot
-
-Replace this file while keeping the filename unchanged:
+The downloadable CV is:
 
 ```text
-src/assets/images/Bodhi_McNally_Portrait.jpg
+public/cv/Bodhi_McNally_Master_CV.pdf
 ```
 
-Use a high-quality square or near-square JPEG. Astro automatically creates responsive AVIF, WebP and JPEG versions during the build. The current image is not stylised; CSS only controls its crop and presentation.
+The About page also uses the Google Drive URL in `src/data/site.ts`. When replacing the CV, update both the PDF and the `cv.updated` value. Check that the Drive file is still shared for public viewing.
 
-If you change the filename, update the import in `src/components/Portrait.astro`.
-
-## Update the CV
-
-The About page provides both the current Google Drive link and a downloadable copy.
-
-1. Replace `public/cv/Bodhi_McNally_Master_CV.pdf` with the new PDF, keeping the filename unchanged.
-2. Replace `cv.driveHref` in `src/data/site.ts` if the Google Drive file itself changes.
-3. Update `cv.updated` in the same file.
-4. Confirm the Drive sharing setting allows anyone with the link to view the file.
-5. Run `npm run verify` and test both links.
-
-## Update the teaching portfolio
-
-Replace `public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf`, keeping the filename unchanged. Its link is configured in `src/data/site.ts`.
-
-## Add a teaching resource
-
-Resources are Markdown or MDX files in:
+The teaching portfolio is:
 
 ```text
-src/content/resources/
+public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf
 ```
 
-Copy `understanding-confidence-intervals.md`, rename the copy with a short lowercase slug, and replace all frontmatter and body content. A minimal example is:
+Anything in `public/` can be viewed by visitors. Check documents for personal information before publishing them.
 
-```md
----
-title: Understanding confidence intervals
-description: A concise guide to estimating and interpreting uncertainty.
-category: Statistics
-tags:
-  - confidence intervals
-  - uncertainty
-published: 2026-10-01
-updated: 2026-10-01
-level: Introductory
-software: []
-estimatedMinutes: 10
-featured: false
-template: false
-draft: true
-downloadableAssets: []
----
+## Publications
 
-Write the resource here.
-```
-
-Set `draft: false` only when the resource is ready to publish. The filename becomes its URL, for example:
-
-```text
-src/content/resources/understanding-confidence-intervals.md
-→ /resources/understanding-confidence-intervals/
-```
-
-The available categories and validated metadata fields are defined in `src/content.config.ts`. Add a new category there only when at least one real resource needs it.
-
-The search and filter controls appear automatically once four or more published resources are available. With a smaller library, the page keeps a simpler editorial list.
-
-### Equations, code, tables and callouts
-
-- Use `$...$` for inline equations and `$$...$$` for display equations.
-- Use fenced Markdown code blocks with a language such as ```` ```r ```` or ```` ```python ````. Syntax highlighting and copy buttons are automatic.
-- R blocks also receive a **Run R** button. R is downloaded from the official webR distribution only when a reader selects that button; execution then occurs in the reader's browser.
-- Use normal Markdown tables; they scroll horizontally on narrow screens.
-- Use a blockquote beginning with a bold label for a callout.
-
-### Downloads and external repositories
-
-Put downloadable files under a clear subfolder of `public/resources/`, then list them in the resource frontmatter:
-
-```yaml
-downloadableAssets:
-  - label: Worked example PDF
-    href: /resources/confidence-intervals/worked-example.pdf
-    description: A two-page printable exercise.
-externalRepository:
-  label: View code on GitHub
-  href: https://github.com/REPLACE_WITH_VERIFIED_ACCOUNT/REPLACE_WITH_REPOSITORY
-```
-
-Never publish an unverified repository URL.
-
-## Add a publication
-
-Edit `src/data/research.ts` and add a verified object to the `publications` array:
+Publication records live in `src/data/research.ts`. The list is deliberately empty until there is a verified publication to add.
 
 ```ts
 {
   id: 'short-stable-slug',
-  title: 'Replace with the exact published title',
+  title: 'Exact publication title',
   authors: ['Author One', 'Bodhi McNally'],
-  journal: 'Replace with journal name',
+  journal: 'Journal name',
   year: 2027,
-  doi: '10.xxxx/replace-with-verified-doi',
-  pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/REPLACE_WITH_ID/',
-  citation: 'Replace with the final preferred citation.',
+  doi: '10.xxxx/example',
+  pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/00000000/',
+  citation: 'Preferred full citation.',
   publicationType: 'Journal article',
   selected: true,
-},
+}
 ```
 
-Remove optional DOI or PubMed fields if they do not exist. Never add an accepted, in-press or published status until it is accurate and public.
+Remove the DOI or PubMed fields if they do not exist. Presentations and projects can be stored in the typed arrays in the same file if they are needed later.
 
-## Add a presentation or conference abstract
+## Teaching resources
 
-Add a verified object to the `presentations` array in `src/data/research.ts`:
+Resources are Markdown or MDX files in `src/content/resources/`. The confidence-interval note is a working example of the format.
 
-```ts
-{
-  id: 'short-stable-slug',
-  title: 'Replace with the exact presentation title',
-  conference: 'Replace with conference name',
-  location: 'City, Country',
-  date: '2027-03-01',
-  presentationType: 'Poster presentation',
-  citation: 'Replace with a verified citation if one exists.',
-  link: 'https://example.org/replace-with-public-program-or-abstract',
-  selected: false,
-},
-```
+To add another resource:
 
-Allowed presentation types are listed in the `Presentation` type immediately above the array. Presentations are retained as structured data for future use but are not displayed on the current Research page.
+1. Copy an existing file and give it a short lowercase filename.
+2. Replace its frontmatter and body.
+3. Keep `draft: true` while working on it.
+4. Change this to `draft: false` when it is ready to publish.
 
-## Add a research project
+The available metadata fields and categories are defined in `src/content.config.ts`. Equations use standard `$...$` or `$$...$$` notation. Fenced code blocks receive syntax highlighting and a copy button.
 
-Add a verified object to the `projects` array in `src/data/research.ts`:
+R code blocks also receive a **Run R** button. The site loads webR 0.6.0 from its official distribution only when that button is used, and the calculation runs in the reader's browser.
 
-```ts
-{
-  id: 'short-stable-slug',
-  title: 'Replace with the approved public project title',
-  institution: 'Replace with the verified institution',
-  collaborators: [],
-  role: 'Replace with the verified role',
-  researchArea: 'Urological oncology',
-  status: 'Active',
-  shortDescription: 'Replace with a concise, accurate public description.',
-  outputs: [],
-  startYear: 2027,
-  selected: true,
-},
-```
+Files offered for download from a resource belong under `public/resources/` and can be linked through the resource's `downloadableAssets` frontmatter.
 
-Confirm that the project title, collaborators, institution and status are suitable to publish before adding them. Projects are retained as structured data for future use but are not displayed on the current Research page.
+## Updating the live site
 
-## Deploy with GitHub and Vercel
-
-### 1. Create the GitHub repository
-
-Create an empty repository named `bodhimcnally.com` in your GitHub account. Do not ask GitHub to add a README, licence or `.gitignore`; those files already exist here.
-
-From this project folder, run:
+The Vercel project is connected to the GitHub repository. Once a change is ready:
 
 ```bash
-git init
-git add .
-git commit -m "Initial academic website"
-git branch -M main
-git remote add origin git@github.com:BodhiMcNally/bodhimcnally.com.git
-git push -u origin main
+git status
+git add -A
+git commit -m "Describe the change"
+git push
 ```
 
-### 2. Import into Vercel
+Vercel should build and deploy the new commit automatically. Its build command is `npm run build` and its output directory is `dist`.
 
-1. In Vercel, choose **Add New → Project**.
-2. Import the GitHub repository.
-3. Vercel should detect Astro automatically.
-4. Confirm the build command is `npm run build` and the output directory is `dist`.
-5. No environment variables or secrets are required.
-6. Deploy.
+If applying a downloaded full-site revision over an older local copy, keep the existing `.git` folder. Copy the new files over the old ones, then check `git status` carefully for files that the revision intentionally removed.
 
-Every push to `main` will then create a new production deployment. Pull requests can receive preview deployments if enabled in Vercel.
+## Teaching material and academic integrity
 
-### 3. Connect `bodhimcnally.com`
+Only publish material that I own or have permission to share. Do not upload:
 
-1. Buy the domain from your preferred registrar if you do not already own it.
-2. In the Vercel project, open **Settings → Domains**.
-3. Add both `bodhimcnally.com` and `www.bodhimcnally.com`.
-4. Copy the DNS records Vercel shows into the registrar’s DNS panel. Use Vercel’s current values rather than copying an old IP address from a guide.
-5. In the Domains settings, configure `www.bodhimcnally.com` to redirect permanently to `bodhimcnally.com` and keep the apex domain primary.
-6. Wait for DNS verification and HTTPS certificate issuance.
+- active assessment solutions;
+- restricted Canvas or LMS content;
+- lecturer slides, question banks or notes I do not own;
+- copyrighted material without permission;
+- identifiable student information; or
+- private research data and collaborator files.
 
-Astro’s canonical metadata and sitemap already use `https://bodhimcnally.com`. The redirect belongs in Vercel’s Domains settings because it is tied to the attached production domains rather than the application routes.
+The disclaimer on each resource should remain unless the University's status of the material changes.
 
-### Other static hosts
+## Useful files
 
-- Build command: `npm run build`
-- Output directory: `dist`
-- Node version: 22 or later
-- Required secrets: none
-
-For Netlify or Cloudflare Pages, connect the same GitHub repository and use those values. If your host has a “primary domain” setting, keep the apex domain primary and redirect `www` to it.
-
-## Academic integrity and copyright
-
-The Resources section should contain only material that you own or have explicit permission to publish. Do **not** upload:
-
-- solutions to active assessments;
-- restricted learning-management-system content;
-- lecturer slides, question banks or notes you do not own;
-- copyrighted resources without permission;
-- confidential or identifiable student material;
-- private datasets, project files or unpublished collaborator material.
-
-Where a resource relates to teaching you undertake at the University, keep the existing independent-resource disclaimer and check any applicable University, school and course requirements before publication.
-
-## SEO, privacy and maintenance
-
-- Page titles, descriptions, canonical URLs, Open Graph metadata, Person/WebSite structured data, `robots.txt` and an XML sitemap are included.
-- No social-preview image is configured. Add one only when you have an approved image and clear rights to publish it.
-- No analytics are installed. This avoids tracking and any analytics-related cookie requirements in the initial site.
-- Review `src/data/site.ts` and all public biography copy whenever your training stage, role or institutional affiliation changes.
-- Run `npm run verify` before every important deployment.
-
-See `docs/ARCHITECTURE.md`, `docs/CONTENT_AUDIT.md` and `docs/NEXT_STEPS.md` for a compact technical map, the initial accuracy audit and a deployment checklist.
+- `src/data/site.ts` — personal details and external links
+- `src/data/research.ts` — publications, presentations and projects
+- `src/content/resources/` — teaching resources
+- `src/styles/` — typography, colour and layout
+- `docs/ARCHITECTURE.md` — brief technical notes
+- `docs/CONTENT_AUDIT.md` — claims and material intentionally omitted

@@ -71,6 +71,17 @@ import { site } from '@/data/site';
           <a class="text-link" href={site.cv.downloadHref} download>Download PDF</a>
         </div>
       </div>
+
+      <div class="cv-embed">
+        <iframe
+          src={`${site.cv.downloadHref}#view=FitH`}
+          title="Bodhi McNally curriculum vitae"
+          loading="lazy"
+        ></iframe>
+        <p>
+          If the document does not appear in your browser, use the Google Drive or download links above.
+        </p>
+      </div>
     </div>
   </section>
 </BaseLayout>
