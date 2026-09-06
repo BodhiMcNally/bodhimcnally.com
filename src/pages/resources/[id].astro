@@ -144,6 +144,7 @@ const structuredData = {
     });
 
     let webRInstancePromise;
+    let ggplotInstallPromise;
 
     const loadWebR = async () => {
       if (!webRInstancePromise) {
@@ -156,6 +157,28 @@ const structuredData = {
       }
 
       return webRInstancePromise;
+    };
+
+    const ensurePackages = async (webR, code) => {
+      const usesGgplot2 =
+        /(?:library|require)\s*\(\s*["']?ggplot2["']?\s*\)/i.test(code) ||
+        /ggplot2::/i.test(code);
+
+      if (!usesGgplot2) return;
+
+      if (!ggplotInstallPromise) {
+        ggplotInstallPromise = webR.installPackages(['ggplot2']);
+      }
+
+      await ggplotInstallPromise;
+    };
+
+    const showOutputMessage = (output, message, isError = false) => {
+      output.replaceChildren();
+      const status = document.createElement('p');
+      status.className = isError ? 'r-output__status r-output__status--error' : 'r-output__status';
+      status.textContent = message;
+      output.append(status);
     };
 
     document.querySelectorAll('.prose pre').forEach((pre) => {
@@ -199,7 +222,7 @@ const structuredData = {
       runButton.textContent = 'Run R';
       toolbar.prepend(runButton);
 
-      const output = document.createElement('pre');
+      const output = document.createElement('div');
       output.className = 'r-output';
       output.hidden = true;
       output.setAttribute('aria-live', 'polite');
@@ -211,22 +234,68 @@ const structuredData = {
         runButton.disabled = true;
         runButton.textContent = 'Loading R…';
         output.hidden = false;
-        output.textContent = 'Starting R in your browser…';
+        showOutputMessage(output, 'Starting R in your browser…');
 
         try {
           const webR = await loadWebR();
+          if (/(?:library|require)\s*\(\s*["']?ggplot2["']?\s*\)|ggplot2::/i.test(code)) {
+            runButton.textContent = 'Loading ggplot2…';
+            showOutputMessage(output, 'Loading ggplot2 and its dependencies…');
+          }
+          await ensurePackages(webR, code);
           runButton.textContent = 'Running…';
-          const expression = `paste(capture.output({\n${code}\n}), collapse = "\\n")`;
-          const result = await webR.evalR(expression);
+          showOutputMessage(output, 'Running code…');
+
+          const shelter = await new webR.Shelter();
           try {
-            const value = await result.toString();
-            output.textContent = value || 'Code ran without printed output.';
+            const capture = await shelter.captureR(code, {
+              captureGraphics: {
+                width: 560,
+                height: 400,
+                bg: '#fcfaf6',
+              },
+            });
+
+            output.replaceChildren();
+
+            const streamText = capture.output
+              .filter((message) => message.type === 'stdout' || message.type === 'stderr')
+              .map((message) => message.data)
+              .join('\n');
+
+            if (streamText) {
+              const textOutput = document.createElement('pre');
+              textOutput.className = 'r-output__text';
+              textOutput.textContent = streamText;
+              output.append(textOutput);
+            }
+
+            capture.images.forEach((image, index) => {
+              const canvas = document.createElement('canvas');
+              canvas.className = 'r-output__plot';
+              canvas.width = image.width;
+              canvas.height = image.height;
+              canvas.setAttribute('role', 'img');
+              canvas.setAttribute('aria-label', `Plot ${index + 1} produced by the R code`);
+              const context = canvas.getContext('2d');
+              context?.drawImage(image, 0, 0, image.width, image.height);
+              output.append(canvas);
+              image.close?.();
+            });
+
+            if (!streamText && capture.images.length === 0) {
+              showOutputMessage(output, 'Code ran without printed or graphical output.');
+            }
           } finally {
-            webR.destroy(result);
+            await shelter.purge();
           }
           runButton.textContent = 'Run again';
         } catch (error) {
-          output.textContent = error instanceof Error ? error.message : 'The R code could not be run.';
+          showOutputMessage(
+            output,
+            error instanceof Error ? error.message : 'The R code could not be run.',
+            true,
+          );
           runButton.textContent = 'Try again';
         } finally {
           runButton.disabled = false;

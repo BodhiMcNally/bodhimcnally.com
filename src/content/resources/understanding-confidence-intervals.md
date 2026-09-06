@@ -79,7 +79,7 @@ You can compare the manual calculation with R's built-in one-sample $t$ test:
 sleep_hours <- c(6.2, 6.8, 7.0, 7.1, 7.3,
                  7.5, 7.8, 6.9, 7.2, 7.4)
 
-t.test(sleep_hours, conf.level = 0.95)$conf.int
+print(t.test(sleep_hours, conf.level = 0.95)$conf.int)
 ```
 
 Each R block on this page can be run in the browser. The first run may take a moment while the R environment loads. The calculation happens on your device; no code or data are sent to this website.

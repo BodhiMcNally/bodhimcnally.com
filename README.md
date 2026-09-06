@@ -2,7 +2,7 @@
 
 Source code for my personal academic website, [bodhimcnally.com](https://bodhimcnally.com).
 
-The site is built with Astro, TypeScript and SCSS and deployed as a static site through Vercel. It has no database, analytics, contact form or environment secrets.
+The site is built with Astro, TypeScript and SCSS and deployed as a static site through Vercel.
 
 ## Running the site locally
 
@@ -57,11 +57,9 @@ The teaching portfolio is:
 public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf
 ```
 
-Anything in `public/` can be viewed by visitors. Check documents for personal information before publishing them.
-
 ## Publications
 
-Publication records live in `src/data/research.ts`. The list is deliberately empty until there is a verified publication to add.
+Publication records live in `src/data/research.ts`.
 
 ```ts
 {
@@ -112,24 +110,9 @@ Vercel should build and deploy the new commit automatically. Its build command i
 
 If applying a downloaded full-site revision over an older local copy, keep the existing `.git` folder. Copy the new files over the old ones, then check `git status` carefully for files that the revision intentionally removed.
 
-## Teaching material and academic integrity
-
-Only publish material that I own or have permission to share. Do not upload:
-
-- active assessment solutions;
-- restricted Canvas or LMS content;
-- lecturer slides, question banks or notes I do not own;
-- copyrighted material without permission;
-- identifiable student information; or
-- private research data and collaborator files.
-
-The disclaimer on each resource should remain unless the University's status of the material changes.
-
 ## Useful files
 
 - `src/data/site.ts` — personal details and external links
 - `src/data/research.ts` — publications, presentations and projects
 - `src/content/resources/` — teaching resources
 - `src/styles/` — typography, colour and layout
-- `docs/ARCHITECTURE.md` — brief technical notes
-- `docs/CONTENT_AUDIT.md` — claims and material intentionally omitted

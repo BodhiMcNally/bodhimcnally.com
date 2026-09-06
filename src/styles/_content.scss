@@ -182,16 +182,43 @@
 .r-output {
   min-height: 3.4rem;
   margin: 0;
-  padding: 1rem 1.25rem;
   border: 0;
   border-top: 1px solid #4d494d;
+  background: #111820 !important;
+  color: #d8e9eb;
+}
+
+.r-output[hidden] {
+  display: none;
+}
+
+.r-output__status {
+  padding: 1rem 1.25rem;
+  margin: 0;
+  color: #d8e9eb;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+}
+
+.r-output__status--error {
+  color: #ffd8df;
+}
+
+.prose .r-output__text {
+  padding: 1rem 1.25rem;
+  margin: 0;
+  border: 0;
   background: #111820 !important;
   color: #d8e9eb;
   white-space: pre-wrap;
 }
 
-.r-output[hidden] {
-  display: none;
+.r-output__plot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top: 1px solid #4d494d;
+  background: var(--paper-light);
 }
 
 .katex-display {
