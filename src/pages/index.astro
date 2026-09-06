@@ -201,56 +201,30 @@ const structuredData = [
     const previousUpdate = document.querySelector('[data-update-previous]');
     const nextUpdate = document.querySelector('[data-update-next]');
 
-    if (updateCarousel && updateSlides.length > 0) {
+    const updateTrack = document.querySelector('[data-update-track]');
+
+    if (updateCarousel && updateTrack && updateSlides.length > 0) {
       let activeUpdate = 0;
-      let updateFrame;
 
       const showUpdate = (index) => {
         activeUpdate = (index + updateSlides.length) % updateSlides.length;
-        const slide = updateSlides[activeUpdate];
-        const maximumScroll = Math.max(0, updateCarousel.scrollWidth - updateCarousel.clientWidth);
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        updateCarousel.scrollTo({
-          left: Math.min(slide.offsetLeft, maximumScroll),
-          behavior: reduceMotion ? 'auto' : 'smooth',
-        });
+        updateTrack.style.transform = `translate3d(-${activeUpdate * 100}%, 0, 0)`;
 
         updatePages.forEach((page, pageIndex) => {
           page.setAttribute('aria-pressed', String(pageIndex === activeUpdate));
         });
-        if (updateStatus) updateStatus.textContent = `${activeUpdate + 1} of ${updateSlides.length}`;
-      };
-
-      const updateActiveSlide = () => {
-        updateFrame = undefined;
-        const left = updateCarousel.scrollLeft;
-        let closestIndex = 0;
-        let closestDistance = Number.POSITIVE_INFINITY;
-
-        updateSlides.forEach((slide, index) => {
-          const distance = Math.abs(slide.offsetLeft - left);
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestIndex = index;
-          }
+        updateSlides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeUpdate;
+          slide.toggleAttribute('inert', !isActive);
+          slide.setAttribute('aria-hidden', String(!isActive));
         });
-
-        if (closestIndex !== activeUpdate) {
-          activeUpdate = closestIndex;
-          updatePages.forEach((page, pageIndex) => {
-            page.setAttribute('aria-pressed', String(pageIndex === activeUpdate));
-          });
-          if (updateStatus) updateStatus.textContent = `${activeUpdate + 1} of ${updateSlides.length}`;
-        }
+        if (updateStatus) updateStatus.textContent = `${activeUpdate + 1} of ${updateSlides.length}`;
       };
 
       previousUpdate?.addEventListener('click', () => showUpdate(activeUpdate - 1));
       nextUpdate?.addEventListener('click', () => showUpdate(activeUpdate + 1));
       updatePages.forEach((page, index) => page.addEventListener('click', () => showUpdate(index)));
-      updateCarousel.addEventListener('scroll', () => {
-        if (updateFrame) return;
-        updateFrame = window.requestAnimationFrame(updateActiveSlide);
-      }, { passive: true });
+      showUpdate(0);
     }
   </script>
 </BaseLayout>
