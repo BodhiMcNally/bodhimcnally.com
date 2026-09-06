@@ -4,6 +4,7 @@ summary: AstraZeneca is recruiting for my former role in its Sydney-based Analyt
 sortOrder: 290
 source: linkedin
 linkedinUrl: https://lnkd.in/p/ggsc3Xyk
+linkedinEmbedUrl: https://www.linkedin.com/embed/feed/update/urn:li:share:7417795864481542144
 draft: false
 ---
 

@@ -208,9 +208,10 @@ const structuredData = [
       const showUpdate = (index) => {
         activeUpdate = (index + updateSlides.length) % updateSlides.length;
         const slide = updateSlides[activeUpdate];
+        const maximumScroll = Math.max(0, updateCarousel.scrollWidth - updateCarousel.clientWidth);
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         updateCarousel.scrollTo({
-          left: slide.offsetLeft,
+          left: Math.min(slide.offsetLeft, maximumScroll),
           behavior: reduceMotion ? 'auto' : 'smooth',
         });
 

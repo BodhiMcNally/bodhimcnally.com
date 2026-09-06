@@ -4,6 +4,7 @@ summary: A reflection on my tenure as the 120th President of the University of S
 sortOrder: 200
 source: linkedin
 linkedinUrl: https://lnkd.in/p/gUSc_SXp
+linkedinEmbedUrl: https://www.linkedin.com/embed/feed/update/urn:li:share:7255510943307112449
 collapsed: true
 draft: false
 ---

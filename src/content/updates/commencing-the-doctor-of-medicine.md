@@ -4,6 +4,7 @@ summary: I will be commencing the Doctor of Medicine at the University of Sydney
 sortOrder: 300
 source: linkedin
 linkedinUrl: https://lnkd.in/p/gjDYV6_r
+linkedinEmbedUrl: https://www.linkedin.com/embed/feed/update/urn:li:share:7419591884752240641
 draft: false
 ---
 
