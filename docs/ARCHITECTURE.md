@@ -2,43 +2,49 @@
 
 ## Framework and rendering
 
-- Astro 7.3, configured for fully static output.
-- Strictest Astro/TypeScript configuration.
+- Astro 7.3 with strict TypeScript and fully static output.
 - No React, Vue or Svelte islands.
-- Vanilla JavaScript is limited to resource filtering, printing and copy-code controls.
-- Astro’s image pipeline generates responsive AVIF, WebP and JPEG headshot variants.
+- Astro's image pipeline produces responsive AVIF, WebP and JPEG versions of the portrait.
+- The site has no database, analytics, contact form or required secrets.
 
 ## Design system
 
-- `src/styles/global.scss` loads focused SCSS partials for tokens, base rules, layout, components, long-form content and print output.
-- CSS custom properties hold the palette, typography scale, spacing and layout measurements. Warm paper and oxblood remain the base identity; a mineral blue is used for one strong homepage band, inner-page headers and the portrait offset.
-- Source Serif 4 and Inter are installed as local package assets, so the site does not depend on a third-party font request at runtime.
-- Motion is a single quiet page-entry transition and small interaction feedback. All motion is neutralised under `prefers-reduced-motion: reduce`.
-- The About-page trajectory is semantic HTML rather than an image, so it remains readable, responsive and editable.
+- `src/styles/global.scss` loads separate SCSS files for tokens, base rules, layout, components, long-form teaching content and print output.
+- Source Serif 4 and Inter are bundled locally.
+- Warm paper, oxblood and mineral blue provide a restrained editorial palette. Colour marks page boundaries and the student-resource prompt; it does not decorate headings or create branded slogans.
+- Content is arranged with rules, spacing and readable prose rather than numbered cards.
+- Motion is limited to a short page entry and interaction feedback, with a complete reduced-motion override.
 
-## Profile data
+## Profile and document data
 
-`src/data/site.ts` is the source of truth for the name, current role, institution, canonical domain, brief homepage introduction, CV state, professional email and profile links. Nullable values remain hidden until verified.
+`src/data/site.ts` is the source of truth for:
+
+- current role and institutional details;
+- the homepage introduction and research summary;
+- the Google Drive CV and local document paths;
+- both public email addresses;
+- LinkedIn, University, GitHub and ORCID links; and
+- the chronological “I’ll be here…” conference list.
+
+The current PDFs live in `public/cv/` and `public/teaching/`.
+
+## Research outputs
+
+`src/data/research.ts` retains typed arrays for publications, presentations and projects. The present Research page displays only publications, as requested. Its search and filters work against the statically rendered publication list and require no service or database.
 
 ## Teaching resources
 
 - Resource files live in `src/content/resources/` as Markdown or MDX.
-- `src/content.config.ts` validates the taxonomy, dates, level, software, reading time, assets, draft state and optional repository link.
-- A dynamic static route at `src/pages/resources/[id].astro` creates one page per published resource.
-- The index filter works entirely in the browser against already-rendered HTML and remains usable when JavaScript is unavailable.
-- Remark/rehype processing adds KaTeX equations; Astro/Shiki supplies syntax highlighting.
-
-## Research outputs
-
-Projects, publications and presentations use explicit TypeScript types and arrays in `src/data/research.ts`. Empty arrays render no invented entries. Adding the first verified record automatically exposes the relevant section on the Research page.
-
-## Leadership and service
-
-Leadership and service are currently kept at a high level within the About page rather than presented as a separate portfolio category. A dedicated route can be restored later if there is a clear public purpose for selected roles.
+- `src/content.config.ts` validates taxonomy, dates, level, software, reading time, assets and draft state.
+- `src/pages/resources/[id].astro` builds one static page per published resource.
+- KaTeX renders equations and Shiki highlights code.
+- Copy controls are added to code blocks in the browser.
+- R blocks receive an additional **Run R** control. The official webR 0.6.0 runtime is loaded from `webr.r-wasm.org` only after a reader asks to run code; R then executes locally in that browser. The fixed version keeps the teaching notes reproducible and avoids silent runtime changes.
+- Resource search and filtering appear automatically once the library contains at least four published resources.
 
 ## SEO and deployment
 
-- `BaseLayout.astro` provides canonical URLs, page-specific metadata and Open Graph fields.
+- `BaseLayout.astro` provides canonical URLs, page descriptions and Open Graph fields.
 - The homepage adds Person and WebSite JSON-LD; resource pages add LearningResource JSON-LD.
-- `@astrojs/sitemap`, `robots.txt` and stable directory-style routes support indexing.
-- The project is portable static output. `vercel.json` adds production security headers without introducing a Vercel runtime dependency; the `www` redirect is configured with the production domains in Vercel.
+- `@astrojs/sitemap`, `robots.txt` and directory-style routes support indexing.
+- `vercel.json` adds portable security headers without creating a Vercel runtime dependency.

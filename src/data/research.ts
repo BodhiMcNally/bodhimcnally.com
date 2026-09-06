@@ -7,7 +7,11 @@ export type Publication = {
   doi?: string;
   pubmedUrl?: string;
   citation: string;
-  publicationType: string;
+  publicationType:
+    | 'Journal article'
+    | 'Review article'
+    | 'Conference abstract'
+    | 'Other';
   selected?: boolean;
 };
 

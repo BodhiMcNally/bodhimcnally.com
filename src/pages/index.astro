@@ -34,74 +34,44 @@ const structuredData = [
 ---
 
 <BaseLayout structuredData={structuredData}>
-  <section class="home-hero container" aria-labelledby="home-title">
-    <div class="home-hero__copy">
-      <p class="home-hero__descriptor">{site.descriptor}</p>
-      <h1 id="home-title">Bodhi <br />McNally</h1>
-      <p class="home-hero__intro">{site.introduction}</p>
-      <div class="home-hero__links" aria-label="Explore the website">
-        <a class="arrow-link" href="/research/">Research direction</a>
-        <a class="arrow-link" href="/teaching/">Teaching</a>
-        <a class="arrow-link" href="/about/">About me</a>
-      </div>
+  <section class="home-introduction container" aria-labelledby="home-title">
+    <div class="home-introduction__copy">
+      <h1 id="home-title">Bodhi McNally</h1>
+      <p class="home-introduction__lead">{site.introduction}</p>
+      <p class="home-introduction__research">{site.researchSummary}</p>
+
+      <nav class="home-directory" aria-label="Main links">
+        <a href="/about/">
+          <span>About me</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href={site.cv.driveHref} target="_blank" rel="noreferrer">
+          <span>Curriculum vitae</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a href="/research/">
+          <span>Current research</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="/teaching/">
+          <span>Teaching</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </nav>
     </div>
-    <Portrait eager={true} />
+
+    <Portrait eager={true} caption={false} />
   </section>
 
-  <section class="section section--ink" aria-labelledby="focus-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">01</span>
-        <span id="focus-title">Current focus</span>
-      </h2>
-      <div class="section-copy">
-        <p class="home-focus-statement">
-          I am interested in how clinical data can support better decisions around surgery—and in measuring recovery in ways that matter to patients.
-        </p>
-        <p>
-          My quantitative background shapes how I approach questions of treatment selection, perioperative outcomes and functional recovery. As a Surgical Research Scholar with RISE, I am developing experience in collaborative surgical research aligned with urology.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--compact" aria-labelledby="work-title">
-    <div class="container">
-      <h2 class="eyebrow" id="work-title">Research and teaching</h2>
-      <div class="editorial-feature-list">
-        <article class="editorial-feature">
-          <h3>Research</h3>
-          <div class="editorial-feature__copy">
-            <p>
-              My interests are taking shape around urological oncology, robotic and minimally invasive surgery, and outcomes research. The common thread is methodological: clinically useful questions, carefully defined measures, transparent analysis and proportionate conclusions.
-            </p>
-            <a class="arrow-link" href="/research/">Explore my research direction</a>
-          </div>
-        </article>
-
-        <article class="editorial-feature">
-          <h3>Teaching & resources</h3>
-          <div class="editorial-feature__copy">
-            <p>
-              I teach undergraduate data science and statistics as a Casual Academic at the University of Sydney. Teaching reinforces the same habits that good clinical research depends on: clear questions, reproducible work and precise interpretation.
-            </p>
-            <div class="inline-links">
-              <a class="arrow-link" href="/teaching/">Teaching approach</a>
-              <a class="arrow-link" href="/resources/">Browse teaching notes</a>
-            </div>
-          </div>
-        </article>
-      </div>
+  <section class="student-prompt">
+    <div class="container student-prompt__inner">
+      <p><em>One of my university students?</em></p>
+      <p>You may be looking for the <a href="/resources/">teaching resources page</a>.</p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="profiles-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">02</span>
-        <span id="profiles-title">Academic profiles</span>
-      </h2>
-      <ProfileList />
-    </div>
+  <section class="home-profiles container" aria-labelledby="profiles-title">
+    <h2 class="visually-hidden" id="profiles-title">Professional links</h2>
+    <ProfileList />
   </section>
 </BaseLayout>

@@ -1,6 +1,6 @@
 # bodhimcnally.com
 
-The source for [bodhimcnally.com](https://bodhimcnally.com): a static academic website for medicine, research, teaching and student resources.
+The source for [bodhimcnally.com](https://bodhimcnally.com), Bodhi McNally's personal academic website.
 
 The site is built with Astro 7, strict TypeScript and SCSS. It is deliberately static, has no database, analytics, tracking, contact form or required environment secrets, and can be hosted on Vercel, Netlify, Cloudflare Pages or any ordinary static host.
 
@@ -14,6 +14,23 @@ npm run dev
 ```
 
 Astro will print the local address, normally `http://localhost:4321`.
+
+## Apply this revision to an existing repository
+
+This download is a complete clean source tree. If an earlier version of the site is already connected to GitHub and Vercel:
+
+1. Keep the existing repository folder and its hidden `.git` directory.
+2. Copy the contents of this download's `bodhimcnally.com` folder into that repository, allowing matching files to be replaced.
+3. Delete the following three files from the existing repository if they remain. They are intentionally absent from this revision, but extracting an archive over an old folder may not remove them:
+
+   ```text
+   src/pages/leadership.astro
+   src/data/leadership.json
+   src/content/resources/how-to-interpret-a-regression-coefficient.md
+   ```
+
+4. Run `npm install`, then `npm run verify`.
+5. Review `git status`, commit the changes and push `main`. The connected Vercel project should deploy the push automatically.
 
 ## Build and verify
 
@@ -49,10 +66,11 @@ src/
 ├── pages/                          Routes
 └── styles/                         SCSS design system
 public/
-├── cv/                             Public CV PDF
+├── cv/                             Downloadable CV PDF
 ├── favicon.svg                     BM favicon
 ├── robots.txt                      Search-engine instructions
 ├── resources/                      Downloadable teaching attachments
+├── teaching/                       Teaching portfolio PDF
 └── site.webmanifest                Basic site manifest
 ```
 
@@ -68,7 +86,7 @@ Edit:
 src/data/site.ts
 ```
 
-This is the central profile file. It contains the site name, current role, institution, clinical school, homepage descriptor, short introduction, canonical URL and external links. Update current information there before editing individual pages.
+This is the central profile file. It contains the site name, current role, institution, clinical school, homepage introduction, research summary, contact details, document links, conference appearances and external profiles. Update current information there before editing individual pages.
 
 Longer narrative copy is intentionally page-specific:
 
@@ -82,11 +100,15 @@ Search those pages for any time-sensitive wording when your role or training sta
 
 Edit `src/data/site.ts`.
 
-- Add a verified GitHub URL to `optionalProfiles.github`.
-- Add a verified Google Scholar URL to `optionalProfiles.googleScholar`.
-- Add a professional email address to `email`.
+- Update either address in `emails`.
+- Update a verified profile in `profiles`.
+- Add a verified Google Scholar URL to `optionalProfiles.googleScholar` when one exists.
 
-Keep an unavailable field as `null`. The site will not display or invent it.
+Keep the Google Scholar field as `null` until the exact profile is public.
+
+## Update the conference list
+
+Edit the `appearances` array in `src/data/site.ts`. Each entry requires only a year, event name and location. Keep the entries in chronological order.
 
 ## Replace the headshot
 
@@ -100,29 +122,19 @@ Use a high-quality square or near-square JPEG. Astro automatically creates respo
 
 If you change the filename, update the import in `src/components/Portrait.astro`.
 
-## Add the CV
+## Update the CV
 
-1. Add the PDF at exactly:
+The About page provides both the current Google Drive link and a downloadable copy.
 
-   ```text
-   public/cv/Bodhi_McNally_CV.pdf
-   ```
+1. Replace `public/cv/Bodhi_McNally_Master_CV.pdf` with the new PDF, keeping the filename unchanged.
+2. Replace `cv.driveHref` in `src/data/site.ts` if the Google Drive file itself changes.
+3. Update `cv.updated` in the same file.
+4. Confirm the Drive sharing setting allows anyone with the link to view the file.
+5. Run `npm run verify` and test both links.
 
-2. In `src/data/site.ts`, change:
+## Update the teaching portfolio
 
-   ```ts
-   href: null as string | null,
-   ```
-
-   to:
-
-   ```ts
-   href: '/cv/Bodhi_McNally_CV.pdf',
-   ```
-
-3. Run `npm run verify` and open the About page to confirm the download link.
-
-Until both steps are complete, the About page shows a restrained unavailable state and no broken button.
+Replace `public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf`, keeping the filename unchanged. Its link is configured in `src/data/site.ts`.
 
 ## Add a teaching resource
 
@@ -132,7 +144,7 @@ Resources are Markdown or MDX files in:
 src/content/resources/
 ```
 
-Copy `how-to-interpret-a-regression-coefficient.md`, rename the copy with a short lowercase slug, and replace all frontmatter and body content. A minimal example is:
+Copy `understanding-confidence-intervals.md`, rename the copy with a short lowercase slug, and replace all frontmatter and body content. A minimal example is:
 
 ```md
 ---
@@ -171,6 +183,7 @@ The search and filter controls appear automatically once four or more published 
 
 - Use `$...$` for inline equations and `$$...$$` for display equations.
 - Use fenced Markdown code blocks with a language such as ```` ```r ```` or ```` ```python ````. Syntax highlighting and copy buttons are automatic.
+- R blocks also receive a **Run R** button. R is downloaded from the official webR distribution only when a reader selects that button; execution then occurs in the reader's browser.
 - Use normal Markdown tables; they scroll horizontally on narrow screens.
 - Use a blockquote beginning with a bold label for a callout.
 
@@ -204,7 +217,7 @@ Edit `src/data/research.ts` and add a verified object to the `publications` arra
   doi: '10.xxxx/replace-with-verified-doi',
   pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/REPLACE_WITH_ID/',
   citation: 'Replace with the final preferred citation.',
-  publicationType: 'Original research',
+  publicationType: 'Journal article',
   selected: true,
 },
 ```
@@ -229,7 +242,7 @@ Add a verified object to the `presentations` array in `src/data/research.ts`:
 },
 ```
 
-Allowed presentation types are listed in the `Presentation` type immediately above the array.
+Allowed presentation types are listed in the `Presentation` type immediately above the array. Presentations are retained as structured data for future use but are not displayed on the current Research page.
 
 ## Add a research project
 
@@ -251,7 +264,7 @@ Add a verified object to the `projects` array in `src/data/research.ts`:
 },
 ```
 
-Confirm that the project title, collaborators, institution and status are suitable to publish before adding them. Keep the RISE description general until the specific project details are verified and shareable.
+Confirm that the project title, collaborators, institution and status are suitable to publish before adding them. Projects are retained as structured data for future use but are not displayed on the current Research page.
 
 ## Deploy with GitHub and Vercel
 
@@ -266,11 +279,9 @@ git init
 git add .
 git commit -m "Initial academic website"
 git branch -M main
-git remote add origin git@github.com:YOUR_GITHUB_USERNAME/bodhimcnally.com.git
+git remote add origin git@github.com:BodhiMcNally/bodhimcnally.com.git
 git push -u origin main
 ```
-
-Replace `YOUR_GITHUB_USERNAME` with the verified account name.
 
 ### 2. Import into Vercel
 

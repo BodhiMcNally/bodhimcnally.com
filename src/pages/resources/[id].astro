@@ -100,7 +100,7 @@ const structuredData = {
 
     <div class="resource-layout container">
       <aside class="resource-layout__aside">
-        {entry.data.template && <p class="badge">Example template</p>}
+        {entry.data.template && <p class="badge">Example</p>}
         <TableOfContents headings={headings} />
       </aside>
       <div>
@@ -143,6 +143,22 @@ const structuredData = {
       window.print();
     });
 
+    let webRInstancePromise: Promise<any> | undefined;
+
+    const loadWebR = async () => {
+      if (!webRInstancePromise) {
+        webRInstancePromise = (async () => {
+          const moduleUrl = 'https://webr.r-wasm.org/v0.6.0/webr.mjs';
+          const { WebR } = await import(/* @vite-ignore */ moduleUrl);
+          const webR = new WebR();
+          await webR.init();
+          return webR;
+        })();
+      }
+
+      return webRInstancePromise;
+    };
+
     document.querySelectorAll<HTMLElement>('.prose pre').forEach((pre) => {
       if (pre.parentElement?.classList.contains('code-block')) return;
 
@@ -151,23 +167,70 @@ const structuredData = {
       pre.before(wrapper);
       wrapper.append(pre);
 
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'code-copy';
-      button.textContent = 'Copy';
-      button.setAttribute('aria-label', 'Copy code to clipboard');
-      wrapper.append(button);
+      const toolbar = document.createElement('div');
+      toolbar.className = 'code-toolbar';
+      pre.before(toolbar);
 
-      button.addEventListener('click', async () => {
+      const copyButton = document.createElement('button');
+      copyButton.type = 'button';
+      copyButton.className = 'code-control';
+      copyButton.textContent = 'Copy';
+      copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+      toolbar.append(copyButton);
+
+      copyButton.addEventListener('click', async () => {
         const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
         try {
           await navigator.clipboard.writeText(code);
-          button.textContent = 'Copied';
+          copyButton.textContent = 'Copied';
           window.setTimeout(() => {
-            button.textContent = 'Copy';
+            copyButton.textContent = 'Copy';
           }, 1600);
         } catch {
-          button.textContent = 'Select code';
+          copyButton.textContent = 'Select code';
+        }
+      });
+
+      const language = pre.dataset.language ?? '';
+      if (language.toLowerCase() !== 'r') return;
+
+      const runButton = document.createElement('button');
+      runButton.type = 'button';
+      runButton.className = 'code-control code-control--run';
+      runButton.textContent = 'Run R';
+      toolbar.prepend(runButton);
+
+      const output = document.createElement('pre');
+      output.className = 'r-output';
+      output.hidden = true;
+      output.setAttribute('aria-live', 'polite');
+      output.setAttribute('aria-label', 'R output');
+      wrapper.append(output);
+
+      runButton.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+        runButton.disabled = true;
+        runButton.textContent = 'Loading R…';
+        output.hidden = false;
+        output.textContent = 'Starting R in your browser…';
+
+        try {
+          const webR = await loadWebR();
+          runButton.textContent = 'Running…';
+          const expression = `paste(capture.output({\n${code}\n}), collapse = "\\n")`;
+          const result = await webR.evalR(expression);
+          try {
+            const value = await result.toString();
+            output.textContent = value || 'Code ran without printed output.';
+          } finally {
+            webR.destroy(result);
+          }
+          runButton.textContent = 'Run again';
+        } catch (error) {
+          output.textContent = error instanceof Error ? error.message : 'The R code could not be run.';
+          runButton.textContent = 'Try again';
+        } finally {
+          runButton.disabled = false;
         }
       });
     });

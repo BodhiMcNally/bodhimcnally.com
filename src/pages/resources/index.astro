@@ -22,15 +22,32 @@ const showBrowseTools = resources.length >= 4;
   description="Original teaching resources by Bodhi McNally in statistics, data science, statistical reasoning and reproducible research."
 >
   <PageHeader
-    eyebrow="Resources"
-    title="A small library for learning with data"
-    introduction="Original explanations, worked examples and practical material for students learning statistics, data science and reproducible analysis. The aim is clarity and usefulness, not volume."
-    folio="04"
+    title="Resources"
+    introduction="Notes, code and additional material developed to supplement my classroom teaching."
   />
 
-  <section class="section section--compact" aria-labelledby="browse-title">
+  <section class="resource-purpose" aria-labelledby="resource-purpose-title">
+    <div class="container resource-purpose__inner">
+      <div>
+        <h2 id="resource-purpose-title">Why these resources are here</h2>
+        <p>
+          During coding demonstrations, students can lose the thread of an explanation when a local error draws their attention away from what is being discussed. Publishing the code after class means students can listen first and return to a working reference afterwards.
+        </p>
+      </div>
+      <div>
+        <p>
+          This library also provides additional explanations, worked examples and useful links for concepts that often need more than one pass. It is intended to supplement classroom teaching, not replace official course material.
+        </p>
+        <p class="small-print">
+          All content is provided for educational purposes. I do my best to keep it accurate and up to date, but students should check it against their course guidance and remain responsible for meeting applicable academic-integrity requirements.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="resources-library" aria-labelledby="browse-title">
     <div class="container">
-      <h2 class="eyebrow" id="browse-title">Available notes</h2>
+      <h2 id="browse-title">Available resources</h2>
 
       {
         showBrowseTools && (
@@ -69,14 +86,6 @@ const showBrowseTools = resources.length >= 4;
         )
       }
 
-      {
-        resources.some((resource) => resource.data.template) && (
-          <p class="library-note">
-            The first entry is a worked template showing the format of future notes. It is clearly marked and can be replaced when the first finished resource is ready.
-          </p>
-        )
-      }
-
       <ol class="resource-list" data-resource-list>
         {
           resources.map((resource) => (
@@ -95,7 +104,7 @@ const showBrowseTools = resources.length >= 4;
               </div>
               <div class="resource-row__meta">
                 <p>{resource.data.category} · {resource.data.estimatedMinutes} min</p>
-                {resource.data.template && <span class="badge">Example template</span>}
+                {resource.data.template && <span class="badge">Example</span>}
                 <ul class="tag-list" aria-label="Tags">
                   {resource.data.tags.map((tag) => <li class="tag">{tag}</li>)}
                 </ul>
@@ -111,12 +120,12 @@ const showBrowseTools = resources.length >= 4;
     </div>
   </section>
 
-  <section class="section" aria-labelledby="resource-note-title">
+  <section class="resource-disclaimer" aria-labelledby="resource-note-title">
     <div class="container disclaimer">
       <h2 id="resource-note-title">A note for students</h2>
       <p>
         <strong>These resources are independently prepared and are not official University of Sydney course materials.</strong>
-        Use them alongside your course guidance, and remain responsible for meeting the academic-integrity requirements that apply to your work.
+        Use them alongside your course guidance and remain responsible for meeting the academic-integrity requirements that apply to your work.
       </p>
     </div>
   </section>

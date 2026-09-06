@@ -1,180 +1,157 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
-import { projects, publications, presentations } from '@/data/research';
+import { publications } from '@/data/research';
 
-const sortedProjects = [...projects].sort((a, b) =>
-  Number(b.selected) - Number(a.selected) ||
-  (b.startYear ?? 0) - (a.startYear ?? 0),
-);
 const sortedPublications = [...publications].sort((a, b) =>
   Number(b.selected) - Number(a.selected) || b.year - a.year,
 );
-const sortedPresentations = [...presentations].sort((a, b) =>
-  Number(b.selected) - Number(a.selected) ||
-  new Date(b.date).getTime() - new Date(a.date).getTime(),
-);
-const hasOutputs = sortedPublications.length > 0 || sortedPresentations.length > 0;
+const hasPublications = sortedPublications.length > 0;
+const filterFor = (publicationType: (typeof publications)[number]['publicationType']) =>
+  publicationType === 'Conference abstract' ? 'abstracts' :
+  publicationType === 'Other' ? 'other' : 'articles';
 ---
 
 <BaseLayout
   title="Research"
   description="Bodhi McNally’s developing research interests in academic urology, surgical outcomes and quantitative clinical research."
 >
-  <PageHeader
-    eyebrow="Research"
-    title="Treatment, surgery and recovery"
-    introduction="My developing interests lie in academic urology, surgical outcomes and quantitative clinical research. I am especially drawn to questions that connect clinical decisions with what happens before, during and after treatment."
-    folio="02"
-  />
+  <PageHeader title="Research" />
 
-  <section class="section section--compact" aria-labelledby="themes-title">
+  <section class="research-overview container" aria-labelledby="research-interests-title">
+    <div class="research-overview__introduction">
+      <h2 id="research-interests-title">Research interests</h2>
+      <p>
+        My developing interests lie in academic urology, surgical outcomes and quantitative clinical research. I am particularly interested in work that uses well-defined clinical data to answer questions about treatment, surgery and recovery.
+      </p>
+    </div>
+
+    <div class="research-areas">
+      <section>
+        <h3>Urological oncology</h3>
+        <p>
+          I am interested in prostate and renal cancer, including how clinical evidence can inform diagnosis, treatment selection and follow-up. I am drawn to research that keeps statistical findings connected to the clinical decisions and patient priorities they are intended to support.
+        </p>
+      </section>
+
+      <section>
+        <h3>Robotic and minimally invasive surgery</h3>
+        <p>
+          Robotic and minimally invasive approaches raise questions that extend beyond technical performance. My interests include how these procedures are evaluated, how outcomes vary between patients and services, and how new approaches should be compared with established care.
+        </p>
+      </section>
+
+      <section>
+        <h3>Surgical outcomes and recovery</h3>
+        <p>
+          I am interested in perioperative outcomes, complications, functional recovery and patient-reported outcomes. These measures provide different views of recovery and need to be defined and interpreted carefully if they are to support useful comparisons.
+        </p>
+      </section>
+
+      <section>
+        <h3>Clinical data science and health services research</h3>
+        <p>
+          My background in data science informs an interest in real-world clinical data, prediction modelling and variation in care. I am most interested in quantitative methods when they begin with a clear clinical question, reflect how the data were generated and make uncertainty explicit.
+        </p>
+      </section>
+    </div>
+  </section>
+
+  <section class="publications-section" id="publications" aria-labelledby="publications-title">
     <div class="container">
-      <h2 class="eyebrow" id="themes-title">Research themes</h2>
-      <ol class="theme-list">
-        <li>
-          <span class="theme-list__number">01</span>
-          <h3>Urological oncology</h3>
-          <p>
-            How can evidence support treatment selection in prostate and renal cancer while preserving clinical context and patient priorities?
-          </p>
-        </li>
-        <li>
-          <span class="theme-list__number">02</span>
-          <h3>Outcomes & recovery</h3>
-          <p>
-            How should perioperative, functional and patient-reported outcomes be defined and followed after robotic and minimally invasive surgery?
-          </p>
-        </li>
-        <li>
-          <span class="theme-list__number">03</span>
-          <h3>Clinical data in practice</h3>
-          <p>
-            When can real-world data and clinical prediction clarify variation in care—and when do limits in measurement make stronger claims unsafe?
-          </p>
-        </li>
+      <header class="section-heading">
+        <h2 id="publications-title">Publications</h2>
+      </header>
+
+      <div class="publication-tools" data-publication-tools>
+        <div class="field publication-search">
+          <label for="publication-search">Search publications</label>
+          <input
+            id="publication-search"
+            type="search"
+            placeholder="Search by title, author, journal or year"
+            autocomplete="off"
+            disabled={!hasPublications}
+            data-publication-search
+          />
+        </div>
+
+        <div class="publication-filter" role="group" aria-label="Filter publications">
+          <span>Show</span>
+          <button type="button" aria-pressed="true" disabled={!hasPublications} data-publication-filter="all">All</button>
+          <button type="button" aria-pressed="false" disabled={!hasPublications} data-publication-filter="articles">Articles</button>
+          <button type="button" aria-pressed="false" disabled={!hasPublications} data-publication-filter="abstracts">Abstracts</button>
+          <button type="button" aria-pressed="false" disabled={!hasPublications} data-publication-filter="selected">Selected</button>
+        </div>
+
+        <p class="publication-status" aria-live="polite" data-publication-status>
+          {hasPublications ? `${sortedPublications.length} publications` : 'No publications listed'}
+        </p>
+      </div>
+
+      <ol class="publication-list" data-publication-list>
+        {
+          sortedPublications.map((publication) => (
+            <li
+              data-publication
+              data-type={filterFor(publication.publicationType)}
+              data-selected={String(Boolean(publication.selected))}
+              data-search={`${publication.title} ${publication.authors.join(' ')} ${publication.journal} ${publication.year} ${publication.citation}`.toLowerCase()}
+            >
+              <div>
+                <p class="publication-list__type">{publication.publicationType} · {publication.year}</p>
+                <h3>{publication.title}</h3>
+                <p class="publication-list__citation">{publication.citation}</p>
+              </div>
+              <div class="publication-list__links">
+                {publication.doi && <a href={`https://doi.org/${publication.doi}`}>DOI</a>}
+                {publication.pubmedUrl && <a href={publication.pubmedUrl}>PubMed</a>}
+              </div>
+            </li>
+          ))
+        }
       </ol>
+
+      <p class="publication-empty" data-publication-empty data-visible={String(!hasPublications)}>
+        {hasPublications ? 'No publications match this search.' : 'No publications are listed yet.'}
+      </p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="approach-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">01</span>
-        <span id="approach-title">Approach</span>
-      </h2>
-      <div class="section-copy">
-        <p class="section-copy__lead">
-          My background in data science is a method base, not the subject of the work.
-        </p>
-        <p>
-          Across these areas, I am most interested in research that begins with a clinically useful question, defines exposures and outcomes carefully, and makes uncertainty visible. Sophisticated analysis cannot rescue a poorly formed question or weak measurement.
-        </p>
-      </div>
-    </div>
-  </section>
+  <script>
+    const search = document.querySelector<HTMLInputElement>('[data-publication-search]');
+    const filters = [...document.querySelectorAll<HTMLButtonElement>('[data-publication-filter]')];
+    const items = [...document.querySelectorAll<HTMLElement>('[data-publication]')];
+    const status = document.querySelector<HTMLElement>('[data-publication-status]');
+    const empty = document.querySelector<HTMLElement>('[data-publication-empty]');
+    let activeFilter = 'all';
 
-  <section class="section section--soft" aria-labelledby="current-research-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">02</span>
-        <span id="current-research-title">Current activity</span>
-      </h2>
-      <div class="section-copy">
-        <p class="section-copy__lead">
-          I am a Surgical Research Scholar with RISE, where I have been matched to a surgical mentor and a research project aligned with urology.
-        </p>
-        <p>
-          At this stage, the value is practical: learning how a team turns a clinically relevant question into feasible collaborative research and communicates its conclusions at the right level of certainty.
-        </p>
-      </div>
-    </div>
-  </section>
+    const applyPublicationFilters = () => {
+      const query = search?.value.trim().toLowerCase() ?? '';
+      let visible = 0;
 
-  {
-    sortedProjects.length > 0 && (
-      <section class="section" aria-labelledby="projects-title">
-        <div class="container section-grid">
-          <h2 class="section-label">
-            <span class="section-label__number">03</span>
-            <span id="projects-title">Projects</span>
-          </h2>
-          <ul class="output-list">
-            {sortedProjects.map((project) => (
-              <li>
-                <div>
-                  <p class="output-list__title">{project.title}</p>
-                  <p class="output-list__meta">
-                    {[project.researchArea, project.role, project.institution]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </p>
-                  <p>{project.shortDescription}</p>
-                </div>
-                <span class="badge">{project.status}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )
-  }
+      items.forEach((item) => {
+        const matchesSearch = !query || (item.dataset.search ?? '').includes(query);
+        const matchesType =
+          activeFilter === 'all' ||
+          item.dataset.type === activeFilter ||
+          (activeFilter === 'selected' && item.dataset.selected === 'true');
+        const matches = matchesSearch && matchesType;
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      });
 
-  {
-    hasOutputs && (
-      <section class="section" aria-labelledby="outputs-title">
-        <div class="container section-grid">
-          <h2 class="section-label">
-            <span class="section-label__number">{sortedProjects.length > 0 ? '04' : '03'}</span>
-            <span id="outputs-title">Research outputs</span>
-          </h2>
+      if (status) status.textContent = `${visible} ${visible === 1 ? 'publication' : 'publications'}`;
+      if (empty && items.length > 0) empty.dataset.visible = String(visible === 0);
+    };
 
-          <div>
-            {sortedPublications.length > 0 && (
-            <div class="output-group">
-              <h3>Publications</h3>
-              <ol class="output-list">
-                {sortedPublications.map((publication) => (
-                  <li>
-                    <div>
-                      <p class="output-list__title">{publication.title}</p>
-                      <p class="output-list__meta">{publication.citation}</p>
-                    </div>
-                    <div class="output-list__links">
-                      {publication.doi && (
-                        <a href={`https://doi.org/${publication.doi}`}>DOI</a>
-                      )}
-                      {publication.pubmedUrl && (
-                        <a href={publication.pubmedUrl}>PubMed</a>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-            )}
-
-            {sortedPresentations.length > 0 && (
-            <div class="output-group">
-              <h3>Presentations</h3>
-              <ol class="output-list">
-                {sortedPresentations.map((presentation) => (
-                  <li>
-                    <div>
-                      <p class="output-list__title">{presentation.title}</p>
-                      <p class="output-list__meta">
-                        {presentation.presentationType} · {presentation.conference}
-                      </p>
-                    </div>
-                    {presentation.link && <a href={presentation.link}>Details</a>}
-                  </li>
-                ))}
-              </ol>
-            </div>
-            )}
-          </div>
-        </div>
-      </section>
-    )
-  }
+    search?.addEventListener('input', applyPublicationFilters);
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeFilter = button.dataset.publicationFilter ?? 'all';
+        filters.forEach((candidate) => candidate.setAttribute('aria-pressed', String(candidate === button)));
+        applyPublicationFilters();
+      });
+    });
+  </script>
 </BaseLayout>

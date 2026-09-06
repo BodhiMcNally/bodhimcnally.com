@@ -3,15 +3,12 @@ import { site } from '@/data/site';
 
 const year = new Date().getFullYear();
 const footerProfiles = site.profiles.filter((profile) => profile.footer);
-const github = site.optionalProfiles.github;
+const primaryEmail = site.emails.at(0);
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <div>
-      <p class="site-footer__name">{site.name}</p>
-      <p class="site-footer__context">Medicine, research and teaching.</p>
-    </div>
+    <p class="site-footer__name">{site.name}</p>
 
     <nav aria-label="Academic profiles">
       <ul class="footer-links">
@@ -22,8 +19,7 @@ const github = site.optionalProfiles.github;
             </li>
           ))
         }
-        {github && <li><a href={github} rel="me">GitHub</a></li>}
-        {site.email && <li><a href={`mailto:${site.email}`}>Email</a></li>}
+        {primaryEmail && <li><a href={`mailto:${primaryEmail.address}`}>Email</a></li>}
       </ul>
     </nav>
 

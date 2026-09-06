@@ -3,106 +3,88 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import { site } from '@/data/site';
 
-const universityProfile = site.profiles.find((profile) => profile.label === 'University profile');
+const universityProfile = site.profiles.find((profile) => profile.label === 'University teaching profile');
 ---
 
 <BaseLayout
   title="Teaching"
   description="Bodhi McNally teaches undergraduate data science and statistics at the University of Sydney, with an emphasis on reasoning, interpretation and reproducibility."
 >
-  <PageHeader
-    eyebrow="Teaching"
-    title="Teaching quantitative thinking"
-    introduction="I teach undergraduate data science and statistics as a Casual Academic in the University of Sydney’s School of Mathematics and Statistics. I want students to see quantitative methods as a way of reasoning about evidence—not a sequence of commands to reproduce."
-    folio="03"
-  />
+  <PageHeader title="Teaching" />
 
-  <section class="section" aria-labelledby="role-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">01</span>
-        <span id="role-title">Current role</span>
-      </h2>
-      <div class="section-copy">
-        <p class="section-copy__lead">
-          Introductory courses are where students form habits that shape every later analysis.
-        </p>
+  <section class="teaching-introduction container">
+    <p>
+      I work as a Casual Academic in the School of Mathematics and Statistics at the University of Sydney, teaching undergraduate data science and statistics.
+    </p>
+    {universityProfile && <a class="arrow-link" href={universityProfile.href}>University teaching profile</a>}
+  </section>
+
+  <section class="reading-section" aria-labelledby="philosophy-title">
+    <div class="reading-section__inner container">
+      <h2 id="philosophy-title">Teaching philosophy</h2>
+      <div class="teaching-philosophy">
         <p>
-          I work with students on moving from a question to a defensible analysis: identifying the observational unit, understanding the structure of the data, choosing methods that fit the question, interpreting output in context and writing code another person can follow. Technical fluency matters, but it should serve an intelligible argument.
+          My learning and teaching philosophy is grounded in the belief that students learn most effectively when they are active participants in the learning process rather than passive recipients of information.
         </p>
-        {
-          universityProfile && (
-            <p>
-              <a class="arrow-link" href={universityProfile.href}>
-                University of Sydney teaching profile
-              </a>
-            </p>
-          )
-        }
+
+        <p>
+          When I first arrived at university, I quickly discovered that success in quantitative disciplines required more than simply attending lectures and tutorials. Data science, statistics and mathematics can be intimidating subjects, and many students approach them believing that they are “not mathematical people”. Early in my degree, I often found myself focusing on individual formulas, coding functions or assessment tasks without fully understanding how they connected to the broader discipline or to real-world problems.
+        </p>
+
+        <p>
+          I often think about learning as the difference between shopping at Aldi and shopping at an Apple Store. At Aldi, products are stacked on pallets, minimally presented, and customers are expected to work things out for themselves. The experience is efficient, but largely transactional. By contrast, Apple Stores are designed around engagement. Staff guide customers through products, explain how different components work together and help them understand the broader ecosystem. The experience is educational as much as it is transactional.
+        </p>
+
+        <p>
+          As an educator, I strive to create the “Apple Store” experience for my students. My goal is not simply to teach statistical methods, programming techniques or mathematical concepts. Rather, I aim to help students understand how these ideas connect to one another, how they can be applied to meaningful problems and why they matter beyond the classroom. Whether teaching hypothesis testing in an interdisciplinary science unit, data wrangling in an intensive course or introductory data science to large first-year cohorts, I seek to move beyond procedural knowledge and foster genuine understanding.
+        </p>
+
+        <p>
+          This philosophy has naturally led me towards Students-as-Partners initiatives and curriculum development work. I believe students are not merely consumers of education but valuable contributors to it. Through curriculum review, assessment redesign and educational scholarship, I have sought to create opportunities for students to influence and improve their own learning experiences. Feedback is therefore central to my practice, not only as a mechanism for supporting student learning, but also as a means of continuously improving my own teaching.
+        </p>
+
+        <p>
+          Ultimately, my goal as an educator is to help students develop confidence, curiosity and independence. By creating supportive learning environments, encouraging active participation and connecting concepts to authentic problems, I hope to equip students with the skills and mindset required for lifelong learning long after they leave the classroom.
+        </p>
       </div>
     </div>
   </section>
 
-  <section class="section section--compact" aria-labelledby="approach-title">
+  <section class="document-section" aria-labelledby="portfolio-title">
     <div class="container">
-      <h2 class="eyebrow" id="approach-title">An approach to quantitative teaching</h2>
-      <div class="three-columns">
-        <article class="principle">
-          <span class="principle__number">01</span>
-          <h3>Start with the question</h3>
-          <p>
-            Begin with the question, observational unit and structure of the data. A method is easier to choose—and harder to misuse—once these are clear.
-          </p>
-        </article>
-        <article class="principle">
-          <span class="principle__number">02</span>
-          <h3>Interpret in context</h3>
-          <p>
-            Translate output into context, units and uncertainty. A correct calculation is incomplete if its meaning cannot be stated precisely.
-          </p>
-        </article>
-        <article class="principle">
-          <span class="principle__number">03</span>
-          <h3>Leave an auditable path</h3>
-          <p>
-            Organise data and code so that the path from raw material to conclusion remains visible, reviewable and possible to repeat.
-          </p>
-        </article>
+      <div class="document-panel">
+        <div>
+          <h2 id="portfolio-title">Teaching portfolio</h2>
+          <p>My teaching philosophy, experience, curriculum work and educational scholarship.</p>
+        </div>
+        <a class="button" href={site.teachingPortfolio.href} target="_blank" rel="noreferrer">View teaching portfolio</a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="teaching-research-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">02</span>
-        <span id="teaching-research-title">Teaching & research</span>
-      </h2>
-      <div class="section-copy">
-        <p class="section-copy__lead">
-          Teaching sharpens the same habits that strong clinical research requires: clear questions, proportionate claims and transparent reasoning.
-        </p>
+  <section class="student-resources-section" aria-labelledby="student-resources-title">
+    <div class="container student-resources-section__inner">
+      <div>
+        <h2 id="student-resources-title">Student resources</h2>
         <p>
-          It also informs my interest in how students and prevocational doctors enter academic work. Early research experience should involve genuine contribution, careful supervision and the gradual development of independence—not simply proximity to a project.
+          I have developed the resources on this site to supplement my classroom teaching. They are independently prepared and are not affiliated with or endorsed by the University of Sydney.
         </p>
+        <a class="arrow-link" href="/resources/">Go to the resource library</a>
       </div>
-    </div>
-  </section>
 
-  <section class="section" aria-labelledby="resources-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">03</span>
-        <span id="resources-title">Student resources</span>
-      </h2>
-      <div class="section-copy">
-        <p class="section-copy__lead">
-          The Resources library is designed for concise, original notes and worked examples in statistics, data science and reproducible analysis.
+      <div class="resource-rationale">
+        <h3>Why I publish material here</h3>
+        <ul>
+          <li>
+            I can share code after tutorials and laboratories so students can concentrate on the explanation while I am demonstrating it. A student who encounters a bug during a live demonstration can otherwise spend the rest of the discussion trying to solve that bug and miss what follows.
+          </li>
+          <li>
+            I can collect additional explanations, examples and useful links in one place for students who want to revisit a concept or approach it from another direction.
+          </li>
+        </ul>
+        <p class="small-print">
+          All content is provided for educational purposes. I do my best to keep it accurate and up to date, but students should use it alongside the official materials and guidance for their course.
         </p>
-        <p>
-          It will remain selective: fewer notes, written around real points of confusion, and revised as the explanations improve.
-        </p>
-        <a class="arrow-link" href="/resources/">Browse teaching notes</a>
       </div>
     </div>
   </section>

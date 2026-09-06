@@ -131,25 +131,32 @@
 }
 
 .code-block {
-  position: relative;
   margin-bottom: 1.45rem;
+  border: 1px solid #343033;
+  background: #191719;
 }
 
 .code-block pre {
   margin-bottom: 0;
-  padding-top: 3.1rem;
+  border: 0;
 }
 
-.code-copy {
-  position: absolute;
-  z-index: 2;
-  top: 0.65rem;
-  right: 0.65rem;
-  min-width: 3.8rem;
-  min-height: 2rem;
-  padding: 0.25rem 0.55rem;
-  border: 1px solid #5f5960;
+.code-toolbar {
+  display: flex;
+  min-height: 2.8rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid #343033;
   background: #252225;
+}
+
+.code-control {
+  min-height: 1.9rem;
+  padding: 0.22rem 0.58rem;
+  border: 1px solid #5f5960;
+  background: transparent;
   color: #f7f4ee;
   cursor: pointer;
   font-family: var(--font-sans);
@@ -157,9 +164,34 @@
   font-weight: 620;
 }
 
-.code-copy:hover {
+.code-control:hover {
   border-color: #b996a0;
   background: #302b30;
+}
+
+.code-control--run {
+  border-color: #88aeb4;
+  color: #dcebed;
+}
+
+.code-control:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.r-output {
+  min-height: 3.4rem;
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border: 0;
+  border-top: 1px solid #4d494d;
+  background: #111820 !important;
+  color: #d8e9eb;
+  white-space: pre-wrap;
+}
+
+.r-output[hidden] {
+  display: none;
 }
 
 .katex-display {

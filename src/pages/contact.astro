@@ -8,20 +8,17 @@ import ProfileList from '@/components/ProfileList.astro';
   title="Contact"
   description="Verified academic and professional profile links for Bodhi McNally, including ORCID, University of Sydney and LinkedIn."
 >
-  <PageHeader
-    eyebrow="Contact"
-    title="Professional links"
-    introduction="My ORCID, University teaching profile and LinkedIn are linked below. I will add a professional email address when there is one I intend to publish here."
-    folio="05"
-  />
+  <PageHeader title="Contact" />
 
-  <section class="section" aria-labelledby="contact-links-title">
-    <div class="container section-grid">
-      <h2 class="section-label">
-        <span class="section-label__number">01</span>
-        <span id="contact-links-title">Profiles</span>
-      </h2>
-      <ProfileList includeUnavailable={true} />
+  <section class="contact-page" aria-labelledby="contact-links-title">
+    <div class="container contact-page__inner">
+      <div>
+        <h2 id="contact-links-title">Get in touch</h2>
+        <p>
+          If you would like to discuss or collaborate on a research, teaching or educational project, you are welcome to contact me through either email address below.
+        </p>
+      </div>
+      <ProfileList includeEmails={true} />
     </div>
   </section>
 </BaseLayout>
