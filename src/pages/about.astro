@@ -72,16 +72,25 @@ import { site } from '@/data/site';
         </div>
       </div>
 
-      <div class="cv-embed">
-        <iframe
-          src={`${site.cv.downloadHref}#view=FitH`}
-          title="Bodhi McNally curriculum vitae"
-          loading="lazy"
-        ></iframe>
-        <p>
-          If the document does not appear in your browser, use the Google Drive or download links above.
-        </p>
-      </div>
+      <section class="cv-preview" aria-labelledby="cv-preview-title">
+        <h3 id="cv-preview-title" class="visually-hidden">Curriculum vitae preview</h3>
+        <ol class="cv-pages">
+          {
+            site.cv.previewPages.map((page, index) => (
+              <li>
+                <img
+                  src={page}
+                  alt={`Page ${index + 1} of Bodhi McNally's curriculum vitae`}
+                  width="1360"
+                  height="1760"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </li>
+            ))
+          }
+        </ol>
+      </section>
     </div>
   </section>
 </BaseLayout>

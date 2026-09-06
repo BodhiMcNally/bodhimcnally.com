@@ -458,23 +458,29 @@
   gap: 1.2rem;
 }
 
-.cv-embed {
+.cv-preview {
   margin-top: var(--space-6);
 }
 
-.cv-embed iframe {
-  display: block;
-  width: 100%;
-  height: min(78vh, 64rem);
-  min-height: 42rem;
-  border: 1px solid var(--line);
-  background: #fff;
+.cv-pages {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.cv-embed p {
-  margin: 0.75rem 0 0;
-  color: var(--muted);
-  font-size: 0.82rem;
+.cv-pages li {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: 0 1rem 2.5rem rgb(39 27 24 / 7%);
+}
+
+.cv-pages img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .button {
@@ -1272,11 +1278,6 @@
 
   .research-overview__introduction {
     gap: 1.2rem;
-  }
-
-  .cv-embed iframe {
-    height: 70vh;
-    min-height: 32rem;
   }
 
   .publication-list li,

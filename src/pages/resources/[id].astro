@@ -237,6 +237,13 @@ const structuredData = {
         showOutputMessage(output, 'Starting R in your browser…');
 
         try {
+          if ('fonts' in document) {
+            await Promise.all([
+              document.fonts.load('400 16px Ubuntu'),
+              document.fonts.load('700 16px Ubuntu'),
+            ]);
+          }
+
           const webR = await loadWebR();
           if (/(?:library|require)\s*\(\s*["']?ggplot2["']?\s*\)|ggplot2::/i.test(code)) {
             runButton.textContent = 'Loading ggplot2…';

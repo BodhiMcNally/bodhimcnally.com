@@ -520,4 +520,4 @@ p <- ggplot(mpg, aes(class, hwy, colour = drv)) +
 print(p)
 ```
 
-Use `theme_bodhi()` for a plot that does not need rotated labels or a legend. Use `theme_bodhi(rotate_x = TRUE)` for crowded categorical labels, and supply `legend_position = "right"` or `"bottom"` when colour, fill, shape or linetype needs explanation. Ubuntu must be available on the device producing the figure; otherwise pass an installed family such as `base_family = "sans"`.
+Use `theme_bodhi()` for a plot that does not need rotated labels or a legend. Use `theme_bodhi(rotate_x = TRUE)` for crowded categorical labels, and supply `legend_position = "right"` or `"bottom"` when colour, fill, shape or linetype needs explanation. Ubuntu is bundled with this website and loaded before the browser executes these examples. When using the theme on another computer, install Ubuntu locally or pass an available family such as `base_family = "sans"`.

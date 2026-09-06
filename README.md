@@ -49,7 +49,9 @@ The downloadable CV is:
 public/cv/Bodhi_McNally_Master_CV.pdf
 ```
 
-The About page also uses the Google Drive URL in `src/data/site.ts`. When replacing the CV, update both the PDF and the `cv.updated` value. Check that the Drive file is still shared for public viewing.
+The About page displays page images from `public/cv/pages/`, avoiding browser-specific PDF embedding. Regenerate those WebP images whenever the PDF changes. If the page count changes, update `cv.previewPages` in `src/data/site.ts`.
+
+The Google Drive URL and the displayed update date also live in `src/data/site.ts`. When replacing the CV, update `cv.updated` and check that the Drive file is still shared for public viewing.
 
 The teaching portfolio is:
 
