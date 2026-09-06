@@ -417,7 +417,20 @@
 }
 
 .update-carousel {
+  position: relative;
   overflow: hidden;
+}
+
+.update-carousel::after {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(3.75rem, 10vw, 7.5rem);
+  background: linear-gradient(90deg, transparent, var(--paper) 92%);
+  content: '';
+  pointer-events: none;
 }
 
 .update-stream {
@@ -426,6 +439,7 @@
   margin: 0;
   list-style: none;
   align-items: stretch;
+  gap: clamp(1.15rem, 2.5vw, 2rem);
   transform: translate3d(0, 0, 0);
   transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -435,7 +449,7 @@
   min-width: 0;
   padding: var(--space-6) 0 var(--space-5);
   border-bottom: 1px solid var(--line);
-  flex: 0 0 100%;
+  flex: 0 0 calc(100% - clamp(3.75rem, 10vw, 7.5rem));
   flex-direction: column;
 }
 

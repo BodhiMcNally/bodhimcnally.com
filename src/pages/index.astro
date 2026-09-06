@@ -206,9 +206,14 @@ const structuredData = [
     if (updateCarousel && updateTrack && updateSlides.length > 0) {
       let activeUpdate = 0;
 
+      const positionUpdateTrack = () => {
+        const activeSlide = updateSlides[activeUpdate];
+        updateTrack.style.transform = `translate3d(-${activeSlide.offsetLeft}px, 0, 0)`;
+      };
+
       const showUpdate = (index) => {
         activeUpdate = (index + updateSlides.length) % updateSlides.length;
-        updateTrack.style.transform = `translate3d(-${activeUpdate * 100}%, 0, 0)`;
+        positionUpdateTrack();
 
         updatePages.forEach((page, pageIndex) => {
           page.setAttribute('aria-pressed', String(pageIndex === activeUpdate));
@@ -224,6 +229,7 @@ const structuredData = [
       previousUpdate?.addEventListener('click', () => showUpdate(activeUpdate - 1));
       nextUpdate?.addEventListener('click', () => showUpdate(activeUpdate + 1));
       updatePages.forEach((page, index) => page.addEventListener('click', () => showUpdate(index)));
+      window.addEventListener('resize', positionUpdateTrack, { passive: true });
       showUpdate(0);
     }
   </script>
