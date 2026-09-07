@@ -1,5 +1,4 @@
-.site-search,
-.page-tools > summary {
+.site-search {
   display: inline-flex;
   min-height: 2.35rem;
   align-items: center;
@@ -14,9 +13,7 @@
   transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
 }
 
-.site-search:hover,
-.page-tools > summary:hover,
-.page-tools[open] > summary {
+.site-search:hover {
   border-color: var(--line-strong);
   background: var(--paper-light);
   color: var(--wine);
@@ -24,63 +21,6 @@
 
 .desktop-nav {
   margin-left: auto;
-}
-
-.page-tools {
-  position: relative;
-}
-
-.page-tools > summary {
-  padding: 0.35rem 0.7rem;
-  list-style: none;
-}
-
-.page-tools > summary::-webkit-details-marker {
-  display: none;
-}
-
-.page-tools > summary svg {
-  fill: currentColor;
-}
-
-.page-tools__menu {
-  position: absolute;
-  z-index: 70;
-  top: calc(100% + 0.65rem);
-  right: 0;
-  width: 15rem;
-  padding: 0.55rem;
-  border: 1px solid var(--line-strong);
-  background: var(--paper-light);
-  box-shadow: 0 1rem 2.8rem rgba(28, 25, 24, 0.14);
-}
-
-.page-tools__menu > p {
-  padding: 0.4rem 0.55rem 0.55rem;
-  margin: 0;
-  color: var(--wine);
-  font-size: 0.75rem;
-  font-weight: 680;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
-
-.page-tools__menu button {
-  display: block;
-  width: 100%;
-  min-height: 2.55rem;
-  padding: 0.55rem;
-  border: 0;
-  background: transparent;
-  color: var(--ink-soft);
-  cursor: pointer;
-  font-size: 0.875rem;
-  text-align: left;
-}
-
-.page-tools__menu button:hover {
-  background: var(--wine-wash);
-  color: var(--wine-dark);
 }
 
 .site-search svg,
@@ -423,15 +363,6 @@ html[data-easter-egg='true'] .brand__mark {
 
   .site-search span,
   .site-search kbd,
-  .page-tools > summary span {
-    display: none;
-  }
-
-  .page-tools > summary {
-    min-width: 2.65rem;
-    padding: 0;
-    justify-content: center;
-  }
 
   .command-palette {
     width: calc(100% - 1rem);
@@ -473,7 +404,6 @@ html[data-easter-egg='true'] .brand__mark {
 
 @media print {
   .site-search,
-  .page-tools,
   .command-palette,
   .back-to-top,
   .heading-anchor {
