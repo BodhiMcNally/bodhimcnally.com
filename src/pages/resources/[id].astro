@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content';
 import 'katex/dist/katex.min.css';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import AnnotationLayer from '@/components/AnnotationLayer.astro';
 import QuartoLab from '@/components/QuartoLab.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import { site } from '@/data/site';
@@ -112,6 +113,9 @@ const structuredData = {
         <button class="button button--quiet" type="button" data-save-resource aria-pressed="false">
           Save resource
         </button>
+        <button class="button button--quiet" type="button" data-open-annotations>
+          My notes
+        </button>
         <button class="button button--quiet" type="button" data-print-page>
           Print or save as PDF
         </button>
@@ -166,6 +170,8 @@ const structuredData = {
       </div>
     </div>
   </article>
+
+  <AnnotationLayer resourceTitle={entry.data.title} resourceId={entry.id} />
 
   <script is:inline type="module">
     const progress = document.querySelector('[data-reading-progress]');

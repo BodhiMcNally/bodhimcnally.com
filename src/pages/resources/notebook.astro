@@ -1,0 +1,223 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+---
+
+<BaseLayout
+  title="My resource notebook"
+  description="A private, browser-based notebook for highlights and notes made on Bodhi McNally’s teaching resources."
+  noindex={true}
+>
+  <PageHeader
+    title="My resource notebook"
+    introduction="Highlights, notes and saved resources from this browser."
+  />
+
+  <section class="notebook-introduction container">
+    <div>
+      <p>
+        This notebook is private to this browser. Its contents are stored on this device and are never sent to the website.
+      </p>
+      <a class="arrow-link" href="/resources/">Return to resources</a>
+    </div>
+    <div class="notebook-actions">
+      <button class="button button--quiet" type="button" data-notebook-export-markdown>Export Markdown</button>
+      <button class="button button--quiet" type="button" data-notebook-export-json>Back up as JSON</button>
+      <label class="button button--quiet" for="notebook-import">Import JSON</label>
+      <input class="visually-hidden" id="notebook-import" type="file" accept="application/json,.json" data-notebook-import />
+    </div>
+  </section>
+
+  <section class="notebook-section" aria-labelledby="saved-title">
+    <div class="container">
+      <div class="section-heading">
+        <h2 id="saved-title">Saved resources</h2>
+        <p data-saved-count></p>
+      </div>
+      <ol class="notebook-saved-list" data-saved-list></ol>
+      <p class="notebook-empty" data-saved-empty>No resources have been saved on this device.</p>
+    </div>
+  </section>
+
+  <section class="notebook-section notebook-section--notes" aria-labelledby="notes-title">
+    <div class="container">
+      <div class="section-heading">
+        <h2 id="notes-title">Highlights and notes</h2>
+        <p data-notes-count></p>
+      </div>
+      <ol class="notebook-notes-list" data-notes-list></ol>
+      <p class="notebook-empty" data-notes-empty>Select text in any teaching resource to create your first highlight.</p>
+    </div>
+  </section>
+
+  <script>
+    type AnnotationRecord = {
+      id: string;
+      href: string;
+      resourceTitle: string;
+      exact: string;
+      prefix: string;
+      suffix: string;
+      color: 'wine' | 'teal' | 'gold';
+      start: number;
+      end: number;
+      note?: string;
+      createdAt?: string;
+      updatedAt?: string;
+    };
+    type SavedResource = { href: string; title: string; description?: string };
+
+    const ANNOTATION_KEY = 'bm-annotations-v1';
+    const SAVED_KEY = 'bm-saved-resources';
+    const notesList = document.querySelector<HTMLOListElement>('[data-notes-list]');
+    const notesEmpty = document.querySelector<HTMLElement>('[data-notes-empty]');
+    const notesCount = document.querySelector<HTMLElement>('[data-notes-count]');
+    const savedList = document.querySelector<HTMLOListElement>('[data-saved-list]');
+    const savedEmpty = document.querySelector<HTMLElement>('[data-saved-empty]');
+    const savedCount = document.querySelector<HTMLElement>('[data-saved-count]');
+
+    const readArray = <T,>(key: string): T[] => {
+      try {
+        const value = JSON.parse(localStorage.getItem(key) ?? '[]');
+        return Array.isArray(value) ? value as T[] : [];
+      } catch {
+        return [];
+      }
+    };
+
+    const download = (contents: string, filename: string, type: string) => {
+      const url = URL.createObjectURL(new Blob([contents], { type }));
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = filename;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    };
+
+    const render = () => {
+      const annotations = readArray<AnnotationRecord>(ANNOTATION_KEY).sort((a, b) =>
+        String(b.updatedAt ?? b.createdAt).localeCompare(String(a.updatedAt ?? a.createdAt)),
+      );
+      const saved = readArray<SavedResource>(SAVED_KEY);
+
+      if (notesList && notesEmpty && notesCount) {
+        notesList.replaceChildren();
+        notesEmpty.hidden = annotations.length > 0;
+        notesCount.textContent = `${annotations.length} ${annotations.length === 1 ? 'annotation' : 'annotations'}`;
+        annotations.forEach((annotation) => {
+          const item = document.createElement('li');
+          item.className = 'notebook-note';
+          const meta = document.createElement('p');
+          meta.className = 'notebook-note__meta';
+          meta.textContent = annotation.resourceTitle;
+          const quote = document.createElement('blockquote');
+          quote.textContent = String(annotation.exact ?? '').trim().replace(/\s+/g, ' ');
+          const note = document.createElement('p');
+          note.className = 'notebook-note__body';
+          note.textContent = annotation.note || 'Highlight without a note.';
+          const actions = document.createElement('div');
+          const open = document.createElement('a');
+          open.href = `${annotation.href}?annotation=${encodeURIComponent(annotation.id)}`;
+          open.textContent = 'Open in resource';
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.textContent = 'Delete';
+          remove.addEventListener('click', () => {
+            localStorage.setItem(ANNOTATION_KEY, JSON.stringify(readArray<AnnotationRecord>(ANNOTATION_KEY).filter((candidate) => candidate.id !== annotation.id)));
+            render();
+          });
+          actions.append(open, remove);
+          item.append(meta, quote, note, actions);
+          notesList.append(item);
+        });
+      }
+
+      if (savedList && savedEmpty && savedCount) {
+        savedList.replaceChildren();
+        savedEmpty.hidden = saved.length > 0;
+        savedCount.textContent = `${saved.length} saved`;
+        saved.forEach((resource) => {
+          const item = document.createElement('li');
+          const copy = document.createElement('div');
+          const title = document.createElement('h3');
+          const link = document.createElement('a');
+          link.href = resource.href;
+          link.textContent = resource.title;
+          title.append(link);
+          const description = document.createElement('p');
+          description.textContent = resource.description ?? '';
+          copy.append(title, description);
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.textContent = 'Remove';
+          remove.addEventListener('click', () => {
+            localStorage.setItem(SAVED_KEY, JSON.stringify(readArray<SavedResource>(SAVED_KEY).filter((candidate) => candidate.href !== resource.href)));
+            render();
+          });
+          item.append(copy, remove);
+          savedList.append(item);
+        });
+      }
+    };
+
+    document.querySelector('[data-notebook-export-json]')?.addEventListener('click', () => {
+      download(JSON.stringify({ version: 1, annotations: readArray<AnnotationRecord>(ANNOTATION_KEY), savedResources: readArray<SavedResource>(SAVED_KEY) }, null, 2), 'bodhi-resource-notebook.json', 'application/json');
+    });
+
+    document.querySelector('[data-notebook-export-markdown]')?.addEventListener('click', () => {
+      const annotations = readArray<AnnotationRecord>(ANNOTATION_KEY);
+      const groups = annotations.reduce<Record<string, AnnotationRecord[]>>((result, annotation) => {
+        const title = annotation.resourceTitle || 'Resource';
+        (result[title] ??= []).push(annotation);
+        return result;
+      }, {});
+      const lines = ['# Resource notebook', ''];
+      Object.entries(groups).forEach(([title, group]) => {
+        lines.push(`## ${title}`, '');
+        group?.forEach((annotation) => {
+          lines.push(`> ${String(annotation.exact ?? '').trim().replace(/\s+/g, ' ')}`, '');
+          if (annotation.note) lines.push(annotation.note, '');
+          lines.push(`[Open resource](${new URL(annotation.href, window.location.origin)})`, '');
+        });
+      });
+      download(lines.join('\n'), 'bodhi-resource-notebook.md', 'text/markdown');
+    });
+
+    document.querySelector<HTMLInputElement>('[data-notebook-import]')?.addEventListener('change', async (event) => {
+      const input = event.currentTarget as HTMLInputElement;
+      const file = input.files?.[0];
+      if (!file) return;
+      try {
+        const backup = JSON.parse(await file.text()) as { version?: unknown; annotations?: unknown[]; savedResources?: unknown[] };
+        if (backup.version !== 1 || !Array.isArray(backup.annotations) || !Array.isArray(backup.savedResources)) throw new Error('Invalid backup');
+        const validAnnotations = backup.annotations.filter((item): item is AnnotationRecord => {
+          if (!item || typeof item !== 'object') return false;
+          const record = item as Record<string, unknown>;
+          return typeof record.id === 'string' && typeof record.href === 'string' && record.href.startsWith('/') &&
+            typeof record.exact === 'string' && Number.isFinite(record.start) && Number.isFinite(record.end) &&
+            typeof record.resourceTitle === 'string' && typeof record.prefix === 'string' &&
+            typeof record.suffix === 'string' && ['wine', 'teal', 'gold'].includes(String(record.color));
+        });
+        const validSaved = backup.savedResources.filter((item): item is SavedResource => {
+          if (!item || typeof item !== 'object') return false;
+          const record = item as Record<string, unknown>;
+          return typeof record.href === 'string' && record.href.startsWith('/') && typeof record.title === 'string';
+        });
+        const annotations = [...readArray<AnnotationRecord>(ANNOTATION_KEY), ...validAnnotations]
+          .filter((item, index, items) => items.findIndex((candidate) => candidate.id === item.id) === index);
+        const saved = [...readArray<SavedResource>(SAVED_KEY), ...validSaved]
+          .filter((item, index, items) => items.findIndex((candidate) => candidate.href === item.href) === index);
+        localStorage.setItem(ANNOTATION_KEY, JSON.stringify(annotations));
+        localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
+        render();
+      } catch {
+        window.alert('This file is not a valid resource-notebook backup.');
+      } finally {
+        input.value = '';
+      }
+    });
+
+    window.addEventListener('storage', render);
+    render();
+  </script>
+</BaseLayout>

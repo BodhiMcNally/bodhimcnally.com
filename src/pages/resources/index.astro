@@ -45,9 +45,27 @@ const showBrowseTools = resources.length >= 4;
     </div>
   </section>
 
+  <section class="resource-workbench" aria-labelledby="workbench-title">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Interactive tools</p>
+        <h2 id="workbench-title">Resource workbench</h2>
+        <p>Small, purpose-built tools for exploring statistical ideas and improving reproducible work. Calculations, notes and uploaded files remain in your browser.</p>
+      </div>
+      <ol class="workbench-list">
+        <li><a href="/resources/lab/"><span>01</span><div><h3>Statistical simulation studio</h3><p>Change sample size, confidence level, effect size and distribution; rerun seeded simulations and export the result.</p></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/reproducibility-inspector/"><span>02</span><div><h3>Reproducibility inspector</h3><p>Audit an R or Quarto project locally for fragile paths, missing files, seeds, package records and document problems.</p></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/notebook/"><span>03</span><div><h3>My resource notebook</h3><p>Return to saved resources, review private annotations and export your notes as Markdown or JSON.</p></div><strong aria-hidden="true">→</strong></a></li>
+      </ol>
+    </div>
+  </section>
+
   <section class="resources-library" aria-labelledby="browse-title">
     <div class="container">
-      <h2 id="browse-title">Available resources</h2>
+      <div class="section-heading section-heading--with-action">
+        <h2 id="browse-title">Available resources</h2>
+        <a class="text-link" href="/resources/notebook/">My resource notebook</a>
+      </div>
 
       {
         showBrowseTools && (

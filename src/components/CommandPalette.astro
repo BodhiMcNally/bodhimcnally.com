@@ -51,6 +51,12 @@ const researchOutputs = [
   })),
 ];
 
+const workbenchPages = [
+  { title: 'Statistical simulation studio', description: 'Interactive confidence interval, sampling distribution and power experiments', href: '/resources/lab/', type: 'Tool', keywords: 'simulation statistics confidence interval power sampling seed R' },
+  { title: 'Reproducibility inspector', description: 'Private browser audit for R and Quarto projects', href: '/resources/reproducibility-inspector/', type: 'Tool', keywords: 'reproducibility audit R Quarto qmd renv paths files' },
+  { title: 'My resource notebook', description: 'Saved resources and private annotations on this device', href: '/resources/notebook/', type: 'Tool', keywords: 'notes notebook annotations highlights saved resources' },
+];
+
 const searchIndex = [
   ...navigation.map((item) => ({
     title: item.label,
@@ -60,6 +66,7 @@ const searchIndex = [
     keywords: '',
   })),
   ...resources,
+  ...workbenchPages,
   ...researchOutputs,
 ];
 const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c');

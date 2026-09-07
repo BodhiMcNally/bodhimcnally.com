@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ReproducibilityInspector from '@/components/ReproducibilityInspector.astro';
+---
+
+<BaseLayout title="Reproducibility inspector" description="A private, browser-only audit for R and Quarto projects.">
+  <PageHeader title="Reproducibility inspector" introduction="Inspect an R or Quarto project for common reproducibility problems before you share or submit it." />
+  <div class="workbench-page container">
+    <ReproducibilityInspector />
+    <aside class="disclaimer workbench-disclaimer">
+      <h2>What this can—and cannot—check</h2>
+      <p>The inspector recognises common problems in R, R Markdown and Quarto source files. It does not execute code, validate statistical choices or guarantee that a project will run elsewhere. The strongest test remains rendering the project in a clean environment.</p>
+    </aside>
+  </div>
+</BaseLayout>

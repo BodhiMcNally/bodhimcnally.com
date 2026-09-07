@@ -1,0 +1,206 @@
+<section class="repro-inspector" data-repro-inspector aria-labelledby="inspector-title">
+  <div class="repro-inspector__intro">
+    <div>
+      <p class="eyebrow">Private browser audit</p>
+      <h2 id="inspector-title">Reproducibility inspector</h2>
+    </div>
+    <p><strong>Your files stay on this device.</strong> They are read by your browser and are never sent to this website.</p>
+  </div>
+
+  <div class="repro-drop" data-repro-drop>
+    <input id="repro-files" type="file" multiple accept=".R,.r,.Rmd,.rmd,.qmd,.yml,.yaml,.json,.txt,.csv,.zip" data-repro-input />
+    <label for="repro-files"><strong>Choose files or a project ZIP</strong><span>or drag them here · maximum 25 MB per file</span></label>
+  </div>
+  <div class="repro-filebar">
+    <p aria-live="polite" data-repro-file-status>No files selected.</p>
+    <button class="button" type="button" data-repro-run disabled>Run audit</button>
+  </div>
+
+  <div class="repro-results" data-repro-results hidden>
+    <div class="repro-summary" aria-live="polite">
+      <div><span data-repro-count="error">0</span><small>errors</small></div>
+      <div><span data-repro-count="warning">0</span><small>warnings</small></div>
+      <div><span data-repro-count="info">0</span><small>notes</small></div>
+      <p data-repro-summary-text></p>
+    </div>
+    <div class="repro-actions">
+      <label for="repro-filter">Show</label>
+      <select id="repro-filter" data-repro-filter><option value="all">All findings</option><option value="error">Errors</option><option value="warning">Warnings</option><option value="info">Notes</option></select>
+      <button type="button" data-repro-export="markdown">Export report</button>
+      <button type="button" data-repro-export="json">Export JSON</button>
+    </div>
+    <ol class="repro-findings" data-repro-findings></ol>
+    <section class="repro-dependencies" data-repro-dependencies hidden>
+      <h3>File references</h3>
+      <p>Files detected in code, documents and Markdown image links.</p>
+      <ul data-repro-dependency-list></ul>
+    </section>
+  </div>
+</section>
+
+<script>
+  import { strFromU8, unzipSync } from 'fflate';
+
+  type Severity = 'error' | 'warning' | 'info';
+  type ProjectFile = { path: string; text: string; size: number };
+  type Finding = { severity: Severity; title: string; detail: string; remedy: string; file?: string; line?: number; evidence?: string };
+  type Dependency = { source: string; target: string; exists: boolean };
+
+  const root = document.querySelector<HTMLElement>('[data-repro-inspector]');
+  if (root) {
+    const input = root.querySelector<HTMLInputElement>('[data-repro-input]')!;
+    const drop = root.querySelector<HTMLElement>('[data-repro-drop]')!;
+    const runButton = root.querySelector<HTMLButtonElement>('[data-repro-run]')!;
+    const fileStatus = root.querySelector<HTMLElement>('[data-repro-file-status]')!;
+    const results = root.querySelector<HTMLElement>('[data-repro-results]')!;
+    const findingsList = root.querySelector<HTMLOListElement>('[data-repro-findings]')!;
+    const filter = root.querySelector<HTMLSelectElement>('[data-repro-filter]')!;
+    let files: ProjectFile[] = [];
+    let findings: Finding[] = [];
+    let dependencies: Dependency[] = [];
+
+    const normalisePath = (value: string) => value.replaceAll('\\\\', '/').replace(/^\.\//, '').replace(/\/+/g, '/');
+    const lineNumber = (text: string, index: number) => text.slice(0, index).split('\n').length;
+    const lineAt = (text: string, index: number) => text.split('\n')[lineNumber(text, index) - 1]?.trim().slice(0, 180) ?? '';
+    const add = (finding: Finding) => findings.push(finding);
+    const isText = (path: string) => /\.(r|rmd|qmd|ya?ml|json|txt|csv|md)$/i.test(path);
+
+    const readSelections = async (selection: FileList | File[]) => {
+      const collected: ProjectFile[] = [];
+      for (const selected of [...selection].slice(0, 500)) {
+        if (selected.size > 25 * 1024 * 1024) continue;
+        if (selected.name.toLowerCase().endsWith('.zip')) {
+          try {
+            const archive = unzipSync(new Uint8Array(await selected.arrayBuffer()));
+            for (const [path, data] of Object.entries(archive).slice(0, 500)) {
+              if (!isText(path) || data.length > 25 * 1024 * 1024) continue;
+              collected.push({ path: normalisePath(path), text: strFromU8(data), size: data.length });
+            }
+          } catch {
+            add({ severity: 'error', title: 'ZIP could not be opened', detail: `${selected.name} is not a readable ZIP archive.`, remedy: 'Create a new ZIP of the project folder and try again.' });
+          }
+        } else if (isText(selected.name)) {
+          const relativePath = (selected as File & { webkitRelativePath?: string }).webkitRelativePath || selected.name;
+          collected.push({ path: normalisePath(relativePath), text: await selected.text(), size: selected.size });
+        }
+      }
+      files = collected;
+      fileStatus.textContent = files.length ? `${files.length} readable ${files.length === 1 ? 'file' : 'files'} ready to inspect.` : 'No supported text files found.';
+      runButton.disabled = files.length === 0;
+    };
+
+    const inspect = () => {
+      findings = findings.filter((finding) => finding.title === 'ZIP could not be opened');
+      dependencies = [];
+      const known = new Set(files.map((file) => normalisePath(file.path).toLowerCase()));
+      const projectNames = [...known];
+      const sourceFiles = files.filter((file) => /\.(r|rmd|qmd|md)$/i.test(file.path));
+      const hasSeed = sourceFiles.some((file) => /\bset\.seed\s*\(/.test(file.text));
+      const usesRandomness = sourceFiles.some((file) => /\b(rnorm|runif|sample|rbinom|rexp|rpois|rgamma)\s*\(/.test(file.text));
+
+      if (sourceFiles.length && !projectNames.some((path) => /(^|\/)readme(\.md|\.txt)?$/i.test(path))) add({ severity: 'info', title: 'No README detected', detail: 'A short README helps another person understand how to run the project.', remedy: 'Describe the purpose, required software, data sources and rendering steps in README.md.' });
+      if (sourceFiles.length && !projectNames.some((path) => /(^|\/)renv\.lock$/i.test(path))) add({ severity: 'warning', title: 'Package versions are not recorded', detail: 'The project uses R code but no renv.lock file was detected.', remedy: 'Consider using renv::init() and committing renv.lock so package versions can be restored.' });
+      if (usesRandomness && !hasSeed) add({ severity: 'warning', title: 'Random process without a seed', detail: 'Random-number functions were found, but no set.seed() call was detected.', remedy: 'Set and document a seed before simulations, sampling or random splitting.' });
+
+      const checks: Array<{ pattern: RegExp; severity: Severity; title: string; detail: string; remedy: string }> = [
+        { pattern: /\bsetwd\s*\(/g, severity: 'warning', title: 'Working directory changed in code', detail: 'setwd() makes a project depend on one computer\'s folder layout.', remedy: 'Use an RStudio Project and relative paths, or the here package.' },
+        { pattern: /\binstall\.packages\s*\(/g, severity: 'warning', title: 'Package installation inside analysis code', detail: 'Installing packages during rendering changes the environment and may require network access.', remedy: 'Install packages separately and record versions with renv.' },
+        { pattern: /(?:[A-Za-z]:[\\/]|\/(?:Users|home)\/)[^'"\n]+/g, severity: 'error', title: 'Computer-specific absolute path', detail: 'This path is unlikely to exist on another computer.', remedy: 'Use a path relative to the project root.' },
+        { pattern: /\b(?:api[_-]?key|token|password|secret)\s*(?:<-|=)\s*['"][^'"]+['"]/gi, severity: 'error', title: 'Possible secret in source code', detail: 'A credential-like value may be stored directly in a file.', remedy: 'Remove it, rotate the credential and read it from an environment variable instead.' },
+      ];
+
+      for (const file of sourceFiles) {
+        for (const check of checks) {
+          for (const match of file.text.matchAll(check.pattern)) add({ ...check, file: file.path, line: lineNumber(file.text, match.index ?? 0), evidence: lineAt(file.text, match.index ?? 0) });
+        }
+        if (/\.qmd$/i.test(file.path)) {
+          const yaml = file.text.match(/^---\s*\n([\s\S]*?)\n---/);
+          if (!yaml) add({ severity: 'error', title: 'Quarto YAML header missing', detail: 'This .qmd file has no opening YAML block.', remedy: 'Begin the document with a --- delimited YAML header containing at least title and format.', file: file.path, line: 1 });
+          else {
+            if (!/^title\s*:/m.test(yaml[1] ?? '')) add({ severity: 'warning', title: 'YAML title missing', detail: 'No title field was detected in the Quarto header.', remedy: 'Add title: "Your title" to the YAML header.', file: file.path, line: 1 });
+            if (!/^format\s*:/m.test(yaml[1] ?? '')) add({ severity: 'info', title: 'YAML format not explicit', detail: 'Quarto will use a default format, but the intended output is not documented.', remedy: 'Add format: html, pdf or an expanded format block.', file: file.path, line: 1 });
+          }
+          const labels = [...file.text.matchAll(/^#\|\s*label:\s*([^\s#]+)/gm)].map((match) => ({ label: match[1] ?? '', index: match.index ?? 0 }));
+          const seen = new Set<string>();
+          for (const label of labels) {
+            if (seen.has(label.label)) add({ severity: 'error', title: 'Duplicate code-cell label', detail: `The label “${label.label}” is used more than once.`, remedy: 'Give every labelled cell a unique, descriptive label.', file: file.path, line: lineNumber(file.text, label.index), evidence: `#| label: ${label.label}` });
+            seen.add(label.label);
+          }
+        }
+
+        const references = [
+          ...file.text.matchAll(/\b(?:read_csv|read\.csv|readRDS|source|include_graphics)\s*\(\s*['"]([^'"]+)['"]/g),
+          ...file.text.matchAll(/!\[[^\]]*\]\((?!https?:|data:)([^)\s]+)(?:\s+['"][^'"]*['"])?\)/g),
+        ];
+        for (const match of references) {
+          const target = normalisePath(match[1] ?? '');
+          if (!target || /[*{}]/.test(target)) continue;
+          const parent = file.path.includes('/') ? file.path.slice(0, file.path.lastIndexOf('/') + 1) : '';
+          const candidates = [target, normalisePath(parent + target)].map((path) => path.toLowerCase());
+          const exists = candidates.some((candidate) => known.has(candidate));
+          dependencies.push({ source: file.path, target, exists });
+          if (!exists) add({ severity: 'error', title: 'Referenced file not found', detail: `“${target}” is referenced but was not included in the selected project.`, remedy: 'Check the spelling and case, then include the file at the expected relative path.', file: file.path, line: lineNumber(file.text, match.index ?? 0), evidence: lineAt(file.text, match.index ?? 0) });
+        }
+      }
+      render();
+    };
+
+    const render = () => {
+      results.hidden = false;
+      (['error', 'warning', 'info'] as Severity[]).forEach((severity) => {
+        const target = root.querySelector<HTMLElement>(`[data-repro-count="${severity}"]`);
+        if (target) target.textContent = String(findings.filter((finding) => finding.severity === severity).length);
+      });
+      const summary = root.querySelector<HTMLElement>('[data-repro-summary-text]');
+      if (summary) summary.textContent = findings.length ? `${findings.length} findings across ${files.length} files. Review them in context; this audit cannot prove that an analysis is reproducible.` : `No findings from ${files.length} files. Automated checks cannot replace rerunning the project on a clean machine.`;
+      findingsList.replaceChildren();
+      findings.forEach((finding) => {
+        if (filter.value !== 'all' && filter.value !== finding.severity) return;
+        const item = document.createElement('li');
+        item.dataset.severity = finding.severity;
+        const heading = document.createElement('h3');
+        heading.textContent = finding.title;
+        const badge = document.createElement('span');
+        badge.textContent = finding.severity === 'info' ? 'note' : finding.severity;
+        heading.prepend(badge);
+        item.append(heading);
+        if (finding.file) {
+          const location = document.createElement('p');
+          location.className = 'repro-location';
+          location.textContent = `${finding.file}${finding.line ? ` · line ${finding.line}` : ''}`;
+          item.append(location);
+        }
+        const detail = document.createElement('p'); detail.textContent = finding.detail; item.append(detail);
+        if (finding.evidence) { const code = document.createElement('code'); code.textContent = finding.evidence; item.append(code); }
+        const remedy = document.createElement('p'); remedy.className = 'repro-remedy'; remedy.textContent = `Next step: ${finding.remedy}`; item.append(remedy);
+        findingsList.append(item);
+      });
+      const dependencySection = root.querySelector<HTMLElement>('[data-repro-dependencies]')!;
+      const dependencyList = root.querySelector<HTMLUListElement>('[data-repro-dependency-list]')!;
+      dependencySection.hidden = dependencies.length === 0;
+      dependencyList.replaceChildren(...dependencies.map((dependency) => {
+        const item = document.createElement('li');
+        item.textContent = `${dependency.source} → ${dependency.target} · ${dependency.exists ? 'found' : 'missing'}`;
+        item.dataset.exists = String(dependency.exists);
+        return item;
+      }));
+    };
+
+    const reportMarkdown = () => [`# Reproducibility audit`, '', `Generated ${new Date().toISOString()}`, '', `Files inspected: ${files.length}`, '', ...findings.flatMap((finding) => [`## ${finding.severity.toUpperCase()}: ${finding.title}`, '', finding.file ? `**Location:** ${finding.file}${finding.line ? `, line ${finding.line}` : ''}` : '', finding.detail, '', `**Next step:** ${finding.remedy}`, ''])].join('\n');
+    const download = (contents: string, name: string, type: string) => {
+      const url = URL.createObjectURL(new Blob([contents], { type }));
+      const anchor = document.createElement('a'); anchor.href = url; anchor.download = name; anchor.click(); URL.revokeObjectURL(url);
+    };
+
+    input.addEventListener('change', () => readSelections(input.files ?? []));
+    ['dragenter', 'dragover'].forEach((name) => drop.addEventListener(name, (event) => { event.preventDefault(); drop.dataset.active = 'true'; }));
+    ['dragleave', 'drop'].forEach((name) => drop.addEventListener(name, (event) => { event.preventDefault(); drop.dataset.active = 'false'; }));
+    drop.addEventListener('drop', (event) => readSelections((event as DragEvent).dataTransfer?.files ?? []));
+    runButton.addEventListener('click', inspect);
+    filter.addEventListener('change', render);
+    root.querySelectorAll<HTMLButtonElement>('[data-repro-export]').forEach((button) => button.addEventListener('click', () => {
+      if (button.dataset.reproExport === 'json') download(JSON.stringify({ generated: new Date().toISOString(), files: files.map(({ path, size }) => ({ path, size })), findings, dependencies }, null, 2), 'reproducibility-audit.json', 'application/json');
+      else download(reportMarkdown(), 'reproducibility-audit.md', 'text/markdown');
+    }));
+  }
+</script>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import SimulationStudio from '@/components/SimulationStudio.astro';
+---
+
+<BaseLayout
+  title="Statistical simulation studio"
+  description="Interactive, reproducible simulations for confidence intervals, sampling distributions and statistical power."
+>
+  <PageHeader
+    title="Statistical simulation studio"
+    introduction="Change the assumptions, rerun the experiment and inspect what happens across repeated samples."
+  />
+  <div class="workbench-page container">
+    <SimulationStudio />
+    <aside class="disclaimer workbench-disclaimer">
+      <h2>About the simulations</h2>
+      <p>
+        These experiments simplify some assumptions so that the underlying ideas remain visible. They are teaching demonstrations rather than substitutes for an appropriate analysis of real data.
+      </p>
+    </aside>
+  </div>
+</BaseLayout>

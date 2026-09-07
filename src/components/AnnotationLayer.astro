@@ -1,0 +1,377 @@
+---
+interface Props {
+  resourceTitle: string;
+  resourceId: string;
+}
+
+const { resourceTitle, resourceId } = Astro.props;
+---
+
+<div
+  class="annotation-layer"
+  data-annotation-layer
+  data-resource-title={resourceTitle}
+  data-resource-id={resourceId}
+>
+  <div class="annotation-toolbar" data-annotation-toolbar hidden role="toolbar" aria-label="Annotate selected text">
+    <button type="button" data-highlight-colour="wine" aria-label="Highlight in wine">
+      <span class="annotation-swatch annotation-swatch--wine" aria-hidden="true"></span>
+    </button>
+    <button type="button" data-highlight-colour="teal" aria-label="Highlight in teal">
+      <span class="annotation-swatch annotation-swatch--teal" aria-hidden="true"></span>
+    </button>
+    <button type="button" data-highlight-colour="gold" aria-label="Highlight in gold">
+      <span class="annotation-swatch annotation-swatch--gold" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="annotation-toolbar__note" data-highlight-note>Add note</button>
+  </div>
+
+  <dialog class="annotation-dialog" data-annotation-dialog aria-labelledby="annotation-dialog-title">
+    <div class="annotation-dialog__header">
+      <div>
+        <p class="eyebrow">Private workspace</p>
+        <h2 id="annotation-dialog-title">My notes</h2>
+      </div>
+      <button type="button" data-close-annotations aria-label="Close notes">×</button>
+    </div>
+    <p class="annotation-dialog__privacy">Saved only in this browser. Nothing is sent to the website.</p>
+    <ol class="annotation-list" data-annotation-list></ol>
+    <p class="annotation-empty" data-annotation-empty>No highlights or notes on this resource yet.</p>
+    <div class="annotation-dialog__footer">
+      <a href="/resources/notebook/">Open notebook</a>
+      <button type="button" data-export-page-notes>Export this page</button>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  type AnnotationRecord = {
+    id: string;
+    href: string;
+    resourceId: string;
+    resourceTitle: string;
+    exact: string;
+    prefix: string;
+    suffix: string;
+    start: number;
+    end: number;
+    colour: string;
+    note: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+
+  const STORAGE_KEY = 'bm-annotations-v1';
+  const layer = document.querySelector<HTMLElement>('[data-annotation-layer]');
+  const root = document.querySelector<HTMLElement>('.prose');
+  const toolbar = document.querySelector<HTMLElement>('[data-annotation-toolbar]');
+  const dialog = document.querySelector<HTMLDialogElement>('[data-annotation-dialog]');
+  const list = document.querySelector<HTMLOListElement>('[data-annotation-list]');
+  const empty = document.querySelector<HTMLElement>('[data-annotation-empty]');
+
+  if (layer && root && toolbar && dialog && list && empty) {
+    const resourceTitle = layer.dataset.resourceTitle ?? document.title;
+    const resourceId = layer.dataset.resourceId ?? window.location.pathname;
+    const resourceHref = window.location.pathname;
+    let pendingAnchor: null | {
+      exact: string;
+      prefix: string;
+      suffix: string;
+      start: number;
+      end: number;
+    } = null;
+
+    const loadAnnotations = (): AnnotationRecord[] => {
+      try {
+        const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+        return Array.isArray(stored) ? stored as AnnotationRecord[] : [];
+      } catch {
+        return [];
+      }
+    };
+
+    const saveAnnotations = (annotations: AnnotationRecord[]) => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(annotations));
+      window.dispatchEvent(new CustomEvent('bm-annotations-changed'));
+    };
+
+    const pageAnnotations = () => loadAnnotations().filter((annotation) => annotation.href === resourceHref);
+
+    const textNodes = () => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          const parent = node.parentElement;
+          if (!parent || !node.textContent) return NodeFilter.FILTER_REJECT;
+          if (parent.closest('script, style, button, textarea, input, select, pre, code, [data-no-annotation]')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        },
+      });
+      const nodes: Text[] = [];
+      let node;
+      while ((node = walker.nextNode())) nodes.push(node as Text);
+      return nodes;
+    };
+
+    const plainText = () => textNodes().map((node) => node.data).join('');
+
+    const boundaryOffset = (targetNode: Node, targetOffset: number) => {
+      let total = 0;
+      for (const node of textNodes()) {
+        if (node === targetNode) return total + targetOffset;
+        if (targetNode.nodeType === Node.ELEMENT_NODE && targetNode.contains(node)) {
+          const range = document.createRange();
+          range.setStart(targetNode, 0);
+          range.setEnd(targetNode, targetOffset);
+          return total + range.toString().length;
+        }
+        total += node.data.length;
+      }
+      return null;
+    };
+
+    const locateAnnotation = (annotation: AnnotationRecord) => {
+      const text = plainText();
+      if (text.slice(annotation.start, annotation.end) === annotation.exact) {
+        return { start: annotation.start, end: annotation.end };
+      }
+
+      const candidates: number[] = [];
+      let position = text.indexOf(annotation.exact);
+      while (position !== -1) {
+        candidates.push(position);
+        position = text.indexOf(annotation.exact, position + 1);
+      }
+      if (candidates.length === 0) return null;
+
+      const best = candidates
+        .map((start) => {
+          const before = text.slice(Math.max(0, start - annotation.prefix.length), start);
+          const after = text.slice(start + annotation.exact.length, start + annotation.exact.length + annotation.suffix.length);
+          let score = 0;
+          for (let index = 1; index <= Math.min(before.length, annotation.prefix.length); index += 1) {
+            if (before.at(-index) === annotation.prefix.at(-index)) score += 1;
+            else break;
+          }
+          for (let index = 0; index < Math.min(after.length, annotation.suffix.length); index += 1) {
+            if (after[index] === annotation.suffix[index]) score += 1;
+            else break;
+          }
+          return { start, score };
+        })
+        .sort((a, b) => b.score - a.score)[0];
+      return best ? { start: best.start, end: best.start + annotation.exact.length } : null;
+    };
+
+    const wrapOffsets = (start: number, end: number, annotation: AnnotationRecord) => {
+      const nodes = textNodes();
+      let cursor = 0;
+      const segments: Array<{ node: Text; start: number; end: number }> = [];
+      nodes.forEach((node) => {
+        const nodeStart = cursor;
+        const nodeEnd = cursor + node.data.length;
+        if (nodeEnd > start && nodeStart < end) {
+          segments.push({
+            node,
+            start: Math.max(0, start - nodeStart),
+            end: Math.min(node.data.length, end - nodeStart),
+          });
+        }
+        cursor = nodeEnd;
+      });
+
+      segments.reverse().forEach((segment) => {
+        if (segment.start >= segment.end || segment.node.parentElement?.closest('mark[data-annotation-id]')) return;
+        const range = document.createRange();
+        range.setStart(segment.node, segment.start);
+        range.setEnd(segment.node, segment.end);
+        const mark = document.createElement('mark');
+        mark.className = `annotation-highlight annotation-highlight--${annotation.colour}`;
+        mark.dataset.annotationId = annotation.id;
+        mark.title = annotation.note ? 'Highlighted text with a private note' : 'Privately highlighted text';
+        range.surroundContents(mark);
+      });
+    };
+
+    const renderHighlights = () => {
+      pageAnnotations().forEach((annotation) => {
+        const location = locateAnnotation(annotation);
+        if (location) wrapOffsets(location.start, location.end, annotation);
+      });
+    };
+
+    const positionToolbar = (rect: DOMRect) => {
+      toolbar.hidden = false;
+      const width = toolbar.offsetWidth;
+      const left = Math.min(window.innerWidth - width - 10, Math.max(10, rect.left + rect.width / 2 - width / 2));
+      const top = Math.min(window.innerHeight - toolbar.offsetHeight - 10, rect.bottom + 9);
+      toolbar.style.left = `${left}px`;
+      toolbar.style.top = `${top}px`;
+    };
+
+    const captureSelection = () => {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
+        toolbar.hidden = true;
+        pendingAnchor = null;
+        return;
+      }
+      const range = selection.getRangeAt(0);
+      if (!root.contains(range.commonAncestorContainer)) return;
+      const exact = range.toString();
+      if (exact.trim().length < 2 || exact.length > 1200) return;
+      const start = boundaryOffset(range.startContainer, range.startOffset);
+      const end = boundaryOffset(range.endContainer, range.endOffset);
+      if (start === null || end === null || end <= start) return;
+      const text = plainText();
+      pendingAnchor = {
+        exact,
+        prefix: text.slice(Math.max(0, start - 48), start),
+        suffix: text.slice(end, end + 48),
+        start,
+        end,
+      };
+      positionToolbar(range.getBoundingClientRect());
+    };
+
+    const createAnnotation = (colour: string, openNote = false) => {
+      if (!pendingAnchor) return;
+      const annotations = loadAnnotations();
+      const overlaps = annotations.some((annotation) =>
+        annotation.href === resourceHref && annotation.start < pendingAnchor!.end && annotation.end > pendingAnchor!.start,
+      );
+      if (overlaps) {
+        toolbar.hidden = true;
+        window.getSelection()?.removeAllRanges();
+        return;
+      }
+      const annotation = {
+        id: crypto.randomUUID(),
+        href: resourceHref,
+        resourceId,
+        resourceTitle,
+        ...pendingAnchor,
+        colour,
+        note: '',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      annotations.push(annotation);
+      saveAnnotations(annotations);
+      wrapOffsets(annotation.start, annotation.end, annotation);
+      toolbar.hidden = true;
+      pendingAnchor = null;
+      window.getSelection()?.removeAllRanges();
+      updateNotesButton();
+      if (openNote) openNotes(annotation.id);
+    };
+
+    const exportPage = () => {
+      const annotations = pageAnnotations();
+      const lines = [`# Notes on ${resourceTitle}`, '', `Source: ${window.location.href}`, ''];
+      annotations.forEach((annotation) => {
+        lines.push(`> ${annotation.exact.trim().replace(/\s+/g, ' ')}`, '');
+        if (annotation.note) lines.push(annotation.note, '');
+      });
+      const blob = new Blob([lines.join('\n')], { type: 'text/markdown' });
+      const anchor = document.createElement('a');
+      anchor.href = URL.createObjectURL(blob);
+      anchor.download = `${resourceId}-notes.md`;
+      anchor.click();
+      URL.revokeObjectURL(anchor.href);
+    };
+
+    const renderNotes = (focusId?: string) => {
+      const annotations = pageAnnotations();
+      list.replaceChildren();
+      empty.hidden = annotations.length > 0;
+      annotations.forEach((annotation) => {
+        const item = document.createElement('li');
+        item.dataset.annotationItem = annotation.id;
+        const quote = document.createElement('blockquote');
+        quote.textContent = annotation.exact.trim().replace(/\s+/g, ' ');
+        const textarea = document.createElement('textarea');
+        textarea.value = annotation.note;
+        textarea.placeholder = 'Add a private note…';
+        textarea.setAttribute('aria-label', `Note for: ${annotation.exact.trim().slice(0, 80)}`);
+        const actions = document.createElement('div');
+        const locate = document.createElement('button');
+        locate.type = 'button';
+        locate.textContent = 'Show in text';
+        locate.addEventListener('click', () => {
+          dialog.close();
+          document.querySelector(`[data-annotation-id="${CSS.escape(annotation.id)}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.textContent = 'Delete';
+        remove.addEventListener('click', () => {
+          saveAnnotations(loadAnnotations().filter((candidate) => candidate.id !== annotation.id));
+          document.querySelectorAll(`[data-annotation-id="${CSS.escape(annotation.id)}"]`).forEach((mark) => mark.replaceWith(...mark.childNodes));
+          renderNotes();
+          updateNotesButton();
+        });
+        textarea.addEventListener('input', () => {
+          const all = loadAnnotations();
+          const target = all.find((candidate) => candidate.id === annotation.id);
+          if (target) {
+            target.note = textarea.value;
+            target.updatedAt = new Date().toISOString();
+            saveAnnotations(all);
+          }
+        });
+        actions.append(locate, remove);
+        item.append(quote, textarea, actions);
+        list.append(item);
+      });
+      if (focusId) window.requestAnimationFrame(() => list.querySelector<HTMLElement>(`[data-annotation-item="${CSS.escape(focusId)}"] textarea`)?.focus());
+    };
+
+    const openNotes = (focusId?: string) => {
+      renderNotes(focusId);
+      if (!dialog.open) dialog.showModal();
+    };
+
+    const updateNotesButton = () => {
+      const count = pageAnnotations().length;
+      document.querySelectorAll<HTMLElement>('[data-open-annotations]').forEach((button) => {
+        button.textContent = count === 0 ? 'My notes' : `My notes (${count})`;
+      });
+    };
+
+    document.addEventListener('selectionchange', () => {
+      window.requestAnimationFrame(captureSelection);
+    });
+    document.addEventListener('pointerdown', (event) => {
+      if (!toolbar.contains(event.target as Node)) toolbar.hidden = true;
+    });
+    toolbar.querySelectorAll<HTMLElement>('[data-highlight-colour]').forEach((button) => {
+      button.addEventListener('pointerdown', (event) => event.preventDefault());
+      button.addEventListener('click', () => createAnnotation(button.dataset.highlightColour ?? 'wine'));
+    });
+    toolbar.querySelector('[data-highlight-note]')?.addEventListener('pointerdown', (event) => event.preventDefault());
+    toolbar.querySelector('[data-highlight-note]')?.addEventListener('click', () => createAnnotation('wine', true));
+    document.querySelectorAll('[data-open-annotations]').forEach((button) => button.addEventListener('click', () => openNotes()));
+    dialog.querySelector('[data-close-annotations]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-export-page-notes]')?.addEventListener('click', exportPage);
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    root.addEventListener('click', (event) => {
+      const mark = (event.target as Element).closest?.('[data-annotation-id]') as HTMLElement | null;
+      if (mark?.dataset.annotationId) openNotes(mark.dataset.annotationId);
+    });
+
+    renderHighlights();
+    updateNotesButton();
+    const requestedAnnotation = new URLSearchParams(window.location.search).get('annotation');
+    if (requestedAnnotation) {
+      window.requestAnimationFrame(() => {
+        const mark = document.querySelector(`[data-annotation-id="${CSS.escape(requestedAnnotation)}"]`);
+        mark?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (mark) openNotes(requestedAnnotation);
+      });
+    }
+  }
+</script>

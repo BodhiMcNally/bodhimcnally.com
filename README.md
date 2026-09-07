@@ -143,6 +143,18 @@ Page tools are available inside the search palette. They support copying a link,
 
 Teaching resources display reading progress, estimated time remaining and a table of contents that follows the reader's position. The table-of-contents behaviour lives in `src/components/TableOfContents.astro`; progress is handled by `src/pages/resources/[id].astro`.
 
+Readers can select text in a resource to highlight it or attach a note. Notes, highlights and saved resources are stored in that browser only; the private notebook at `/resources/notebook/` can export them as Markdown or JSON. Importing the JSON restores a backup on another browser.
+
+## Interactive workbench
+
+The Resources page also links to three browser-based tools:
+
+- `/resources/lab/` runs seeded simulations for confidence intervals, sampling distributions and statistical power. It can copy equivalent R code, export the simulated data and copy a URL that recreates the chosen settings.
+- `/resources/reproducibility-inspector/` checks selected R, R Markdown and Quarto files—or a project ZIP—for common portability and reproducibility problems. Files are parsed locally and are not uploaded.
+- `/resources/notebook/` collects device-local highlights, notes and saved resources.
+
+The simulation and inspector components are in `src/components/SimulationStudio.astro` and `src/components/ReproducibilityInspector.astro`. Their shared presentation is in `src/styles/_workbench.scss`.
+
 ## Updating the live site
 
 The Vercel project is connected to the GitHub repository. Once a change is ready:
