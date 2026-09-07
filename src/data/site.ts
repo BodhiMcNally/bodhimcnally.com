@@ -1,3 +1,5 @@
+import cvPages from './cv-pages.json';
+
 export type ProfileLink = {
   label: string;
   href: string;
@@ -34,12 +36,8 @@ export const site = {
   cv: {
     driveHref: 'https://drive.google.com/file/d/15gHFVTP9Cgdh4T-KLPsUnEmfxF7kbx50/view?usp=drivesdk',
     downloadHref: '/cv/Bodhi_McNally_Master_CV.pdf',
-    previewPages: [
-      '/cv/pages/bodhi-cv-page-1.webp',
-      '/cv/pages/bodhi-cv-page-2.webp',
-      '/cv/pages/bodhi-cv-page-3.webp',
-      '/cv/pages/bodhi-cv-page-4.webp',
-    ],
+    previewPages: cvPages.pages,
+    previewDimensions: cvPages.dimensions,
     updated: 'September 2026',
   },
   teachingPortfolio: {

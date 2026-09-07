@@ -18,7 +18,13 @@ const resources = (await getCollection('resources', ({ data }) => !data.draft)).
   description: entry.data.description,
   href: `/resources/${entry.id}/`,
   type: 'Resource',
-  keywords: [entry.data.category, entry.data.level, ...entry.data.tags, ...entry.data.software].join(' '),
+  keywords: [
+    entry.data.category,
+    entry.data.level,
+    ...entry.data.tags,
+    ...entry.data.software,
+    (entry.body ?? '').replace(/[`#>*_[\](){}|$-]/g, ' '),
+  ].join(' '),
 }));
 
 const researchOutputs = [
@@ -87,6 +93,15 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
       <p class="command-palette__empty" data-command-empty hidden>
         No matching pages or resources.
       </p>
+      <div class="command-palette__quick" data-command-quick>
+        <p>Page tools</p>
+        <div>
+          <button type="button" data-copy-page-link>Copy link</button>
+          <button type="button" data-share-page>Share</button>
+          <button type="button" data-copy-citation hidden>Copy citation</button>
+          <button type="button" data-print-page>Print</button>
+        </div>
+      </div>
     </div>
 
     <footer class="command-palette__footer" aria-hidden="true">
@@ -96,6 +111,8 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
     </footer>
   </div>
 </dialog>
+
+<p class="site-toast" role="status" aria-live="polite" data-site-toast></p>
 
 <button class="back-to-top" type="button" data-back-to-top aria-label="Back to top" title="Back to top">
   <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
@@ -114,6 +131,8 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
     const label = document.querySelector('[data-command-label]');
     const rawIndex = document.querySelector('[data-command-index]');
     const backToTop = document.querySelector('[data-back-to-top]');
+    const quickActions = document.querySelector('[data-command-quick]');
+    const toast = document.querySelector('[data-site-toast]');
 
     if (!(dialog instanceof HTMLDialogElement) || !(input instanceof HTMLInputElement) || !results || !rawIndex) return;
 
@@ -126,6 +145,25 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
       '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
     })[character]);
     const safeHref = (value) => typeof value === 'string' && value.startsWith('/') ? value : '/';
+    let toastTimer;
+    const announce = (message) => {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.dataset.visible = 'true';
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toast.dataset.visible = 'false';
+      }, 2400);
+    };
+
+    const copyText = async (text, successMessage) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        announce(successMessage);
+      } catch {
+        announce('Copying was blocked by the browser.');
+      }
+    };
 
     const pageHeadings = [...document.querySelectorAll('main h2[id], main h3[id]')].map((heading) => ({
       title: heading.textContent?.trim() || 'Section',
@@ -198,6 +236,7 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
 
     const render = () => {
       const query = normalise(input.value.trim());
+      if (quickActions) quickActions.hidden = Boolean(query);
       visibleItems = query
         ? allItems
             .map((item) => ({ ...item, score: scoreItem(item, query) }))
@@ -236,6 +275,39 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
 
     document.querySelectorAll('[data-command-open]').forEach((button) => button.addEventListener('click', open));
     document.querySelector('[data-command-close]')?.addEventListener('click', close);
+    document.querySelector('[data-copy-page-link]')?.addEventListener('click', async () => {
+      await copyText(window.location.href, 'Page link copied.');
+      close();
+    });
+    document.querySelector('[data-share-page]')?.addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: document.title, url: window.location.href });
+        } catch (error) {
+          if (error?.name !== 'AbortError') await copyText(window.location.href, 'Page link copied.');
+        }
+      } else {
+        await copyText(window.location.href, 'Page link copied.');
+      }
+      close();
+    });
+    document.querySelector('[data-print-page]')?.addEventListener('click', () => {
+      close();
+      window.print();
+    });
+
+    const resourceTitle = document.querySelector('.resource-header h1')?.textContent?.trim();
+    const citationButton = document.querySelector('[data-copy-citation]');
+    if (resourceTitle && citationButton) {
+      citationButton.hidden = false;
+      citationButton.addEventListener('click', async () => {
+        const published = document.querySelector('meta[property="article:published_time"]')?.getAttribute('content');
+        const year = published ? new Date(published).getUTCFullYear() : new Date().getUTCFullYear();
+        const citation = `McNally, B. (${year}). ${resourceTitle}. bodhimcnally.com. ${window.location.href}`;
+        await copyText(citation, 'Citation copied.');
+        close();
+      });
+    }
     input.addEventListener('input', render);
     input.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowDown') {

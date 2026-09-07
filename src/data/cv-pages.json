@@ -1,0 +1,28 @@
+{
+  "renderVersion": 1,
+  "sourceHash": "928c014451af42fd0d3dca4143c8b7e6948fff300bef696f032095e7f370e166",
+  "pages": [
+    "/cv/pages/bodhi-cv-page-1.webp",
+    "/cv/pages/bodhi-cv-page-2.webp",
+    "/cv/pages/bodhi-cv-page-3.webp",
+    "/cv/pages/bodhi-cv-page-4.webp"
+  ],
+  "dimensions": [
+    {
+      "width": 1360,
+      "height": 1760
+    },
+    {
+      "width": 1360,
+      "height": 1760
+    },
+    {
+      "width": 1360,
+      "height": 1760
+    },
+    {
+      "width": 1360,
+      "height": 1760
+    }
+  ]
+}

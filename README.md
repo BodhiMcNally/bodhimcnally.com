@@ -49,7 +49,9 @@ The downloadable CV is:
 public/cv/Bodhi_McNally_Master_CV.pdf
 ```
 
-The About page displays page images from `public/cv/pages/`, avoiding browser-specific PDF embedding. Regenerate those WebP images whenever the PDF changes. If the page count changes, update `cv.previewPages` in `src/data/site.ts`.
+The About page displays WebP page images from `public/cv/pages/`, avoiding browser-specific PDF embedding. Replace the master PDF using the same filename, then run either `npm run dev` or `npm run build`. The site will detect that the PDF contents changed, regenerate every page image and update the page list automatically. Old page images are removed if the replacement CV is shorter.
+
+The conversion is handled by `scripts/render-cv-pages.mjs`. Its generated manifest, `src/data/cv-pages.json`, and the WebP files should be committed with the replacement PDF. If the PDF has not changed, the conversion step is skipped.
 
 The Google Drive URL and the displayed update date also live in `src/data/site.ts`. When replacing the CV, update `cv.updated` and check that the Drive file is still shared for public viewing.
 
@@ -135,9 +137,11 @@ Files offered for download from a resource belong under `public/resources/` and 
 
 ## Site search and navigation
 
-The search palette is available from the header, by pressing `/`, or with `Ctrl+K` on Windows and `Command+K` on macOS. Its main index is assembled automatically from the navigation, published teaching resources, and any future records in `src/data/research.ts`. Headings from the page currently open are added in the browser.
+The search palette is available from the header, by pressing `/`, or with `Ctrl+K` on Windows and `Command+K` on macOS. Its index is assembled automatically from the navigation, the full text and metadata of published teaching resources, and any future records in `src/data/research.ts`. Headings from the page currently open are added in the browser.
 
-The palette, heading links and return-to-top control are implemented in `src/components/CommandPalette.astro`; their styles are in `src/styles/_command-palette.scss`. Recently viewed pages are kept only in the visitor's browser.
+The palette also contains page actions for copying a link, sharing and printing. Teaching resources include a generated citation action. The palette, heading links, page actions and return-to-top control are implemented in `src/components/CommandPalette.astro`; their styles are in `src/styles/_command-palette.scss`. Recently viewed pages are kept only in the visitor's browser.
+
+The table of contents on a teaching resource follows the reader's position and marks the section currently being read. That behaviour lives in `src/components/TableOfContents.astro`.
 
 ## Updating the live site
 

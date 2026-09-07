@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/render-cv-pages.mjs",
     "dev": "astro dev",
     "check": "astro check",
+    "prebuild": "node scripts/render-cv-pages.mjs",
     "build": "npm run check && astro build",
     "preview": "astro preview",
     "verify": "npm run build && node scripts/check-links.mjs && node scripts/audit-html.mjs"
@@ -22,6 +24,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@napi-rs/canvas": "^0.1.80",
+    "pdftoimg-js": "^0.2.5",
     "sass": "^1.104.0",
     "typescript": "^6.0.3"
   },

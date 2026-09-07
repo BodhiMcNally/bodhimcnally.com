@@ -81,8 +81,8 @@ import { site } from '@/data/site';
                 <img
                   src={page}
                   alt={`Page ${index + 1} of Bodhi McNally's curriculum vitae`}
-                  width="1360"
-                  height="1760"
+                  width={site.cv.previewDimensions[index]?.width ?? 1360}
+                  height={site.cv.previewDimensions[index]?.height ?? 1760}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   decoding="async"
                 />

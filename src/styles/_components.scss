@@ -1293,10 +1293,15 @@
   text-decoration: none;
 }
 
-.toc a:hover {
+.toc a:hover,
+.toc a[aria-current='location'] {
   color: var(--wine);
   text-decoration: underline;
   text-underline-offset: 0.17em;
+}
+
+.toc a[aria-current='location'] {
+  font-weight: 650;
 }
 
 .output-group {

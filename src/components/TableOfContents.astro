@@ -13,11 +13,53 @@ const visibleHeadings = headings.filter((heading) => heading.depth === 2);
   visibleHeadings.length > 1 && (
     <nav class="toc" aria-label="On this page">
       <p class="toc__title">On this page</p>
-      <ol>
+      <ol data-toc-list>
         {visibleHeadings.map((heading) => (
-          <li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+          <li><a href={`#${heading.slug}`} data-toc-link={heading.slug}>{heading.text}</a></li>
         ))}
       </ol>
     </nav>
   )
 }
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  const headings = links
+    .map((link) => document.getElementById(link.dataset.tocLink ?? ''))
+    .filter((heading): heading is HTMLElement => Boolean(heading));
+
+  if (links.length > 0 && headings.length > 0) {
+    let frame: number | undefined;
+
+    const updateCurrentSection = () => {
+      frame = undefined;
+      const headerOffset = (document.querySelector('.site-header')?.getBoundingClientRect().height ?? 82) + 32;
+      const firstHeading = headings[0];
+      if (!firstHeading) return;
+      let current = firstHeading;
+
+      headings.forEach((heading) => {
+        if (heading.getBoundingClientRect().top <= headerOffset) current = heading;
+      });
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+        current = headings.at(-1) ?? current;
+      }
+
+      links.forEach((link) => {
+        const isCurrent = link.dataset.tocLink === current.id;
+        if (isCurrent) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateCurrentSection);
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    updateCurrentSection();
+  }
+</script>
