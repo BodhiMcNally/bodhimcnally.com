@@ -44,6 +44,25 @@ const isActive = (href: string) =>
       <kbd aria-hidden="true">/</kbd>
     </button>
 
+    <details class="page-tools" data-page-tools>
+      <summary aria-label="Open page tools">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17">
+          <circle cx="5" cy="12" r="1.4"></circle>
+          <circle cx="12" cy="12" r="1.4"></circle>
+          <circle cx="19" cy="12" r="1.4"></circle>
+        </svg>
+        <span>Tools</span>
+      </summary>
+      <div class="page-tools__menu">
+        <p>Page tools</p>
+        <button type="button" data-copy-page-link>Copy page link</button>
+        <button type="button" data-share-page>Share this page</button>
+        <button type="button" data-copy-citation hidden>Copy APA citation</button>
+        <button type="button" data-save-resource hidden aria-pressed="false">Save resource</button>
+        <button type="button" data-print-page>Print or save as PDF</button>
+      </div>
+    </details>
+
     <details class="mobile-nav">
       <summary>
         <span>Menu</span>

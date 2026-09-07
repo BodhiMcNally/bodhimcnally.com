@@ -71,6 +71,11 @@ const structuredData = {
   >
     <span data-reading-progress-bar></span>
   </div>
+  <p class="reading-position" data-reading-position data-estimated-minutes={entry.data.estimatedMinutes}>
+    <span data-reading-time>{entry.data.estimatedMinutes} min left</span>
+    <span aria-hidden="true">·</span>
+    <span data-reading-percent>0%</span>
+  </p>
 
   <article>
     <header class="resource-header container">
@@ -98,7 +103,16 @@ const structuredData = {
       </div>
 
       <div class="resource-actions">
-        <button class="button button--quiet" type="button" data-print-resource>
+        <button class="button button--quiet" type="button" data-copy-page-link>
+          Copy link
+        </button>
+        <button class="button button--quiet" type="button" data-copy-citation>
+          Copy APA citation
+        </button>
+        <button class="button button--quiet" type="button" data-save-resource aria-pressed="false">
+          Save resource
+        </button>
+        <button class="button button--quiet" type="button" data-print-page>
           Print or save as PDF
         </button>
         {
@@ -156,6 +170,9 @@ const structuredData = {
   <script is:inline type="module">
     const progress = document.querySelector('[data-reading-progress]');
     const progressBar = document.querySelector('[data-reading-progress-bar]');
+    const readingPosition = document.querySelector('[data-reading-position]');
+    const readingTime = document.querySelector('[data-reading-time]');
+    const readingPercent = document.querySelector('[data-reading-percent]');
     const resourceArticle = document.querySelector('article');
 
     if (progress && progressBar && resourceArticle) {
@@ -167,6 +184,14 @@ const structuredData = {
         const value = Math.min(1, Math.max(0, (window.scrollY - articleTop) / distance));
         progressBar.style.transform = `scaleX(${value})`;
         progress.setAttribute('aria-valuenow', String(Math.round(value * 100)));
+        if (readingPosition && readingTime && readingPercent) {
+          const percent = Math.round(value * 100);
+          const totalMinutes = Number(readingPosition.dataset.estimatedMinutes ?? 1);
+          const remainingMinutes = Math.max(1, Math.ceil(totalMinutes * (1 - value)));
+          readingTime.textContent = value >= 0.985 ? 'Complete' : `${remainingMinutes} min left`;
+          readingPercent.textContent = `${percent}%`;
+          readingPosition.dataset.visible = String(value > 0.025);
+        }
       };
 
       const requestProgressUpdate = () => {
@@ -178,10 +203,6 @@ const structuredData = {
       window.addEventListener('scroll', requestProgressUpdate, { passive: true });
       window.addEventListener('resize', requestProgressUpdate);
     }
-
-    document.querySelector('[data-print-resource]')?.addEventListener('click', () => {
-      window.print();
-    });
 
     let webRInstancePromise;
     let ggplotInstallPromise;

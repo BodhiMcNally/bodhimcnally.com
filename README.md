@@ -139,9 +139,9 @@ Files offered for download from a resource belong under `public/resources/` and 
 
 The search palette is available from the header, by pressing `/`, or with `Ctrl+K` on Windows and `Command+K` on macOS. Its index is assembled automatically from the navigation, the full text and metadata of published teaching resources, and any future records in `src/data/research.ts`. Headings from the page currently open are added in the browser.
 
-The palette also contains page actions for copying a link, sharing and printing. Teaching resources include a generated citation action. The palette, heading links, page actions and return-to-top control are implemented in `src/components/CommandPalette.astro`; their styles are in `src/styles/_command-palette.scss`. Recently viewed pages are kept only in the visitor's browser.
+Page tools are available from the **Tools** control in the header as well as from the palette. They support copying a link, native sharing and printing. Teaching resources add an APA citation action and can be saved to a device-local reading list. The palette, heading links, page actions and return-to-top control are implemented in `src/components/CommandPalette.astro`; their styles are in `src/styles/_command-palette.scss`. Recently viewed and saved pages are kept only in the visitor's browser.
 
-The table of contents on a teaching resource follows the reader's position and marks the section currently being read. That behaviour lives in `src/components/TableOfContents.astro`.
+Teaching resources display reading progress, estimated time remaining and a table of contents that follows the reader's position. The table-of-contents behaviour lives in `src/components/TableOfContents.astro`; progress is handled by `src/pages/resources/[id].astro`.
 
 ## Updating the live site
 

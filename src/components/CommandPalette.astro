@@ -98,7 +98,8 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
         <div>
           <button type="button" data-copy-page-link>Copy link</button>
           <button type="button" data-share-page>Share</button>
-          <button type="button" data-copy-citation hidden>Copy citation</button>
+          <button type="button" data-copy-citation hidden>Copy APA citation</button>
+          <button type="button" data-save-resource hidden aria-pressed="false">Save resource</button>
           <button type="button" data-print-page>Print</button>
         </div>
       </div>
@@ -203,6 +204,17 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
       }
     };
 
+    const savedItems = () => {
+      try {
+        return JSON.parse(localStorage.getItem('bm-saved-resources') || '[]')
+          .filter((item) => typeof item.href === 'string' && item.href.startsWith('/'))
+          .map((item) => ({ ...item, type: 'Saved' }))
+          .slice(0, 5);
+      } catch {
+        return [];
+      }
+    };
+
     const scoreItem = (item, query) => {
       const title = normalise(item.title);
       const description = normalise(item.description || '');
@@ -243,9 +255,11 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
             .filter((item) => item.score >= 0)
             .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
             .slice(0, 9)
-        : [...recentItems(), ...pageHeadings.slice(0, 5), ...staticItems.filter((item) => item.type === 'Page').slice(0, 4)].slice(0, 9);
+        : [...savedItems(), ...recentItems(), ...pageHeadings.slice(0, 5), ...staticItems.filter((item) => item.type === 'Page').slice(0, 4)]
+            .filter((item, index, items) => items.findIndex((candidate) => candidate.href === item.href) === index)
+            .slice(0, 9);
 
-      label.textContent = query ? 'Search results' : recentItems().length ? 'Recent and suggested' : 'Navigate';
+      label.textContent = query ? 'Search results' : savedItems().length ? 'Saved and suggested' : recentItems().length ? 'Recent and suggested' : 'Navigate';
       results.innerHTML = visibleItems.map((item, index) => `
         <li role="option" aria-selected="${index === 0}" data-command-option>
           <a data-command-href="${escapeHtml(safeHref(item.href))}" tabindex="${index === 0 ? '0' : '-1'}">
@@ -271,15 +285,19 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
       window.requestAnimationFrame(() => input.focus());
     };
 
-    const close = () => dialog.close();
+    const close = () => {
+      if (dialog.open) dialog.close();
+    };
+    const closeTools = (button) => button.closest('[data-page-tools]')?.removeAttribute('open');
 
     document.querySelectorAll('[data-command-open]').forEach((button) => button.addEventListener('click', open));
     document.querySelector('[data-command-close]')?.addEventListener('click', close);
-    document.querySelector('[data-copy-page-link]')?.addEventListener('click', async () => {
+    document.querySelectorAll('[data-copy-page-link]').forEach((button) => button.addEventListener('click', async () => {
       await copyText(window.location.href, 'Page link copied.');
+      closeTools(button);
       close();
-    });
-    document.querySelector('[data-share-page]')?.addEventListener('click', async () => {
+    }));
+    document.querySelectorAll('[data-share-page]').forEach((button) => button.addEventListener('click', async () => {
       if (navigator.share) {
         try {
           await navigator.share({ title: document.title, url: window.location.href });
@@ -289,26 +307,70 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
       } else {
         await copyText(window.location.href, 'Page link copied.');
       }
+      closeTools(button);
       close();
-    });
-    document.querySelector('[data-print-page]')?.addEventListener('click', () => {
+    }));
+    document.querySelectorAll('[data-print-page]').forEach((button) => button.addEventListener('click', () => {
+      closeTools(button);
       close();
       window.print();
-    });
+    }));
 
     const resourceTitle = document.querySelector('.resource-header h1')?.textContent?.trim();
-    const citationButton = document.querySelector('[data-copy-citation]');
-    if (resourceTitle && citationButton) {
-      citationButton.hidden = false;
-      citationButton.addEventListener('click', async () => {
-        const published = document.querySelector('meta[property="article:published_time"]')?.getAttribute('content');
-        const year = published ? new Date(published).getUTCFullYear() : new Date().getUTCFullYear();
-        const citation = `McNally, B. (${year}). ${resourceTitle}. bodhimcnally.com. ${window.location.href}`;
-        await copyText(citation, 'Citation copied.');
-        close();
+    const resourceDescription = document.querySelector('.resource-header__description')?.textContent?.trim() || 'Saved teaching resource';
+    const citationButtons = [...document.querySelectorAll('[data-copy-citation]')];
+    const saveButtons = [...document.querySelectorAll('[data-save-resource]')];
+    if (resourceTitle) {
+      citationButtons.forEach((button) => {
+        button.hidden = false;
+        button.addEventListener('click', async () => {
+          const published = document.querySelector('meta[property="article:published_time"]')?.getAttribute('content');
+          const year = published ? new Date(published).getUTCFullYear() : new Date().getUTCFullYear();
+          const citation = `McNally, B. (${year}). ${resourceTitle}. bodhimcnally.com. ${window.location.href}`;
+          await copyText(citation, 'Citation copied.');
+          closeTools(button);
+          close();
+        });
       });
+
+      const resourceHref = window.location.pathname;
+      const updateSaveButtons = () => {
+        const isSaved = savedItems().some((item) => item.href === resourceHref);
+        saveButtons.forEach((button) => {
+          button.hidden = false;
+          button.setAttribute('aria-pressed', String(isSaved));
+          button.textContent = isSaved ? 'Remove saved resource' : 'Save resource';
+        });
+      };
+
+      saveButtons.forEach((button) => button.addEventListener('click', () => {
+        const saved = savedItems();
+        const isSaved = saved.some((item) => item.href === resourceHref);
+        const next = isSaved
+          ? saved.filter((item) => item.href !== resourceHref)
+          : [{ title: resourceTitle, description: resourceDescription, href: resourceHref, keywords: '' }, ...saved];
+        localStorage.setItem('bm-saved-resources', JSON.stringify(next.slice(0, 20)));
+        updateSaveButtons();
+        announce(isSaved ? 'Resource removed from your saved list.' : 'Resource saved on this device.');
+        closeTools(button);
+        close();
+      }));
+      updateSaveButtons();
     }
-    input.addEventListener('input', render);
+    const secretQueries = new Map([
+      ['p = 0.05', 'Statistical significance is not clinical significance.'],
+      ['sudo make me a surgeon', 'Permission denied: specialist training incomplete.'],
+      ['the answer to life the universe and everything', '42 — but the study may still be underpowered.'],
+    ]);
+    input.addEventListener('input', () => {
+      const secret = secretQueries.get(normalise(input.value.trim()));
+      if (secret) {
+        close();
+        announce(secret);
+        return;
+      }
+      render();
+    });
     input.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowDown') {
         event.preventDefault();
@@ -337,6 +399,20 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
         open();
       }
     });
+
+    const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+    document.addEventListener('keydown', (event) => {
+      konamiIndex = event.key.toLowerCase() === konami[konamiIndex]?.toLowerCase() ? konamiIndex + 1 : 0;
+      if (konamiIndex === konami.length) {
+        konamiIndex = 0;
+        document.documentElement.dataset.easterEgg = 'true';
+        announce('Correlation still does not imply causation.');
+        window.setTimeout(() => delete document.documentElement.dataset.easterEgg, 5000);
+      }
+    });
+
+    console.info('Bodhi McNally — built with Astro, reproducible content and an unreasonable concern for confidence intervals.');
 
     document.querySelectorAll('main h2[id], main h3[id]').forEach((heading) => {
       if (heading.querySelector('.heading-anchor')) return;
