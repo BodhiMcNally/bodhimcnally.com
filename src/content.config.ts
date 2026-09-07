@@ -17,6 +17,7 @@ const resources = defineCollection({
       'Visualisation',
       'Reproducible Research',
       'Statistical Thinking',
+      'Academic Skills',
     ]),
     tags: z.array(z.string()).default([]),
     published: z.coerce.date(),
