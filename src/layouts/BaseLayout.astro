@@ -3,6 +3,7 @@ import '@/styles/global.scss';
 
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
+import CommandPalette from '@/components/CommandPalette.astro';
 import { site } from '@/data/site';
 
 interface Props {
@@ -75,6 +76,7 @@ const canonicalUrl = new URL(canonicalPath, site.canonicalUrl).toString();
     <main id="main-content" class="site-main page-enter">
       <slot />
     </main>
+    <CommandPalette />
     <Footer />
   </body>
 </html>

@@ -1,0 +1,287 @@
+---
+import { getCollection } from 'astro:content';
+
+import { navigation } from '@/data/site';
+import { presentations, projects, publications } from '@/data/research';
+
+const pageDescriptions: Record<string, string> = {
+  '/': 'Introduction, current focus and recent posts',
+  '/about/': 'Biography, curriculum vitae and upcoming conferences',
+  '/research/': 'Research interests and publications',
+  '/teaching/': 'Teaching philosophy, portfolio and student resources',
+  '/resources/': 'Teaching notes, code and interactive learning material',
+  '/contact/': 'Email and professional profiles',
+};
+
+const resources = (await getCollection('resources', ({ data }) => !data.draft)).map((entry) => ({
+  title: entry.data.title,
+  description: entry.data.description,
+  href: `/resources/${entry.id}/`,
+  type: 'Resource',
+  keywords: [entry.data.category, entry.data.level, ...entry.data.tags, ...entry.data.software].join(' '),
+}));
+
+const researchOutputs = [
+  ...publications.map((entry) => ({
+    title: entry.title,
+    description: entry.citation,
+    href: '/research/#publications',
+    type: 'Publication',
+    keywords: `${entry.authors.join(' ')} ${entry.journal} ${entry.year} ${entry.publicationType}`,
+  })),
+  ...presentations.map((entry) => ({
+    title: entry.title,
+    description: `${entry.conference}${entry.location ? ` · ${entry.location}` : ''}`,
+    href: '/research/',
+    type: 'Presentation',
+    keywords: `${entry.presentationType} ${entry.date}`,
+  })),
+  ...projects.map((entry) => ({
+    title: entry.title,
+    description: entry.shortDescription,
+    href: '/research/',
+    type: 'Project',
+    keywords: `${entry.researchArea} ${entry.status} ${entry.institution ?? ''}`,
+  })),
+];
+
+const searchIndex = [
+  ...navigation.map((item) => ({
+    title: item.label,
+    description: pageDescriptions[item.href] ?? '',
+    href: item.href,
+    type: 'Page',
+    keywords: '',
+  })),
+  ...resources,
+  ...researchOutputs,
+];
+const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c');
+---
+
+<dialog class="command-palette" data-command-dialog aria-labelledby="command-title">
+  <div class="command-palette__panel">
+    <header class="command-palette__search">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="m16 16 4 4"></path>
+      </svg>
+      <label class="visually-hidden" for="site-command-search" id="command-title">Search this site</label>
+      <input
+        id="site-command-search"
+        type="search"
+        placeholder="Search pages, resources or this page…"
+        autocomplete="off"
+        spellcheck="false"
+        data-command-input
+      />
+      <button type="button" class="command-palette__close" data-command-close>
+        <span class="command-palette__esc" aria-hidden="true">Esc</span>
+        <span class="visually-hidden">Close search</span>
+      </button>
+    </header>
+
+    <div class="command-palette__body">
+      <p class="command-palette__label" data-command-label>Navigate</p>
+      <ol class="command-palette__results" role="listbox" data-command-results></ol>
+      <p class="command-palette__empty" data-command-empty hidden>
+        No matching pages or resources.
+      </p>
+    </div>
+
+    <footer class="command-palette__footer" aria-hidden="true">
+      <span><kbd>↑</kbd><kbd>↓</kbd> choose</span>
+      <span><kbd>Enter</kbd> open</span>
+      <span><kbd>Esc</kbd> close</span>
+    </footer>
+  </div>
+</dialog>
+
+<button class="back-to-top" type="button" data-back-to-top aria-label="Back to top" title="Back to top">
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+    <path d="m6 14 6-6 6 6"></path>
+  </svg>
+</button>
+
+<script is:inline type="application/json" data-command-index set:html={serialisedSearchIndex}></script>
+
+<script is:inline>
+  (() => {
+    const dialog = document.querySelector('[data-command-dialog]');
+    const input = document.querySelector('[data-command-input]');
+    const results = document.querySelector('[data-command-results]');
+    const empty = document.querySelector('[data-command-empty]');
+    const label = document.querySelector('[data-command-label]');
+    const rawIndex = document.querySelector('[data-command-index]');
+    const backToTop = document.querySelector('[data-back-to-top]');
+
+    if (!(dialog instanceof HTMLDialogElement) || !(input instanceof HTMLInputElement) || !results || !rawIndex) return;
+
+    const staticItems = JSON.parse(rawIndex.textContent || '[]');
+    let activeIndex = 0;
+    let visibleItems = [];
+
+    const normalise = (value) => value.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+    const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
+    })[character]);
+    const safeHref = (value) => typeof value === 'string' && value.startsWith('/') ? value : '/';
+
+    const pageHeadings = [...document.querySelectorAll('main h2[id], main h3[id]')].map((heading) => ({
+      title: heading.textContent?.trim() || 'Section',
+      description: `Section on ${document.title.replace(/ — Bodhi McNally$/, '')}`,
+      href: `${window.location.pathname}${window.location.search}#${heading.id}`,
+      type: 'On this page',
+      keywords: '',
+    }));
+
+    const allItems = [...pageHeadings, ...staticItems];
+
+    const recordVisit = () => {
+      if (window.location.pathname === '/404/') return;
+      try {
+        const recent = JSON.parse(localStorage.getItem('bm-recent-pages') || '[]')
+          .filter((item) => item.href !== window.location.pathname);
+        recent.unshift({
+          title: document.title.replace(/ — Bodhi McNally$/, ''),
+          href: window.location.pathname,
+          description: 'Recently viewed',
+          type: 'Recent',
+          keywords: '',
+        });
+        localStorage.setItem('bm-recent-pages', JSON.stringify(recent.slice(0, 4)));
+      } catch {
+        // The palette remains fully functional when browser storage is unavailable.
+      }
+    };
+
+    const recentItems = () => {
+      try {
+        return JSON.parse(localStorage.getItem('bm-recent-pages') || '[]')
+          .filter((item) => item.href !== window.location.pathname)
+          .slice(0, 3);
+      } catch {
+        return [];
+      }
+    };
+
+    const scoreItem = (item, query) => {
+      const title = normalise(item.title);
+      const description = normalise(item.description || '');
+      const keywords = normalise(item.keywords || '');
+      const terms = query.split(/\s+/).filter(Boolean);
+      if (!terms.every((term) => title.includes(term) || description.includes(term) || keywords.includes(term))) return -1;
+
+      let score = 0;
+      if (title === query) score += 100;
+      if (title.startsWith(query)) score += 55;
+      if (title.includes(query)) score += 35;
+      terms.forEach((term) => {
+        if (title.split(/\s+/).some((word) => word.startsWith(term))) score += 14;
+        if (keywords.includes(term)) score += 5;
+        if (description.includes(term)) score += 2;
+      });
+      if (item.type === 'On this page') score += 4;
+      return score;
+    };
+
+    const setActive = (index) => {
+      const options = [...results.querySelectorAll('[role="option"]')];
+      if (options.length === 0) return;
+      activeIndex = (index + options.length) % options.length;
+      options.forEach((option, optionIndex) => {
+        option.setAttribute('aria-selected', String(optionIndex === activeIndex));
+        option.querySelector('a')?.setAttribute('tabindex', optionIndex === activeIndex ? '0' : '-1');
+      });
+      options[activeIndex]?.scrollIntoView({ block: 'nearest' });
+    };
+
+    const render = () => {
+      const query = normalise(input.value.trim());
+      visibleItems = query
+        ? allItems
+            .map((item) => ({ ...item, score: scoreItem(item, query) }))
+            .filter((item) => item.score >= 0)
+            .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
+            .slice(0, 9)
+        : [...recentItems(), ...pageHeadings.slice(0, 5), ...staticItems.filter((item) => item.type === 'Page').slice(0, 4)].slice(0, 9);
+
+      label.textContent = query ? 'Search results' : recentItems().length ? 'Recent and suggested' : 'Navigate';
+      results.innerHTML = visibleItems.map((item, index) => `
+        <li role="option" aria-selected="${index === 0}" data-command-option>
+          <a data-command-href="${escapeHtml(safeHref(item.href))}" tabindex="${index === 0 ? '0' : '-1'}">
+            <span class="command-palette__result-copy">
+              <strong>${escapeHtml(item.title)}</strong>
+              <span>${escapeHtml(item.description || '')}</span>
+            </span>
+            <span class="command-palette__type">${escapeHtml(item.type)}</span>
+          </a>
+        </li>
+      `).join('');
+      results.querySelectorAll('[data-command-href]').forEach((anchor) => {
+        anchor.setAttribute('href', anchor.dataset.commandHref || '/');
+      });
+      activeIndex = 0;
+      empty.hidden = visibleItems.length !== 0;
+    };
+
+    const open = () => {
+      if (!dialog.open) dialog.showModal();
+      input.value = '';
+      render();
+      window.requestAnimationFrame(() => input.focus());
+    };
+
+    const close = () => dialog.close();
+
+    document.querySelectorAll('[data-command-open]').forEach((button) => button.addEventListener('click', open));
+    document.querySelector('[data-command-close]')?.addEventListener('click', close);
+    input.addEventListener('input', render);
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setActive(activeIndex + 1);
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setActive(activeIndex - 1);
+      } else if (event.key === 'Enter' && visibleItems[activeIndex]) {
+        event.preventDefault();
+        window.location.href = visibleItems[activeIndex].href;
+      }
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) close();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const target = event.target;
+      const isTyping = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || target?.isContentEditable;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        dialog.open ? close() : open();
+      } else if (event.key === '/' && !isTyping && !dialog.open) {
+        event.preventDefault();
+        open();
+      }
+    });
+
+    document.querySelectorAll('main h2[id], main h3[id]').forEach((heading) => {
+      if (heading.querySelector('.heading-anchor')) return;
+      const anchor = document.createElement('a');
+      anchor.className = 'heading-anchor';
+      anchor.href = `#${heading.id}`;
+      anchor.setAttribute('aria-label', `Link to ${heading.textContent?.trim() || 'this section'}`);
+      anchor.textContent = '#';
+      heading.append(anchor);
+    });
+
+    const updateBackToTop = () => {
+      if (backToTop) backToTop.dataset.visible = String(window.scrollY > Math.min(850, document.documentElement.scrollHeight * 0.22));
+    };
+    backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    updateBackToTop();
+    recordVisit();
+  })();
+</script>

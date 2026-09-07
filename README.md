@@ -133,6 +133,12 @@ The exact Ubuntu font files used by the plotting environment are stored in `publ
 
 Files offered for download from a resource belong under `public/resources/` and can be linked through the resource's `downloadableAssets` frontmatter.
 
+## Site search and navigation
+
+The search palette is available from the header, by pressing `/`, or with `Ctrl+K` on Windows and `Command+K` on macOS. Its main index is assembled automatically from the navigation, published teaching resources, and any future records in `src/data/research.ts`. Headings from the page currently open are added in the browser.
+
+The palette, heading links and return-to-top control are implemented in `src/components/CommandPalette.astro`; their styles are in `src/styles/_command-palette.scss`. Recently viewed pages are kept only in the visitor's browser.
+
 ## Updating the live site
 
 The Vercel project is connected to the GitHub repository. Once a change is ready:

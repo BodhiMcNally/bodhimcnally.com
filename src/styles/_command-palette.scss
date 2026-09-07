@@ -1,0 +1,333 @@
+.site-search {
+  display: inline-flex;
+  min-height: 2.35rem;
+  align-items: center;
+  gap: 0.48rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 560;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+
+.site-search:hover {
+  border-color: var(--line-strong);
+  background: var(--paper-light);
+  color: var(--wine);
+}
+
+.site-search svg,
+.command-palette__search svg,
+.back-to-top svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+
+.site-search kbd {
+  display: grid;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.command-palette {
+  width: min(42rem, calc(100% - 2rem));
+  max-height: min(42rem, calc(100dvh - 3rem));
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-light);
+  color: var(--ink);
+  box-shadow: 0 2rem 6rem rgba(28, 25, 24, 0.24);
+}
+
+.command-palette::backdrop {
+  background: rgba(28, 25, 24, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.command-palette__panel {
+  display: grid;
+  max-height: min(42rem, calc(100dvh - 3rem));
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.command-palette__search {
+  display: grid;
+  min-height: 4.4rem;
+  padding-inline: 1.15rem;
+  border-bottom: 1px solid var(--line);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--muted);
+}
+
+.command-palette__search input {
+  width: 100%;
+  padding: 1rem 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.command-palette__search input::placeholder {
+  color: var(--muted);
+}
+
+.command-palette__close {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.command-palette__esc,
+.command-palette__footer kbd {
+  display: inline-flex;
+  min-height: 1.65rem;
+  padding-inline: 0.42rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.command-palette__body {
+  min-height: 12rem;
+  padding: 0.8rem;
+  overflow-y: auto;
+}
+
+.command-palette__label {
+  padding: 0.35rem 0.55rem 0.55rem;
+  margin: 0;
+  color: var(--wine);
+  font-size: 0.72rem;
+  font-weight: 680;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.command-palette__results {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.command-palette__results li + li {
+  margin-top: 0.2rem;
+}
+
+.command-palette__results a {
+  display: grid;
+  min-height: 4.25rem;
+  padding: 0.7rem 0.8rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.command-palette__results li[aria-selected='true'] a,
+.command-palette__results a:hover {
+  background: var(--wine-wash);
+  color: var(--wine-dark);
+}
+
+.command-palette__result-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.1rem;
+}
+
+.command-palette__result-copy strong {
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 570;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-palette__result-copy > span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-palette__type {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 630;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.command-palette__empty {
+  padding: 3rem 1rem;
+  margin: 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.command-palette__footer {
+  display: flex;
+  min-height: 3rem;
+  padding-inline: 1rem;
+  border-top: 1px solid var(--line);
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.command-palette__footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.heading-anchor {
+  display: inline-block;
+  margin-left: 0.45rem;
+  color: var(--wine);
+  font-family: var(--font-sans);
+  font-size: 0.62em;
+  font-weight: 600;
+  opacity: 0;
+  text-decoration: none;
+  transform: translateY(-0.08em);
+  transition: opacity 150ms ease;
+}
+
+h2:hover > .heading-anchor,
+h3:hover > .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.back-to-top {
+  position: fixed;
+  z-index: 45;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-light);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.65rem);
+  visibility: hidden;
+  transition: opacity 160ms ease, transform 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.back-to-top[data-visible='true'] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  border-color: var(--wine);
+  color: var(--wine);
+}
+
+@media (max-width: 68rem) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .site-header__inner {
+    justify-content: flex-start;
+  }
+
+  .site-search {
+    margin-left: auto;
+  }
+
+  .mobile-nav {
+    display: block;
+  }
+}
+
+@media (max-width: 45rem) {
+  .site-search {
+    min-width: 2.65rem;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .site-search span,
+  .site-search kbd {
+    display: none;
+  }
+
+  .command-palette {
+    width: calc(100% - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .command-palette__panel {
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .command-palette__footer {
+    display: none;
+  }
+
+  .command-palette__type {
+    display: none;
+  }
+
+  .command-palette__results a {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .back-to-top {
+    right: 0.8rem;
+    bottom: 0.8rem;
+  }
+}
+
+@media (hover: none) {
+  .heading-anchor {
+    opacity: 0.62;
+  }
+}
+
+@media print {
+  .site-search,
+  .command-palette,
+  .back-to-top,
+  .heading-anchor {
+    display: none !important;
+  }
+}
