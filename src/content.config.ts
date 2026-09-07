@@ -27,6 +27,7 @@ const resources = defineCollection({
     featured: z.boolean().default(false),
     template: z.boolean().default(false),
     draft: z.boolean().default(false),
+    browserR: z.boolean().default(true),
     downloadableAssets: z
       .array(
         z.object({

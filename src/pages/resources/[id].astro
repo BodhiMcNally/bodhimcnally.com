@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AnnotationLayer from '@/components/AnnotationLayer.astro';
 import QuartoLab from '@/components/QuartoLab.astro';
+import GitPractice from '@/components/GitPractice.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import { site } from '@/data/site';
 
@@ -78,7 +79,7 @@ const structuredData = {
     <span data-reading-percent>0%</span>
   </p>
 
-  <article>
+  <article data-browser-r={String(entry.data.browserR)}>
     <header class="resource-header container">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a>
@@ -136,6 +137,7 @@ const structuredData = {
       </aside>
       <div>
         {entry.id === 'quarto-documents-in-rstudio' && <QuartoLab />}
+        {entry.id === 'git-and-github-from-first-commit' && <GitPractice />}
 
         <div class="prose">
           <Content />
@@ -341,7 +343,7 @@ const structuredData = {
       });
 
       const language = pre.dataset.language ?? '';
-      if (language.toLowerCase() !== 'r') return;
+      if (language.toLowerCase() !== 'r' || resourceArticle?.dataset.browserR === 'false') return;
 
       const runButton = document.createElement('button');
       runButton.type = 'button';

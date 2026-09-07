@@ -131,6 +131,10 @@ The available metadata fields and categories are defined in `src/content.config.
 
 R code blocks also receive a **Run R** button. The site loads webR 0.6.0 from its official distribution only when that button is used, and the calculation runs in the reader's browser.
 
+Set `browserR: false` in a resource's frontmatter when its examples depend on HTML widgets or specialised packages that the browser runner cannot display faithfully. The code remains highlighted and copyable without presenting a misleading run control.
+
+The Git resource mounts `src/components/GitPractice.astro`, a deliberately limited virtual repository for practising basic shell and Git commands. It does not execute system commands or access the visitor's files.
+
 The exact Ubuntu font files used by the plotting environment are stored in `public/fonts/`. Keep their filenames unchanged: the resource runner copies them into webR and registers them with its plotting worker when a code block uses Ubuntu.
 
 Files offered for download from a resource belong under `public/resources/` and can be linked through the resource's `downloadableAssets` frontmatter.
