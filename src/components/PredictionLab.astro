@@ -1,0 +1,24 @@
+<section class="academic-tool" data-prediction-lab aria-labelledby="prediction-title">
+  <header class="tool-intro"><div><p class="eyebrow">Clinical prediction</p><h2 id="prediction-title">Threshold laboratory</h2></div><p>Explore how discrimination, prevalence and decision thresholds change what a test result means.</p></header>
+  <div class="tool-grid">
+    <form class="tool-controls"><label>Population size <input type="number" min="100" max="100000" step="100" value="1000" data-prediction="population"></label><label>Prevalence <output data-prediction-output="prevalence">20%</output><input type="range" min="1" max="80" value="20" data-prediction="prevalence"></label><label>Sensitivity <output data-prediction-output="sensitivity">85%</output><input type="range" min="1" max="100" value="85" data-prediction="sensitivity"></label><label>Specificity <output data-prediction-output="specificity">80%</output><input type="range" min="1" max="100" value="80" data-prediction="specificity"></label><label>Decision threshold <output data-prediction-output="threshold">20%</output><input type="range" min="1" max="80" value="20" data-prediction="threshold"></label></form>
+    <div class="tool-output"><div class="prediction-metrics" data-prediction-metrics></div><div class="prediction-matrix" data-prediction-matrix></div><div class="tool-reading" data-prediction-reading></div></div>
+  </div>
+</section>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-prediction-lab]');
+  if (root) {
+    const input = (name: string) => Number(root.querySelector<HTMLInputElement>(`[data-prediction="${name}"]`)?.value ?? 0);
+    const update = () => {
+      ['prevalence','sensitivity','specificity','threshold'].forEach((name) => { const output = root.querySelector<HTMLOutputElement>(`[data-prediction-output="${name}"]`); if (output) output.value = `${input(name)}%`; });
+      const n = input('population'), prevalence = input('prevalence') / 100, sensitivity = input('sensitivity') / 100, specificity = input('specificity') / 100, threshold = input('threshold') / 100;
+      const diseased = n * prevalence, healthy = n - diseased, tp = diseased * sensitivity, fn = diseased - tp, tn = healthy * specificity, fp = healthy - tn;
+      const ppv = tp / Math.max(tp + fp, 1), npv = tn / Math.max(tn + fn, 1), lrPos = sensitivity / Math.max(1 - specificity, .0001), lrNeg = (1 - sensitivity) / Math.max(specificity, .0001);
+      const netBenefit = tp / n - fp / n * (threshold / (1 - threshold));
+      root.querySelector<HTMLElement>('[data-prediction-metrics]')!.innerHTML = `<div><strong>${(ppv*100).toFixed(1)}%</strong><span>PPV</span></div><div><strong>${(npv*100).toFixed(1)}%</strong><span>NPV</span></div><div><strong>${lrPos.toFixed(2)}</strong><span>LR+</span></div><div><strong>${lrNeg.toFixed(2)}</strong><span>LR−</span></div>`;
+      root.querySelector<HTMLElement>('[data-prediction-matrix]')!.innerHTML = `<table><caption>Expected results per ${n.toLocaleString()} people</caption><thead><tr><th></th><th>Condition present</th><th>Condition absent</th></tr></thead><tbody><tr><th>Test positive</th><td>${tp.toFixed(0)} true positive</td><td>${fp.toFixed(0)} false positive</td></tr><tr><th>Test negative</th><td>${fn.toFixed(0)} false negative</td><td>${tn.toFixed(0)} true negative</td></tr></tbody></table>`;
+      root.querySelector<HTMLElement>('[data-prediction-reading]')!.innerHTML = `<p class="eyebrow">Decision analysis</p><p class="tool-result">Net benefit ${netBenefit.toFixed(3)}</p><p>At a ${(threshold*100).toFixed(0)}% threshold, a false positive is weighted as ${(threshold/(1-threshold)).toFixed(2)} of a true positive. Predictive values change with prevalence even when sensitivity and specificity remain fixed.</p>`;
+    };
+    root.addEventListener('input', update); update();
+  }
+</script>

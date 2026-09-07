@@ -1,0 +1,15 @@
+project:
+  type: default
+
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-copy: true
+    css: styles.css
+
+execute:
+  warning: false
+  message: false
+
+bibliography: references.bib

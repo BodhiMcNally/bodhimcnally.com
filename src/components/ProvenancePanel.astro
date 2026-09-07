@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+const resourceCount = (await getCollection('resources', ({ data }) => !data.draft)).length;
+const updateCount = (await getCollection('updates', ({ data }) => !data.draft)).length;
+const builtAt = new Date().toISOString();
+const commit = import.meta.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? '';
+---
+<dialog class="provenance-panel" data-provenance-dialog aria-labelledby="provenance-title">
+  <div class="provenance-panel__inner">
+    <header><div><p class="eyebrow">Site provenance</p><h2 id="provenance-title">How this site works</h2></div><button type="button" data-provenance-close aria-label="Close site details">×</button></header>
+    <dl>
+      <div><dt>Architecture</dt><dd>Static Astro site</dd></div><div><dt>Generated</dt><dd><time datetime={builtAt}>{builtAt.replace('T',' ').slice(0,16)} UTC</time></dd></div><div><dt>Source revision</dt><dd>{commit || 'Local build'}</dd></div><div><dt>Published resources</dt><dd>{resourceCount}</dd></div><div><dt>Published updates</dt><dd>{updateCount}</dd></div><div><dt>Offline worker</dt><dd data-provenance-worker>Checking…</dd></div><div><dt>Local storage used</dt><dd data-provenance-storage>Checking…</dd></div><div><dt>Network status</dt><dd data-provenance-network>Checking…</dd></div>
+    </dl>
+    <section><h3>Privacy by design</h3><p>Annotations, saved resources, clinic progress and project drafts remain in this browser. The statistical simulations run in a Web Worker. The reproducibility inspector reads selected files locally and does not upload them.</p></section>
+    <section><h3>Verification</h3><p>The production workflow checks TypeScript and Astro diagnostics, builds every static route, validates internal links and runs baseline metadata and accessibility checks.</p></section>
+  </div>
+</dialog>
+<script>
+  const dialog=document.querySelector<HTMLDialogElement>('[data-provenance-dialog]');if(dialog){const update=async()=>{const worker=dialog.querySelector('[data-provenance-worker]');if(worker)worker.textContent='serviceWorker' in navigator?(navigator.serviceWorker.controller?'Active':'Available after next visit'):'Unsupported';const network=dialog.querySelector('[data-provenance-network]');if(network)network.textContent=navigator.onLine?'Online':'Offline';let bytes=0;for(let index=0;index<localStorage.length;index+=1){const key=localStorage.key(index)??'';bytes+=key.length+(localStorage.getItem(key)?.length??0);}const storage=dialog.querySelector('[data-provenance-storage]');if(storage)storage.textContent=bytes<1024?`${bytes} bytes`:`${(bytes/1024).toFixed(1)} KB`;};document.addEventListener('click',event=>{const target=event.target;if(!(target instanceof Element)||!target.closest('[data-open-provenance]'))return;const command=document.querySelector<HTMLDialogElement>('[data-command-dialog]');if(command?.open)command.close();update();dialog.showModal();});dialog.querySelector('[data-provenance-close]')?.addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});window.addEventListener('online',update);window.addEventListener('offline',update);}
+</script>

@@ -1,0 +1,4 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'; import PageHeader from '@/components/PageHeader.astro'; import ExplainResult from '@/components/ExplainResult.astro';
+---
+<BaseLayout title="Explain this result" description="A guided scaffold for writing precise interpretations of model estimates."><PageHeader title="Explain this result" introduction="Specify the comparison, outcome, estimate and uncertainty; the scaffold assembles them into a defensible sentence."/><div class="workbench-page container"><ExplainResult/><aside class="disclaimer workbench-disclaimer"><h2>Check the model, not only the sentence</h2><p>A well-written interpretation can still be wrong if the design, model or assumptions are unsuitable. Review the estimate’s scale and adjustment set before using the draft.</p></aside></div></BaseLayout>

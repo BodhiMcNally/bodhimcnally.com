@@ -20,6 +20,9 @@ featured: true
 template: false
 draft: false
 downloadableAssets:
+  - label: Complete starter project
+    href: /resources/quarto/quarto-starter-project.zip
+    description: A ready-to-open project containing the QMD report, project YAML, stylesheet and example bibliography.
   - label: Starter Quarto report
     href: /resources/quarto/report-template.qmd
     description: An editable .qmd file containing a title block, setup cell, figure, cross-reference and reproducibility section.

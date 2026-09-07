@@ -1,0 +1,4 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'; import PageHeader from '@/components/PageHeader.astro'; import PredictionLab from '@/components/PredictionLab.astro';
+---
+<BaseLayout title="Clinical prediction laboratory" description="Explore diagnostic accuracy, predictive values and threshold-based decisions."><PageHeader title="Clinical prediction laboratory" introduction="Translate sensitivity and specificity into expected patient counts, predictive values and threshold-based net benefit."/><div class="workbench-page container"><PredictionLab/><aside class="disclaimer workbench-disclaimer"><h2>Teaching demonstration</h2><p>This tool does not evaluate a real clinical model and must not be used for patient care. Its purpose is to make the arithmetic and assumptions visible.</p></aside></div></BaseLayout>

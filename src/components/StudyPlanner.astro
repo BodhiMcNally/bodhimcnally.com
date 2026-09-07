@@ -1,0 +1,32 @@
+<section class="academic-tool study-planner" data-study-planner aria-labelledby="planner-title">
+  <header class="tool-intro"><div><p class="eyebrow">Private protocol builder</p><h2 id="planner-title">Research project workspace</h2></div><p>Your draft is saved in this browser. Export it before changing devices or clearing site data.</p></header>
+  <div class="planner-layout">
+    <form class="planner-form" data-planner-form>
+      <label>Working title<input name="title" placeholder="A concise, descriptive project title"></label>
+      <label>Research question<textarea name="question" rows="3" placeholder="In [population], is [exposure] associated with [outcome]?"></textarea></label>
+      <div class="planner-pico"><label>Population<textarea name="population" rows="2"></textarea></label><label>Exposure or intervention<textarea name="exposure" rows="2"></textarea></label><label>Comparator<textarea name="comparator" rows="2"></textarea></label><label>Primary outcome<textarea name="outcome" rows="2"></textarea></label></div>
+      <label>Design<select name="design"><option>Retrospective cohort</option><option>Prospective cohort</option><option>Cross-sectional study</option><option>Case-control study</option><option>Randomised trial</option><option>Qualitative study</option><option>Systematic review</option></select></label>
+      <label>Inclusion criteria<textarea name="inclusion" rows="3" placeholder="One criterion per line"></textarea></label><label>Exclusion criteria<textarea name="exclusion" rows="3" placeholder="One criterion per line"></textarea></label>
+      <label>Variables and definitions<textarea name="variables" rows="4" placeholder="Variable | role | operational definition | source"></textarea></label>
+      <label>Analysis plan<textarea name="analysis" rows="4" placeholder="Estimand, descriptive analysis, model, uncertainty and sensitivity analyses"></textarea></label>
+      <label>Biases and limitations<textarea name="biases" rows="3" placeholder="Selection, measurement, confounding, missing data…"></textarea></label>
+    </form>
+    <aside class="planner-preview"><p class="eyebrow">Protocol outline</p><div data-planner-preview></div></aside>
+  </div>
+  <div class="tool-actions"><span data-planner-status aria-live="polite">Not yet saved</span><button type="button" data-planner-export="md">Download Markdown</button><button type="button" data-planner-export="qmd">Download Quarto</button><button type="button" data-planner-export="json">Back up JSON</button><label class="tool-file-label" for="planner-import">Restore JSON</label><input id="planner-import" class="visually-hidden" type="file" accept=".json" data-planner-import></div>
+</section>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-study-planner]');
+  if (root) {
+    const form = root.querySelector<HTMLFormElement>('[data-planner-form]')!; const preview = root.querySelector<HTMLElement>('[data-planner-preview]')!; const status = root.querySelector<HTMLElement>('[data-planner-status]')!; const key = 'bm-study-planner-v1'; let timer = 0;
+    const data = () => Object.fromEntries(new FormData(form).entries()) as Record<string,string>;
+    const markdown = () => { const d = data(); return `# ${d.title || 'Untitled research project'}\n\n## Research question\n\n${d.question || 'Not yet specified.'}\n\n## Study design\n\n${d.design}\n\n## PECO/PICOT\n\n- **Population:** ${d.population}\n- **Exposure or intervention:** ${d.exposure}\n- **Comparator:** ${d.comparator}\n- **Primary outcome:** ${d.outcome}\n\n## Eligibility\n\n### Inclusion criteria\n\n${d.inclusion}\n\n### Exclusion criteria\n\n${d.exclusion}\n\n## Variables and definitions\n\n${d.variables}\n\n## Analysis plan\n\n${d.analysis}\n\n## Biases and limitations\n\n${d.biases}\n`; };
+    const render = () => { const d = data(); preview.replaceChildren(); [['Question',d.question],['Population',d.population],['Exposure / intervention',d.exposure],['Comparator',d.comparator],['Primary outcome',d.outcome],['Design',d.design],['Analysis',d.analysis]].forEach(([heading,value]) => { const section=document.createElement('section'); const h=document.createElement('h3'); h.textContent=heading ?? ''; const p=document.createElement('p'); p.textContent=value || 'Not yet specified.'; section.append(h,p); preview.append(section); }); };
+    const save = () => { localStorage.setItem(key, JSON.stringify(data())); status.textContent = `Saved ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`; };
+    const download = (contents:string,name:string,type:string) => { const url=URL.createObjectURL(new Blob([contents],{type})); const a=document.createElement('a'); a.href=url;a.download=name;a.click();URL.revokeObjectURL(url); };
+    form.addEventListener('input',()=>{render();window.clearTimeout(timer);timer=window.setTimeout(save,500);});
+    try { const stored=JSON.parse(localStorage.getItem(key) ?? '{}') as Record<string,string>; Object.entries(stored).forEach(([name,value])=>{const field=form.elements.namedItem(name);if(field instanceof HTMLInputElement||field instanceof HTMLTextAreaElement||field instanceof HTMLSelectElement)field.value=value;}); } catch { /* begin with an empty workspace */ }
+    root.querySelectorAll<HTMLButtonElement>('[data-planner-export]').forEach(button=>button.addEventListener('click',()=>{const kind=button.dataset.plannerExport; const d=data(); if(kind==='json')download(JSON.stringify({version:1,data:d},null,2),'research-project.json','application/json'); else {const body=markdown(); download(kind==='qmd'?`---\ntitle: "${(d.title||'Research project').replaceAll('"','\\"')}"\nformat: html\n---\n\n${body.replace(/^# .*\n\n/,'')}`:body,kind==='qmd'?'research-project.qmd':'research-project.md','text/plain');}}));
+    root.querySelector<HTMLInputElement>('[data-planner-import]')?.addEventListener('change',async e=>{const file=(e.currentTarget as HTMLInputElement).files?.[0];if(!file)return;try{const parsed=JSON.parse(await file.text()) as {version?:number;data?:Record<string,string>};if(parsed.version!==1||!parsed.data)throw new Error();localStorage.setItem(key,JSON.stringify(parsed.data));location.reload();}catch{status.textContent='That backup could not be restored.';}}); render();
+  }
+</script>

@@ -1,0 +1,4 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'; import PageHeader from '@/components/PageHeader.astro'; import MethodsPlayground from '@/components/MethodsPlayground.astro';
+---
+<BaseLayout title="Research methods playground" description="Interactive demonstrations of logistic probability, confounding and missing data."><PageHeader title="Research methods playground" introduction="Three simplified experiments for reasoning about models, bias and incomplete data."/><div class="workbench-page container"><MethodsPlayground/><aside class="disclaimer workbench-disclaimer"><h2>Interpret with care</h2><p>These demonstrations isolate one concept at a time. Real analyses require a defensible design, appropriate estimand, diagnostic checks and subject-matter knowledge.</p></aside></div></BaseLayout>

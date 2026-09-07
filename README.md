@@ -155,6 +155,10 @@ The Resources page also links to three browser-based tools:
 
 The simulation and inspector components are in `src/components/SimulationStudio.astro` and `src/components/ReproducibilityInspector.astro`. Their shared presentation is in `src/styles/_workbench.scss`.
 
+The broader teaching toolkit adds methods, prediction, interpretation, study-planning and visualisation exercises under `src/components/`. These are ordinary Astro components with browser-side TypeScript and no server or database. The project workspace and learning progress use local browser storage; none of those records are sent to the site.
+
+The site registers `public/sw.js` on HTTPS. Students can use **Save resources offline** on the Resources page to cache the teaching library on their device. Change the cache name in `public/sw.js` when making a significant caching change so older caches are replaced. The site-details panel in the footer reports the current build, content counts, network state, offline-worker state and approximate local-storage use.
+
 ## Updating the live site
 
 The Vercel project is connected to the GitHub repository. Once a change is ready:

@@ -1,0 +1,54 @@
+<section class="academic-tool" data-methods-playground aria-labelledby="methods-tool-title">
+  <header class="tool-intro"><div><p class="eyebrow">Interactive methods</p><h2 id="methods-tool-title">Research methods playground</h2></div><p>Change one assumption at a time and observe how the statistical result changes.</p></header>
+  <div class="tool-tabs" role="tablist" aria-label="Methods demonstration">
+    <button type="button" role="tab" aria-selected="true" data-method-tab="logistic">Logistic probability</button>
+    <button type="button" role="tab" aria-selected="false" data-method-tab="confounding">Confounding</button>
+    <button type="button" role="tab" aria-selected="false" data-method-tab="missing">Missing data</button>
+  </div>
+  <div class="tool-grid">
+    <form class="tool-controls" data-method-controls>
+      <div data-method-panel="logistic"><label>Intercept <output data-output="intercept">−2.00</output><input type="range" min="-5" max="2" step="0.1" value="-2" data-param="intercept"></label><label>Coefficient <output data-output="coefficient">0.80</output><input type="range" min="-2" max="2" step="0.1" value="0.8" data-param="coefficient"></label><label>Predictor value <output data-output="predictor">2.0</output><input type="range" min="-3" max="6" step="0.1" value="2" data-param="predictor"></label></div>
+      <div data-method-panel="confounding" hidden><label>True treatment effect <output data-output="effect">−5</output><input type="range" min="-15" max="15" step="1" value="-5" data-param="effect"></label><label>Confounder imbalance <output data-output="imbalance">6</output><input type="range" min="-10" max="10" step="1" value="6" data-param="imbalance"></label><label>Confounder–outcome effect <output data-output="confounder">1.5</output><input type="range" min="-3" max="3" step="0.1" value="1.5" data-param="confounder"></label></div>
+      <div data-method-panel="missing" hidden><label>Missing observations <output data-output="missingRate">25%</output><input type="range" min="0" max="70" step="5" value="25" data-param="missingRate"></label><label>Difference among missing values <output data-output="missingShift">12</output><input type="range" min="-30" max="30" step="1" value="12" data-param="missingShift"></label><label>Mechanism<select data-param="mechanism"><option value="mcar">MCAR</option><option value="mar">MAR</option><option value="mnar" selected>MNAR</option></select></label></div>
+    </form>
+    <div class="tool-output" aria-live="polite"><div class="tool-figure" data-method-figure></div><div class="tool-reading" data-method-reading></div></div>
+  </div>
+</section>
+
+<script>
+  type Method = 'logistic' | 'confounding' | 'missing';
+  const root = document.querySelector<HTMLElement>('[data-methods-playground]');
+  if (root) {
+    let active: Method = 'logistic';
+    const value = (name: string) => Number(root.querySelector<HTMLInputElement>(`[data-param="${name}"]`)?.value ?? 0);
+    const figure = root.querySelector<HTMLElement>('[data-method-figure]')!;
+    const reading = root.querySelector<HTMLElement>('[data-method-reading]')!;
+    const update = () => {
+      root.querySelectorAll<HTMLInputElement>('[data-param][type="range"]').forEach((control) => {
+        const output = root.querySelector<HTMLOutputElement>(`[data-output="${control.dataset.param}"]`);
+        if (!output) return;
+        const number = Number(control.value);
+        output.value = control.dataset.param === 'missingRate' ? `${number}%` : ['intercept','coefficient'].includes(control.dataset.param ?? '') ? number.toFixed(2) : control.dataset.param === 'predictor' || control.dataset.param === 'confounder' ? number.toFixed(1) : String(number);
+      });
+      if (active === 'logistic') {
+        const intercept = value('intercept'); const coefficient = value('coefficient'); const predictor = value('predictor');
+        const probability = 1 / (1 + Math.exp(-(intercept + coefficient * predictor)));
+        const points = Array.from({ length: 80 }, (_, index) => { const x = -3 + index * 9 / 79; const p = 1 / (1 + Math.exp(-(intercept + coefficient * x))); return `${50 + index * 7.8},${300 - p * 250}`; }).join(' ');
+        figure.innerHTML = `<svg viewBox="0 0 720 340" role="img" aria-label="Logistic probability curve"><line x1="50" y1="300" x2="680" y2="300" stroke="#aaa198"/><line x1="50" y1="45" x2="50" y2="300" stroke="#aaa198"/><polyline points="${points}" fill="none" stroke="#214c57" stroke-width="4"/><circle cx="${50 + ((predictor + 3) / 9) * 630}" cy="${300 - probability * 250}" r="7" fill="#6e2538"/><text x="58" y="65">1.0</text><text x="58" y="292">0.0</text></svg>`;
+        reading.innerHTML = `<p class="eyebrow">Predicted probability</p><p class="tool-result">${(probability * 100).toFixed(1)}%</p><p>The linear predictor is <strong>${(intercept + coefficient * predictor).toFixed(2)}</strong>. Logistic regression maps that unrestricted value onto a probability between zero and one.</p>`;
+      } else if (active === 'confounding') {
+        const effect = value('effect'); const bias = value('imbalance') * value('confounder'); const crude = effect + bias;
+        const x = (number: number) => 360 + number * 6;
+        figure.innerHTML = `<svg viewBox="0 0 720 260" role="img" aria-label="Crude and adjusted treatment estimates"><line x1="80" y1="215" x2="650" y2="215" stroke="#aaa198"/><line x1="${x(0)}" y1="35" x2="${x(0)}" y2="220" stroke="#aaa198" stroke-dasharray="5 5"/><line x1="${x(crude)}" y1="85" x2="${x(effect)}" y2="165" stroke="#d6cfc5" stroke-width="3"/><circle cx="${x(crude)}" cy="85" r="9" fill="#6e2538"/><circle cx="${x(effect)}" cy="165" r="9" fill="#214c57"/><text x="80" y="90">Crude</text><text x="80" y="170">Adjusted</text></svg>`;
+        reading.innerHTML = `<p class="eyebrow">Estimated effects</p><p class="tool-result">Crude ${crude.toFixed(1)} · adjusted ${effect.toFixed(1)}</p><p>The crude estimate contains <strong>${bias.toFixed(1)}</strong> units of confounding bias in this simplified example. Adjustment recovers the specified effect only because the confounder is measured correctly and the model is correctly specified.</p>`;
+      } else {
+        const rate = value('missingRate') / 100; const shift = value('missingShift'); const mechanism = root.querySelector<HTMLSelectElement>('[data-param="mechanism"]')?.value ?? 'mnar';
+        const completeMean = mechanism === 'mcar' ? 100 : 100 - shift * rate; const fullMean = 100 + shift * rate;
+        figure.innerHTML = `<svg viewBox="0 0 720 260" role="img" aria-label="Complete-case and full-data means"><line x1="80" y1="215" x2="650" y2="215" stroke="#aaa198"/><rect x="170" y="${210 - completeMean}" width="120" height="${completeMean}" fill="#6e2538"/><rect x="420" y="${210 - fullMean}" width="120" height="${fullMean}" fill="#214c57"/><text x="175" y="238">Observed only</text><text x="438" y="238">Full data</text></svg>`;
+        reading.innerHTML = `<p class="eyebrow">Mean after missingness</p><p class="tool-result">${completeMean.toFixed(1)} observed · ${fullMean.toFixed(1)} full</p><p>${mechanism.toUpperCase()} describes why values are missing—not merely how many. Complete-case analysis is unbiased here only under the simplified MCAR setting.</p>`;
+      }
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-method-tab]').forEach((button) => button.addEventListener('click', () => { active = button.dataset.methodTab as Method; root.querySelectorAll('[data-method-tab]').forEach((tab) => tab.setAttribute('aria-selected', String(tab === button))); root.querySelectorAll<HTMLElement>('[data-method-panel]').forEach((panel) => panel.hidden = panel.dataset.methodPanel !== active); update(); }));
+    root.querySelector('[data-method-controls]')?.addEventListener('input', update); root.querySelector('[data-method-controls]')?.addEventListener('change', update); update();
+  }
+</script>

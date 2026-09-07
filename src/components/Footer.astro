@@ -20,6 +20,7 @@ const primaryEmail = site.emails.at(0);
           ))
         }
         {primaryEmail && <li><a href={`mailto:${primaryEmail.address}`}>Email</a></li>}
+        <li><button type="button" data-open-provenance>Site details</button></li>
       </ul>
     </nav>
 

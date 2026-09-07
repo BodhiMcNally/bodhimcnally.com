@@ -4,6 +4,7 @@ import '@/styles/global.scss';
 import Footer from '@/components/Footer.astro';
 import Header from '@/components/Header.astro';
 import CommandPalette from '@/components/CommandPalette.astro';
+import ProvenancePanel from '@/components/ProvenancePanel.astro';
 import { site } from '@/data/site';
 
 interface Props {
@@ -77,6 +78,12 @@ const canonicalUrl = new URL(canonicalPath, site.canonicalUrl).toString();
       <slot />
     </main>
     <CommandPalette />
+    <ProvenancePanel />
     <Footer />
+    <script is:inline>
+      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+      }
+    </script>
   </body>
 </html>
