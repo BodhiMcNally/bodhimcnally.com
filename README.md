@@ -133,7 +133,9 @@ R code blocks also receive a **Run R** button. The site loads webR 0.6.0 from it
 
 Set `browserR: false` in a resource's frontmatter when its examples depend on HTML widgets or specialised packages that the browser runner cannot display faithfully. The code remains highlighted and copyable without presenting a misleading run control.
 
-The Git resource mounts `src/components/GitPractice.astro`, a deliberately limited virtual repository for practising basic shell and Git commands. It does not execute system commands or access the visitor's files.
+The Git resource mounts `src/components/GitPractice.astro`, an isolated virtual filesystem and repository for practising basic shell and Git commands. It models file edits, diffs, staging, commits, branches and remotes without executing system commands or accessing the visitor's files.
+
+The table and Plotly resources also use webR. Table objects are converted to HTML in R and inserted into a sanitised output viewport. Plotly objects are converted to JSON in R and rendered with Plotly.js. These package-heavy examples need an internet connection on first use.
 
 The exact Ubuntu font files used by the plotting environment are stored in `public/fonts/`. Keep their filenames unchanged: the resource runner copies them into webR and registers them with its plotting worker when a code block uses Ubuntu.
 
@@ -151,15 +153,14 @@ Readers can select text in a resource to highlight it or attach a note. Notes, h
 
 ## Interactive workbench
 
-The Resources page also links to three browser-based tools:
+The Resources page links to four browser-based tools:
 
 - `/resources/lab/` runs seeded simulations for confidence intervals, sampling distributions and statistical power. It can copy equivalent R code, export the simulated data and copy a URL that recreates the chosen settings.
-- `/resources/reproducibility-inspector/` checks selected R, R Markdown and Quarto files—or a project ZIP—for common portability and reproducibility problems. Files are parsed locally and are not uploaded.
-- `/resources/notebook/` collects device-local highlights, notes and saved resources.
+- `/resources/prediction-lab/` demonstrates predictive values, likelihood ratios and threshold decisions.
+- `/resources/interpretation-clinic/` provides short exercises in interpreting statistical output.
+- `/resources/quarto-documents-in-rstudio/` contains the editable QMD laboratory.
 
-The simulation and inspector components are in `src/components/SimulationStudio.astro` and `src/components/ReproducibilityInspector.astro`. Their shared presentation is in `src/styles/_workbench.scss`.
-
-The broader teaching toolkit adds methods, prediction, interpretation, study-planning and visualisation exercises under `src/components/`. These are ordinary Astro components with browser-side TypeScript and no server or database. The project workspace and learning progress use local browser storage; none of those records are sent to the site.
+The private notebook at `/resources/notebook/` remains available from the library heading, individual-resource annotation controls and site search, but is not listed as a workbench demonstration.
 
 The site registers `public/sw.js` on HTTPS. Students can use **Save resources offline** on the Resources page to cache the teaching library on their device. Change the cache name in `public/sw.js` when making a significant caching change so older caches are replaced. The site-details panel in the footer reports the current build, content counts, network state, offline-worker state and approximate local-storage use.
 

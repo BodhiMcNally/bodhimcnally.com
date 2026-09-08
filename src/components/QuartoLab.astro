@@ -108,6 +108,42 @@ State the estimate, interval and practical interpretation together.
 :::`,
   },
   {
+    id: 'tabsets',
+    label: 'Tabbed content',
+    source: `---
+title: "Comparing analytical views"
+author: "Student Name"
+format:
+  html:
+    toc: true
+---
+
+## Results
+
+The fenced div below turns its second-level headings into interactive tabs.
+
+::: {.panel-tabset}
+## Summary
+
+The estimated mean was **14.2 units**.
+
+## R code
+
+\`\`\`{r}
+values <- c(12, 15, 11, 18, 15)
+mean(values)
+\`\`\`
+
+## Interpretation
+
+Report the estimate together with its uncertainty and context.
+:::
+
+## Discussion
+
+Use a tabset when the sections are alternatives, not when every section must be read in sequence.`,
+  },
+  {
     id: 'figures',
     label: 'Figures and cross-references',
     source: `---
@@ -389,6 +425,95 @@ const initialSource = presets[0]?.source ?? '';
         headingElement.textContent = numbered && depth === 2 ? `${sectionNumber} ${text}` : text;
         content.append(headingElement);
         index += 1;
+        continue;
+      }
+
+      const tabsetStart = line.match(/^:::\s*\{[^}]*\.panel-tabset[^}]*\}\s*$/);
+      if (tabsetStart) {
+        const tabsetLines: string[] = [];
+        index += 1;
+        let insideCode = false;
+        while (index < lines.length) {
+          const candidate = lines[index] ?? '';
+          if (/^```/.test(candidate.trim())) insideCode = !insideCode;
+          if (!insideCode && candidate.trim() === ':::') break;
+          tabsetLines.push(candidate);
+          index += 1;
+        }
+        index += 1;
+
+        const panels: Array<{ title: string; lines: string[] }> = [];
+        let currentPanel: { title: string; lines: string[] } | undefined;
+        let panelCode = false;
+        tabsetLines.forEach((entry) => {
+          if (/^```/.test(entry.trim())) panelCode = !panelCode;
+          const panelHeading = !panelCode ? entry.trim().match(/^##\s+(.+)$/) : null;
+          if (panelHeading) {
+            currentPanel = { title: panelHeading[1] ?? 'Tab', lines: [] };
+            panels.push(currentPanel);
+          } else if (currentPanel) {
+            currentPanel.lines.push(entry);
+          }
+        });
+
+        if (panels.length) {
+          const tabset = document.createElement('section');
+          tabset.className = 'quarto-preview__tabset';
+          const tablist = document.createElement('div');
+          tablist.className = 'quarto-preview__tablist';
+          tablist.setAttribute('role', 'tablist');
+          tablist.setAttribute('aria-label', 'Tabbed document content');
+          const panelElements: HTMLElement[] = [];
+          const tabButtons: HTMLButtonElement[] = [];
+
+          const activateTab = (activeIndex: number) => {
+            tabButtons.forEach((button, buttonIndex) => {
+              const active = buttonIndex === activeIndex;
+              button.setAttribute('aria-selected', String(active));
+              button.tabIndex = active ? 0 : -1;
+              panelElements[buttonIndex]!.hidden = !active;
+            });
+          };
+
+          panels.forEach((panel, panelIndex) => {
+            const suffix = `${Date.now()}-${panelIndex}`;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.id = `quarto-tab-${suffix}`;
+            button.setAttribute('role', 'tab');
+            button.setAttribute('aria-controls', `quarto-panel-${suffix}`);
+            button.textContent = panel.title;
+            button.addEventListener('click', () => activateTab(panelIndex));
+            button.addEventListener('keydown', (event) => {
+              if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+              event.preventDefault();
+              let next = panelIndex;
+              if (event.key === 'ArrowRight') next = (panelIndex + 1) % panels.length;
+              if (event.key === 'ArrowLeft') next = (panelIndex - 1 + panels.length) % panels.length;
+              if (event.key === 'Home') next = 0;
+              if (event.key === 'End') next = panels.length - 1;
+              activateTab(next);
+              tabButtons[next]?.focus();
+            });
+            tabButtons.push(button);
+            tablist.append(button);
+
+            const panelElement = document.createElement('div');
+            panelElement.id = `quarto-panel-${suffix}`;
+            panelElement.className = 'quarto-preview__tabpanel';
+            panelElement.setAttribute('role', 'tabpanel');
+            panelElement.setAttribute('aria-labelledby', button.id);
+            const temporary = document.createElement('div');
+            renderQmd(panel.lines.join('\n'), temporary);
+            const renderedBody = temporary.querySelector('.quarto-preview__body');
+            if (renderedBody) panelElement.append(...renderedBody.childNodes);
+            panelElements.push(panelElement);
+          });
+
+          tabset.append(tablist, ...panelElements);
+          activateTab(0);
+          content.append(tabset);
+        }
         continue;
       }
 

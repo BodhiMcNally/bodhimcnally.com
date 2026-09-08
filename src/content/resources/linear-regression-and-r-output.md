@@ -15,6 +15,8 @@ downloadableAssets: []
 
 Linear regression describes how the expected value of a continuous outcome changes with one or more predictors. The calculation is easy to request in R. The harder—and more important—work is deciding what the coefficients mean, whether the model is appropriate and how much uncertainty remains.
 
+Select **Run R** above any code block to fit the model and inspect the actual R output in the browser. Each example loads the data and prerequisite model objects it needs, so it can be run independently.
+
 ## The model
 
 For one predictor, the population model is
@@ -249,4 +251,3 @@ predict(fit, newdata = new_data, interval = "confidence")
 ```
 
 The statistical output is not the conclusion. The conclusion comes from connecting the estimand, design, model, uncertainty and subject matter.
-

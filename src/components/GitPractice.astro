@@ -1,9 +1,161 @@
 <section class="git-practice" data-git-practice aria-labelledby="git-practice-title">
-  <div class="git-practice__header"><div><p class="eyebrow">Safe practice terminal</p><h2 id="git-practice-title">Git sandbox</h2></div><button type="button" data-git-reset>Reset repository</button></div>
-  <div class="git-practice__terminal" role="log" aria-live="polite" data-git-output><p><span>$</span> Start with <code>git status</code>, or type <code>help</code>.</p></div>
-  <form class="git-practice__prompt" data-git-form><label class="visually-hidden" for="git-command">Git or shell command</label><span aria-hidden="true">$</span><input id="git-command" autocomplete="off" spellcheck="false" placeholder="git status" data-git-input><button type="submit">Run</button></form>
-  <p class="git-practice__note">This is a teaching simulator, not a real shell. It recognises a deliberately limited set of safe commands and never accesses your files or GitHub account.</p>
+  <div class="git-practice__header">
+    <div><p class="eyebrow">Safe practice terminal</p><h2 id="git-practice-title">Git and shell sandbox</h2></div>
+    <button type="button" data-git-reset>Reset repository</button>
+  </div>
+  <div class="git-practice__workspace">
+    <div>
+      <div class="git-practice__terminal" role="log" aria-live="polite" data-git-output>
+        <p><span>$</span> Start with <code>git status</code>, or type <code>help</code>.</p>
+      </div>
+      <form class="git-practice__prompt" data-git-form>
+        <label class="visually-hidden" for="git-command">Git or shell command</label>
+        <span aria-hidden="true">$</span>
+        <input id="git-command" autocomplete="off" spellcheck="false" placeholder="git status" data-git-input>
+        <button type="submit">Run</button>
+      </form>
+    </div>
+    <aside class="git-practice__state" aria-label="Repository state">
+      <div><p>Branch</p><strong data-git-branch>main</strong></div>
+      <div><p>Working tree</p><ul data-git-working></ul></div>
+      <div><p>Staging area</p><ul data-git-staged></ul></div>
+      <div><p>Commit history</p><ol data-git-history></ol></div>
+    </aside>
+  </div>
+  <p class="git-practice__note">This is an isolated teaching model of a filesystem and Git repository. It does not access your computer, execute native Bash, contact GitHub or use credentials.</p>
 </section>
+
 <script>
-  type Repo={initialised:boolean;files:Record<string,string>;staged:string[];commits:Array<{id:string;message:string;files:string[]}>;branch:string};const root=document.querySelector<HTMLElement>('[data-git-practice]');if(root){const output=root.querySelector<HTMLElement>('[data-git-output]')!,input=root.querySelector<HTMLInputElement>('[data-git-input]')!;let repo:Repo={initialised:false,files:{'README.md':'# My project'},staged:[],commits:[],branch:'main'};const print=(value:string,type='')=>{const p=document.createElement('p');if(type)p.dataset.type=type;p.textContent=value;output.append(p);output.scrollTop=output.scrollHeight;};const status=()=>{if(!repo.initialised)return'Not a git repository. Run git init.';const tracked=new Set(repo.commits.flatMap(commit=>commit.files));const staged=new Set(repo.staged);const untracked=Object.keys(repo.files).filter(file=>!tracked.has(file)&&!staged.has(file));return `On branch ${repo.branch}\n${repo.staged.length?`Changes to be committed:\n  ${repo.staged.join('\n  ')}`:'No changes staged.'}${untracked.length?`\nUntracked files:\n  ${untracked.join('\n  ')}`:''}`;};const run=(raw:string)=>{const command=raw.trim();print(`$ ${command}`,'command');if(!command)return;const parts=command.match(/(?:[^\s"]+|"[^"]*")+/g)?.map(value=>value.replace(/^"|"$/g,''))??[];if(command==='help'){print('Commands: pwd, ls, touch FILE, mkdir DIR, clear, git init, git status, git add FILE|., git commit -m "MESSAGE", git log, git branch, git switch -c NAME, git diff');return;}if(command==='pwd'){print('/project');return;}if(command==='ls'){print(Object.keys(repo.files).join('  ')||'(empty)');return;}if(command==='clear'){output.replaceChildren();return;}if(parts[0]==='touch'&&parts[1]){repo.files[parts[1]]='';print(`Created ${parts[1]}`);return;}if(parts[0]==='mkdir'&&parts[1]){repo.files[`${parts[1]}/`]='';print(`Created directory ${parts[1]}/`);return;}if(command==='git init'){repo.initialised=true;print('Initialized empty Git repository in /project/.git/');return;}if(command==='git status'){print(status());return;}if(command==='git branch'){print(`* ${repo.branch}`);return;}if(parts[0]==='git'&&parts[1]==='switch'&&parts[2]==='-c'&&parts[3]){if(!repo.initialised){print(status(),'error');return;}repo.branch=parts[3];print(`Switched to a new branch '${repo.branch}'`);return;}if(parts[0]==='git'&&parts[1]==='add'&&parts[2]){if(!repo.initialised){print(status(),'error');return;}const selected=parts[2]==='.'?Object.keys(repo.files):parts.slice(2).filter(file=>file in repo.files);repo.staged=[...new Set([...repo.staged,...selected])];print(selected.length?`Staged ${selected.join(', ')}`:'No matching files.','');return;}if(parts[0]==='git'&&parts[1]==='commit'&&parts[2]==='-m'&&parts[3]){if(!repo.initialised){print(status(),'error');return;}if(!repo.staged.length){print('Nothing to commit. Stage a file first.','error');return;}const id=Math.random().toString(16).slice(2,9);repo.commits.unshift({id,message:parts[3],files:[...repo.staged]});repo.staged=[];print(`[${repo.branch} ${id}] ${parts[3]}`);return;}if(command==='git log'){print(repo.commits.length?repo.commits.map(commit=>`commit ${commit.id}\n    ${commit.message}`).join('\n\n'):'No commits yet.');return;}if(command==='git diff'){print(repo.staged.length?'Staged changes are not shown by plain git diff. Try git status.':'No unstaged changes in this simplified repository.');return;}print(`Command not recognised: ${command}\nType help to see the supported commands.`,'error');};root.querySelector<HTMLFormElement>('[data-git-form]')?.addEventListener('submit',event=>{event.preventDefault();run(input.value);input.value='';});root.querySelector('[data-git-reset]')?.addEventListener('click',()=>{repo={initialised:false,files:{'README.md':'# My project'},staged:[],commits:[],branch:'main'};output.replaceChildren();print('Repository reset. Start with git status.');input.focus();});}
+  type Snapshot = Record<string, string>;
+  type Staged = Record<string, string | null>;
+  type Commit = { id: string; message: string; files: Snapshot };
+  type Repo = { initialised: boolean; files: Snapshot; staged: Staged; commits: Commit[]; branch: string; remote?: string };
+
+  const root = document.querySelector<HTMLElement>('[data-git-practice]');
+  if (root) {
+    const output = root.querySelector<HTMLElement>('[data-git-output]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-git-input]')!;
+    const branchOutput = root.querySelector<HTMLElement>('[data-git-branch]')!;
+    const workingOutput = root.querySelector<HTMLUListElement>('[data-git-working]')!;
+    const stagedOutput = root.querySelector<HTMLUListElement>('[data-git-staged]')!;
+    const historyOutput = root.querySelector<HTMLOListElement>('[data-git-history]')!;
+    const freshRepo = (): Repo => ({ initialised: false, files: { 'README.md': '# My reproducible project\n' }, staged: {}, commits: [], branch: 'main' });
+    let repo = freshRepo();
+
+    const print = (value: string, type = '') => {
+      const paragraph = document.createElement('p');
+      if (type) paragraph.dataset.type = type;
+      paragraph.textContent = value;
+      output.append(paragraph);
+      output.scrollTop = output.scrollHeight;
+    };
+    const currentCommit = () => repo.commits[0]?.files ?? {};
+    const comparisonBase = (file: string) => Object.prototype.hasOwnProperty.call(repo.staged, file) ? repo.staged[file] : currentCommit()[file];
+    const allPaths = () => [...new Set([...Object.keys(currentCommit()), ...Object.keys(repo.files)])].sort();
+    const changedPaths = () => allPaths().filter((file) => repo.files[file] !== currentCommit()[file]);
+    const unstagedPaths = () => allPaths().filter((file) => repo.files[file] !== comparisonBase(file));
+
+    const listInto = (list: HTMLElement, values: Array<{ label: string; state?: string }>, empty: string) => {
+      list.replaceChildren();
+      if (!values.length) {
+        const item = document.createElement('li');
+        item.textContent = empty;
+        item.dataset.empty = 'true';
+        list.append(item);
+        return;
+      }
+      values.forEach(({ label, state }) => {
+        const item = document.createElement('li');
+        item.textContent = label;
+        if (state) item.dataset.state = state;
+        list.append(item);
+      });
+    };
+
+    const renderState = () => {
+      branchOutput.textContent = repo.branch;
+      const committed = currentCommit();
+      listInto(workingOutput, Object.keys(repo.files).sort().map((file) => ({
+        label: file,
+        state: !(file in committed) ? 'untracked' : repo.files[file] !== committed[file] ? 'modified' : 'clean',
+      })), 'No files');
+      listInto(stagedOutput, Object.entries(repo.staged).map(([file, value]) => ({ label: file, state: value === null ? 'deleted' : 'staged' })), 'Nothing staged');
+      historyOutput.replaceChildren();
+      if (!repo.commits.length) {
+        const item = document.createElement('li');
+        item.textContent = 'No commits';
+        item.dataset.empty = 'true';
+        historyOutput.append(item);
+      } else {
+        repo.commits.slice(0, 4).forEach((commit) => {
+          const item = document.createElement('li');
+          const id = document.createElement('code');
+          id.textContent = commit.id;
+          item.append(id, ` ${commit.message}`);
+          historyOutput.append(item);
+        });
+      }
+    };
+
+    const status = () => {
+      if (!repo.initialised) return 'Not a Git repository. Run git init.';
+      const staged = Object.keys(repo.staged);
+      const unstaged = unstagedPaths();
+      const untracked = Object.keys(repo.files).filter((file) => !(file in currentCommit()) && !(file in repo.staged));
+      return [`On branch ${repo.branch}`, staged.length ? `Changes to be committed:\n  ${staged.join('\n  ')}` : 'No changes staged.', unstaged.length ? `Changes not staged:\n  ${unstaged.join('\n  ')}` : '', untracked.length ? `Untracked files:\n  ${untracked.join('\n  ')}` : ''].filter(Boolean).join('\n');
+    };
+
+    const diffText = (stagedOnly: boolean) => {
+      const paths = stagedOnly ? Object.keys(repo.staged) : unstagedPaths();
+      if (!paths.length) return stagedOnly ? 'No staged changes.' : 'No unstaged changes.';
+      return paths.map((file) => {
+        const before = stagedOnly ? currentCommit()[file] : comparisonBase(file);
+        const after = stagedOnly ? repo.staged[file] : repo.files[file];
+        return [`diff -- ${file}`, `- ${before ?? '(file absent)'}`, `+ ${after ?? '(file deleted)'}`].join('\n');
+      }).join('\n\n');
+    };
+    const splitCommand = (command: string) => command.match(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g)?.map((value) => value.replace(/^["']|["']$/g, '')) ?? [];
+
+    const run = (raw: string) => {
+      const command = raw.trim();
+      print(`$ ${command}`, 'command');
+      if (!command) return;
+      const parts = splitCommand(command);
+      if (command === 'help') print('Shell: pwd, ls, cat FILE, touch FILE, mkdir DIR, echo "TEXT" > FILE, rm FILE, clear\nGit: git init, status, add FILE|., diff [--staged], commit -m "MESSAGE", log, branch, switch -c NAME, restore --staged FILE, remote add origin URL, remote -v, push');
+      else if (command === 'pwd') print('/project');
+      else if (command === 'ls') print(Object.keys(repo.files).sort().join('  ') || '(empty)');
+      else if (command === 'clear') output.replaceChildren();
+      else if (parts[0] === 'cat' && parts[1]) print(parts[1] in repo.files ? repo.files[parts[1]]! : `cat: ${parts[1]}: No such file`, parts[1] in repo.files ? '' : 'error');
+      else if (parts[0] === 'touch' && parts[1]) repo.files[parts[1]] ??= '';
+      else if (parts[0] === 'mkdir' && parts[1]) repo.files[`${parts[1].replace(/\/$/, '')}/`] = '';
+      else if (parts[0] === 'rm' && parts[1]) { if (parts[1] in repo.files) delete repo.files[parts[1]]; else print(`rm: ${parts[1]}: No such file`, 'error'); }
+      else if (/^echo\s+/.test(command) && command.includes('>')) {
+        const echo = command.match(/^echo\s+(["']?)(.*?)\1\s*>\s*(\S+)$/);
+        if (!echo) print('Use: echo "text" > FILE', 'error'); else repo.files[echo[3]!] = `${echo[2]}\n`;
+      } else if (command === 'git init') { repo.initialised = true; print('Initialized empty Git repository in /project/.git/'); }
+      else if (command === 'git status') print(status());
+      else if (command === 'git branch') print(`* ${repo.branch}`);
+      else if (parts[0] === 'git' && parts[1] === 'switch' && parts[2] === '-c' && parts[3]) { if (!repo.initialised) print(status(), 'error'); else { repo.branch = parts[3]; print(`Switched to a new branch '${repo.branch}'`); } }
+      else if (parts[0] === 'git' && parts[1] === 'add' && parts[2]) {
+        if (!repo.initialised) print(status(), 'error');
+        else { const selected = parts[2] === '.' ? changedPaths() : parts.slice(2); selected.forEach((file) => { if (file in repo.files) repo.staged[file] = repo.files[file]!; else if (file in currentCommit()) repo.staged[file] = null; }); print(selected.length ? `Staged ${selected.join(', ')}` : 'No changes to stage.'); }
+      } else if (command === 'git diff') print(diffText(false));
+      else if (command === 'git diff --staged') print(diffText(true));
+      else if (parts[0] === 'git' && parts[1] === 'restore' && parts[2] === '--staged' && parts[3]) { delete repo.staged[parts[3]]; print(`Unstaged ${parts[3]}`); }
+      else if (parts[0] === 'git' && parts[1] === 'commit' && parts[2] === '-m' && parts[3]) {
+        if (!repo.initialised) print(status(), 'error');
+        else if (!Object.keys(repo.staged).length) print('Nothing to commit. Stage a change first.', 'error');
+        else { const snapshot = { ...currentCommit() }; Object.entries(repo.staged).forEach(([file, value]) => value === null ? delete snapshot[file] : snapshot[file] = value); const id = Math.random().toString(16).slice(2, 9); repo.commits.unshift({ id, message: parts[3], files: snapshot }); repo.staged = {}; print(`[${repo.branch} ${id}] ${parts[3]}`); }
+      } else if (command === 'git log' || command.startsWith('git log ')) print(repo.commits.length ? repo.commits.map((commit) => `commit ${commit.id}\n    ${commit.message}`).join('\n\n') : 'No commits yet.');
+      else if (parts[0] === 'git' && parts[1] === 'remote' && parts[2] === 'add' && parts[3] === 'origin' && parts[4]) { repo.remote = parts[4]; print('Remote origin recorded in this sandbox.'); }
+      else if (command === 'git remote -v') print(repo.remote ? `origin  ${repo.remote} (fetch)\norigin  ${repo.remote} (push)` : 'No remotes configured.');
+      else if (command === 'git push') print(repo.remote ? 'Push simulated. This sandbox never sends data to the remote.' : 'No remote configured.', repo.remote ? '' : 'error');
+      else print(`Command not recognised: ${command}\nType help to see the supported commands.`, 'error');
+      renderState();
+    };
+
+    root.querySelector<HTMLFormElement>('[data-git-form]')?.addEventListener('submit', (event) => { event.preventDefault(); run(input.value); input.value = ''; });
+    root.querySelector('[data-git-reset]')?.addEventListener('click', () => { repo = freshRepo(); output.replaceChildren(); print('Repository reset. Start with git status.'); renderState(); input.focus(); });
+    renderState();
+  }
 </script>

@@ -221,6 +221,54 @@
   background: var(--paper-light);
 }
 
+.r-output__table {
+  padding: 1.1rem;
+  overflow-x: auto;
+  background: var(--paper-light);
+  color: var(--ink);
+}
+
+.r-output__table table {
+  width: max-content;
+  min-width: min(100%, 38rem);
+  margin: 0;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+}
+
+.r-output__table caption {
+  padding: 0 0 0.7rem;
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+}
+
+.r-output__table th,
+.r-output__table td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  vertical-align: top;
+}
+
+.r-output__table th:first-child,
+.r-output__table td:first-child {
+  text-align: left;
+}
+
+.r-output__plotly {
+  width: 100%;
+  min-height: 30rem;
+  background: var(--paper-light);
+}
+
+@media (max-width: 42rem) {
+  .r-output__plotly {
+    min-height: 24rem;
+  }
+}
+
 .katex-display {
   max-width: 100%;
   padding-block: 0.5rem;

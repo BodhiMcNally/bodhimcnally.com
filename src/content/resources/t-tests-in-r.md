@@ -15,6 +15,8 @@ downloadableAssets: []
 
 A t-test compares a mean with a reference value or compares means between two conditions. The three familiar forms answer different questions. Choosing among them depends on the study design, not on which command produces the smallest p-value.
 
+Select **Run R** above any code block to calculate the test and inspect its actual output. The example data are restored automatically for each run, so students can begin at any point in the lesson.
+
 ## The common structure
 
 Each t-statistic has the form
@@ -198,4 +200,3 @@ Always state the direction of subtraction.
 - Running many t-tests across groups or outcomes without addressing multiplicity.
 - Removing an outlier solely because it changes significance.
 - Treating statistical significance as clinical importance.
-

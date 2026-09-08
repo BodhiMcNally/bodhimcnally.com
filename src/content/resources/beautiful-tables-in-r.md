@@ -10,7 +10,7 @@ estimatedMinutes: 65
 featured: true
 template: false
 draft: false
-browserR: false
+browserR: true
 downloadableAssets: []
 ---
 
@@ -24,7 +24,7 @@ This resource covers five related tools:
 - `gtsummary` for analytical summaries and model results; and
 - `gtExtras` for optional visual elements added to `gt` tables.
 
-Package-heavy examples are intended primarily for RStudio and Quarto. The browser R runner can execute ordinary R, but availability and rendering of HTML table packages may vary.
+Select **Run R** above an example to execute it in the browser and render the resulting table directly beneath the code. The first use of a package can take longer because its WebAssembly build and dependencies must be loaded. The computation happens on your device. RStudio and Quarto remain the appropriate environment for saving the table into a complete report.
 
 ## Begin with table-ready data
 
@@ -212,7 +212,7 @@ Conditional styling should encode a meaningful rule that is stated or obvious. A
 library(gtsummary)
 
 trial |>
-  select(trt, age, grade, response) |>
+  dplyr::select(trt, age, grade, response) |>
   tbl_summary(
     by = trt,
     missing = "ifany",
@@ -236,7 +236,7 @@ trial |>
 
 ```r
 trial |>
-  select(trt, age, grade, response) |>
+  dplyr::select(trt, age, grade, response) |>
   tbl_summary(by = trt) |>
   add_p() |>
   add_n() |>

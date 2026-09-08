@@ -564,6 +564,26 @@ Tabular results appear here.
 Graphical results appear here.
 ```
 
+The same idea can be scoped explicitly with a fenced div. This form is useful when the tabset should sit inside a larger section without turning every following heading into a tab:
+
+```markdown
+::: {.panel-tabset}
+## Summary
+
+The principal result appears here.
+
+## R code
+
+The code appears here.
+
+## Interpretation
+
+The prose interpretation appears here.
+:::
+```
+
+Choose **Tabbed content** in the QMD laboratory to edit this form and test its rendered behaviour. The preview supports clicking the tabs as well as the Left Arrow, Right Arrow, Home and End keys.
+
 Tabs can reduce scrolling but hide information. Avoid them when readers need to compare panels at the same time, when printing matters, or when the tab labels do not make the hidden content obvious.
 
 ### Columns and page layout

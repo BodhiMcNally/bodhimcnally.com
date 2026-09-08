@@ -16,9 +16,8 @@ const categories = [...new Set(resources.map((resource) => resource.data.categor
 const tags = [...new Set(resources.flatMap((resource) => resource.data.tags))].sort();
 const showBrowseTools = resources.length >= 4;
 const offlineUrls = [
-  '/resources/', '/resources/lab/', '/resources/notebook/', '/resources/reproducibility-inspector/',
-  '/resources/methods-playground/', '/resources/project-workspace/', '/resources/interpretation-clinic/',
-  '/resources/prediction-lab/', '/resources/explain-result/', '/resources/visualisation-critique/',
+  '/resources/', '/resources/lab/', '/resources/notebook/', '/resources/interpretation-clinic/',
+  '/resources/prediction-lab/',
   ...resources.map((resource) => `/resources/${resource.id}/`),
 ];
 ---
@@ -60,15 +59,9 @@ const offlineUrls = [
       </div>
       <ol class="workbench-list">
         <li><a href="/resources/lab/"><span>01</span><div><h3>Statistical simulation studio</h3><p>Change sample size, confidence level, effect size and distribution; rerun seeded simulations and export the result.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/methods-playground/"><span>02</span><div><h3>Research methods playground</h3><p>Explore logistic probability, confounding and missing-data mechanisms through controlled demonstrations.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/prediction-lab/"><span>03</span><div><h3>Clinical prediction laboratory</h3><p>Translate diagnostic accuracy into patient counts, predictive values, likelihood ratios and net benefit.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/project-workspace/"><span>04</span><div><h3>Research project workspace</h3><p>Develop a question, eligibility criteria, variable definitions and analysis outline; export to Markdown or Quarto.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/interpretation-clinic/"><span>05</span><div><h3>Statistical interpretation clinic</h3><p>Practise interpreting coefficients, odds ratios, interactions and p-values with immediate feedback.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/explain-result/"><span>06</span><div><h3>Explain this result</h3><p>Turn a model estimate and confidence interval into a precise, appropriately cautious interpretation.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/visualisation-critique/"><span>07</span><div><h3>Data visualisation critique studio</h3><p>Repair a deliberately weak figure while the corresponding ggplot2 code updates.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/quarto-documents-in-rstudio/"><span>08</span><div><h3>Quarto document workshop</h3><p>Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/reproducibility-inspector/"><span>09</span><div><h3>Reproducibility inspector</h3><p>Audit an R or Quarto project locally for fragile paths, missing files, seeds, package records and document problems.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/notebook/"><span>10</span><div><h3>My resource notebook</h3><p>Return to saved resources, review private annotations and export your notes as Markdown or JSON.</p></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/prediction-lab/"><span>02</span><div><h3>Clinical prediction laboratory</h3><p>Translate diagnostic accuracy into patient counts, predictive values, likelihood ratios and net benefit.</p></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/interpretation-clinic/"><span>03</span><div><h3>Statistical interpretation clinic</h3><p>Practise interpreting coefficients, odds ratios, interactions and p-values with immediate feedback.</p></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/quarto-documents-in-rstudio/"><span>04</span><div><h3>Quarto document workshop</h3><p>Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project.</p></div><strong aria-hidden="true">→</strong></a></li>
       </ol>
       <div class="offline-resources">
         <div><h3>Offline resource mode</h3><p>Save the current teaching library and interactive tools for reading without a connection. Executable R chunks may still require a connection the first time their runtime is loaded.</p></div>

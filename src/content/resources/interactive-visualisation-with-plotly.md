@@ -10,13 +10,13 @@ estimatedMinutes: 55
 featured: true
 template: false
 draft: false
-browserR: false
+browserR: true
 downloadableAssets: []
 ---
 
 Interactivity is useful when it helps a reader inspect values, compare subsets or navigate dense data. It is not automatically an improvement over a clear static figure. Plotly’s R package creates browser-based graphics using Plotly.js and the `htmlwidgets` framework.
 
-Package examples on this page are best run in RStudio or rendered through Quarto. A Plotly widget requires an HTML output context; PDF and printed copies need a static alternative.
+Select **Run R** above a code block to execute it with R in the browser. The resulting Plotly widget is then handed to Plotly.js and rendered as a genuinely interactive chart beneath the code. The first run is slower because the browser must load R, the packages and the JavaScript renderer. PDF and printed copies still need a static alternative.
 
 ## Two routes into Plotly
 

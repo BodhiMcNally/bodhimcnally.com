@@ -16,7 +16,7 @@ downloadableAssets: []
 
 Git records meaningful versions of a project. GitHub hosts Git repositories and adds collaboration features such as pull requests, issues and web-based code review. They are related, but they are not the same thing: you can use Git without GitHub, and a GitHub account does not automatically place a local folder under version control.
 
-Use the **Git sandbox** above to practise the central sequence:
+Use the **Git and shell sandbox** above to practise the central sequence. Its repository-state panel updates after every command so you can see the working tree, staging area and commit history change:
 
 ```bash
 git init
@@ -26,7 +26,18 @@ git commit -m "Add project README"
 git log
 ```
 
-The simulator never runs a real shell. Commands shown elsewhere in this lesson are for your own terminal and are intentionally not executed by the webpage.
+Try editing a file before staging it:
+
+```bash
+git init
+echo "# Analysis project" > README.md
+git diff
+git add README.md
+git diff --staged
+git commit -m "Write project title"
+```
+
+The sandbox implements these operations inside an isolated browser model. A public webpage cannot safely be given native Bash access to your computer, and it should never receive your GitHub credentials. Commands shown elsewhere in this lesson are therefore either handled by the sandbox's constrained virtual repository or intended for your own terminal. This boundary is deliberate: the concepts are interactive without granting the site access to real files or accounts.
 
 ## The mental model
 

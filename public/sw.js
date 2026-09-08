@@ -1,4 +1,4 @@
-const CACHE = 'bodhi-academic-v3';
+const CACHE = 'bodhi-academic-v4';
 const CORE = ['/', '/resources/', '/resources/notebook/', '/resources/lab/', '/offline.html', '/favicon.svg', '/site.webmanifest'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));

@@ -79,7 +79,7 @@ const structuredData = {
     <span data-reading-percent>0%</span>
   </p>
 
-  <article data-browser-r={String(entry.data.browserR)}>
+  <article data-browser-r={String(entry.data.browserR)} data-resource-id={entry.id}>
     <header class="resource-header container">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a>
@@ -213,8 +213,9 @@ const structuredData = {
     }
 
     let webRInstancePromise;
-    let ggplotInstallPromise;
+    const packageInstallPromises = new Map();
     let ubuntuInstallPromise;
+    let plotlyScriptPromise;
 
     const ubuntuFonts = [
       { file: 'Ubuntu-Light.ttf', weight: '300', style: 'normal' },
@@ -288,18 +289,106 @@ const structuredData = {
       await ubuntuInstallPromise;
     };
 
-    const ensurePackages = async (webR, code) => {
-      const usesGgplot2 =
-        /(?:library|require)\s*\(\s*["']?ggplot2["']?\s*\)/i.test(code) ||
-        /ggplot2::/i.test(code);
+    const packagesForCode = (code) => {
+      const packages = new Set();
+      const mentions = (name) =>
+        new RegExp(`(?:library|require)\\s*\\(\\s*["']?${name}["']?\\s*\\)|${name}::`, 'i').test(code);
 
-      if (!usesGgplot2) return;
-
-      if (!ggplotInstallPromise) {
-        ggplotInstallPromise = webR.installPackages(['ggplot2']);
+      if (mentions('ggplot2') || /\bggplot\s*\(/i.test(code)) packages.add('ggplot2');
+      if (mentions('knitr') || /\bkable\s*\(/i.test(code)) packages.add('knitr');
+      if (mentions('kableExtra') || /\b(?:kable_styling|add_header_above|column_spec|cell_spec)\s*\(/i.test(code)) {
+        packages.add('knitr');
+        packages.add('kableExtra');
+      }
+      if (mentions('gt') || /\b(?:gt|tab_header|tab_spanner|cols_label|fmt_|tab_style|tab_options|gtsave)\s*\(/i.test(code)) {
+        packages.add('gt');
+      }
+      if (mentions('gtsummary') || /\b(?:tbl_summary|tbl_regression|tbl_merge|add_overall|add_p|add_n|bold_labels)\s*\(/i.test(code)) {
+        packages.add('gtsummary');
+      }
+      if (mentions('gtExtras') || /\bgt_plt_/i.test(code)) packages.add('gtExtras');
+      if (mentions('dplyr') || /\bdplyr::/i.test(code)) packages.add('dplyr');
+      if (mentions('plotly') || /\b(?:plot_ly|ggplotly|subplot|add_markers)\s*\(/i.test(code)) {
+        packages.add('jsonlite');
+        packages.add('plotly');
       }
 
-      await ggplotInstallPromise;
+      return [...packages];
+    };
+
+    const ensurePackages = async (webR, packages) => {
+      const existing = packages
+        .map((packageName) => packageInstallPromises.get(packageName))
+        .filter(Boolean);
+      const missing = packages.filter((packageName) => !packageInstallPromises.has(packageName));
+      if (missing.length) {
+        const installation = webR.installPackages(missing, true);
+        missing.forEach((packageName) => packageInstallPromises.set(packageName, installation));
+        existing.push(installation);
+      }
+      await Promise.all(existing);
+    };
+
+    const loadPlotly = async () => {
+      const globalWindow = window;
+      if (globalWindow.Plotly) return globalWindow.Plotly;
+      if (!plotlyScriptPromise) {
+        plotlyScriptPromise = new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdn.plot.ly/plotly-3.1.0.min.js';
+          script.async = true;
+          script.addEventListener('load', () => resolve(globalWindow.Plotly));
+          script.addEventListener('error', () => reject(new Error('Plotly.js could not be loaded. Check the connection and try again.')));
+          document.head.append(script);
+        });
+      }
+      return plotlyScriptPromise;
+    };
+
+    const resourcePrelude = (resourceId) => {
+      if (resourceId === 'linear-regression-and-r-output') return `
+        data(mtcars)
+        model_simple <- lm(mpg ~ wt, data = mtcars)
+        mtcars$wt_centred <- mtcars$wt - mean(mtcars$wt)
+        model_adjusted <- lm(mpg ~ wt + hp + factor(am), data = mtcars)
+        mtcars$transmission <- factor(mtcars$am, levels = c(0, 1), labels = c("Automatic", "Manual"))
+        model_factor <- lm(mpg ~ wt + transmission, data = mtcars)
+      `;
+      if (resourceId === 't-tests-in-r') return `
+        measurements <- c(98, 102, 101, 97, 105, 100, 103, 99, 104, 101)
+        trial <- data.frame(
+          group = factor(rep(c("Control", "Intervention"), each = 10)),
+          outcome = c(12, 14, 11, 13, 15, 10, 16, 12, 14, 13, 9, 11, 10, 8, 12, 9, 10, 7, 11, 9)
+        )
+        before <- c(72, 84, 65, 90, 77, 81, 69, 88)
+        after <- c(68, 80, 66, 83, 74, 76, 65, 82)
+        differences <- before - after
+      `;
+      if (resourceId === 'beautiful-tables-in-r') return `
+        options(knitr.table.format = "html")
+        summary_data <- data.frame(
+          group = c("Control", "Intervention"), n = c(120, 118),
+          age_mean = c(61.24, 60.87), age_sd = c(8.91, 9.16), event_n = c(24, 15)
+        )
+        summary_data$event_percent <- 100 * summary_data$event_n / summary_data$n
+      `;
+      if (resourceId === 'interactive-visualisation-with-plotly') return `
+        data(mtcars)
+        cars <- transform(mtcars, model = row.names(mtcars), transmission = ifelse(am == 1, "Manual", "Automatic"))
+      `;
+      return '';
+    };
+
+    const sanitiseTableHtml = (html) => {
+      const template = document.createElement('template');
+      template.innerHTML = html;
+      template.content.querySelectorAll('script, iframe, object, embed, link, meta, form, input, button').forEach((node) => node.remove());
+      template.content.querySelectorAll('*').forEach((node) => {
+        [...node.attributes].forEach((attribute) => {
+          if (/^on/i.test(attribute.name) || /javascript:/i.test(attribute.value)) node.removeAttribute(attribute.name);
+        });
+      });
+      return template.content;
     };
 
     const showOutputMessage = (output, message, isError = false) => {
@@ -360,6 +449,11 @@ const structuredData = {
 
       runButton.addEventListener('click', async () => {
         const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+        const resourceId = resourceArticle?.dataset.resourceId ?? '';
+        const packages = packagesForCode(code);
+        const isPlotly = packages.includes('plotly') && /\b(?:plot_ly|ggplotly|subplot|add_markers|config)\s*\(/i.test(code);
+        const isHtmlTable = /\b(?:kable|kable_styling|add_header_above|column_spec|gt|tbl_summary|tbl_regression|tbl_merge|gt_plt_)\s*\(/i.test(code);
+        const evaluationCode = `${resourcePrelude(resourceId)}\n${code}`;
         runButton.disabled = true;
         runButton.textContent = 'Loading R…';
         output.hidden = false;
@@ -380,17 +474,73 @@ const structuredData = {
             showOutputMessage(output, 'Installing Ubuntu in the plotting environment…');
             await ensureUbuntu(webR);
           }
-          if (/(?:library|require)\s*\(\s*["']?ggplot2["']?\s*\)|ggplot2::/i.test(code)) {
-            runButton.textContent = 'Loading ggplot2…';
-            showOutputMessage(output, 'Loading ggplot2 and its dependencies…');
+          if (packages.length) {
+            runButton.textContent = 'Loading packages…';
+            showOutputMessage(output, `Loading ${packages.join(', ')} and required dependencies…`);
           }
-          await ensurePackages(webR, code);
+          await ensurePackages(webR, packages);
           runButton.textContent = 'Running…';
           showOutputMessage(output, 'Running code…');
 
+          if (isPlotly) {
+            const plotlyJson = await webR.evalRString(`local({
+              .__resource_plot <- ({ ${evaluationCode} })
+              plotly::plotly_json(.__resource_plot, pretty = FALSE)
+            })`);
+            const plotly = await loadPlotly();
+            if (!plotly) throw new Error('Plotly.js loaded without exposing its renderer.');
+            output.replaceChildren();
+            const plot = document.createElement('div');
+            plot.className = 'r-output__plotly';
+            plot.setAttribute('role', 'img');
+            plot.setAttribute('aria-label', 'Interactive Plotly chart produced by the R code');
+            output.append(plot);
+            const specification = JSON.parse(plotlyJson);
+            const plotData = Array.isArray(specification) ? specification : (specification.data ?? specification);
+            const plotLayout = Array.isArray(specification) ? {} : (specification.layout ?? {});
+            const plotConfig = Array.isArray(specification) ? {} : (specification.config ?? {});
+            await plotly.newPlot(plot, plotData, plotLayout, {
+              ...plotConfig,
+              responsive: true,
+              displaylogo: false,
+            });
+            runButton.textContent = 'Run again';
+            return;
+          }
+
+          if (isHtmlTable) {
+            const tableHtml = await webR.evalRString(`local({
+              .__resource_table <- ({ ${evaluationCode} })
+              if (inherits(.__resource_table, "gtsummary")) {
+                .__resource_table <- gtsummary::as_gt(.__resource_table)
+              }
+              if (inherits(.__resource_table, "gt_tbl")) {
+                gt::as_raw_html(.__resource_table, inline_css = TRUE)
+              } else if (inherits(.__resource_table, "knitr_kable") || inherits(.__resource_table, "kableExtra")) {
+                as.character(.__resource_table)
+              } else {
+                paste(capture.output(print(.__resource_table)), collapse = "\\n")
+              }
+            })`);
+            output.replaceChildren();
+            if (/^\s*</.test(tableHtml)) {
+              const tableViewport = document.createElement('div');
+              tableViewport.className = 'r-output__table';
+              tableViewport.append(sanitiseTableHtml(tableHtml));
+              output.append(tableViewport);
+            } else {
+              const textOutput = document.createElement('pre');
+              textOutput.className = 'r-output__text';
+              textOutput.textContent = tableHtml;
+              output.append(textOutput);
+            }
+            runButton.textContent = 'Run again';
+            return;
+          }
+
           const shelter = await new webR.Shelter();
           try {
-            const capture = await shelter.captureR(code, {
+            const capture = await shelter.captureR(evaluationCode, {
               captureGraphics: {
                 width: 560,
                 height: 400,
