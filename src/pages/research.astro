@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
-import { publications } from '@/data/research';
+import { projects, publications } from '@/data/research';
 
 const sortedPublications = [...publications].sort((a, b) =>
   Number(b.selected) - Number(a.selected) || b.year - a.year,
@@ -24,6 +24,38 @@ const filterFor = (publicationType: (typeof publications)[number]['publicationTy
       <p>
         My developing interests lie in academic urology, surgical outcomes and quantitative clinical research. I am particularly interested in urological oncology, especially prostate and renal cancer; robotic and minimally invasive surgery; and the evaluation of perioperative, functional and patient-reported outcomes. My quantitative background also informs an interest in using real-world clinical data, prediction modelling and health-services research to study treatment selection, variation in care and patient recovery. I am most interested in methods that begin with a clear clinical question, reflect how the data were generated and communicate uncertainty honestly.
       </p>
+    </div>
+  </section>
+
+  <section class="current-research" aria-labelledby="current-research-title">
+    <div class="container">
+      <header class="section-heading">
+        <p class="eyebrow">Current work</p>
+        <h2 id="current-research-title">Research projects</h2>
+      </header>
+
+      <div class="research-projects">
+        {
+          projects.map((project) => (
+            <article class="research-project">
+              <div class="research-project__meta">
+                <span>{project.status}</span>
+                {project.startYear && <span>{project.startYear}–present</span>}
+              </div>
+              <h3>{project.title}</h3>
+              <p class="research-project__affiliation">
+                {[project.role, project.institution].filter(Boolean).join(' · ')}
+              </p>
+              <p>{project.shortDescription}</p>
+              {project.collaborators?.length && (
+                <p class="research-project__collaborators">
+                  Collaborating with {project.collaborators.join(', ')}
+                </p>
+              )}
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 
