@@ -8,6 +8,8 @@ import AnnotationLayer from '@/components/AnnotationLayer.astro';
 import QuartoLab from '@/components/QuartoLab.astro';
 import GitPractice from '@/components/GitPractice.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import MapglTutorial from '@/components/MapglTutorial.astro';
+import mapglHeadings from '@/data/mapgl/headings.json';
 import { site } from '@/data/site';
 
 export async function getStaticPaths() {
@@ -24,6 +26,8 @@ interface Props {
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
+const isMapglTutorial = entry.id === 'interactive-maps-in-r-with-mapgl';
+const resourceHeadings = isMapglTutorial ? mapglHeadings : headings;
 const updated = entry.data.updated ?? entry.data.published;
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat('en-AU', {
@@ -133,14 +137,14 @@ const structuredData = {
     <div class="resource-layout container">
       <aside class="resource-layout__aside">
         {entry.data.template && <p class="badge">Example</p>}
-        <TableOfContents headings={headings} />
+        <TableOfContents headings={resourceHeadings} />
       </aside>
       <div>
         {entry.id === 'quarto-documents-in-rstudio' && <QuartoLab />}
         {entry.id === 'git-and-github-from-first-commit' && <GitPractice />}
 
         <div class="prose">
-          <Content />
+          {isMapglTutorial ? <MapglTutorial /> : <Content />}
         </div>
 
         {

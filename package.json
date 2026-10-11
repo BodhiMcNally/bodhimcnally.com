@@ -10,7 +10,8 @@
     "prebuild": "node scripts/render-cv-pages.mjs && node scripts/render-icons.mjs",
     "build": "npm run check && astro build",
     "preview": "astro preview",
-    "verify": "npm run build && node scripts/check-links.mjs && node scripts/audit-html.mjs"
+    "verify": "npm run build && node scripts/check-links.mjs && node scripts/audit-html.mjs",
+    "precheck": "node scripts/configure-mapgl-build.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.0",
