@@ -1,9 +1,8 @@
 project:
-  type: website
+  type: default
   output-dir: _site
   render:
     - index.qmd
-    - project2-starter.qmd
   resources:
     - data/README.md
     - data/preparation-summary.json
@@ -14,28 +13,7 @@ project:
     - data/sydney-sa2-population-long.csv
     - data/sydney-public-schools.csv
     - data/sydney-population-grid-2025.tif
-    - R/**
-    - downloads/**
-    - index.qmd
-    - project2-starter.qmd
-    - scripts/install-packages.R
 
-website:
-  title: "Mapping with R"
-  navbar:
-    background: "#172f46"
-    left:
-      - href: index.qmd
-        text: Tutorial
-      - href: project2-starter.qmd
-        text: Project 2 starter
-    right:
-      - href: https://bodhimcnally.com/resources/
-        text: Bodhi McNally
-  page-footer:
-    left: "Bodhi McNally · DATA1X01 teaching resources"
-    right: "Built with Quarto, mapgl, and sf"
-  search: false
 
 format:
   html:

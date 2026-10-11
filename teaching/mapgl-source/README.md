@@ -1,34 +1,32 @@
 # Interactive maps in R with mapgl
 
-A complete, executable Quarto tutorial for DATA1X01 Project 2, using real Greater Sydney data: 373 ABS SA2 polygons and population estimates, 1,033 NSW government education locations, and the ABS 2025 population grid. Prepared data and original-source snapshots are included. See `data/README.md` for citations, licences, periods, and preparation.
+One complete, executable Quarto lesson for DATA1X01 Project 2, using real Greater Sydney data: 373 ABS SA2 polygons and annual population estimates, 1,033 NSW government education locations, and the ABS 2025 population grid. See `data/README.md` for sources, licences, periods and preparation.
 
-## Run the tutorial locally
+## Run the lesson locally
 
-1. Open this folder as your RStudio project, or make it your working directory.
-2. Install R 4.1+ and the Quarto CLI. Run `Rscript scripts/install-packages.R` once, or install the listed packages in the R Console.
-3. Run `quarto preview` to explore, or `quarto render` to rebuild both reports.
+1. Extract this entire folder and open it in RStudio as your project.
+2. Install R 4.1+ and the Quarto CLI. Run `Rscript scripts/install-packages.R` once, or install the packages listed in the lesson in the R Console.
+3. Run `quarto preview index.qmd` to work through it, or `quarto render index.qmd --to html` to generate the full report.
 
-The executable sources are `index.qmd` and `project2-starter.qmd`. All displayed R examples execute at render time. The maps then run as JavaScript htmlwidgets in an ordinary browser; the static page does not run a live R kernel. OpenFreeMap supplies remote basemap tiles without an API key, so map viewing needs internet access and WebGL.
+`index.qmd` is the full tutorial. All displayed R examples execute during rendering. The resulting maps run as JavaScript htmlwidgets in a browser. To change an example's calculations or mapping code, edit the QMD and render again. OpenFreeMap basemaps require internet access; viewing maps requires WebGL.
 
-The starter uses real ABS population data and contains an interactive choropleth, a supporting bar chart, and a table. Adapt it to your question and the assessment instructions.
+## Academic website
 
-## Website integration
+The full lesson appears directly at `/resources/interactive-maps-in-r-with-mapgl/`, inside the academic website's existing resource layout. It has the website's navigation, typography, table of contents and code-copy controls. Each map loads as the reader reaches its example. There is no iframe, separate published lesson page or starter report.
 
-The supplied website additions already contain rendered HTML at `public/resources/mapgl/`. The Astro deployment does not need R or Quarto. The native resource page links to the full lesson and automatically appears in the website resource library and search.
-
-For a future content update, edit these sources, then from the **website root** run:
+The website uses prebuilt content and requires no R or Quarto on the hosting service. For a later content edit, change this QMD and run these commands from the website root:
 
 ```bash
 node scripts/update-mapgl.mjs
 npm run verify
 ```
 
-This optional update command requires local R and Quarto. It rebuilds the reports and standalone preview, refreshes the downloadable source ZIP, adds canonical URLs, and copies the rendered files into `public/resources/mapgl/`. Commit the source changes and generated public files, then push normally. It does not delete files or modify other site resources.
+The optional update command requires local R and Quarto. It renders this single lesson in a temporary directory, extracts the lesson body and widget dependencies, writes the native content and map payloads, and refreshes the student source download. Commit the changed sources, `src/data/mapgl/`, and `public/resources/mapgl/`, then push normally.
 
-Read `docs/MAPGL_INTEGRATION.md` in the website additions for the copy-and-paste installation instructions.
+For the initial website update, follow `docs/MAPGL_INTEGRATION.md`. The downloadable standalone source project does not need the Astro website to run.
 
 ## Data preparation
 
-The reports use prepared local files, so they do not fetch data during rendering. `Rscript R/prepare-sydney-data.R` rebuilds them from the bundled snapshots. `scripts/fetch-sydney-data.R` is an optional source-refresh script requiring `readxl`. Review provenance and any changed counts after refreshing the live NSW data. Keep full analytical boundaries separate from the simplified display copy.
+Rendering reads the bundled prepared data and does not fetch live data. `Rscript R/prepare-sydney-data.R` rebuilds prepared files from the original snapshots. `scripts/fetch-sydney-data.R` is an optional refresh script requiring `readxl`; review provenance, reference periods and changed counts after refreshing a source. Keep the full analytical boundaries separate from the simplified display copy.
 
-The original tutorial sources and prepared data are in `downloads/mapgl-tutorial-source.zip` on the published website. Individual `.qmd.txt` links download as `.qmd` to avoid Quarto rewriting source links into rendered-page links.
+The website supplies this complete folder in `downloads/mapgl-tutorial-source.zip`. The individual `.qmd.txt` download can be saved as `index.qmd`, but needs the data and configuration from the complete bundle.

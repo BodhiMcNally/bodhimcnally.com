@@ -15,12 +15,6 @@ I discovered **mapgl** while working with geospatial data at AstraZeneca, where 
 This tutorial brings that approach into **DATA1X01 Project 2**. You will learn how to turn a table or spatial file into an interactive map, embed it in your Quarto report, and explain the pattern it shows. You do not need previous experience with geographic information systems.
 :::
 
-::: {.lesson-downloads}
-[Download the source bundle](downloads/mapgl-tutorial-source.zip){download="mapgl-tutorial-source.zip"}
-[Tutorial source](downloads/index.qmd.txt){download="index.qmd"}
-[Project 2 starter](downloads/project2-starter.qmd.txt){download="project2-starter.qmd"}
-[Example data guide](data/README.md)
-:::
 
 ::: {.callout-note title="How the examples work"}
 The maps below are actual outputs of the R code, rather than screenshots. Drag to pan, use the **+ / −** buttons to zoom, and try the popups and other controls. Mouse-wheel zoom is disabled in most examples so you can scroll through the lesson comfortably.
@@ -864,7 +858,7 @@ execute:
 ---
 ```
 
-Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish the map chunk with the map object. For example, the starter report uses this pattern:
+Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish the map chunk with the map object. For example, a report can use this pattern:
 
 ````markdown
 ```{{r}}
@@ -891,8 +885,8 @@ Do not set `eval: false`, `include: false`, or `output: false` on a chunk whose 
 Run these commands in a **terminal**, from your project folder:
 
 ```bash
-quarto preview project2-starter.qmd
-quarto render project2-starter.qmd --to html
+quarto preview index.qmd
+quarto render index.qmd --to html
 ```
 
 Start from a fresh R session before the final render, and check the resulting HTML in a browser. A report must not rely on objects that happen to exist in your Console. Test at least one popup, one zoom control, and any filter or slider you added.
@@ -930,8 +924,6 @@ Start with the analytical question, then choose a geometry and an encoding that 
 4. **Choose the encoding.** Use category colours for categories, a sequential scale for a rate, or proportional circle areas for suitable counts. Explain the units.
 5. **Write the finding.** Describe a relevant pattern, quantify it, and discuss the source's limitations. Pair the map with a chart or table when precise comparison matters.
 6. **Render and check the result.** Make sure the HTML opens and the map works in the same format the reader or marker will receive.
-
-The [Project 2 starter](project2-starter.qmd) is a small, executable report with a map, a supporting chart, and guidance on interpretation. It uses the same real Sydney SA2 and population data. Adapt the question, analysis, and interpretation to your own project, and check that these data meet the assessment instructions. It is a scaffold for your own analysis, rather than a completed assignment.
 
 ### Performance and responsible publication
 

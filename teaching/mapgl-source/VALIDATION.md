@@ -1,37 +1,53 @@
 # Validation record
 
-Real Sydney revision, **11 October 2026**. The tutorial targets mapgl **0.5.2**. These checks were completed against the academic website source ZIP supplied by Bodhi McNally.
+Native website integration, **11 October 2026**. Tested against the academic website source ZIP supplied by Bodhi McNally, with the previous real-Sydney mapgl additions installed.
 
-## Executed R and Quarto
+## Executed R outputs
 
-- R 4.3.3; Quarto 1.8.27; mapgl 0.5.2; sf 1.0-15; terra 1.7-65. Complete package versions and session information are supplied alongside this file.
-- Tutorial: 25 R chunks, with 22 executed. Installation, custom-file import templates, and optional static export are intentionally unexecuted examples.
-- Starter: all 6 R chunks executed, producing an interactive SA2 choropleth, bar chart, and supporting table. Figure captions and cross-references resolve without warnings, and the chart has meaningful alternative text.
-- The standalone SA2 preview was generated with R and exported as a self-contained htmlwidget.
-- The local update helper was exercised end to end, including rendering to a temporary directory, source ZIP generation, canonical URLs, publication, and removal of redundant generated libraries. Normal Astro builds use the supplied rendered HTML and require no R installation.
+The previous revision executed the complete tutorial with R 4.3.3, Quarto 1.8.27, mapgl 0.5.2, sf 1.0-15 and terra 1.7-65. The package versions and session information are retained alongside this file. This revision leaves **all 25 R chunks byte-for-byte unchanged**: 22 executed chunks and three intentionally unexecuted examples (package installation, custom-file imports and optional static export).
 
-## Data checks
+This migration used the already executed self-contained Quarto lesson to generate the native page. Each of its **13 map payloads was compared byte-for-byte** with the original R-generated JSON. All match exactly. The starter report, standalone preview and their references have been removed. The source now defines one Quarto document rather than a second website navigation layer.
 
-373 unique, valid, non-empty Greater Sydney SA2 geometries. All population codes match in both directions; the 2025 sum is **5,638,830**, matching the published ABS total. The annual series has **1,865 unique area/year records**. All **1,033** retained school points match exactly one full-resolution SA2; **29** lack reported FTE and are explicitly excluded from quantitative point views. No invalid school coordinates or multiple polygon memberships were found in the source selection. The original raster resolution is **1,000 metres in EPSG:3577**. Raster display classes use documented thresholds, a categorical colour table, and nearest-neighbour rendering.
+`node scripts/update-mapgl.mjs --from-html ...` was exercised end to end: HTML parsing, native content and section anchors, dependency publication, lazy payload extraction, obsolete-file migration, checksums and student source ZIP generation. The default fresh-R-render path uses `quarto render` in a temporary directory and was not rerun during this document-only integration revision. The original unchanged R chunks were already executed successfully. Hosting builds use supplied assets and do not execute R.
 
-## Browser checks
+## Real data
 
-Chrome for Testing 131 with Playwright, desktop 1440 × 1000 and mobile 390 × 844. All **13 tutorial map outputs** rendered: 12 individual widgets and a swipe comparison with two map contexts. The native resource-page preview and starter map also rendered.
+The same checked real data are retained: 373 unique, valid Greater Sydney SA2s; 2025 resident population total **5,638,830**; **1,865** unique area/year records; **1,033** government education locations, all matched to exactly one full-resolution SA2; **29** missing latest-reported FTE values, explicitly excluded from quantitative point views. The original population grid is 1 km in EPSG:3577. Display classes and nearest-neighbour resampling are unchanged. Full provenance, periods, exclusions, preparation and licences remain in `data/README.md`.
 
-Checked a real Glebe Public School popup (193 latest reported FTE), category filtering, SA2 boundary visibility, the year slider filtering to 2025, numbered school clusters and click-to-zoom, the 2021/2025 swipe handle, and raster nearest-neighbour sampling. Source and data downloads resolve; the tutorial source download matches the authored QMD. Full legend units and reference years remain visible, and the tutorial and native resource fit mobile screens.
+## Native browser checks
 
-The resource appears automatically in the existing resource listing and search index. Its unsupported browser-R buttons are disabled; the published maps remain interactive JavaScript widgets. R editing and execution take place in the downloadable Quarto project.
+Chrome for Testing 131 with Playwright, desktop **1440 × 1000** and mobile **390 × 844**.
 
-No page errors, console errors, or HTTP error responses occurred. One Google Fonts request was cancelled during page navigation; no basemap or map-control error occurred.
+- All **13 native map outputs** rendered: 12 single widgets plus a swipe comparison with two contexts.
+- One native page title, one main landmark, the existing website navigation, all **20** tutorial section anchors, and no iframe or starter links.
+- Maps load as the reader approaches their example. No maps or widget runtime are loaded at the top of the lesson before an example approaches the viewport.
+- Real Glebe Public School popup: **193 latest reported FTE**. Actual click and zoom verified.
+- Native code-copy control writes the package-installation example to the clipboard.
+- Category legend changes its enabled state; SA2 boundary toggle hides the line layer.
+- School cluster count labels render, using Noto Sans Regular.
+- Time slider filters the layer to numeric **2025**, confirmed after its scheduled update.
+- Swipe divider responds to a real pointer drag. Raster uses **nearest** resampling.
+- Student source ZIP, QMD and data guide return HTTP 200.
+- Desktop and mobile pages have no horizontal overflow. Mobile map width is **350 px** in a 390 px viewport. Legends, units, attribution and code were visually inspected.
+- No page errors, console errors or HTTP error responses in the final browser checks.
 
-## Website and preservation
+The existing browser R runner remains disabled only for this resource because it does not support the full mapgl/sf pipeline. Interactive maps run directly on the website; students execute changed R code in the downloadable Quarto project.
 
-`npm run verify` completed successfully: Astro check reported **0 errors, 0 warnings, and 0 hints**; the site built; all internal links in **30 HTML files** resolved; and the existing baseline accessibility/metadata audit passed for all 30. The legend presentation adjustment was followed by another HTML audit and browser interaction check.
+## Website checks
 
-All **121 original website source files** were compared by SHA-256 against the supplied ZIP and remain byte-for-byte identical. The installation ZIP contains only new paths; it contains no original website files, repository history, dependencies, or build directory. Native listing/search updates come from the existing content-collection mechanism.
+`npm run verify` passes: Astro reports **0 errors, 0 warnings and 0 hints**, builds **26 routes**, resolves all internal links in **27 HTML files**, and passes the existing baseline accessibility/metadata audit. The three duplicate HTML pages are no longer published.
 
-## Scope of optional examples
+## Preservation and installation
 
-The optional PDF/Word static-export pattern needs chromote and Chrome/Chromium and was not executed. The optional live-source refresh script was syntax-checked but not rerun; it additionally requires readxl and internet access. Later NSW snapshots may change. The supplied reports render from bundled prepared data without refreshing sources.
+Compared every original website source file against the supplied ZIP. **119 of 121** remain byte-for-byte unchanged. The only original files changed by migration are:
 
-Maps require browser WebGL and internet access for the remote basemap. Embedded dependencies do not make remote tiles available offline. See the data guide for source periods, licences, preparation, and interpretive limits.
+1. `src/pages/resources/[id].astro`: two imports, a mapgl resource condition, native section selection and conditional lesson content. All existing resource behaviour is retained.
+2. `tsconfig.json`: appends `public/resources/mapgl` to the existing exclude list. All other settings are retained.
+
+The update ZIP contains neither original file. Its one-time installer patches the user's existing versions rather than overwriting them. Tests with a customised template and an extra TypeScript exclusion confirmed that local customisations and unrelated files survive, only exact obsolete mapgl paths are removed, and rerunning the installer is idempotent. An unrecognised template causes a clean stop before either original file is written.
+
+No original page content, dependencies, build configuration values, navigation entries or repository history are replaced. The installer performs no git or deployment actions. The source archive omits the starter, temporary Quarto output, exports, caches and redundant libraries.
+
+## Optional examples
+
+The PDF/Word static-export pattern still requires chromote and Chrome/Chromium and was not executed. The optional live-data refresh script was previously syntax-checked and was not rerun. It additionally requires readxl and internet access. The supplied lesson reads the bundled prepared data during rendering. Viewing its basemap requires internet access and WebGL; embedded dependencies do not cache remote tiles.
