@@ -1,0 +1,1322 @@
+
+
+
+
+
+<div class="lesson-intro">
+<p>I discovered <strong>mapgl</strong> while working with geospatial data at AstraZeneca, where I was building an in-house solution for sales territory and workforce planning for a new product and team launch. Being able to put data on a map, explore it interactively, and explain what the geography meant made it much easier to connect an analysis to a practical decision.</p>
+<p>This tutorial brings that approach into <strong>DATA1X01 Project 2</strong>. You will learn how to turn a table or spatial file into an interactive map, embed it in your Quarto report, and explain the pattern it shows. You do not need previous experience with geographic information systems.</p>
+</div>
+
+<div class="callout callout-style-default callout-note callout-titled" title="How the examples work">
+<div class="callout-header d-flex align-content-center">
+
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How the examples work
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The maps below are actual outputs of the R code, rather than screenshots. Drag to pan, use the <strong>+ / −</strong> buttons to zoom, and try the popups and other controls. Mouse-wheel zoom is disabled in most examples so you can scroll through the lesson comfortably.</p>
+<p><strong>R runs when Quarto renders this page.</strong> The published maps run JavaScript in your browser. To change the R code and recompute an example, download the source and run it in RStudio. A static website does not provide a live R session. These examples use MapLibre and OpenFreeMap without an API key; the basemap still needs an internet connection.</p>
+</div>
+</div>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="our-real-sydney-case-study" id="our-real-sydney-case-study">Our real Sydney case study</h2>
+<p>We will use <strong>Greater Sydney</strong>, as defined by the ABS Greater Capital City Statistical Area (<code>1GSYD</code>). This includes the Central Coast and Blue Mountains; it is broader than the City of Sydney council area. The polygon maps use <strong>373 real Statistical Areas Level 2 (SA2s)</strong>. An SA2 is a statistical area, not necessarily a suburb or a school catchment.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>What we use</th>
+<th>Source and reference period</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SA2 boundaries</td>
+<td>Official codes, names, polygons, and area in km²</td>
+<td><a href="https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs/edition-3-july-2021-june-2026">ABS ASGS Edition 3</a>, 2021 geography</td>
+</tr>
+<tr class="even">
+<td>Resident population</td>
+<td>Annual population estimates, 2021–2025</td>
+<td><a href="https://www.abs.gov.au/statistics/people/population/regional-population/2024-25">ABS Regional population, 2024–25</a>; population at 30 June each year</td>
+</tr>
+<tr class="odd">
+<td>Government education locations</td>
+<td>Coordinates, school type, and latest reported FTE enrolments</td>
+<td><a href="https://data.nsw.gov.au/data/dataset/nsw-education-nsw-public-schools-master-dataset">NSW Department of Education master dataset</a>, extracted 2 October 2026</td>
+</tr>
+<tr class="even">
+<td>Population grid</td>
+<td>Modelled population density in 1 km cells</td>
+<td>ABS Australian population grid 2025, cropped to Greater Sydney</td>
+</tr>
+</tbody>
+</table>
+<p>The school snapshot includes environmental education centres and other government education sites as well as primary and secondary schools. We retain the provider’s types. It covers government education, rather than all schools. The enrolment field is <strong>latest reported FTE</strong>, not a count measured on the extraction date; the source does not supply an enrolment-year column. Population estimates for 2025 are preliminary. These periods and populations cannot be treated as interchangeable.</p>
+<p>The prepared CSV, GeoJSON, GeoPackage, and GeoTIFF files are bundled with the source. <a href="/resources/mapgl/data/README.md">The data guide</a> records attribution, original URLs, transformations, exclusions, and checksums. None of the maps uses simulated observations.</p>
+<p>You can work through the core sections first, then choose an extension that suits your data. An effective project might need only one well-designed map and a supporting chart. This is an optional teaching resource: follow the assessment instructions for the required data, methods, and submission format.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="set-up-r-and-quarto" id="set-up-r-and-quarto">1. Set up R and Quarto</h2>
+<p>Use <strong>R 4.1 or later</strong>, RStudio, and the <a href="https://quarto.org/docs/get-started/">Quarto CLI</a>. The examples use R’s native <code>|&gt;</code> pipe: read it as “take the result on the left and pass it to the next function”. Install packages once in the <strong>Console</strong>, outside your report’s code chunks:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mapgl"</span>, <span class="st">"sf"</span>, <span class="st">"dplyr"</span>, <span class="st">"readr"</span>, <span class="st">"htmltools"</span>, <span class="st">"htmlwidgets"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"terra"</span>, <span class="st">"viridisLite"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"jsonlite"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div></div>
+</div>
+<p>Now load the packages in the report. Unlike installation, this step must run whenever you render it.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapgl)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This tutorial uses the mapgl 0.5.2 API.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">packageVersion</span>(<span class="st">"mapgl"</span>) <span class="sc">&gt;=</span> <span class="st">"0.5.2"</span>)</span></code></pre></div></div>
+</div>
+<p><strong>mapgl</strong> creates the maps; <strong>sf</strong> stores vector geometries and performs spatial operations; <strong>dplyr</strong> prepares tables; <strong>readr</strong> imports CSV files. Later, <strong>terra</strong> handles raster data. Package names and R functions are case-sensitive.</p>
+<p>The <a href="https://walker-data.com/mapgl/">mapgl documentation</a> describes two interfaces: <code>maplibre()</code> and <code>mapboxgl()</code>. We will use <code>maplibre()</code> throughout. Mapbox requires an access token and its own service terms; it is an optional alternative, rather than a requirement for this lesson.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="make-your-first-map" id="make-your-first-map">2. Make your first map</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with one actual record from the bundled NSW snapshot.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>first_school <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-public-schools.csv"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">"Glebe Public School"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(first_school) <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>first_location <span class="ot">&lt;-</span> <span class="fu">c</span>(first_school<span class="sc">$</span>longitude, first_school<span class="sc">$</span>latitude)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>first_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">center =</span> first_location,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">zoom =</span> <span class="dv">12</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">420</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_markers</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    first_location,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#0d706f"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="st">"Glebe Public School · NSW Department of Education"</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>(<span class="at">position =</span> <span class="st">"top-right"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_fullscreen_control</span>(<span class="at">position =</span> <span class="st">"top-right"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_scale_control</span>(<span class="at">position =</span> <span class="st">"bottom-left"</span>, <span class="at">unit =</span> <span class="st">"metric"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>first_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-22b24ac4ebd7d9cb366d"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-22b24ac4ebd7d9cb366d">Load map</button></div><div id="htmlwidget-22b24ac4ebd7d9cb366d" style="width:100%;height:420px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-22b24ac4ebd7d9cb366d" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-22b24ac4ebd7d9cb366d.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: click the marker, zoom in, then use the fullscreen control.</p>
+</div>
+<p>The final line displays the object. If you finish a chunk with <code>first_map &lt;- ...</code>, R stores the map but does not automatically display it.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>What it changes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>style</code></td>
+<td>The basemap: here, OpenFreeMap’s restrained Positron style.</td>
+</tr>
+<tr class="even">
+<td><code>center</code></td>
+<td>The starting location, in <strong>longitude, latitude</strong> order.</td>
+</tr>
+<tr class="odd">
+<td><code>zoom</code></td>
+<td>The initial level of detail. Larger values zoom in.</td>
+</tr>
+<tr class="even">
+<td><code>projection</code></td>
+<td>The display projection. We use Mercator for local examples.</td>
+</tr>
+<tr class="odd">
+<td><code>height</code></td>
+<td>The map’s height in pixels. Set it explicitly in a report.</td>
+</tr>
+<tr class="even">
+<td><code>scrollZoom</code></td>
+<td>Whether scrolling the mouse wheel zooms the map.</td>
+</tr>
+</tbody>
+</table>
+<p>A marker is convenient for one or a few locations. For a dataset of points, use a <strong>circle layer</strong>, which supports styling, filtering, and clustering. See the <a href="https://walker-data.com/mapgl/reference/maplibre.html"><code>maplibre()</code> reference</a> and <a href="https://walker-data.com/mapgl/reference/openfreemap_style.html">available OpenFreeMap styles</a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="put-geospatial-data-into-the-right-form" id="put-geospatial-data-into-the-right-form">3. Put geospatial data into the right form</h2>
+<p>You need either coordinates, geometries, or an identifier that can be joined to boundaries. A place name on its own is not a geometry.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Your starting data</th>
+<th>Preparation in R</th>
+<th>Typical map</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CSV with longitude and latitude</td>
+<td><code>read_csv()</code>, then <code>st_as_sf()</code></td>
+<td>Circles, clusters, or a heatmap</td>
+</tr>
+<tr class="even">
+<td>GeoJSON or GeoPackage</td>
+<td><code>st_read()</code></td>
+<td>Points, lines, or filled polygons</td>
+</tr>
+<tr class="odd">
+<td>Shapefile</td>
+<td>Keep <code>.shp</code>, <code>.shx</code>, <code>.dbf</code>, and <code>.prj</code> together; use <code>st_read()</code></td>
+<td>Depends on the geometry</td>
+</tr>
+<tr class="even">
+<td>Table of statistics by area</td>
+<td>Join to an appropriate boundary file using an area code</td>
+<td>Choropleth</td>
+</tr>
+<tr class="odd">
+<td>GeoTIFF or another raster</td>
+<td><code>terra::rast()</code></td>
+<td>Raster overlay</td>
+</tr>
+<tr class="even">
+<td>Addresses or place names</td>
+<td>Obtain verified coordinates or join to appropriate boundaries first</td>
+<td>Depends on the question</td>
+</tr>
+</tbody>
+</table>
+<p>Geocoding is a separate step, with possible ambiguity, service limits, and costs. “Sydney” could mean a city, an administrative area, or a suburb. Document how you resolved it. A map cannot supply geographic precision that your source data does not contain.</p>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="convert-a-csv-into-spatial-points" id="convert-a-csv-into-spatial-points">Convert a CSV into spatial points</h3>
+<p>The bundled CSV contains <strong>1,033 real government education locations in Greater Sydney</strong>. It is a spatial subset of the NSW master dataset, with only the fields needed for this lesson. A public school location does not identify where its students live. All relative paths in this lesson assume that you extracted the complete source bundle and opened its folder as your project.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>schools_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-public-schools.csv"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">school_code =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>schools_raw <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, school_type, longitude, latitude, enrolment_fte) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"A few real records from the NSW school snapshot."</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>A few real records from the NSW school snapshot.</caption>
+<colgroup>
+<col style="width: 37%">
+<col style="width: 18%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">school_type</th>
+<th style="text-align: right;">longitude</th>
+<th style="text-align: right;">latitude</th>
+<th style="text-align: right;">enrolment_fte</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Abbotsford Public School</td>
+<td style="text-align: left;">Primary School</td>
+<td style="text-align: right;">151.1312</td>
+<td style="text-align: right;">-33.85273</td>
+<td style="text-align: right;">368</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Annandale Public School</td>
+<td style="text-align: left;">Primary School</td>
+<td style="text-align: right;">151.1696</td>
+<td style="text-align: right;">-33.88578</td>
+<td style="text-align: right;">363</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Annandale North Public School</td>
+<td style="text-align: left;">Primary School</td>
+<td style="text-align: right;">151.1718</td>
+<td style="text-align: right;">-33.87790</td>
+<td style="text-align: right;">359</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Appin Public School</td>
+<td style="text-align: left;">Primary School</td>
+<td style="text-align: right;">150.7877</td>
+<td style="text-align: right;">-34.19842</td>
+<td style="text-align: right;">337</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Validate coordinates before converting them. This retains an explicit record of excluded rows rather than silently losing them.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coordinate_ok <span class="ot">&lt;-</span> <span class="fu">with</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  schools_raw,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.finite</span>(longitude) <span class="sc">&amp;</span> <span class="fu">is.finite</span>(latitude) <span class="sc">&amp;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    longitude <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">180</span> <span class="sc">&amp;</span> longitude <span class="sc">&lt;=</span> <span class="dv">180</span> <span class="sc">&amp;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    latitude <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">90</span> <span class="sc">&amp;</span> latitude <span class="sc">&lt;=</span> <span class="dv">90</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>rejected_schools <span class="ot">&lt;-</span> schools_raw[<span class="sc">!</span>coordinate_ok, ]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>schools_clean <span class="ot">&lt;-</span> schools_raw[coordinate_ok, ]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(schools_clean) <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">!</span><span class="fu">anyDuplicated</span>(schools_clean<span class="sc">$</span>school_code))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  schools_clean,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>),</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">crs =</span> <span class="dv">4326</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">remove =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">rows_imported =</span> <span class="fu">nrow</span>(schools_raw),</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">rows_excluded =</span> <span class="fu">nrow</span>(rejected_schools),</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">rows_mapped =</span> <span class="fu">nrow</span>(schools)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">rows_imported</th>
+<th style="text-align: right;">rows_excluded</th>
+<th style="text-align: right;">rows_mapped</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1033</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1033</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><code>sf</code> adds a <strong>geometry column</strong> to the table. <code>coords</code> identifies the coordinate columns, and <code>crs = 4326</code> declares that these are WGS84 longitude and latitude in degrees. Use that declaration only when it matches the source metadata. <code>remove = FALSE</code> keeps the coordinate columns for inspection.</p>
+<p>Range checks catch obvious errors, but cannot prove that a valid coordinate is the correct one. Check the map’s extent against your study area, look for swapped columns, and investigate suspicious points. The NSW dictionary describes latitude and longitude but does not specify their geodetic datum; this teaching example treats them as WGS84 web coordinates. Do not use that assumption for survey accuracy or legal boundary decisions.</p>
+</section>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="understand-coordinate-reference-systems" id="understand-coordinate-reference-systems">Understand coordinate reference systems</h3>
+<p>A <strong>coordinate reference system (CRS)</strong> describes what your coordinate numbers mean. Geographic coordinates use angular units; projected coordinates often use metres. Inspect an imported file’s CRS and geometry type:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(schools)<span class="sc">$</span>input</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "EPSG:4326"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">st_geometry_type</span>(schools))</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] POINT
+18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_bbox</span>(schools)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     xmin      ymin      xmax      ymax 
+150.23258 -34.32048 151.58244 -33.13547 </code></pre>
+</div>
+</div>
+<p>If a spatial file has a known projected CRS, convert its coordinates with <code>st_transform(x, 4326)</code> before passing it to a web map. <strong>Assigning a CRS and transforming coordinates are different operations.</strong> <code>st_set_crs()</code> changes the declared meaning of the existing numbers; it does not recalculate them. If the CRS is missing, find the original metadata before assigning one.</p>
+<p>For the following import patterns, replace the paths with your own existing files. These are intentionally unexecuted templates.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>areas <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/my-boundaries.geojson"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">st_crs</span>(areas)))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>areas <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(areas, <span class="dv">4326</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># A GeoPackage can contain several layers.</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">st_layers</span>(<span class="st">"data/my-geography.gpkg"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>roads <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/my-geography.gpkg"</span>, <span class="at">layer =</span> <span class="st">"roads"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For projected CSV coordinates, use the CRS stated by the data provider.</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>projected_points <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(my_table, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"easting"</span>, <span class="st">"northing"</span>),</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">crs =</span> verified_source_crs)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>web_points <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(projected_points, <span class="dv">4326</span>)</span></code></pre></div></div>
+</div>
+<p>The <a href="https://r-spatial.github.io/sf/reference/st_read.html"><code>sf</code> import reference</a> covers supported file formats; the <a href="https://r-spatial.github.io/sf/reference/st_transform.html"><code>st_transform()</code> reference</a> explains transformations. For distance, buffers, or area calculations, choose an appropriate analytical CRS or understand <code>sf</code>’s geographic calculation methods. Do not interpret degrees as metres.</p>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="add-points-tooltips-and-popups" id="add-points-tooltips-and-popups">4. Add points, tooltips, and popups</h2>
+<p>A map contains <strong>sources</strong> and <strong>layers</strong>. A source holds the data. A layer tells the browser how to draw those data. Here, providing an <code>sf</code> object directly to <code>source</code> lets mapgl register the source for us.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escape text before placing it inside popup HTML.</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">&lt;-</span> schools <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">popup_html =</span> <span class="fu">paste0</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;"</span>, htmltools<span class="sc">::</span><span class="fu">htmlEscape</span>(name), <span class="st">"&lt;/strong&gt;&lt;br&gt;"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    htmltools<span class="sc">::</span><span class="fu">htmlEscape</span>(school_type), <span class="st">"&lt;br&gt;"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latest reported FTE enrolment: "</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">if_else</span>(<span class="fu">is.na</span>(enrolment_fte), <span class="st">"Not reported"</span>, <span class="fu">as.character</span>(enrolment_fte))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>points_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>),</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">bounds =</span> schools,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>),</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">440</span>,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_circle_layer</span>(</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"school-points"</span>,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">source =</span> schools,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_color =</span> <span class="st">"#0d706f"</span>,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_radius =</span> <span class="dv">7</span>,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_opacity =</span> <span class="fl">0.85</span>,</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_stroke_color =</span> <span class="st">"#ffffff"</span>,</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_stroke_width =</span> <span class="fl">1.5</span>,</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">tooltip =</span> <span class="st">"name"</span>,</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="st">"popup_html"</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>points_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-3234a1adfbfa1597d64a"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-3234a1adfbfa1597d64a">Load map</button></div><div id="htmlwidget-3234a1adfbfa1597d64a" style="width:100%;height:440px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-3234a1adfbfa1597d64a" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-3234a1adfbfa1597d64a.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: hover over a school for its name, then click for its school type and enrolment figure. Source: NSW Department of Education, snapshot 2 October 2026.</p>
+</div>
+<p><code>bounds = schools</code> fits the starting view to the data. <code>id</code> is a unique <strong>layer identifier</strong>, not a column name. <code>tooltip</code> and <code>popup</code> identify columns used for hover and click content. Popup columns can contain HTML, so escape text imported from other sources before adding your own markup.</p>
+<p><code>fitBoundsOptions = list(padding = 40)</code> leaves room around the fitted data so circles at the edges are fully visible. It is a MapLibre option passed through by <code>maplibre()</code>.</p>
+<p>Read the <a href="https://walker-data.com/mapgl/articles/layers-overview.html">sources and layers overview</a> and <a href="https://walker-data.com/mapgl/reference/add_circle_layer.html"><code>add_circle_layer()</code> reference</a> for more options.</p>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="a-quick-map-for-exploration" id="a-quick-map-for-exploration">A quick map for exploration</h3>
+<p>When you mainly want to inspect a spatial dataset, <code>maplibre_view()</code> chooses a layer and colour scale for you:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">maplibre_view</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(schools, <span class="sc">!</span><span class="fu">is.na</span>(enrolment_fte)),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"enrolment_fte"</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> viridisLite<span class="sc">::</span>viridis,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">420</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-56d1c51397159dce4ab1"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-56d1c51397159dce4ab1">Load map</button></div><div id="htmlwidget-56d1c51397159dce4ab1" style="width:100%;height:420px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-56d1c51397159dce4ab1" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-56d1c51397159dce4ab1.json"></script>
+</div>
+</div>
+<p>This quick view excludes the 29 records without reported enrolments; it does not replace them with zero. This is useful during exploration. For your final report, control the scale, legend title, units, and missing-value treatment deliberately. See the <a href="https://walker-data.com/mapgl/reference/maplibre_view.html"><code>maplibre_view()</code> reference</a>.</p>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="map-categories-and-quantities" id="map-categories-and-quantities">5. Map categories and quantities</h2>
+<p>Styling expressions connect an attribute to an appearance. A constant gives every feature the same style; an expression calculates a style from a feature or map property.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Helper</th>
+<th>Use it for</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>get_column()</code></td>
+<td>A prepared attribute</td>
+<td>A radius calculated in R</td>
+</tr>
+<tr class="even">
+<td><code>match_expr()</code></td>
+<td>Named categories</td>
+<td>School group colours</td>
+</tr>
+<tr class="odd">
+<td><code>interpolate()</code></td>
+<td>Smooth numeric variation</td>
+<td>Population density colours</td>
+</tr>
+<tr class="even">
+<td><code>step_expr()</code></td>
+<td>Fixed thresholds</td>
+<td>Density bands</td>
+</tr>
+</tbody>
+</table>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="category-colours-and-proportional-circles" id="category-colours-and-proportional-circles">Category colours and proportional circles</h3>
+<p>We group primary and infants schools together, retain secondary schools separately, and put the provider’s remaining categories in an explicitly labelled group. The original school type remains in the popup. For proportional circles, <strong>area</strong> should represent enrolment, so radius is proportional to the square root of FTE.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>school_groups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Primary / infants"</span>, <span class="st">"Secondary"</span>, <span class="st">"Other government sites"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>school_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#009E73"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">&lt;-</span> schools <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">school_group =</span> <span class="fu">case_when</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    school_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Primary School"</span>, <span class="st">"Infants School"</span>) <span class="sc">~</span> school_groups[<span class="dv">1</span>],</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    school_type <span class="sc">==</span> <span class="st">"Secondary School"</span> <span class="sc">~</span> school_groups[<span class="dv">2</span>],</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> school_groups[<span class="dv">3</span>]</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Missing enrolment is not zero. Keep those locations in the basic map,</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># but account for their exclusion from this quantitative encoding.</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>schools_known <span class="ot">&lt;-</span> schools <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(enrolment_fte))</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">is.finite</span>(schools_known<span class="sc">$</span>enrolment_fte)),</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(schools_known<span class="sc">$</span>enrolment_fte <span class="sc">&gt;=</span> <span class="dv">0</span>))</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>schools_known <span class="ot">&lt;-</span> schools_known <span class="sc">|&gt;</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">radius_px =</span> <span class="dv">6</span> <span class="sc">*</span> <span class="fu">sqrt</span>(enrolment_fte <span class="sc">/</span> <span class="dv">500</span>))</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">all_locations =</span> <span class="fu">nrow</span>(schools),</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">missing_enrolment =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(schools<span class="sc">$</span>enrolment_fte)),</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">locations_with_enrolment =</span> <span class="fu">nrow</span>(schools_known)) <span class="sc">|&gt;</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">all_locations</th>
+<th style="text-align: right;">missing_enrolment</th>
+<th style="text-align: right;">locations_with_enrolment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1033</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">1004</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>styled_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> schools,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">500</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_circle_layer</span>(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"styled-schools"</span>, <span class="at">source =</span> schools_known,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_color =</span> <span class="fu">match_expr</span>(<span class="st">"school_group"</span>, <span class="at">values =</span> school_groups,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">stops =</span> school_colours, <span class="at">default =</span> <span class="st">"#999999"</span>),</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_radius =</span> <span class="fu">get_column</span>(<span class="st">"radius_px"</span>), <span class="at">circle_opacity =</span> <span class="fl">0.8</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_stroke_color =</span> <span class="st">"white"</span>, <span class="at">circle_stroke_width =</span> <span class="dv">1</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">tooltip =</span> <span class="st">"name"</span>, <span class="at">popup =</span> <span class="st">"popup_html"</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_categorical_legend</span>(</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"School group · click to filter"</span>,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> school_groups, <span class="at">colors =</span> school_colours,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">patch_shape =</span> <span class="st">"circle"</span>, <span class="at">position =</span> <span class="st">"top-left"</span>,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">layer_id =</span> <span class="st">"styled-schools"</span>, <span class="at">interactive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">filter_column =</span> <span class="st">"school_group"</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_categorical_legend</span>(</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"Latest reported FTE · circle area"</span>,</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"500"</span>, <span class="st">"1,000"</span>, <span class="st">"2,000"</span>), <span class="at">colors =</span> <span class="fu">rep</span>(<span class="st">"#526478"</span>, <span class="dv">3</span>),</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">patch_shape =</span> <span class="st">"circle"</span>, <span class="at">sizes =</span> <span class="dv">12</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">2000</span>) <span class="sc">/</span> <span class="dv">500</span>),</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"bottom-left"</span>, <span class="at">add =</span> <span class="cn">TRUE</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>styled_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-473e03943908376c75e1"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-473e03943908376c75e1">Load map</button></div><div id="htmlwidget-473e03943908376c75e1" style="width:100%;height:500px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-473e03943908376c75e1" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-473e03943908376c75e1.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: click a group in the top legend, then inspect a popup. The map includes 1,004 locations with reported FTE; 29 records with missing FTE are excluded from this view. Source: NSW Department of Education.</p>
+</div>
+<p>A location with 2,000 FTE has twice the radius and four times the area of a location with 500 FTE. Legend <code>sizes</code> are diameters. A true zero has zero radius here; if you must show zeros, add a separate symbol with a clear key. FTE describes enrolment, not building capacity, local child population, or students’ home locations.</p>
+<p>The second legend uses <code>add = TRUE</code> to supplement the first. Clicking a legend changes browser visibility; it does not change the R data or recompute your analysis. See <a href="https://walker-data.com/mapgl/reference/match_expr.html"><code>match_expr()</code></a> and <a href="https://walker-data.com/mapgl/reference/map_legends.html">map legends</a>.</p>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="combine-real-sa2-polygons-lines-and-points" id="combine-real-sa2-polygons-lines-and-points">6. Combine real SA2 polygons, lines, and points</h2>
+<p>Use <strong>fill layers</strong> for areas, <strong>line layers</strong> for outlines or paths, and <strong>circle layers</strong> for points. We will draw actual SA2 polygons, derive line geometries from their boundaries, and overlay the school locations. These lines represent boundaries; they do not imply travel routes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Small display copy: simplified by 25 metres in a projected CRS.</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sa2 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/greater-sydney-sa2-display.geojson"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">4326</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyDuplicated</span>(sa2<span class="sc">$</span>sa2_code),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>          <span class="sc">!</span><span class="fu">any</span>(<span class="fu">st_is_empty</span>(sa2)), <span class="fu">all</span>(<span class="fu">st_is_valid</span>(sa2)))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>sa2_lines <span class="ot">&lt;-</span> <span class="fu">st_boundary</span>(sa2)</span></code></pre></div></div>
+</div>
+<p>Registering a source once lets several layers reuse it. Add fills first, then lines and points so the points remain visible.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>layered_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> sa2,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">480</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_source</span>(<span class="at">id =</span> <span class="st">"sa2-data"</span>, <span class="at">data =</span> sa2) <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_fill_layer</span>(</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"sa2-fill"</span>, <span class="at">source =</span> <span class="st">"sa2-data"</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_color =</span> <span class="st">"#56B4E9"</span>, <span class="at">fill_opacity =</span> <span class="fl">0.18</span>, <span class="at">popup =</span> <span class="st">"sa2_name"</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_line_layer</span>(</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"sa2-outlines"</span>, <span class="at">source =</span> sa2_lines,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">line_color =</span> <span class="st">"#526478"</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">line_width =</span> <span class="fu">interpolate</span>(<span class="at">property =</span> <span class="st">"zoom"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">13</span>),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>                             <span class="at">stops =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">1.5</span>))</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_circle_layer</span>(</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"school-overlay"</span>, <span class="at">source =</span> schools,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_color =</span> <span class="st">"#0072B2"</span>, <span class="at">circle_radius =</span> <span class="dv">4</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_stroke_color =</span> <span class="st">"white"</span>, <span class="at">circle_stroke_width =</span> <span class="fl">0.6</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="st">"popup_html"</span>, <span class="at">tooltip =</span> <span class="st">"name"</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_layers_control</span>(</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">layers =</span> <span class="fu">list</span>(<span class="st">"SA2 polygons"</span> <span class="ot">=</span> <span class="st">"sa2-fill"</span>,</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"SA2 boundary lines"</span> <span class="ot">=</span> <span class="st">"sa2-outlines"</span>,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Government education locations"</span> <span class="ot">=</span> <span class="st">"school-overlay"</span>),</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"top-left"</span>, <span class="at">collapsible =</span> <span class="cn">FALSE</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>layered_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-e010c12c68dc312ae41c"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-e010c12c68dc312ae41c">Load map</button></div><div id="htmlwidget-e010c12c68dc312ae41c" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-e010c12c68dc312ae41c" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-e010c12c68dc312ae41c.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: switch the school points and boundary lines off independently. Zoom in to see the SA2 detail. Sources: ABS ASGS 2021 and NSW Department of Education.</p>
+</div>
+<p><code>source = "sa2-data"</code> names a <strong>source ID</strong>. A layer control uses <strong>layer IDs</strong>. Here the layers are independent so you can inspect fills, outlines, and points separately. To switch fill and outline together, group their IDs in one vector. See <a href="https://walker-data.com/mapgl/reference/add_source.html"><code>add_source()</code></a> and <a href="https://walker-data.com/mapgl/reference/add_layers_control.html"><code>add_layers_control()</code></a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="join-population-statistics-to-sa2-boundaries" id="join-population-statistics-to-sa2-boundaries">7. Join population statistics to SA2 boundaries</h2>
+<p>Population is supplied as a table, while geometry is supplied separately. Join them on the <strong>nine-character SA2 code</strong>, checking uniqueness and unmatched keys in both directions. Keep identifiers as character values; area names can change or be spelled differently.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-sa2-population.csv"</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">sa2_code =</span> <span class="fu">col_character</span>()))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(sa2<span class="sc">$</span>sa2_code), <span class="sc">!</span><span class="fu">anyNA</span>(population<span class="sc">$</span>sa2_code),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>          <span class="sc">!</span><span class="fu">anyDuplicated</span>(sa2<span class="sc">$</span>sa2_code), <span class="sc">!</span><span class="fu">anyDuplicated</span>(population<span class="sc">$</span>sa2_code))</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>boundaries_without_data <span class="ot">&lt;-</span> <span class="fu">anti_join</span>(<span class="fu">st_drop_geometry</span>(sa2), population,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">by =</span> <span class="st">"sa2_code"</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>data_without_boundaries <span class="ot">&lt;-</span> <span class="fu">anti_join</span>(population, <span class="fu">st_drop_geometry</span>(sa2),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">by =</span> <span class="st">"sa2_code"</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(boundaries_without_data) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>          <span class="fu">nrow</span>(data_without_boundaries) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>sa2_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sa2, <span class="fu">select</span>(population, <span class="sc">-</span>sa2_name), <span class="at">by =</span> <span class="st">"sa2_code"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(sa2_data) <span class="sc">==</span> <span class="fu">nrow</span>(sa2), <span class="fu">all</span>(sa2_data<span class="sc">$</span>area_km2 <span class="sc">&gt;</span> <span class="dv">0</span>),</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(<span class="fu">is.finite</span>(sa2_data<span class="sc">$</span>population_2025)),</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(sa2_data<span class="sc">$</span>population_2025 <span class="sc">&gt;=</span> <span class="dv">0</span>))</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>sa2_data <span class="ot">&lt;-</span> sa2_data <span class="sc">|&gt;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">density_2021 =</span> population_2021 <span class="sc">/</span> area_km2,</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">density_2025 =</span> population_2025 <span class="sc">/</span> area_km2,</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup_html =</span> <span class="fu">paste0</span>(</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>      <span class="st">"&lt;strong&gt;"</span>, htmltools<span class="sc">::</span><span class="fu">htmlEscape</span>(sa2_name), <span class="st">"&lt;/strong&gt;&lt;br&gt;"</span>,</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>      <span class="st">"SA2: "</span>, sa2_code, <span class="st">"&lt;br&gt;Population, June 2025: "</span>,</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">format</span>(population_2025, <span class="at">big.mark =</span> <span class="st">","</span>, <span class="at">trim =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>      <span class="st">"&lt;br&gt;Area: "</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f km²"</span>, area_km2),</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>      <span class="st">"&lt;br&gt;Density: "</span>, <span class="fu">sprintf</span>(<span class="st">"%.0f residents/km²"</span>, density_2025)</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>sa2_data <span class="sc">|&gt;</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(density_2025)) <span class="sc">|&gt;</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sa2_name, population_2025, area_km2, density_2025) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>),</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"The six highest-density Sydney SA2s in June 2025."</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>The six highest-density Sydney SA2s in June 2025.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sa2_name</th>
+<th style="text-align: right;">population_2025</th>
+<th style="text-align: right;">area_km2</th>
+<th style="text-align: right;">density_2025</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sydney (South) - Haymarket</td>
+<td style="text-align: right;">24758</td>
+<td style="text-align: right;">1.0810</td>
+<td style="text-align: right;">22903</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chippendale</td>
+<td style="text-align: right;">9505</td>
+<td style="text-align: right;">0.4642</td>
+<td style="text-align: right;">20476</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ultimo</td>
+<td style="text-align: right;">10534</td>
+<td style="text-align: right;">0.5588</td>
+<td style="text-align: right;">18851</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zetland</td>
+<td style="text-align: right;">14991</td>
+<td style="text-align: right;">0.8047</td>
+<td style="text-align: right;">18629</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wolli Creek</td>
+<td style="text-align: right;">12585</td>
+<td style="text-align: right;">0.6795</td>
+<td style="text-align: right;">18521</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Waterloo</td>
+<td style="text-align: right;">18631</td>
+<td style="text-align: right;">1.1339</td>
+<td style="text-align: right;">16431</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The boundary vintage is <strong>ASGS 2021</strong>, matching the geography used for these population estimates. Using a newer boundary file just because it is newer can break comparability. The bundled snapshot contains population values for all 373 polygons; unmatched keys and missing measurements are still separate problems that you must check in your own data.</p>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="why-map-density-rather-than-population-count" id="why-map-density-rather-than-population-count">Why map density rather than population count?</h3>
+<p>A large SA2 can contain many people spread over a large area. Population density is <code>population / area_km2</code>, measured in <strong>residents per square kilometre</strong>. It answers a question about geographic concentration. A count answers a question about how many residents an area contains. Neither is a measure of school access or capacity.</p>
+<p>We use the official ABS <code>area_albers_sqkm</code> value, renamed <code>area_km2</code>. We do not recompute area from the simplified display polygons. The denominator includes the area represented by the ABS boundary definition; density does not mean that population is evenly spread inside the polygon.</p>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="build-a-choropleth-of-population-density" id="build-a-choropleth-of-population-density">8. Build a choropleth of population density</h2>
+<p>A <strong>choropleth</strong> shades areas according to a statistic. A sequential colour scale suits a non-negative density. A diverging scale can suit change around zero. Explain the units and the limits of your colour scale.</p>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="a-continuous-colour-scale" id="a-continuous-colour-scale">A continuous colour scale</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>density_limits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5000</span>, <span class="dv">25000</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>density_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#f7fbff"</span>, <span class="st">"#6baed6"</span>, <span class="st">"#08306b"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>missing_colour <span class="ot">&lt;-</span> <span class="st">"#bdbdbd"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">max</span>(sa2_data<span class="sc">$</span>density_2025) <span class="sc">&lt;=</span> <span class="fu">max</span>(density_limits))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>density_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> sa2_data,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">480</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_source</span>(<span class="at">id =</span> <span class="st">"density-data"</span>, <span class="at">data =</span> sa2_data) <span class="sc">|&gt;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_fill_layer</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"density-fill"</span>, <span class="at">source =</span> <span class="st">"density-data"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_color =</span> <span class="fu">interpolate</span>(<span class="st">"density_2025"</span>, <span class="at">values =</span> density_limits,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">stops =</span> density_colours, <span class="at">na_color =</span> missing_colour),</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_opacity =</span> <span class="fl">0.85</span>, <span class="at">popup =</span> <span class="st">"popup_html"</span>, <span class="at">tooltip =</span> <span class="st">"sa2_name"</span>,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">hover_options =</span> <span class="fu">list</span>(<span class="at">fill_opacity =</span> <span class="dv">1</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_line_layer</span>(</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"density-outline"</span>, <span class="at">source =</span> <span class="st">"density-data"</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">line_color =</span> <span class="st">"#526478"</span>, <span class="at">line_width =</span> <span class="fl">0.5</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_continuous_legend</span>(</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"June 2025 · residents per km²"</span>,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> density_limits, <span class="at">colors =</span> density_colours,</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"bottom-left"</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>density_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-dc5d83f6850702a3e1d0"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-dc5d83f6850702a3e1d0">Load map</button></div><div id="htmlwidget-dc5d83f6850702a3e1d0" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-dc5d83f6850702a3e1d0" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-dc5d83f6850702a3e1d0.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: zoom towards central Sydney and click an SA2. Its popup reports the real population, official area, and calculated density. Source: ABS Regional population 2024–25 and ASGS 2021.</p>
+</div>
+<p><code>interpolate()</code> blends between stops and holds endpoint colours beyond the specified limits. The 0–25,000 scale covers this snapshot’s densities and will also be used for comparisons. The 5,000 stop is a colour anchor, not a class boundary. If your data exceed the upper limit, extend the scale or disclose that values saturate. The missing-value colour is specified for future adaptation; this snapshot has no missing density values, so it has no missing-data legend key. See <a href="https://walker-data.com/mapgl/reference/interpolate.html"><code>interpolate()</code></a>.</p>
+</section>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="fixed-bands-and-an-accurate-legend" id="fixed-bands-and-an-accurate-legend">Fixed bands and an accurate legend</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>band_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#eff3ff"</span>, <span class="st">"#bdd7e7"</span>, <span class="st">"#6baed6"</span>, <span class="st">"#2171b5"</span>, <span class="st">"#08306b"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>band_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> sa2_data,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">480</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_fill_layer</span>(</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"density-bands"</span>, <span class="at">source =</span> sa2_data,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_color =</span> <span class="fu">step_expr</span>(<span class="st">"density_2025"</span>, <span class="at">base =</span> band_colours[<span class="dv">1</span>],</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">2000</span>, <span class="dv">5000</span>, <span class="dv">8000</span>), <span class="at">stops =</span> band_colours[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">na_color =</span> missing_colour),</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_opacity =</span> <span class="fl">0.85</span>, <span class="at">fill_outline_color =</span> <span class="st">"#526478"</span>,</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="st">"popup_html"</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_categorical_legend</span>(</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"June 2025 · residents per km²"</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"0 to &lt;500"</span>, <span class="st">"500 to &lt;2,000"</span>, <span class="st">"2,000 to &lt;5,000"</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>               <span class="st">"5,000 to &lt;8,000"</span>, <span class="st">"8,000 or more"</span>),</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> band_colours, <span class="at">position =</span> <span class="st">"top-left"</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>band_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-022ace4e657033a46c47"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-022ace4e657033a46c47">Load map</button></div><div id="htmlwidget-022ace4e657033a46c47" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-022ace4e657033a46c47" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-022ace4e657033a46c47.json"></script>
+</div>
+</div>
+<p>At exactly 500 the second colour begins; at 2,000 the third begins. Fixed thresholds discard within-band differences. Automatic helpers such as <code>step_quantile()</code> or <code>step_jenks()</code> can aid exploration, but separately recalculating breaks for each year makes identical colours represent different values. See <a href="https://walker-data.com/mapgl/reference/step_expr.html"><code>step_expr()</code></a> and <a href="https://walker-data.com/mapgl/reference/step_classification.html">classification helpers</a>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="A map still needs an analytical finding">
+<div class="callout-header d-flex align-content-center">
+
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>A map still needs an analytical finding
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the bundled June 2025 data, <strong>Sydney (South) - Haymarket</strong> has 24,758 residents across 1.0810 km², approximately <strong>22,903 residents/km²</strong>. Chippendale and Ultimo follow at approximately 20,476 and 18,851 residents/km². These values are calculated from the table and official area field, rather than read off a colour.</p>
+<p>Discuss the pattern relevant to your question. Population estimates are not exact headcounts, and the 2025 estimates are preliminary. Area-level differences do not establish causation or describe every person within an area. Large, sparsely populated polygons can dominate visual attention.</p>
+</div>
+</div>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="use-a-spatial-join-when-there-is-no-area-code" id="use-a-spatial-join-when-there-is-no-area-code">9. Use a spatial join when there is no area code</h2>
+<p>The school table has coordinates but no SA2 code. A <strong>spatial join</strong> attaches the code using location. Use the full-resolution analytical boundaries for this operation, not the simplified display copy.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sa2_full <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/greater-sydney-sa2.gpkg"</span>, <span class="at">layer =</span> <span class="st">"sa2"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A local projected CRS makes the boundary predicate explicit.</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># EPSG:28356 is GDA94 / MGA zone 56; it is not a universal choice.</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>schools_local <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(schools, <span class="dv">28356</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>sa2_local <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(sa2_full, <span class="dv">28356</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>memberships <span class="ot">&lt;-</span> <span class="fu">st_within</span>(schools_local, sa2_local)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>membership_count <span class="ot">&lt;-</span> <span class="fu">lengths</span>(memberships)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(membership_count <span class="sc">==</span> <span class="dv">1</span>L))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>schools_with_sa2 <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  schools_local, <span class="fu">select</span>(sa2_local, sa2_code), <span class="at">join =</span> st_within, <span class="at">left =</span> <span class="cn">TRUE</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>school_counts <span class="ot">&lt;-</span> schools_with_sa2 <span class="sc">|&gt;</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">count</span>(sa2_code, <span class="at">name =</span> <span class="st">"n_locations"</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>sa2_with_counts <span class="ot">&lt;-</span> sa2 <span class="sc">|&gt;</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(school_counts, <span class="at">by =</span> <span class="st">"sa2_code"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_locations =</span> <span class="fu">coalesce</span>(n_locations, <span class="dv">0</span>L))</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">sum</span>(sa2_with_counts<span class="sc">$</span>n_locations) <span class="sc">==</span> <span class="fu">nrow</span>(schools))</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>sa2_with_counts <span class="sc">|&gt;</span> <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(n_locations)) <span class="sc">|&gt;</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sa2_name, n_locations) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">8</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Government education locations assigned by point location."</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Government education locations assigned by point location.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sa2_name</th>
+<th style="text-align: right;">n_locations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Kurrajong Heights - Ebenezer</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dural - Kenthurst - Wisemans Ferry</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oyster Bay - Como - Jannali</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lalor Park - Kings Langley</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bidwill - Hebersham - Emerton</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kingswood - Werrington</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gosford - Springfield</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lethbridge Park - Tregear</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Zero means no locations from this government dataset were assigned to the SA2. It does not mean no schools of any kind, no school-age residents, or no access to education. School catchments and student residence can cross SA2 boundaries.</p>
+<p>Points on boundaries, outside the study area, or inside overlapping polygons need an explicit rule. <code>st_within()</code> excludes boundary points in this projected example; a different predicate can match more than one polygon. Investigate exceptions before joining instead of dropping duplicate assignments arbitrarily. See <a href="https://r-spatial.github.io/sf/reference/st_join.html"><code>st_join()</code></a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="explore-point-concentration-with-a-heatmap" id="explore-point-concentration-with-a-heatmap">10. Explore point concentration with a heatmap</h2>
+<p>A heatmap smooths nearby points across screen pixels. Its appearance depends on zoom, radius, and weighting. We give each government education location the same weight, including those without an enrolment figure.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>heat_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> schools,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">440</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_heatmap_layer</span>(</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"school-heat"</span>, <span class="at">source =</span> schools, <span class="at">heatmap_weight =</span> <span class="dv">1</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">heatmap_radius =</span> <span class="fu">interpolate</span>(<span class="at">property =</span> <span class="st">"zoom"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">14</span>),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stops =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">32</span>)),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">heatmap_intensity =</span> <span class="dv">1</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">heatmap_color =</span> <span class="fu">interpolate</span>(<span class="at">property =</span> <span class="st">"heatmap-density"</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="dv">1</span>),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">stops =</span> <span class="fu">c</span>(<span class="st">"rgba(255,255,255,0)"</span>, <span class="st">"#c6dbef"</span>, <span class="st">"#6baed6"</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>                <span class="st">"#2171b5"</span>, <span class="st">"#08306b"</span>)),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">heatmap_opacity =</span> <span class="fl">0.8</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_continuous_legend</span>(</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"Relative concentration of locations"</span>,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Lower"</span>, <span class="st">"Higher"</span>), <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#c6dbef"</span>, <span class="st">"#08306b"</span>),</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"bottom-left"</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>heat_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-cdc919d3803471f17966"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-cdc919d3803471f17966">Load map</button></div><div id="htmlwidget-cdc919d3803471f17966" style="width:100%;height:440px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-cdc919d3803471f17966" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-cdc919d3803471f17966.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: zoom in and out. The legend is qualitative; it does not report schools per km² or enrolments. Source: NSW Department of Education, 2 October 2026 snapshot.</p>
+</div>
+<p>This is a visual concentration map, not a population-adjusted rate or a test of a statistically significant hotspot. For a defined density, calculate a statistic on documented areas or use an appropriate density estimator. See <a href="https://walker-data.com/mapgl/reference/add_heatmap_layer.html"><code>add_heatmap_layer()</code></a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="cluster-crowded-school-points" id="cluster-crowded-school-points">11. Cluster crowded school points</h2>
+<p>Clustering groups nearby points at the current zoom and displays their feature counts. It reduces overplotting; these groups are visual, rather than fixed statistical clusters.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cluster_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> schools,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">470</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_circle_layer</span>(</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"schools"</span>, <span class="at">source =</span> schools, <span class="at">circle_color =</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_radius =</span> <span class="dv">5</span>, <span class="at">popup =</span> <span class="st">"popup_html"</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_options =</span> <span class="fu">cluster_options</span>(</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_zoom =</span> <span class="dv">12</span>, <span class="at">cluster_radius =</span> <span class="dv">45</span>, <span class="at">count_stops =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">100</span>),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">color_stops =</span> <span class="fu">c</span>(<span class="st">"#56B4E9"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#172f46"</span>),</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">radius_stops =</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">25</span>, <span class="dv">34</span>), <span class="at">text_color =</span> <span class="st">"white"</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_layout_property</span>(<span class="at">layer_id =</span> <span class="st">"schools-cluster-count"</span>,</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"text-font"</span>, <span class="at">value =</span> <span class="fu">list</span>(<span class="st">"Noto Sans Regular"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_categorical_legend</span>(</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"Locations in visual cluster"</span>,</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2–19"</span>, <span class="st">"20–99"</span>, <span class="st">"100 or more"</span>, <span class="st">"Individual location"</span>),</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#56B4E9"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#172f46"</span>, <span class="st">"#D55E00"</span>),</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">patch_shape =</span> <span class="st">"circle"</span>, <span class="at">position =</span> <span class="st">"top-left"</span></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>cluster_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-80d61f214244bb50763d"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-80d61f214244bb50763d">Load map</button></div><div id="htmlwidget-80d61f214244bb50763d" style="width:100%;height:470px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-80d61f214244bb50763d" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-80d61f214244bb50763d.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: click a numbered cluster to zoom towards its locations, then click an individual point. The label counts locations, not enrolled students. Source: NSW Department of Education.</p>
+</div>
+<p>Supply the <code>sf</code> points directly to <code>add_circle_layer()</code> with <a href="https://walker-data.com/mapgl/reference/cluster_options.html"><code>cluster_options()</code></a>. The shortcut creates a separate <code>schools-cluster-count</code> symbol layer. We use <a href="https://walker-data.com/mapgl/reference/set_layout_property.html"><code>set_layout_property()</code></a> to select Noto Sans Regular, available from the OpenFreeMap glyph service. An unavailable font can leave labels blank while circles still render.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="add-a-population-year-slider-without-a-server" id="add-a-population-year-slider-without-a-server">12. Add a population year slider without a server</h2>
+<p>A slider filters features in the browser, so it works on a static website. The filter property must be <strong>numeric</strong>. We build one polygon record per SA2 and year from the real 2021–2025 population series; the slider shows only one year’s records at a time.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>population_long <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-sa2-population-long.csv"</span>,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">sa2_code =</span> <span class="fu">col_character</span>(), <span class="at">year =</span> <span class="fu">col_integer</span>()))</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyDuplicated</span>(<span class="fu">paste</span>(population_long<span class="sc">$</span>sa2_code, population_long<span class="sc">$</span>year)),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">is.numeric</span>(population_long<span class="sc">$</span>year),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">nrow</span>(population_long) <span class="sc">==</span> <span class="fu">nrow</span>(sa2) <span class="sc">*</span> <span class="dv">5</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>sa2_time <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sa2, population_long, <span class="at">by =</span> <span class="st">"sa2_code"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">density =</span> population <span class="sc">/</span> area_km2,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">year_popup =</span> <span class="fu">paste0</span>(htmltools<span class="sc">::</span><span class="fu">htmlEscape</span>(sa2_name), <span class="st">"&lt;br&gt;June "</span>, year,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"&lt;br&gt;Population: "</span>, population,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"&lt;br&gt;Density: "</span>, <span class="fu">sprintf</span>(<span class="st">"%.0f residents/km²"</span>, density)))</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(sa2_time) <span class="sc">==</span> <span class="fu">nrow</span>(population_long))</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>time_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> sa2,</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">480</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_fill_layer</span>(</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"population-by-year"</span>, <span class="at">source =</span> sa2_time,</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_color =</span> <span class="fu">interpolate</span>(<span class="st">"density"</span>, <span class="at">values =</span> density_limits,</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>                              <span class="at">stops =</span> density_colours),</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_opacity =</span> <span class="fl">0.85</span>, <span class="at">fill_outline_color =</span> <span class="st">"#526478"</span>, <span class="at">popup =</span> <span class="st">"year_popup"</span></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_slider_control</span>(</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">layers =</span> <span class="st">"population-by-year"</span>, <span class="at">property =</span> <span class="st">"year"</span>, <span class="at">values =</span> <span class="dv">2021</span><span class="sc">:</span><span class="dv">2025</span>,</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">as.character</span>(<span class="dv">2021</span><span class="sc">:</span><span class="dv">2025</span>), <span class="at">mode =</span> <span class="st">"sequential"</span>,</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">initial_value =</span> <span class="dv">2021</span>, <span class="at">play_button =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Population at 30 June · selected year"</span>,</span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">230</span>, <span class="at">position =</span> <span class="st">"top-left"</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_continuous_legend</span>(</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"All years · residents per km²"</span>,</span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> density_limits, <span class="at">colors =</span> density_colours, <span class="at">position =</span> <span class="st">"bottom-left"</span></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a>time_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-273bbefd3bec5bc75016"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-273bbefd3bec5bc75016">Load map</button></div><div id="htmlwidget-273bbefd3bec5bc75016" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-273bbefd3bec5bc75016" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-273bbefd3bec5bc75016.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: move the slider to 2025 or press play. The colours use a fixed scale and the geography is fixed to ASGS 2021. Source: ABS Regional population 2024–25, annual series.</p>
+</div>
+<p>These are annual population snapshots, so <strong>sequential</strong> filtering suits the question. Cumulative mode would overlap several estimates of the same area and should not be used to add resident populations across years. The browser reveals existing records; it does not estimate missing years or fit a trend model.</p>
+<p>For dates, use <code>as_time_property(date_column, unit = "date")</code> to produce a numeric property: GeoJSON serializes R dates as strings. For large datasets, avoid repeating complex geometries unnecessarily; the slider also supports changing paint expressions on a single geometry source. See <a href="https://walker-data.com/mapgl/reference/add_slider_control.html"><code>add_slider_control()</code></a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="compare-2021-and-2025-using-a-shared-scale" id="compare-2021-and-2025-using-a-shared-scale">13. Compare 2021 and 2025 using a shared scale</h2>
+<p>A swipe comparison helps inspect changes. Both maps must use comparable statistics, units, geography, and colour limits. Here density uses the same official area denominator and the same 0–25,000 scale.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>make_year_map <span class="ot">&lt;-</span> <span class="cf">function</span>(data, year) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  density_column <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"density_"</span>, year)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(density_column <span class="sc">%in%</span> <span class="fu">names</span>(data))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">maplibre</span>(</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> data,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_fill_layer</span>(</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">id =</span> <span class="st">"comparison-density"</span>, <span class="at">source =</span> data,</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill_color =</span> <span class="fu">interpolate</span>(density_column, <span class="at">values =</span> density_limits,</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">stops =</span> density_colours, <span class="at">na_color =</span> missing_colour),</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill_opacity =</span> <span class="fl">0.85</span>, <span class="at">fill_outline_color =</span> <span class="st">"#526478"</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>comparison_map <span class="ot">&lt;-</span> <span class="fu">compare</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">make_year_map</span>(sa2_data, <span class="dv">2021</span>), <span class="fu">make_year_map</span>(sa2_data, <span class="dv">2025</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"swipe"</span>, <span class="at">height =</span> <span class="dv">480</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_legend</span>(</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"Left: 2021 · Right: 2025 · residents/km²"</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> density_limits, <span class="at">colors =</span> density_colours,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"continuous"</span>, <span class="at">target =</span> <span class="st">"compare"</span>, <span class="at">position =</span> <span class="st">"bottom-left"</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>comparison_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="compare-container-60ad2"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="compare-container-60ad2">Load map</button></div><div id="compare-container-60ad2" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl_compare" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="compare-container-60ad2" data-mapgl-src="/resources/mapgl/widgets/compare-container-60ad2.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: drag the central handle. Left shows June 2021; right shows June 2025. Source: ABS Regional population 2024–25.</p>
+</div>
+<p>Use <code>mode = "sync"</code> for synchronized views. Quantify changes in a table or chart as well: colour differences do not establish why population changed. For example, compute <code>population_2025 - population_2021</code>; for percentage change, check for a zero baseline before dividing. See <a href="https://walker-data.com/mapgl/reference/compare.html"><code>compare()</code></a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="explore-3d-extrusion" id="explore-3d-extrusion">14. Explore 3D extrusion</h2>
+<p>Extrusion assigns display heights to polygons. Perspective and occlusion make precise comparisons difficult, so retain a 2D map or table. This example focuses on central Sydney while drawing the real SA2 dataset.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sa2_3d <span class="ot">&lt;-</span> sa2_data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">height_m =</span> density_2025 <span class="sc">/</span> <span class="dv">10</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>extrusion_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">center =</span> <span class="fu">c</span>(<span class="fl">151.20</span>, <span class="sc">-</span><span class="fl">33.89</span>),</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">zoom =</span> <span class="fl">11.8</span>, <span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">pitch =</span> <span class="dv">50</span>, <span class="at">bearing =</span> <span class="sc">-</span><span class="dv">20</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">480</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_fill_extrusion_layer</span>(</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"extruded-sa2"</span>, <span class="at">source =</span> sa2_3d,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_extrusion_color =</span> <span class="fu">interpolate</span>(<span class="st">"density_2025"</span>, <span class="at">values =</span> density_limits,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">stops =</span> density_colours),</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_extrusion_height =</span> <span class="fu">get_column</span>(<span class="st">"height_m"</span>),</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill_extrusion_opacity =</span> <span class="fl">0.85</span>, <span class="at">popup =</span> <span class="st">"popup_html"</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_continuous_legend</span>(</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"Residents/km² · height = density ÷ 10 m"</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> density_limits, <span class="at">colors =</span> density_colours, <span class="at">position =</span> <span class="st">"bottom-left"</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>extrusion_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-02b79aa272cfac53fe28"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-02b79aa272cfac53fe28">Load map</button></div><div id="htmlwidget-02b79aa272cfac53fe28" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-02b79aa272cfac53fe28" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-02b79aa272cfac53fe28.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>The heights encode population density; they are not measured building heights or terrain. A density of 10,000 residents/km² produces a display height of 1,000 metres. Source: ABS.</p>
+</div>
+<p><code>fill_extrusion_height</code> expects metres, so the display conversion is explicit. <code>projection = "mercator"</code> avoids globe-related extrusion artefacts described in the <a href="https://walker-data.com/mapgl/articles/layers-overview.html">layer overview</a>. See <a href="https://walker-data.com/mapgl/reference/add_fill_extrusion_layer.html"><code>add_fill_extrusion_layer()</code></a>.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="display-the-real-abs-population-raster" id="display-the-real-abs-population-raster">15. Display the real ABS population raster</h2>
+<p>Vector data describe distinct features. <strong>Raster data</strong> describe values in grid cells. The bundled GeoTIFF is the ABS 2025 population grid cropped and masked to Greater Sydney, retaining its native <strong>1 km cells in EPSG:3577</strong>. Its values are modelled residents per km², not observations of individuals at cell centres.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>population_grid <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">"data/sydney-population-grid-2025.tif"</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">res</span>(population_grid)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1000 1000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">crs</span>(population_grid, <span class="at">proj =</span> <span class="cn">TRUE</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "+proj=aea +lat_0=0 +lon_0=132 +lat_1=-18 +lat_2=-36 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">global</span>(population_grid, <span class="fu">c</span>(<span class="st">"min"</span>, <span class="st">"max"</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        min      max
+population_density_2025   0 24015.78</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Classify on the original analytical grid before making a display image.</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 = zero, 2 = &gt;0 to &lt;500, 3 = 500 to &lt;2000, ... 6 = &gt;=8000.</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>grid_classes <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> (population_grid <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">+</span> (population_grid <span class="sc">&gt;=</span> <span class="dv">500</span>) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  (population_grid <span class="sc">&gt;=</span> <span class="dv">2000</span>) <span class="sc">+</span> (population_grid <span class="sc">&gt;=</span> <span class="dv">5000</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  (population_grid <span class="sc">&gt;=</span> <span class="dv">8000</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>grid_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#f7f7f7"</span>, <span class="st">"#eff3ff"</span>, <span class="st">"#bdd7e7"</span>, <span class="st">"#6baed6"</span>, <span class="st">"#2171b5"</span>, <span class="st">"#08306b"</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>grid_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Zero"</span>, <span class="st">"&gt;0 to &lt;500"</span>, <span class="st">"500 to &lt;2,000"</span>, <span class="st">"2,000 to &lt;5,000"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"5,000 to &lt;8,000"</span>, <span class="st">"8,000 or more"</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>rgb <span class="ot">&lt;-</span> <span class="fu">t</span>(grDevices<span class="sc">::</span><span class="fu">col2rgb</span>(grid_colours))</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">coltab</span>(grid_classes) <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">red =</span> rgb[, <span class="dv">1</span>], <span class="at">green =</span> rgb[, <span class="dv">2</span>], <span class="at">blue =</span> rgb[, <span class="dv">3</span>], <span class="at">alpha =</span> <span class="dv">255</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>raster_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> sa2,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitBoundsOptions =</span> <span class="fu">list</span>(<span class="at">padding =</span> <span class="dv">40</span>), <span class="at">projection =</span> <span class="st">"mercator"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">480</span>, <span class="at">scrollZoom =</span> <span class="cn">FALSE</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_image_source</span>(<span class="at">id =</span> <span class="st">"population-grid-image"</span>, <span class="at">data =</span> grid_classes) <span class="sc">|&gt;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_raster_layer</span>(</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"population-grid"</span>, <span class="at">source =</span> <span class="st">"population-grid-image"</span>,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">raster_opacity =</span> <span class="fl">0.85</span>, <span class="at">raster_resampling =</span> <span class="st">"nearest"</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_categorical_legend</span>(</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend_title =</span> <span class="st">"Modelled residents/km² · June 2025"</span>,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> grid_labels, <span class="at">colors =</span> grid_colours, <span class="at">position =</span> <span class="st">"top-left"</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_navigation_control</span>()</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>raster_map</span></code></pre></div></div>
+<div class="cell-output-display">
+<div class="mapgl-widget-status" data-mapgl-status="htmlwidget-a90b6d60201912c308bc"><span role="status">Interactive map loads as you scroll.</span> <button type="button" class="button button--quiet" data-load-map="htmlwidget-a90b6d60201912c308bc">Load map</button></div><div id="htmlwidget-a90b6d60201912c308bc" style="width:100%;height:480px;" class="mapgl-widget-pending" data-mapgl-binding="maplibregl" data-mapgl-widget="" role="region" aria-label="Interactive Sydney map"></div>
+<script type="application/json" data-for="htmlwidget-a90b6d60201912c308bc" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-a90b6d60201912c308bc.json"></script>
+</div>
+</div>
+<div class="map-note">
+<p>Try it: zoom in to inspect the grid cells. The classes retain exact threshold meanings; unmodelled or masked cells are transparent. Source: ABS Australian population grid 2025.</p>
+</div>
+<p>The colour table makes this a categorical display raster. Mapgl uses nearest-neighbour reprojection for this path; <code>raster_resampling = "nearest"</code> also prevents blended class colours when zooming. Zero is distinct from missing data. The retained analytical GeoTIFF still contains its original numeric density values.</p>
+<p>Mapgl turns the raster into an image; this example does not provide cell-value popups. A display image is not a substitute for the original grid in analysis. Cropping by a region and masking edge cells is approximate at the 1 km grid scale, so do not expect the masked grid to reproduce the exact SA2 population total. See <a href="https://walker-data.com/mapgl/reference/add_image_source.html"><code>add_image_source()</code></a> and <a href="https://walker-data.com/mapgl/reference/add_raster_layer.html"><code>add_raster_layer()</code></a>.</p>
+<p>Use <code>terra::</code> explicitly: terra and mapgl share function names including <code>interpolate()</code> and <code>compare()</code>. If you attach both packages, qualify the intended function with <code>mapgl::</code> or <code>terra::</code>. For a large raster, crop or reduce a display copy, or consider a tiled source.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="put-the-map-in-your-quarto-report" id="put-the-map-in-your-quarto-report">16. Put the map in your Quarto report</h2>
+<p>Interactive htmlwidgets belong in an <strong>HTML report</strong>. A normal mapgl map returned from an R chunk becomes an interactive widget when Quarto renders the document. No iframe, screenshot, or Shiny server is needed for that workflow. See <a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">Quarto’s htmlwidgets guide</a>.</p>
+<p>Use this YAML at the top of an independent report:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My DATA1X01 Project 2 report"</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-copy</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">error</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div></div>
+<p>Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish the map chunk with the map object. For example, a report can use this pattern:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-schools</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Greater Sydney government education locations. Source: NSW Department of Education, 2 October 2026 snapshot."</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>my_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> schools,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">projection =</span> <span class="st">"mercator"</span>, <span class="at">height =</span> <span class="dv">480</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_circle_layer</span>(</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="st">"school-points"</span>, <span class="at">source =</span> schools,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">circle_color =</span> <span class="st">"#0072B2"</span>, <span class="at">circle_radius =</span> <span class="dv">6</span>, <span class="at">popup =</span> <span class="st">"name"</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>my_map</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>@fig-schools shows the education locations included in this analysis.</span></code></pre></div></div>
+<p>Do not set <code>eval: false</code>, <code>include: false</code>, or <code>output: false</code> on a chunk whose map should appear. Avoid placing maps inside collapsed tabs during initial troubleshooting. A <code>fig-*</code> label and <code>fig-cap</code> provide a caption and cross-reference. Follow your course’s instructions about showing code and submitting supporting files.</p>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="render-and-verify-the-report" id="render-and-verify-the-report">Render and verify the report</h3>
+<p>Run these commands in a <strong>terminal</strong>, from your project folder:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview index.qmd</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render index.qmd <span class="at">--to</span> html</span></code></pre></div></div>
+<p>Start from a fresh R session before the final render, and check the resulting HTML in a browser. A report must not rely on objects that happen to exist in your Console. Test at least one popup, one zoom control, and any filter or slider you added.</p>
+<p><code>embed-resources: true</code> puts the document’s local JavaScript and CSS dependencies into the HTML. It does <strong>not</strong> download the complete remote basemap or guarantee offline maps. Send the rendered HTML and any files required by the assessment instructions. For a website, also publish linked downloads and any supporting assets. See <a href="https://quarto.org/docs/output-formats/html-basics.html">Quarto’s HTML documentation</a>.</p>
+</section>
+<section class="level3">
+<h3 class="anchored" data-anchor-id="pdf-and-word-need-a-static-alternative" id="pdf-and-word-need-a-static-alternative">PDF and Word need a static alternative</h3>
+<p>PDF and Word cannot preserve these interactive maps. Mapgl’s <code>print_map()</code> can produce a static figure during rendering, using <strong>chromote</strong> and an installed Chrome/Chromium browser. The following is an optional export pattern; it is not executed in this HTML tutorial.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run once in the Console if needed: install.packages("chromote")</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  density_map</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print_map</span>(density_map, <span class="at">width =</span> <span class="dv">1000</span>, <span class="at">height =</span> <span class="dv">600</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># You can also save files outside a report:</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save_map</span>(density_map, <span class="st">"density-map.png"</span>, <span class="at">width =</span> <span class="dv">1000</span>, <span class="at">height =</span> <span class="dv">600</span>)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>htmlwidgets<span class="sc">::</span><span class="fu">saveWidget</span>(density_map, <span class="st">"density-map.html"</span>, <span class="at">selfcontained =</span> <span class="cn">TRUE</span>)</span></code></pre></div></div>
+</div>
+<p>The helper script <code>scripts/export-example.R</code> provides a complete HTML export example. If you use static output, inspect it after export: check the extent, legend, missing-value key, and attribution. See <a href="https://walker-data.com/mapgl/reference/print_map.html"><code>print_map()</code></a> and <a href="https://walker-data.com/mapgl/reference/save_map.html"><code>save_map()</code></a>.</p>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="adapt-the-workflow-to-project-2" id="adapt-the-workflow-to-project-2">17. Adapt the workflow to Project 2</h2>
+<p>Start with the analytical question, then choose a geometry and an encoding that help answer it. For example, point locations can support a question about distribution, while area rates can support a comparison between regions. The appearance of the map should follow from that question.</p>
+<ol type="1">
+<li><strong>Identify the geographic unit.</strong> Is each row a location, an event, a route, or an area? Check the data period and coverage.</li>
+<li><strong>Prepare and validate the data.</strong> Read files reproducibly, verify the CRS, inspect invalid or empty geometries, and account for excluded rows.</li>
+<li><strong>Join only what is needed.</strong> Check unique identifiers and unmatched keys. Keep only columns that are appropriate to publish.</li>
+<li><strong>Choose the encoding.</strong> Use category colours for categories, a sequential scale for a rate, or proportional circle areas for suitable counts. Explain the units.</li>
+<li><strong>Write the finding.</strong> Describe a relevant pattern, quantify it, and discuss the source’s limitations. Pair the map with a chart or table when precise comparison matters.</li>
+<li><strong>Render and check the result.</strong> Make sure the HTML opens and the map works in the same format the reader or marker will receive.</li>
+</ol>
+
+<section class="level3">
+<h3 class="anchored" data-anchor-id="performance-and-responsible-publication" id="performance-and-responsible-publication">Performance and responsible publication</h3>
+<p>Every attribute retained in a displayed <code>sf</code> object may be serialized into the map’s GeoJSON. Hiding a column from a popup does not remove it from the published HTML. Select only approved fields before mapping, and do not publish confidential data or precise personal locations.</p>
+<p>For a slow map, first reduce unnecessary columns, crop to the study region, and inspect file size. Simplify <strong>a display copy</strong> of large geometries using a defensible tolerance; retain the originals for analysis. A clustering control reduces visual crowding but still sends the underlying points to the browser. Large projects may need vector tiles or PMTiles rather than an embedded GeoJSON dataset.</p>
+<p>Keep basemap attribution visible. Provide a useful caption and a table or chart so that colour perception, a small screen, or an unavailable basemap does not prevent a reader from understanding your result. Avoid adding many maps when one answers the question clearly.</p>
+</section>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="troubleshoot-common-problems" id="troubleshoot-common-problems">18. Troubleshoot common problems</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symptom</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The basemap appears, but no data do</td>
+<td>Check <code>st_bbox()</code>, longitude/latitude order, CRS, geometry type, and whether a filter excludes everything.</td>
+</tr>
+<tr class="even">
+<td>Points appear in the wrong country</td>
+<td>Check swapped coordinates and the source CRS. Projected eastings and northings are not longitude and latitude.</td>
+</tr>
+<tr class="odd">
+<td>Nothing appears in the report</td>
+<td>Finish the chunk with the map object, set a non-zero height, and render to HTML. Check chunk output options.</td>
+</tr>
+<tr class="even">
+<td>Grey or unexpected colours</td>
+<td>Inspect missing values, column types, exact category spelling, and expression defaults.</td>
+</tr>
+<tr class="odd">
+<td>A join adds many extra rows</td>
+<td>Check duplicate keys and whether a spatial predicate matches multiple areas.</td>
+</tr>
+<tr class="even">
+<td>A join loses areas</td>
+<td>Inspect unmatched keys in both directions, identifier types, leading zeros, and boundary vintage.</td>
+</tr>
+<tr class="odd">
+<td>A slider shows no features</td>
+<td>Make the property numeric, check the layer ID, and check its range and selected value.</td>
+</tr>
+<tr class="even">
+<td>The layer control changes nothing</td>
+<td>Supply layer IDs, rather than source IDs; group related fill and outline layers.</td>
+</tr>
+<tr class="odd">
+<td><code>could not find function</code></td>
+<td>Load the package and check its version. These examples use mapgl 0.5.2 or later.</td>
+</tr>
+<tr class="even">
+<td><code>sf</code> or <code>terra</code> will not install</td>
+<td>Use an appropriate binary where available. Linux source installs need geospatial system libraries; see each package’s official installation guidance.</td>
+</tr>
+<tr class="odd">
+<td>The whole map stays blank</td>
+<td>Check the browser console, WebGL availability, internet access, basemap service, and website security policy. Try another current browser.</td>
+</tr>
+<tr class="even">
+<td>The published page loses its maps</td>
+<td>Publish the rendered HTML with its dependencies, or use <code>embed-resources: true</code>. Source <code>.qmd</code> alone is not a rendered page.</td>
+</tr>
+<tr class="odd">
+<td>The map works online but fails offline</td>
+<td>Its basemap is remote. Embedded dependencies do not make remote tiles available offline.</td>
+</tr>
+<tr class="even">
+<td>The map fails in PDF or Word</td>
+<td>Use a tested static image or the <code>print_map()</code> export pattern.</td>
+</tr>
+</tbody>
+</table>
+<p>If the basemap service is temporarily unavailable, you can construct a map using <code>style = basemap_style("#f5f5f2")</code> and your local data layers. This provides a plain background for debugging or a deliberately basemap-free design. It lacks place labels and other basemap context, and the mapping library still needs to be available.</p>
+</section>
+<section class="level2">
+<h2 class="anchored" data-anchor-id="documentation-and-reproducibility" id="documentation-and-reproducibility">Documentation and reproducibility</h2>
+<p>This lesson uses original examples informed by <strong>Kyle Walker’s mapgl documentation</strong>. It targets mapgl <strong>0.5.2</strong> and explicitly selects its basemap to avoid relying on a default that may change between versions. Refer to the current documentation when extending the examples.</p>
+<ul>
+<li><a href="https://walker-data.com/mapgl/">mapgl home and getting started</a></li>
+<li><a href="https://walker-data.com/mapgl/articles/layers-overview.html">Sources and layers</a></li>
+<li><a href="https://walker-data.com/mapgl/articles/map-design.html">Map design</a></li>
+<li><a href="https://walker-data.com/mapgl/reference/index.html">Complete function reference</a></li>
+<li><a href="https://walker-data.com/mapgl/news/index.html">mapgl release notes</a></li>
+<li><a href="https://r-spatial.github.io/sf/"><code>sf</code> documentation</a></li>
+<li><a href="https://rspatial.github.io/terra/"><code>terra</code> documentation</a></li>
+<li><a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">Quarto and htmlwidgets</a></li>
+<li><a href="https://openfreemap.org/">OpenFreeMap and basemap attribution</a></li>
+<li><a href="https://www.abs.gov.au/methodologies/regional-population-methodology/2024-25">ABS population methodology</a></li>
+<li><a href="https://data.nsw.gov.au/data/dataset/nsw-education-nsw-public-schools-master-dataset">NSW school data and dictionary</a></li>
+</ul>
+<p>To record your own environment, run <code>sessionInfo()</code> and retain the output with your project. The supplied <code>R/prepare-sydney-data.R</code> rebuilds the teaching files from bundled official-source snapshots. <code>scripts/fetch-sydney-data.R</code> documents how to download those sources again; a later school snapshot may differ. <code>data/README.md</code> documents the fields, periods, licences, and transformations.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Practice tasks">
+<div class="callout-header d-flex align-content-center">
+
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Practice tasks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try one extension at a time: change the school colour palette and update its legend; compare population counts with density; find which schools fall in each SA2; change the heatmap radius and describe the visual effect; or quantify the SA2 with the largest population change between 2021 and 2025. Explain why cumulative filtering would be inappropriate for repeated annual population snapshots.</p>
+<p>Then choose one map appropriate to your own data and write a paragraph that explains a specific finding, its magnitude, and its limitations.</p>
+</div>
+</div>
+
+
+</section>
+

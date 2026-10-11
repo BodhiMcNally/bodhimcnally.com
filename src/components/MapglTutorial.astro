@@ -1,0 +1,207 @@
+---
+import tutorial from '@/data/mapgl/tutorial.html?raw';
+---
+
+<link rel="stylesheet" href="/resources/mapgl/runtime/mapgl.css" />
+<div class="mapgl-tutorial" data-mapgl-tutorial>
+  <Fragment set:html={tutorial} />
+</div>
+
+<script>
+  type WidgetRuntime = { staticRender: () => void };
+  const widgetWindow = window as Window & { HTMLWidgets?: WidgetRuntime };
+  const lesson = document.querySelector<HTMLElement>('[data-mapgl-tutorial]');
+
+  if (lesson) {
+    let runtimePromise: Promise<WidgetRuntime> | undefined;
+    const loadRuntime = () => {
+      if (!runtimePromise) {
+        runtimePromise = new Promise<WidgetRuntime>((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = '/resources/mapgl/runtime/mapgl.js';
+          script.onload = () => {
+            if (widgetWindow.HTMLWidgets) resolve(widgetWindow.HTMLWidgets);
+            else reject(new Error('Map runtime did not initialise.'));
+          };
+          script.onerror = () => reject(new Error('Map runtime could not be loaded.'));
+          document.head.append(script);
+        }).catch((error: unknown) => {
+          runtimePromise = undefined;
+          throw error;
+        });
+      }
+      return runtimePromise;
+    };
+
+    const inFlight = new Map<string, Promise<void>>();
+    const loadMap = (element: HTMLElement) => {
+      const existing = inFlight.get(element.id);
+      if (existing) return existing;
+      const operation = (async () => {
+        const payload = lesson.querySelector<HTMLScriptElement>(`script[data-for="${element.id}"][data-mapgl-src]`);
+        const status = lesson.querySelector<HTMLElement>(`[data-mapgl-status="${element.id}"]`);
+        const message = status?.querySelector<HTMLElement>('[role="status"]');
+        const button = status?.querySelector<HTMLButtonElement>('button');
+        if (button) button.disabled = true;
+        if (message) message.textContent = 'Loading interactive map…';
+        try {
+          if (!payload?.dataset.mapglSrc) throw new Error('Map data link is missing.');
+          const [runtime, response] = await Promise.all([loadRuntime(), fetch(payload.dataset.mapglSrc)]);
+          if (!response.ok) throw new Error(`Map data returned ${response.status}.`);
+          const json = await response.text();
+          JSON.parse(json);
+          payload.textContent = json;
+          element.classList.remove('mapgl-widget-pending');
+          element.classList.add('html-widget', element.dataset.mapglBinding || 'maplibregl');
+          runtime.staticRender();
+          element.dataset.mapglLoaded = 'true';
+          if (status) status.hidden = true;
+        } catch (error) {
+          element.classList.remove('html-widget');
+          element.classList.remove(element.dataset.mapglBinding || 'maplibregl');
+          element.classList.add('mapgl-widget-pending');
+          if (message) message.textContent = 'The map could not load. Check your connection and try again.';
+          if (button) {
+            button.disabled = false;
+            button.textContent = 'Retry map';
+          }
+          console.error('Mapgl example failed to load:', error);
+          inFlight.delete(element.id);
+        }
+      })();
+      inFlight.set(element.id, operation);
+      return operation;
+    };
+
+    const widgets = [...lesson.querySelectorAll<HTMLElement>('[data-mapgl-widget]')];
+    const observer = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          observer?.unobserve(entry.target);
+          void loadMap(entry.target as HTMLElement);
+        }
+      }
+    }, { rootMargin: '350px 0px' }) : undefined;
+    widgets.forEach(element => observer?.observe(element));
+    lesson.querySelectorAll<HTMLButtonElement>('[data-load-map]').forEach(button => {
+      button.addEventListener('click', () => {
+        const element = document.getElementById(button.dataset.loadMap ?? '');
+        if (element) {
+          observer?.unobserve(element);
+          void loadMap(element);
+        }
+      });
+    });
+  }
+</script>
+
+<style is:global>
+  /* Let this grid column shrink below the intrinsic width of output tables. */
+  .resource-layout:has(.mapgl-tutorial) > div { min-width: 0; }
+  .prose:has(.mapgl-tutorial) { width: 100%; min-width: 0; }
+  .mapgl-tutorial { min-width: 0; }
+  .mapgl-tutorial .lesson-intro {
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+    border-left: 3px solid var(--mineral);
+  }
+  .mapgl-tutorial .lesson-intro p:last-child { margin-bottom: 0; }
+  .mapgl-tutorial .callout {
+    padding: 1.1rem 1.25rem;
+    margin: 1.5rem 0;
+    border: 1px solid var(--mineral-line);
+    border-left: 3px solid var(--mineral);
+    background: var(--mineral-faint);
+  }
+  .mapgl-tutorial .callout-title-container {
+    margin-bottom: .5rem;
+    color: var(--mineral-dark);
+    font-family: var(--font-sans);
+    font-size: .9rem;
+    font-weight: 700;
+  }
+  .mapgl-tutorial .callout-body > :last-child { margin-bottom: 0; }
+  .mapgl-tutorial .map-note {
+    padding: .65rem .9rem;
+    margin-top: .5rem;
+    color: var(--mineral-dark);
+    background: var(--mineral-faint);
+    font-family: var(--font-sans);
+    font-size: .85rem;
+  }
+  .mapgl-tutorial .map-note p { margin: 0; }
+  .mapgl-tutorial .cell-output-display { margin-bottom: 1.5rem; }
+  .mapgl-tutorial .cell-output-stdout pre,
+  .mapgl-tutorial .cell-output-stderr pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .mapgl-tutorial .maplibregl,
+  .mapgl-tutorial .maplibregl_compare,
+  .mapgl-tutorial .mapgl-widget-pending {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: .4rem;
+    overflow: hidden;
+  }
+  .mapgl-tutorial .mapgl-widget-pending { background: var(--paper-deep); }
+  .mapgl-tutorial .mapgl-widget-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+    padding: .8rem;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: .82rem;
+  }
+  .mapgl-tutorial .mapgl-widget-status[hidden] { display: none; }
+  .mapgl-tutorial .maplibregl-popup-content {
+    color: #172f46;
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+  .mapgl-tutorial .maplibregl-popup-content strong { color: #172f46; }
+  .mapgl-tutorial .maplibregl-popup-content p { margin: .4rem 0; }
+  .mapgl-tutorial .maplibregl-ctrl-attrib { font-size: 11px; }
+  .mapgl-tutorial .mapboxgl-legend { max-width: calc(100% - 50px); }
+  .mapgl-tutorial .mapboxgl-legend strong { color: #172f46; }
+  .mapgl-tutorial .mapgl-legend-title,
+  .mapgl-tutorial .legend-text {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.3 !important;
+  }
+  .mapgl-tutorial .legend-patch-container { flex-shrink: 0; }
+  .mapgl-tutorial .legend-text { min-width: 0; }
+  .mapgl-tutorial .layers-control ul { padding: 0; margin: 0; }
+  .mapgl-tutorial .layers-control li { padding: 0; margin: 0; }
+  .mapgl-tutorial .layers-control a,
+  .mapgl-tutorial .maplibregl-ctrl a { color: inherit; }
+  .mapgl-tutorial pre.sourceCode { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .mapgl-tutorial pre.sourceCode .co { color: #a5aca8; font-style: italic; }
+  .mapgl-tutorial pre.sourceCode .st,
+  .mapgl-tutorial pre.sourceCode .ch { color: #a5d6ff; }
+  .mapgl-tutorial pre.sourceCode .kw,
+  .mapgl-tutorial pre.sourceCode .cf { color: #ff9baf; }
+  .mapgl-tutorial pre.sourceCode .dv,
+  .mapgl-tutorial pre.sourceCode .fl,
+  .mapgl-tutorial pre.sourceCode .cn { color: #b7d7ac; }
+  .mapgl-tutorial pre.sourceCode .fu { color: #e0c4fa; }
+  .mapgl-tutorial .sourceCode { max-width: 100%; min-width: 0; }
+  .mapgl-tutorial .cell-output-display table caption {
+    padding: .5rem 0;
+    font-size: .85rem;
+    text-align: left;
+  }
+  @media (max-width: 42rem) {
+    .mapgl-tutorial .maplibregl-ctrl-top-left,
+    .mapgl-tutorial .maplibregl-ctrl-bottom-left { max-width: calc(100% - 65px); }
+    .mapgl-tutorial .mapgl-legend-title { font-size: 13px !important; }
+    .mapgl-tutorial .mapboxgl-legend.bottom-left { bottom: 55px !important; }
+  }
+  @media print {
+    .mapgl-tutorial .mapgl-widget-status { display: none; }
+  }
+</style>

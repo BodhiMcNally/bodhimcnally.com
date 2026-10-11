@@ -1,0 +1,152 @@
+[
+  {
+    "depth": 2,
+    "slug": "our-real-sydney-case-study",
+    "text": "Our real Sydney case study"
+  },
+  {
+    "depth": 2,
+    "slug": "set-up-r-and-quarto",
+    "text": "1. Set up R and Quarto"
+  },
+  {
+    "depth": 2,
+    "slug": "make-your-first-map",
+    "text": "2. Make your first map"
+  },
+  {
+    "depth": 2,
+    "slug": "put-geospatial-data-into-the-right-form",
+    "text": "3. Put geospatial data into the right form"
+  },
+  {
+    "depth": 3,
+    "slug": "convert-a-csv-into-spatial-points",
+    "text": "Convert a CSV into spatial points"
+  },
+  {
+    "depth": 3,
+    "slug": "understand-coordinate-reference-systems",
+    "text": "Understand coordinate reference systems"
+  },
+  {
+    "depth": 2,
+    "slug": "add-points-tooltips-and-popups",
+    "text": "4. Add points, tooltips, and popups"
+  },
+  {
+    "depth": 3,
+    "slug": "a-quick-map-for-exploration",
+    "text": "A quick map for exploration"
+  },
+  {
+    "depth": 2,
+    "slug": "map-categories-and-quantities",
+    "text": "5. Map categories and quantities"
+  },
+  {
+    "depth": 3,
+    "slug": "category-colours-and-proportional-circles",
+    "text": "Category colours and proportional circles"
+  },
+  {
+    "depth": 2,
+    "slug": "combine-real-sa2-polygons-lines-and-points",
+    "text": "6. Combine real SA2 polygons, lines, and points"
+  },
+  {
+    "depth": 2,
+    "slug": "join-population-statistics-to-sa2-boundaries",
+    "text": "7. Join population statistics to SA2 boundaries"
+  },
+  {
+    "depth": 3,
+    "slug": "why-map-density-rather-than-population-count",
+    "text": "Why map density rather than population count?"
+  },
+  {
+    "depth": 2,
+    "slug": "build-a-choropleth-of-population-density",
+    "text": "8. Build a choropleth of population density"
+  },
+  {
+    "depth": 3,
+    "slug": "a-continuous-colour-scale",
+    "text": "A continuous colour scale"
+  },
+  {
+    "depth": 3,
+    "slug": "fixed-bands-and-an-accurate-legend",
+    "text": "Fixed bands and an accurate legend"
+  },
+  {
+    "depth": 2,
+    "slug": "use-a-spatial-join-when-there-is-no-area-code",
+    "text": "9. Use a spatial join when there is no area code"
+  },
+  {
+    "depth": 2,
+    "slug": "explore-point-concentration-with-a-heatmap",
+    "text": "10. Explore point concentration with a heatmap"
+  },
+  {
+    "depth": 2,
+    "slug": "cluster-crowded-school-points",
+    "text": "11. Cluster crowded school points"
+  },
+  {
+    "depth": 2,
+    "slug": "add-a-population-year-slider-without-a-server",
+    "text": "12. Add a population year slider without a server"
+  },
+  {
+    "depth": 2,
+    "slug": "compare-2021-and-2025-using-a-shared-scale",
+    "text": "13. Compare 2021 and 2025 using a shared scale"
+  },
+  {
+    "depth": 2,
+    "slug": "explore-3d-extrusion",
+    "text": "14. Explore 3D extrusion"
+  },
+  {
+    "depth": 2,
+    "slug": "display-the-real-abs-population-raster",
+    "text": "15. Display the real ABS population raster"
+  },
+  {
+    "depth": 2,
+    "slug": "put-the-map-in-your-quarto-report",
+    "text": "16. Put the map in your Quarto report"
+  },
+  {
+    "depth": 3,
+    "slug": "render-and-verify-the-report",
+    "text": "Render and verify the report"
+  },
+  {
+    "depth": 3,
+    "slug": "pdf-and-word-need-a-static-alternative",
+    "text": "PDF and Word need a static alternative"
+  },
+  {
+    "depth": 2,
+    "slug": "adapt-the-workflow-to-project-2",
+    "text": "17. Adapt the workflow to Project 2"
+  },
+  {
+    "depth": 3,
+    "slug": "performance-and-responsible-publication",
+    "text": "Performance and responsible publication"
+  },
+  {
+    "depth": 2,
+    "slug": "troubleshoot-common-problems",
+    "text": "18. Troubleshoot common problems"
+  },
+  {
+    "depth": 2,
+    "slug": "documentation-and-reproducibility",
+    "text": "Documentation and reproducibility"
+  }
+]
