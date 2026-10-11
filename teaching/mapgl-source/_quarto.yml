@@ -1,0 +1,64 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - project2-starter.qmd
+  resources:
+    - data/README.md
+    - data/preparation-summary.json
+    - data/SHA256SUMS.txt
+    - data/greater-sydney-sa2.gpkg
+    - data/greater-sydney-sa2-display.geojson
+    - data/sydney-sa2-population.csv
+    - data/sydney-sa2-population-long.csv
+    - data/sydney-public-schools.csv
+    - data/sydney-population-grid-2025.tif
+    - R/**
+    - downloads/**
+    - index.qmd
+    - project2-starter.qmd
+    - scripts/install-packages.R
+
+website:
+  title: "Mapping with R"
+  navbar:
+    background: "#172f46"
+    left:
+      - href: index.qmd
+        text: Tutorial
+      - href: project2-starter.qmd
+        text: Project 2 starter
+    right:
+      - href: https://bodhimcnally.com/resources/
+        text: Bodhi McNally
+  page-footer:
+    left: "Bodhi McNally · DATA1X01 teaching resources"
+    right: "Built with Quarto, mapgl, and sf"
+  search: false
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    toc-title: "On this page"
+    code-copy: true
+    code-overflow: wrap
+    code-fold: false
+    highlight-style: github
+    embed-resources: true
+    lang: en-AU
+    smooth-scroll: true
+    link-external-newwindow: true
+    fig-width: 9
+    fig-height: 5
+
+execute:
+  echo: true
+  warning: true
+  message: false
+  error: false
+  cache: false
+  freeze: false

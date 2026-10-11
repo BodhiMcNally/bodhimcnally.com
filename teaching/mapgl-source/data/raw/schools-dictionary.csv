@@ -1,0 +1,47 @@
+field_name,type,Update frequency,comment
+School_code,integer,Static,Official NSW Department of Education school code.
+AgeID,integer,As required,Commonwealth issued location ID.
+School_name,varchar,As required,Official school name. 
+Street,varchar,As required,School street address (may include building/street number). 
+Town_suburb,varchar,As required,School suburb/town.
+Postcode,integer,As required,School postcode.
+Phone,varchar,As required,School phone
+School_Email,varchar,As required,School email
+Website,varchar,As required,School website
+Fax,varchar,As required,School fax
+latest_year_enrolment_FTE,double,Annually in December (as at August),Full-time equivalent (FTE) student enrolments as reported under the Australian Bureau of Statistics (ABS) National Schools Collection (NSSC). 
+Indigenous_pct,varchar,Annually in December (as at August),"The percentage of full-time equivalent (FTE) students enrolled, as reported under the NSSC, who identify as Aboriginal or Torres Strait Islanders and are accepted in the community with which they associate. Data is suppressed where student numbers are equal to, or less than five, indicated by ""np""."
+LBOTE_pct,integer,Annually in December (as at March),"The percentage of students (headcount) who are from language backgrounds other than English (LBOTE). A student is considered LBOTE if in their home a language other than English is spoken by the students, parents or guardians. Data is suppressed where student numbers are equal to, or less than five, indicated by ""np""."
+ICSEA_value,integer,Annually in February (as at February),"Index of Community Socio-Educational Advantage (ICSEA), sourced from ACARA. The ICSEA is a scale that represents levels of educational advantage. ICSEA values are on a scale, which has a mean of 1000 and a standard deviation of 100. ICSEA values range from around 500 (representing extremely disadvantaged backgrounds) to about 1300 (representing schools with students from very advantaged backgrounds). "
+Level_of_schooling,varchar,As required,"Schooling level (or school type) flag. Options include: primary school, secondary school, central/community school. "
+Selective_school,varchar,As required,"Secondary school selective flag. Options include: fully selective, partially selective, not selective. "
+Opportunity_class,varchar,As required,Opportunity class flag. (Y) or (N) a schoool offers opportunity classes for highly achieving Year 5 and 6 academically gifted students.
+School_specialty_type,varchar,As required,"School speciality flag. Most NSW public schools are comprehensive, however, some schools offer a specialty as well. Options include: technology, sports, language, and creative and performing arts."
+School_subtype,varchar,As required,Further breakdown of a school level/type. Useful for differentiating junior secondary and senior secondary from standard 7-12 secondary schools. Also indicates the type of support provided in Schools for Specific Purposes.
+Support_classes,varchar,Not available,Currently not available. 
+Preschool_ind,varchar,As required,Preschool flag. (Y) or (N) a preschool is attached to the school.
+Distance_education,varchar,As required,"Distance education flag. Options include: (s) distance education school, (c) distance education centre, (n) no distance education.  "
+Intensive_english_centre,varchar,As required,Intensive English flag. (Y) or (N) an intensive English centre is attached to this school
+School_gender,varchar,As required,"School population gender status. Options include: co-ed schools, girls schools, boys schools. "
+Late_opening_school,varchar,Static,School late opening hours flag. (Y) or (N) a school opens later.
+Date_1st_teacher,datetime,Static,"First teacher on duty date. Essentially, the official data of the school opened."
+LGA,varchar,As required,Local government area. 
+electorate_from_2023,varchar,As required,"The NSW electorate in which a school is located, as defined in the ABS State Electorate Divisions 2022 release."
+electorate_2015_2022,varchar,As required,"The NSW electorate in which a school is located, as defined in the ABS State Electorate Divisions 2021 release."
+Fed_electorate_from_2025,varchar,As required,Federal electorate divisions (2025 boundaries). 
+Fed_electorate_2016_2024,varchar,Static,Federal electorate divisions (2016-2024 boundaries). 
+Operational_directorate,varchar,As required,NSW Department of Education operational directorate. 
+Principal_network,varchar,As required,NSW Department of Education principal network. 
+Operational_directorate_office,varchar,As required,NSW Department of Education operational directorate offices.
+Operational_directorate_office_phone,varchar,As required,NSW Department of Education operational directorate offices phone number
+Operational_directorate_office_address,varchar,As required,NSW Department of Education operational directorate offices address
+FACS_district,varchar,As required,Family and Community Services district.
+Local_health_district,varchar,As required,"NSW local health districts. Eight local health districts cover the Sydney metropolitan region, and seven cover rural and regional NSW."
+AECG_region,varchar,As required,Aboriginal Education Consultative Group region.
+ASGS_remoteness,varchar,As required,"Remoteness category based on the ABS' Australian Statistical Geography Standard (ASGS) 2016 remoteness structure. Options include: Major Cities, Inner Regional, Outer Regional, Remote and Very Remote."
+Latitude,decimal,As required,School latitude coordinates.
+Longitude,decimal,As required,School longitude coordinates. 
+Assets unit,varchar,As required,The department's asset management districts across NSW.
+SA4,varchar,As required,ABS Statistical Area Level 4 - http://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1270.0.55.001~July%202016~Main%20Features~Statistical%20Area%20Level%204%20(SA4)~10016
+FOEI_value,varchar,Annually in December (as at May),Family Occupation and Education Index (FOEI) is a school-level index of educational disadvantage (higher value = higher level of disadvantage). It has been selected as the basis of the equity loading for socio-economic background in the Department’s Resource Allocation Model.
+Date_extracted,datetime,Nightly,"The date on which the information, knowledge or data was last extracted. However, not all fields may have been updated on this date, as some data come from different update cycles. Always refer to the update frequency above for the most accurate context."

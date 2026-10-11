@@ -1,0 +1,155 @@
+---
+title: "Population density across Greater Sydney: Project 2 starter"
+subtitle: "An executable Quarto report using real SA2 polygons and ABS population data"
+author: "Your name and SID"
+description: "A reproducible DATA1X01 Project 2 scaffold: join ABS population estimates to real Greater Sydney SA2 polygons, draw an interactive map, and support it with a chart."
+format:
+  html:
+    embed-resources: true
+    toc: true
+    code-copy: true
+execute:
+  echo: true
+  message: false
+  warning: true
+  error: false
+---
+
+::: {.callout-important title="Adapt this scaffold to your project"}
+This report uses **real ABS data** to demonstrate a reproducible workflow. Develop your own question, analysis, findings, and limitations, and replace the author details. Follow the Project 2 assessment instructions, including any rules about data sources, code, and submission format. This scaffold is a teaching example, not a completed assignment.
+:::
+
+## Question and data
+
+An example exploratory question is: **How does population density vary across Greater Sydney SA2s in June 2025?** A polygon map shows the geographic pattern, while a chart makes the highest-density areas easier to compare.
+
+Each polygon is an ABS **Statistical Area Level 2 (SA2)** in the Greater Sydney statistical area. The table contains Estimated Resident Population (ERP) at 30 June 2025 from [ABS Regional population, 2024–25](https://www.abs.gov.au/statistics/people/population/regional-population/2024-25), released 31 March 2026. These estimates are preliminary. The boundaries use ASGS 2021, matching the population table's geography. Greater Sydney includes the Central Coast and Blue Mountains and is broader than the City of Sydney council area.
+
+The files come with the [mapgl tutorial](index.qmd); [the data guide](data/README.md) records provenance, attribution, fields, and preparation steps.
+
+```{r}
+#| label: setup
+library(mapgl)
+library(sf)
+library(dplyr)
+library(readr)
+stopifnot(packageVersion("mapgl") >= "0.5.2")
+```
+
+## Prepare and check the data
+
+Import from paths relative to this report. Preserve area codes as character identifiers. Check uniqueness, geometry validity, and unmatched codes before joining.
+
+```{r}
+#| label: prepare-data
+areas <- st_read("data/greater-sydney-sa2-display.geojson", quiet = TRUE) |>
+  st_transform(4326)
+population <- read_csv("data/sydney-sa2-population.csv",
+  col_types = cols(sa2_code = col_character()))
+stopifnot(!anyNA(areas$sa2_code), !anyNA(population$sa2_code),
+          !anyDuplicated(areas$sa2_code), !anyDuplicated(population$sa2_code),
+          all(st_is_valid(areas)), !any(st_is_empty(areas)))
+missing_statistics <- anti_join(st_drop_geometry(areas), population,
+                                by = "sa2_code")
+missing_geometry <- anti_join(population, st_drop_geometry(areas),
+                              by = "sa2_code")
+stopifnot(nrow(missing_statistics) == 0, nrow(missing_geometry) == 0)
+
+areas_data <- left_join(areas, select(population, sa2_code, population_2025),
+                        by = "sa2_code")
+stopifnot(nrow(areas_data) == nrow(areas),
+          all(is.finite(areas_data$population_2025)),
+          all(areas_data$population_2025 >= 0), all(areas_data$area_km2 > 0))
+areas_data <- areas_data |>
+  mutate(density = population_2025 / area_km2,
+    popup_html = paste0("<strong>", htmltools::htmlEscape(sa2_name), "</strong><br>",
+      "SA2: ", sa2_code, "<br>Population, June 2025: ", population_2025,
+      "<br>Density: ", sprintf("%.0f residents/km²", density)))
+
+data.frame(boundaries = nrow(areas), statistics = nrow(population),
+           unmatched_boundaries = nrow(missing_statistics),
+           unmatched_statistics = nrow(missing_geometry),
+           joined_areas = nrow(areas_data)) |> knitr::kable()
+```
+
+All 373 areas match in this snapshot. Density uses the **official ABS area field**, not an area recalculated from the simplified display polygons. A 25 metre simplification reduces browser size; full-resolution boundaries are bundled separately for spatial analysis.
+
+## Geographic pattern
+
+Colour encodes population density in residents per km². The same explicit colour limits should be used if you add a comparable map for another year.
+
+```{r}
+#| label: fig-density-map
+#| fig-cap: "Estimated resident population density by Greater Sydney SA2, June 2025. Geography: ASGS 2021. Sources: ABS Regional population 2024–25 and ASGS Edition 3."
+limits <- c(0, 5000, 25000)
+colours <- c("#f7fbff", "#6baed6", "#08306b")
+stopifnot(max(areas_data$density) <= max(limits))
+my_map <- maplibre(
+  style = openfreemap_style("positron"), bounds = areas_data,
+  fitBoundsOptions = list(padding = 40), projection = "mercator",
+  height = 480, scrollZoom = FALSE
+) |>
+  add_fill_layer(
+    id = "sa2-density", source = areas_data,
+    fill_color = interpolate("density", values = limits, stops = colours),
+    fill_opacity = 0.85, fill_outline_color = "#526478",
+    popup = "popup_html", tooltip = "sa2_name"
+  ) |>
+  add_continuous_legend(
+    legend_title = "June 2025 · residents per km²",
+    values = limits, colors = colours, position = "bottom-left"
+  ) |>
+  add_navigation_control() |>
+  add_fullscreen_control()
+my_map
+```
+
+Use @fig-density-map to inspect the geography, zoom towards central Sydney, and click areas for exact values. Keep the OpenFreeMap/OpenStreetMap basemap attribution visible alongside your citations for the observation and boundary data.
+
+## A supporting comparison
+
+A chart communicates precise comparisons and remains readable when the interactive map is unavailable. We show the ten highest-density SA2s, rather than trying to place all 373 names on one axis.
+
+```{r}
+#| label: fig-density-comparison
+#| fig-alt: "Horizontal bars compare the ten highest-density Greater Sydney SA2s. Sydney (South) - Haymarket is highest, followed by Chippendale and Ultimo; exact values are provided in the accompanying table."
+#| fig-cap: "The ten highest-density Greater Sydney SA2s in June 2025. Density is population divided by official ABS area. Source: ABS Regional population 2024–25 and ASGS 2021."
+#| fig-width: 10
+#| fig-height: 6
+highest_density <- areas_data |> st_drop_geometry() |>
+  arrange(desc(density)) |> head(10)
+chart_data <- highest_density |> arrange(density)
+par(mar = c(4.5, 13, 1, 1))
+barplot(chart_data$density, names.arg = chart_data$sa2_name,
+        horiz = TRUE, las = 1, col = "#0072B2", border = NA,
+        cex.names = 0.85, xlab = "Residents per square kilometre")
+```
+
+```{r}
+#| label: comparison-table
+highest_density |> select(sa2_name, population_2025, area_km2, density) |>
+  knitr::kable(digits = c(NA, 0, 4, 0),
+               caption = "Values underlying the comparison chart.")
+```
+
+## Interpretation and limitations
+
+In this snapshot, **`r highest_density$sa2_name[1]`** has the highest density, approximately **`r format(round(highest_density$density[1]), big.mark = ",")` residents/km²**. The next two areas are `r highest_density$sa2_name[2]` and `r highest_density$sa2_name[3]`. @fig-density-comparison makes the difference easier to compare than colour alone; @fig-density-map supplies geographic context.
+
+Extend this interpretation with a specific pattern relevant to your own question. Density is an area average: it does not imply uniform distribution within an SA2. Area boundaries and the chosen scale influence the visual pattern, and large polygons can draw disproportionate attention. The estimates have statistical uncertainty and the 2025 figures are preliminary. This descriptive map does not establish a cause of population concentration.
+
+If you overlay schools, their location does not tell you where enrolled students live. School enrolment and resident population describe different populations and reference periods; a ratio of these fields alone is not a measure of school capacity or access.
+
+## Reproducibility and final checks
+
+Render from a fresh R session using `quarto render project2-starter.qmd --to html`. Open the HTML and test a popup and each control. Include the source files required by the assessment instructions. Embedded dependencies do not make remote basemap tiles available offline.
+
+```{r}
+#| label: package-versions
+packages_used <- c("mapgl", "sf", "dplyr", "readr")
+data.frame(package = packages_used,
+  version = vapply(packages_used, function(p) as.character(packageVersion(p)),
+                    character(1))) |>
+  knitr::kable(caption = "Package versions used for this render.")
+```
+

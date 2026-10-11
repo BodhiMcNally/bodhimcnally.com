@@ -1,0 +1,25 @@
+{
+  "retrieved": "2026-10-11",
+  "sa2_areas": 373,
+  "population_2021": 5261801,
+  "population_2025": 5638830,
+  "schools_in_nsw_snapshot": 2210,
+  "invalid_school_coordinates": 0,
+  "schools_in_greater_sydney": 1033,
+  "schools_outside_greater_sydney": 1177,
+  "school_types": {
+    "Central/Community School": 4,
+    "Environmental Education Centre": 12,
+    "Infants School": 9,
+    "Other School": 2,
+    "Primary School": 706,
+    "Schools for Specific Purposes": 76,
+    "Secondary School": 224
+  },
+  "missing_enrolment_fte": 29,
+  "school_snapshot_dates": "2026-10-02",
+  "original_grid_crs": "EPSG:3577",
+  "original_grid_resolution_metres": [1000, 1000],
+  "display_simplification_metres": 25,
+  "grid_max": 24015.7754
+}

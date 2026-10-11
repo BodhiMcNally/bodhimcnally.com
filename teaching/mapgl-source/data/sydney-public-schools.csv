@@ -1,0 +1,1034 @@
+school_code,name,school_type,enrolment_fte,longitude,latitude,date_extracted
+1001,Abbotsford Public School,Primary School,368,151.131206,-33.852728,2026-10-02
+1041,Annandale Public School,Primary School,363,151.169599,-33.885782,2026-10-02
+1042,Annandale North Public School,Primary School,359,151.171835,-33.877905,2026-10-02
+1045,Appin Public School,Primary School,337,150.78766,-34.198417,2026-10-02
+1048,Arcadia Public School,Primary School,60,151.051031,-33.623487,2026-10-02
+1061,Artarmon Public School,Primary School,1063,151.186001,-33.811249,2026-10-02
+1064,Ashbury Public School,Primary School,356,151.11944,-33.898833,2026-10-02
+1065,Ashfield Public School,Primary School,474,151.12821,-33.889723,2026-10-02
+1070,Asquith Public School,Primary School,384,151.112177,-33.685729,2026-10-02
+1073,Auburn North Public School,Primary School,645,151.038618,-33.841669,2026-10-02
+1075,Auburn West Public School,Primary School,572,151.019764,-33.860931,2026-10-02
+1077,Austral Public School,Primary School,846,150.812638,-33.934487,2026-10-02
+1082,Avoca Beach Public School,Primary School,455,151.430745,-33.471154,2026-10-02
+1104,Seaforth Public School,Primary School,394,151.251235,-33.793262,2026-10-02
+1121,Banksmeadow Public School,Primary School,268,151.20661,-33.953739,2026-10-02
+1123,Greenacre Public School,Primary School,611,151.057581,-33.911161,2026-10-02
+1124,Bankstown North Public School,Primary School,382,151.038043,-33.904888,2026-10-02
+1134,Bargo Public School,Primary School,268,150.58274,-34.292889,2026-10-02
+1148,Bass Hill Public School,Primary School,346,151.005779,-33.905902,2026-10-02
+1166,Beecroft Public School,Primary School,837,151.06462,-33.752085,2026-10-02
+1179,Bellevue Hill Public School,Primary School,573,151.259785,-33.886986,2026-10-02
+1185,Belmore North Public School,Primary School,252,151.084885,-33.909885,2026-10-02
+1186,Belmore South Public School,Primary School,230,151.091985,-33.925735,2026-10-02
+1199,Berala Public School,Primary School,656,151.028244,-33.869714,2026-10-02
+1203,Berkeley Vale Public School,Primary School,524,151.435888,-33.350515,2026-10-02
+1205,Berowra Public School,Primary School,272,151.148996,-33.618522,2026-10-02
+1215,Beverly Hills Public School,Primary School,320,151.085209,-33.953449,2026-10-02
+1228,Bilpin Public School,Primary School,37,150.516765,-33.497331,2026-10-02
+1240,Birchgrove Public School,Primary School,214,151.177045,-33.853009,2026-10-02
+1246,Blackheath Public School,Primary School,254,150.285831,-33.639284,2026-10-02
+1255,Blakehurst Public School,Primary School,256,151.115779,-33.98298,2026-10-02
+1257,Blaxcell Street Public School,Primary School,948,151.006125,-33.858068,2026-10-02
+1258,Blaxland Public School,Primary School,137,150.603489,-33.737103,2026-10-02
+1292,Bondi Beach Public School,Primary School,348,151.276821,-33.8883,2026-10-02
+1320,Boronia Park Public School,Primary School,409,151.135558,-33.821414,2026-10-02
+1321,Bossley Park Public School,Primary School,265,150.883076,-33.858524,2026-10-02
+1323,Botany Public School,Primary School,232,151.194687,-33.94316,2026-10-02
+1346,Colo Heights Public School,Primary School,29,150.739776,-33.372972,2026-10-02
+1358,Brighton-Le-Sands Public School,Primary School,433,151.148929,-33.962357,2026-10-02
+1360,Bringelly Public School,Primary School,114,150.730266,-33.93791,2026-10-02
+1372,Bronte Public School,Primary School,257,151.262011,-33.900605,2026-10-02
+1377,Brooklyn Public School,Primary School,79,151.214992,-33.548414,2026-10-02
+1379,Brookvale Public School,Primary School,306,151.270787,-33.761678,2026-10-02
+1433,Burnside Public School,Primary School,218,151.018316,-33.79258,2026-10-02
+1455,Burwood Public School,Primary School,476,151.098987,-33.8768,2026-10-02
+1460,Buxton Public School,Primary School,163,150.544826,-34.246971,2026-10-02
+1472,Cabramatta Public School,Primary School,435,150.942629,-33.895823,2026-10-02
+1482,Camden Public School,Primary School,313,150.693236,-34.051998,2026-10-02
+1483,Camdenville Public School,Primary School,310,151.175741,-33.906146,2026-10-02
+1485,Cammeray Public School,Primary School,622,151.211542,-33.820422,2026-10-02
+1486,Campbelltown Public School,Primary School,284,150.815634,-34.070109,2026-10-02
+1488,Campsie Public School,Primary School,515,151.104846,-33.911863,2026-10-02
+1494,Canley Vale Public School,Primary School,752,150.937632,-33.88676,2026-10-02
+1497,Canterbury Public School,Primary School,346,151.122306,-33.908761,2026-10-02
+1498,Brisbania Public School,Primary School,358,151.357294,-33.478822,2026-10-02
+1508,Caringbah Public School,Primary School,394,151.122988,-34.053433,2026-10-02
+1512,Carlton Public School,Primary School,599,151.12246,-33.963496,2026-10-02
+1513,Carlton South Public School,Primary School,514,151.128287,-33.973045,2026-10-02
+1529,Castle Hill Public School,Primary School,970,151.004663,-33.727887,2026-10-02
+1535,Cattai Public School,Primary School,57,150.906904,-33.558762,2026-10-02
+1537,Cawdor Public School,Primary School,76,150.673727,-34.109711,2026-10-02
+1560,Chipping Norton Public School,Primary School,333,150.96085,-33.909108,2026-10-02
+1566,Clemton Park Public School,Primary School,500,151.108423,-33.929708,2026-10-02
+1573,Clovelly Public School,Primary School,513,151.26028,-33.907431,2026-10-02
+1580,Cobbitty Public School,Primary School,360,150.685938,-34.0159,2026-10-02
+1596,Colyton Public School,Primary School,714,150.81316,-33.777199,2026-10-02
+1604,Comleroy Road Public School,Primary School,144,150.69763,-33.506475,2026-10-02
+1605,Como Public School,Primary School,103,151.069127,-34.001832,2026-10-02
+1607,Concord Public School,Primary School,276,151.106944,-33.863224,2026-10-02
+1608,Concord West Public School,Primary School,414,151.087317,-33.839613,2026-10-02
+1613,Connells Point Public School,Primary School,429,151.100306,-33.984689,2026-10-02
+1616,Coogee Public School,Primary School,361,151.249846,-33.920819,2026-10-02
+1668,Cowan Public School,Primary School,24,151.168843,-33.588808,2026-10-02
+1682,Cronulla Public School,Primary School,516,151.14773,-34.054077,2026-10-02
+1735,Darlington Public School,Primary School,147,151.18939,-33.892638,2026-10-02
+1744,Dee Why Public School,Primary School,478,151.285209,-33.749025,2026-10-02
+1760,Doonside Public School,Primary School,258,150.870497,-33.764557,2026-10-02
+1768,Double Bay Public School,Primary School,237,151.240894,-33.874856,2026-10-02
+1770,Douglas Park Public School,Primary School,145,150.713038,-34.179484,2026-10-02
+1774,Drummoyne Public School,Primary School,427,151.153035,-33.856073,2026-10-02
+1799,Dural Public School,Primary School,350,151.026394,-33.686057,2026-10-02
+1807,Earlwood Public School,Primary School,600,151.12238,-33.928982,2026-10-02
+1808,Eastern Creek Public School,Primary School,246,150.852624,-33.787013,2026-10-02
+1809,Panania Public School,Primary School,368,150.99946,-33.965972,2026-10-02
+1813,Ebenezer Public School,Primary School,85,150.876774,-33.530917,2026-10-02
+1839,Empire Bay Public School,Primary School,426,151.362889,-33.504316,2026-10-02
+1841,Emu Plains Public School,Primary School,406,150.657739,-33.755617,2026-10-02
+1844,Enfield Public School,Primary School,199,151.094528,-33.888598,2026-10-02
+1845,Engadine Public School,Primary School,411,151.012431,-34.06335,2026-10-02
+1849,The Entrance Public School,Primary School,422,151.493009,-33.346741,2026-10-02
+1850,Epping Public School,Primary School,790,151.087878,-33.770727,2026-10-02
+1851,Epping West Public School,Primary School,994,151.068048,-33.772789,2026-10-02
+1856,Erina Heights Public School,Primary School,254,151.413585,-33.428028,2026-10-02
+1857,Woodport Public School,Primary School,429,151.37849,-33.439347,2026-10-02
+1860,Ermington Public School,Primary School,472,151.071574,-33.804749,2026-10-02
+1864,Ettalong Public School,Primary School,490,151.332702,-33.513539,2026-10-02
+1890,Excelsior Public School,Primary School,561,150.990408,-33.740444,2026-10-02
+1895,Fairfield Public School,Primary School,386,150.955409,-33.866847,2026-10-02
+1896,Fairfield West Public School,Primary School,545,150.924762,-33.868037,2026-10-02
+1920,Five Dock Public School,Primary School,314,151.127318,-33.866859,2026-10-02
+1932,Forest Lodge Public School,Primary School,307,151.181597,-33.882169,2026-10-02
+1937,Fort Street Public School,Primary School,284,151.204871,-33.860427,2026-10-02
+1944,Freemans Reach Public School,Primary School,194,150.799309,-33.558697,2026-10-02
+1946,Frenchs Forest Public School,Primary School,218,151.224695,-33.751516,2026-10-02
+1952,Galston Public School,Primary School,147,151.04517,-33.648197,2026-10-02
+1988,Girraween Public School,Primary School,1072,150.950356,-33.799711,2026-10-02
+1990,Gladesville Public School,Primary School,305,151.125699,-33.832977,2026-10-02
+1994,Glenbrook Public School,Primary School,338,150.6177045,-33.7656978,2026-10-02
+2001,Glenfield Public School,Primary School,470,150.896584,-33.971005,2026-10-02
+2003,Glenhaven Public School,Primary School,240,151.002882,-33.700792,2026-10-02
+2009,Glenmore Road Public School,Primary School,263,151.230233,-33.881385,2026-10-02
+2012,Glenorie Public School,Primary School,283,151.008082,-33.599444,2026-10-02
+2021,Glossodia Public School,Primary School,184,150.765471,-33.530504,2026-10-02
+2049,Gosford Public School,Primary School,545,151.33449,-33.42075,2026-10-02
+2064,Granville Public School,Primary School,590,151.004671,-33.834264,2026-10-02
+2066,Granville South Public School,Primary School,323,150.995883,-33.848289,2026-10-02
+2075,Green Valley Public School,Primary School,365,150.868972,-33.90074,2026-10-02
+2076,Greenwich Public School,Primary School,367,151.183252,-33.82587,2026-10-02
+2086,Greystanes Public School,Primary School,540,150.941111,-33.828043,2026-10-02
+2093,Guildford Public School,Primary School,623,150.981983,-33.855821,2026-10-02
+2116,Gymea Bay Public School,Primary School,763,151.082825,-34.046905,2026-10-02
+2117,Haberfield Public School,Primary School,542,151.134002,-33.879467,2026-10-02
+2128,Hammondville Public School,Primary School,445,150.954525,-33.947273,2026-10-02
+2133,Harbord Public School,Primary School,881,151.286531,-33.772164,2026-10-02
+2149,Heathcote Public School,Primary School,273,151.007321,-34.086704,2026-10-02
+2164,Hillside Public School,Primary School,25,150.976151,-33.601784,2026-10-02
+2171,Holgate Public School,Primary School,95,151.407722,-33.405106,2026-10-02
+2173,Homebush Public School,Primary School,368,151.08523,-33.867319,2026-10-02
+2182,Horsley Park Public School,Primary School,84,150.852683,-33.840414,2026-10-02
+2187,Hoxton Park Public School,Primary School,531,150.849626,-33.931881,2026-10-02
+2189,Hunters Hill Public School,Primary School,228,151.151254,-33.835121,2026-10-02
+2197,Hurstville Public School,Primary School,1048,151.110728,-33.964695,2026-10-02
+2198,Hurstville South Public School,Primary School,453,151.099252,-33.972516,2026-10-02
+2206,Ingleburn Public School,Primary School,424,150.866612,-34.000332,2026-10-02
+2236,Jilliby Public School,Primary School,60,151.380052,-33.239937,2026-10-02
+2259,Kanwal Public School,Primary School,500,151.484884,-33.262456,2026-10-02
+2270,Kegworth Public School,Primary School,252,151.14693,-33.886514,2026-10-02
+2274,Kellyville Public School,Primary School,855,150.957887,-33.711052,2026-10-02
+2283,Kensington Public School,Primary School,381,151.224965,-33.909604,2026-10-02
+2284,Kenthurst Public School,Primary School,187,151.004575,-33.665603,2026-10-02
+2285,Kentlyn Public School,Primary School,120,150.858576,-34.073132,2026-10-02
+2304,Kincumber Public School,Primary School,364,151.394355,-33.468184,2026-10-02
+2307,Kingsgrove Public School,Primary School,268,151.10156,-33.947822,2026-10-02
+2308,Bexley North Public School,Primary School,340,151.120374,-33.940838,2026-10-02
+2312,Kingswood Public School,Primary School,499,150.726509,-33.765884,2026-10-02
+2319,Kogarah Public School,Primary School,456,151.136618,-33.962028,2026-10-02
+2334,Kulnura Public School,Primary School,37,151.216011,-33.232582,2026-10-02
+2340,Kurmond Public School,Primary School,125,150.692309,-33.549715,2026-10-02
+2341,Kurnell Public School,Primary School,211,151.203773,-34.010156,2026-10-02
+2342,Kurrajong Public School,Primary School,139,150.662653,-33.555196,2026-10-02
+2343,Kurrajong East Public School,Primary School,81,150.77726,-33.511172,2026-10-02
+2344,Kurrajong North Public School,Primary School,67,150.639446,-33.541815,2026-10-02
+2360,Lakemba Public School,Primary School,428,151.070046,-33.923615,2026-10-02
+2362,Lake Munmorah Public School,Primary School,384,151.575559,-33.1882,2026-10-02
+2368,Lane Cove Public School,Primary School,688,151.169134,-33.816514,2026-10-02
+2373,La Perouse Public School,Primary School,111,151.235423,-33.978352,2026-10-02
+2381,Lawson Public School,Primary School,196,150.428243,-33.721217,2026-10-02
+2391,Leura Public School,Primary School,199,150.336733,-33.711151,2026-10-02
+2394,Lidcombe Public School,Primary School,762,151.046926,-33.861019,2026-10-02
+2403,Lindfield Public School,Primary School,584,151.168917,-33.78075,2026-10-02
+2404,Lindfield East Public School,Primary School,531,151.18429,-33.767479,2026-10-02
+2407,Lisarow Public School,Primary School,192,151.376296,-33.381283,2026-10-02
+2413,Llandilo Public School,Primary School,155,150.751783,-33.707237,2026-10-02
+2421,Londonderry Public School,Primary School,235,150.736905,-33.647454,2026-10-02
+2431,Luddenham Public School,Primary School,35,150.691523,-33.881331,2026-10-02
+2439,Macdonald Valley Public School,Primary School,13,150.971993,-33.321271,2026-10-02
+2454,Malabar Public School,Primary School,244,151.248559,-33.962214,2026-10-02
+2469,Manly West Public School,Primary School,761,151.268753,-33.791875,2026-10-02
+2472,Maraylya Public School,Primary School,106,150.916264,-33.592681,2026-10-02
+2480,Maroota Public School,Primary School,31,150.99365,-33.455283,2026-10-02
+2482,Maroubra Bay Public School,Primary School,269,151.253017,-33.944236,2026-10-02
+2489,Marsden Park Public School,Primary School,242,150.833642,-33.696425,2026-10-02
+2499,Mascot Public School,Primary School,397,151.192485,-33.928577,2026-10-02
+2502,Matraville Public School,Primary School,222,151.229111,-33.955064,2026-10-02
+2510,The Meadows Public School,Primary School,335,150.942567,-33.781365,2026-10-02
+2515,Megalong Public School,Primary School,3,150.232582,-33.715301,2026-10-02
+2520,Menai Public School,Primary School,154,151.006587,-34.01213,2026-10-02
+2531,Merrylands Public School,Primary School,620,150.976047,-33.840516,2026-10-02
+2542,Middle Dural Public School,Primary School,31,151.023178,-33.64496,2026-10-02
+2543,Middle Harbour Public School,Primary School,423,151.2327,-33.82282,2026-10-02
+2560,Milperra Public School,Primary School,317,150.979779,-33.942077,2026-10-02
+2572,Minto Public School,Primary School,220,150.847266,-34.029979,2026-10-02
+2574,Miranda Public School,Primary School,300,151.097405,-34.034645,2026-10-02
+2593,Mona Vale Public School,Primary School,671,151.300404,-33.676998,2026-10-02
+2624,Mortdale Public School,Primary School,350,151.080995,-33.972901,2026-10-02
+2625,Mortlake Public School,Primary School,261,151.103861,-33.849829,2026-10-02
+2640,Mount Hunter Public School,Primary School,32,150.63643,-34.07177,2026-10-02
+2648,Mount Pritchard Public School,Primary School,368,150.900007,-33.899845,2026-10-02
+2652,Mount Victoria Public School,Primary School,56,150.253883,-33.591334,2026-10-02
+2659,Mulgoa Public School,Primary School,103,150.650344,-33.836505,2026-10-02
+2703,Narara Public School,Primary School,377,151.362616,-33.387915,2026-10-02
+2704,Narellan Public School,Primary School,291,150.733769,-34.042764,2026-10-02
+2706,Narrabeen Lakes Public School,Primary School,364,151.297413,-33.720323,2026-10-02
+2730,Neutral Bay Public School,Primary School,641,151.219605,-33.83261,2026-10-02
+2740,Newport Public School,Primary School,556,151.312237,-33.660561,2026-10-02
+2744,Newtown North Public School,Primary School,221,151.185392,-33.891821,2026-10-02
+2749,Nicholson Street Public School,Primary School,95,151.193188,-33.855744,2026-10-02
+2760,Normanhurst Public School,Primary School,372,151.098026,-33.723332,2026-10-02
+2761,Northbridge Public School,Primary School,364,151.218597,-33.813034,2026-10-02
+2763,Northmead Public School,Primary School,614,150.990753,-33.786511,2026-10-02
+2764,North Rocks Public School,Primary School,861,151.025148,-33.768425,2026-10-02
+2766,North Sydney Public School,Primary School,756,151.203685,-33.834819,2026-10-02
+2789,Oakdale Public School,Primary School,141,150.508197,-34.078907,2026-10-02
+2793,The Oaks Public School,Primary School,308,150.571724,-34.078385,2026-10-02
+2794,Oakville Public School,Primary School,612,150.87054,-33.620452,2026-10-02
+2796,Oatley Public School,Primary School,365,151.080332,-33.983741,2026-10-02
+2801,Old Guildford Public School,Primary School,411,150.986508,-33.867484,2026-10-02
+2812,Orange Grove Public School,Primary School,519,151.158678,-33.872278,2026-10-02
+2815,Orchard Hills Public School,Primary School,242,150.721365,-33.783029,2026-10-02
+2820,Ourimbah Public School,Primary School,332,151.368168,-33.354916,2026-10-02
+2826,Padstow Park Public School,Primary School,334,151.030882,-33.954955,2026-10-02
+2838,Parklea Public School,Primary School,566,150.93476,-33.725885,2026-10-02
+2840,Parramatta Public School,Primary School,671,151.008374,-33.816821,2026-10-02
+2842,Parramatta North Public School,Primary School,253,151.004694,-33.803951,2026-10-02
+2843,Parramatta West Public School,Primary School,949,150.990968,-33.824472,2026-10-02
+2849,Peakhurst Public School,Primary School,412,151.062306,-33.955402,2026-10-02
+2852,Peats Ridge Public School,Primary School,19,151.23275,-33.325841,2026-10-02
+2857,Pennant Hills Public School,Primary School,490,151.068058,-33.7358,2026-10-02
+2858,West Pennant Hills Public School,Primary School,510,151.050491,-33.746075,2026-10-02
+2859,Penrith Public School,Primary School,524,150.70439,-33.755926,2026-10-02
+2861,Penshurst Public School,Primary School,458,151.087702,-33.962636,2026-10-02
+2867,Picton Public School,Primary School,307,150.609346,-34.17624,2026-10-02
+2884,Pitt Town Public School,Primary School,290,150.859638,-33.583887,2026-10-02
+2887,Plumpton Public School,Primary School,504,150.838556,-33.749158,2026-10-02
+2901,Prestons Public School,Primary School,586,150.889961,-33.94642,2026-10-02
+2902,Pretty Beach Public School,Primary School,154,151.350019,-33.528039,2026-10-02
+2910,Punchbowl Public School,Primary School,528,151.055905,-33.930613,2026-10-02
+2913,Putney Public School,Primary School,357,151.110973,-33.824562,2026-10-02
+2918,Quakers Hill Public School,Primary School,962,150.885265,-33.737467,2026-10-02
+2926,Leppington Public School,Primary School,507,150.810901,-33.959269,2026-10-02
+2930,Rainbow Street Public School,Primary School,454,151.237164,-33.924647,2026-10-02
+2950,Regents Park Public School,Primary School,268,151.024693,-33.885518,2026-10-02
+2951,Regentville Public School,Primary School,523,150.668311,-33.77728,2026-10-02
+2958,Revesby Public School,Primary School,303,151.017145,-33.944449,2026-10-02
+2965,Richmond North Public School,Primary School,309,150.716871,-33.580591,2026-10-02
+2970,Riverstone Public School,Primary School,599,150.871019,-33.678387,2026-10-02
+2973,Rockdale Public School,Primary School,321,151.141681,-33.952626,2026-10-02
+2988,Rose Bay Public School,Primary School,377,151.270962,-33.873011,2026-10-02
+2994,Roseville Public School,Primary School,520,151.188666,-33.781883,2026-10-02
+2999,Rossmore Public School,Primary School,113,150.770857,-33.946493,2026-10-02
+3008,Rouse Hill Public School,Primary School,1058,150.920985,-33.679219,2026-10-02
+3020,Rydalmere Public School,Primary School,151,151.044705,-33.814317,2026-10-02
+3021,Ryde Public School,Primary School,497,151.108015,-33.812552,2026-10-02
+3022,North Ryde Public School,Primary School,316,151.120042,-33.794766,2026-10-02
+3023,West Ryde Public School,Primary School,512,151.085097,-33.808363,2026-10-02
+3029,St Johns Park Public School,Primary School,673,150.899278,-33.887204,2026-10-02
+3031,St Marys Public School,Primary School,258,150.770634,-33.768364,2026-10-02
+3032,St Peters Public School,Primary School,154,151.176696,-33.912993,2026-10-02
+3038,Sans Souci Public School,Primary School,523,151.12923,-33.99499,2026-10-02
+3046,Schofields Public School,Primary School,1119,150.875247,-33.693115,2026-10-02
+3053,Seven Hills North Public School,Primary School,246,150.955041,-33.759976,2026-10-02
+3073,Smithfield Public School,Primary School,517,150.933495,-33.853583,2026-10-02
+3078,Somersby Public School,Primary School,56,151.291312,-33.358368,2026-10-02
+3095,Springwood Public School,Primary School,370,150.573472,-33.704613,2026-10-02
+3123,Strathfield North Public School,Primary School,508,151.09204,-33.854531,2026-10-02
+3124,Strathfield South Public School,Primary School,423,151.084702,-33.89078,2026-10-02
+3129,Summer Hill Public School,Primary School,662,151.135853,-33.895815,2026-10-02
+3136,Sutherland Public School,Primary School,344,151.059149,-34.033001,2026-10-02
+3143,Sylvania Public School,Primary School,167,151.112077,-34.008118,2026-10-02
+3147,Tacoma Public School,Primary School,186,151.458936,-33.28298,2026-10-02
+3148,Tahmoor Public School,Primary School,525,150.588951,-34.227663,2026-10-02
+3168,Taren Point Public School,Primary School,114,151.12269,-34.01808,2026-10-02
+3190,Terrey Hills Public School,Primary School,183,151.222619,-33.685723,2026-10-02
+3191,Terrigal Public School,Primary School,888,151.438197,-33.442449,2026-10-02
+3200,Thirlmere Public School,Primary School,401,150.569311,-34.204832,2026-10-02
+3240,Toongabbie Public School,Primary School,381,150.966667,-33.787181,2026-10-02
+3250,Toukley Public School,Primary School,494,151.550307,-33.267795,2026-10-02
+3269,Tuggerah Public School,Primary School,359,151.415571,-33.312999,2026-10-02
+3288,Turramurra North Public School,Primary School,196,151.147816,-33.714724,2026-10-02
+3305,Ultimo Public School,Primary School,483,151.195607,-33.877674,2026-10-02
+3310,Undercliffe Public School,Primary School,152,151.138601,-33.924086,2026-10-02
+3325,Vaucluse Public School,Primary School,217,151.281166,-33.850478,2026-10-02
+3328,Carramar Public School,Primary School,227,150.969204,-33.885512,2026-10-02
+3329,Vineyard Public School,Primary School,97,150.857935,-33.647352,2026-10-02
+3334,Waitara Public School,Primary School,972,151.111586,-33.708119,2026-10-02
+3346,Wallacia Public School,Primary School,53,150.641613,-33.862695,2026-10-02
+3390,Warrawee Public School,Primary School,622,151.121236,-33.729484,2026-10-02
+3396,Waterfall Public School,Primary School,17,150.995977,-34.137598,2026-10-02
+3422,Wentworth Falls Public School,Primary School,370,150.373525,-33.714112,2026-10-02
+3423,Wentworthville Public School,Primary School,863,150.968613,-33.814004,2026-10-02
+3441,Wilberforce Public School,Primary School,326,150.839763,-33.558704,2026-10-02
+3449,Willoughby Public School,Primary School,905,151.200123,-33.802197,2026-10-02
+3453,Athelstane Public School,Primary School,277,151.138362,-33.937445,2026-10-02
+3459,Windsor Public School,Primary School,125,150.816413,-33.610366,2026-10-02
+3470,Wisemans Ferry Public School,Primary School,44,150.984133,-33.385958,2026-10-02
+3527,Wyong Public School,Primary School,433,151.426188,-33.271886,2026-10-02
+3528,Wyong Creek Public School,Primary School,94,151.34807,-33.267129,2026-10-02
+3537,Yanderra Public School,Primary School,35,150.571244,-34.320475,2026-10-02
+3593,Oyster Bay Public School,Primary School,416,151.080693,-34.00779,2026-10-02
+3615,Kemps Creek Public School,Primary School,114,150.790299,-33.882805,2026-10-02
+3632,Fairfield Heights Public School,Primary School,642,150.940272,-33.866094,2026-10-02
+3668,Cronulla South Public School,Primary School,261,151.154201,-34.06611,2026-10-02
+3678,Warwick Farm Public School,Primary School,219,150.929409,-33.909642,2026-10-02
+3698,Chester Hill Public School,Primary School,578,151.00161,-33.885597,2026-10-02
+3702,Georges Hall Public School,Primary School,685,150.9922,-33.912435,2026-10-02
+3703,South Coogee Public School,Primary School,376,151.25409,-33.933333,2026-10-02
+3719,Annangrove Public School,Primary School,142,150.95255,-33.667417,2026-10-02
+3735,Woronora River Public School,Primary School,70,151.041114,-34.026575,2026-10-02
+3736,Balgowlah Heights Public School,Primary School,651,151.258754,-33.805985,2026-10-02
+3743,Riverwood Public School,Primary School,126,151.046586,-33.947208,2026-10-02
+3744,Warragamba Public School,Primary School,434,150.60539,-33.890924,2026-10-02
+3748,Belrose Public School,Primary School,186,151.216645,-33.727235,2026-10-02
+3765,Bundeena Public School,Primary School,174,151.152422,-34.086792,2026-10-02
+3777,Pymble Public School,Primary School,519,151.141089,-33.732269,2026-10-02
+3789,Condell Park Public School,Primary School,586,151.013674,-33.925486,2026-10-02
+3792,Avalon Public School,Primary School,666,151.326739,-33.639377,2026-10-02
+3794,Bald Face Public School,Primary School,246,151.106905,-33.996752,2026-10-02
+3796,Lugarno Public School,Primary School,272,151.044676,-33.984956,2026-10-02
+3797,Oatley West Public School,Primary School,519,151.065459,-33.979006,2026-10-02
+3808,Chullora Public School,Primary School,430,151.060249,-33.895371,2026-10-02
+3822,Sutherland North Public School,Primary School,225,151.067084,-34.026785,2026-10-02
+3827,Narraweena Public School,Primary School,511,151.273639,-33.7492,2026-10-02
+3829,Jannali Public School,Primary School,139,151.060909,-34.017945,2026-10-02
+3830,Ramsgate Public School,Primary School,447,151.143549,-33.981431,2026-10-02
+3831,Chalmers Road School,Schools for Specific Purposes,79,151.081613,-33.879569,2026-10-02
+3833,Wahroonga Public School,Primary School,508,151.128476,-33.715583,2026-10-02
+3840,Parramatta East Public School,Primary School,465,151.017766,-33.806081,2026-10-02
+3846,Melrose Park Public School,Primary School,163,151.071939,-33.814849,2026-10-02
+3854,Hazelbrook Public School,Primary School,356,150.459399,-33.726554,2026-10-02
+3855,Turramurra Public School,Primary School,531,151.114305,-33.745258,2026-10-02
+3862,Denistone East Public School,Primary School,790,151.096571,-33.7943,2026-10-02
+3863,Meadowbank Public School,Primary School,642,151.0921,-33.8129,2026-10-02
+3869,Yagoona Public School,Primary School,556,151.026716,-33.909174,2026-10-02
+3871,Wattle Grove Public School,Primary School,427,150.937482,-33.958654,2026-10-02
+3873,Dobroyd Point Public School,Primary School,116,151.140692,-33.874416,2026-10-02
+3875,Narwee Public School,Primary School,246,151.06865,-33.948186,2026-10-02
+3883,Westmead Public School,Primary School,717,150.985291,-33.810171,2026-10-02
+3885,Mount Colah Public School,Primary School,442,151.115695,-33.672947,2026-10-02
+3886,McCallums Hill Public School,Primary School,330,151.084758,-33.934891,2026-10-02
+3896,Como West Public School,Primary School,275,151.060505,-34.004744,2026-10-02
+3905,Pagewood Public School,Primary School,207,151.214172,-33.942104,2026-10-02
+3906,Narrabeen North Public School,Primary School,580,151.298134,-33.699095,2026-10-02
+3908,Lane Cove West Public School,Primary School,474,151.152003,-33.809886,2026-10-02
+3914,Grays Point Public School,Primary School,353,151.0723,-34.058656,2026-10-02
+3918,Killara Public School,Primary School,273,151.148436,-33.765473,2026-10-02
+3919,Castle Cove Public School,Primary School,273,151.201973,-33.783375,2026-10-02
+3924,East Hills Public School,Primary School,130,150.991975,-33.957953,2026-10-02
+3925,Curl Curl North Public School,Primary School,699,151.289314,-33.764639,2026-10-02
+3931,Seven Hills Public School,Primary School,131,150.937488,-33.770031,2026-10-02
+3935,Crown Street Public School,Primary School,288,151.21522,-33.882253,2026-10-02
+3943,Gordon West Public School,Primary School,424,151.139223,-33.760318,2026-10-02
+3944,Beverly Hills North Public School,Primary School,352,151.074837,-33.940606,2026-10-02
+3948,Tempe Public School,Primary School,346,151.160994,-33.920935,2026-10-02
+3950,Manly Village Public School,Primary School,532,151.287627,-33.7994,2026-10-02
+3951,Marrickville West Public School,Primary School,411,151.145073,-33.914468,2026-10-02
+3952,Marrickville Public School,Primary School,213,151.162658,-33.906705,2026-10-02
+3953,Waverley Public School,Primary School,263,151.251539,-33.898174,2026-10-02
+3956,Beaumont Road Public School,Primary School,310,151.146271,-33.774289,2026-10-02
+3957,Woolooware Public School,Primary School,462,151.146233,-34.045454,2026-10-02
+3958,Padstow Heights Public School,Primary School,297,151.030001,-33.966519,2026-10-02
+3970,Collaroy Plateau Public School,Primary School,452,151.29344,-33.73297,2026-10-02
+3971,Beacon Hill Public School,Primary School,459,151.260584,-33.75163,2026-10-02
+3972,Caringbah North Public School,Primary School,538,151.123079,-34.036574,2026-10-02
+3977,Villawood East Public School,Primary School,301,150.986013,-33.890154,2026-10-02
+3980,Cabramatta West Public School,Primary School,477,150.922985,-33.897515,2026-10-02
+3981,Chester Hill North Public School,Primary School,400,151.001039,-33.872352,2026-10-02
+3983,Canley Heights Public School,Primary School,529,150.922611,-33.884812,2026-10-02
+3984,Balgowlah North Public School,Primary School,381,151.246457,-33.783267,2026-10-02
+3985,Gordon East Public School,Primary School,195,151.156203,-33.74582,2026-10-02
+3986,Yennora Public School,Primary School,244,150.970993,-33.866826,2026-10-02
+3987,Katoomba North Public School,Primary School,128,150.315134,-33.699128,2026-10-02
+3993,Pendle Hill Public School,Primary School,309,150.953964,-33.810297,2026-10-02
+3995,Umina Beach Public School,Primary School,606,151.314055,-33.52511,2026-10-02
+3997,Hilltop Road Public School,Primary School,762,150.973319,-33.826331,2026-10-02
+3999,Richmond Public School,Primary School,298,150.757514,-33.598937,2026-10-02
+4000,Guildford West Public School,Primary School,366,150.966496,-33.847672,2026-10-02
+4004,Jannali East Public School,Primary School,313,151.07232,-34.019152,2026-10-02
+4009,Fairvale Public School,Primary School,503,150.940718,-33.876939,2026-10-02
+4012,Panania North Public School,Primary School,441,150.999631,-33.944499,2026-10-02
+4013,Peakhurst West Public School,Primary School,291,151.049429,-33.962021,2026-10-02
+4015,Mowbray Public School,Primary School,714,151.155895,-33.803943,2026-10-02
+4016,Revesby South Public School,Primary School,312,151.017335,-33.960526,2026-10-02
+4019,Forestville Public School,Primary School,462,151.212803,-33.761582,2026-10-02
+4021,Manly Vale Public School,Primary School,553,151.25976,-33.783497,2026-10-02
+4024,Sylvania Heights Public School,Primary School,482,151.097344,-34.012724,2026-10-02
+4029,Dundas Public School,Primary School,312,151.036399,-33.804424,2026-10-02
+4038,Epping Heights Public School,Primary School,396,151.07408,-33.762695,2026-10-02
+4041,Eastwood Heights Public School,Primary School,416,151.095463,-33.781914,2026-10-02
+4049,Mount Kuring-gai Public School,Primary School,132,151.135604,-33.657474,2026-10-02
+4050,Point Clare Public School,Primary School,479,151.327734,-33.443519,2026-10-02
+4051,Penshurst West Public School,Primary School,220,151.072176,-33.962115,2026-10-02
+4055,Oxley Park Public School,Primary School,601,150.788894,-33.771451,2026-10-02
+4056,Rooty Hill Public School,Primary School,645,150.840435,-33.769292,2026-10-02
+4057,Birrong Public School,Primary School,451,151.02007,-33.895596,2026-10-02
+4058,Leumeah Public School,Primary School,516,150.840373,-34.049425,2026-10-02
+4059,Wattawa Heights Public School,Primary School,196,151.012095,-33.914921,2026-10-02
+4060,Cambridge Park Public School,Primary School,523,150.725939,-33.747017,2026-10-02
+4061,Blacktown North Public School,Primary School,354,150.913134,-33.75879,2026-10-02
+4064,Macquarie Fields Public School,Primary School,828,150.882486,-33.995325,2026-10-02
+4065,Villawood North Public School,Primary School,250,150.972454,-33.877111,2026-10-02
+4066,Windsor South Public School,Primary School,333,150.804036,-33.618221,2026-10-02
+4067,Matraville Soldiers Settlement Public School,Primary School,114,151.239995,-33.958039,2026-10-02
+4071,Oatlands Public School,Primary School,159,151.023521,-33.800088,2026-10-02
+4075,Kirrawee Public School,Primary School,326,151.07749,-34.033467,2026-10-02
+4077,Illawong Public School,Primary School,191,151.042689,-33.999133,2026-10-02
+4084,Lilli Pilli Public School,Primary School,323,151.118387,-34.066592,2026-10-02
+4088,Padstow North Public School,Primary School,305,151.031421,-33.945302,2026-10-02
+4092,Hannans Road Public School,Primary School,106,151.057599,-33.945271,2026-10-02
+4097,Tuggerawong Public School,Primary School,208,151.485605,-33.279824,2026-10-02
+4103,Telopea Public School,Primary School,139,151.04364,-33.797032,2026-10-02
+4110,Central Mangrove Public School,Primary School,23,151.244425,-33.295626,2026-10-02
+4116,Blacktown West Public School,Primary School,443,150.893057,-33.770441,2026-10-02
+4117,Warnervale Public School,Primary School,442,151.469227,-33.251778,2026-10-02
+4122,Miranda North Public School,Primary School,291,151.11273,-34.031992,2026-10-02
+4123,Rydalmere East Public School,Primary School,104,151.05818,-33.817144,2026-10-02
+4124,Yowie Bay Public School,Primary School,329,151.102761,-34.048155,2026-10-02
+4125,Ermington West Public School,Primary School,104,151.058368,-33.805894,2026-10-02
+4126,Campbelltown North Public School,Primary School,358,150.826589,-34.061201,2026-10-02
+4138,Penrith South Public School,Primary School,441,150.700637,-33.763901,2026-10-02
+4142,Bankstown West Public School,Primary School,317,151.019639,-33.915528,2026-10-02
+4147,Erskineville Public School,Primary School,334,151.186112,-33.900881,2026-10-02
+4148,Castlereagh Public School,Primary School,126,150.675968,-33.667028,2026-10-02
+4151,Tower Street Public School,Primary School,154,151.007373,-33.956383,2026-10-02
+4157,Yates Avenue Public School,Primary School,155,151.058398,-33.795608,2026-10-02
+4160,Kent Road Public School,Primary School,1007,151.108936,-33.787415,2026-10-02
+4161,Liverpool West Public School,Primary School,668,150.907691,-33.927101,2026-10-02
+4162,Seven Hills West Public School,Primary School,324,150.921605,-33.765987,2026-10-02
+4164,Truscott Street Public School,Primary School,265,151.130918,-33.794097,2026-10-02
+4165,Epping North Public School,Primary School,382,151.095425,-33.757643,2026-10-02
+4166,Marayong Public School,Primary School,557,150.895304,-33.756609,2026-10-02
+4183,Budgewoi Public School,Primary School,555,151.549312,-33.225718,2026-10-02
+4191,Lalor Park Public School,Primary School,187,150.93125,-33.760504,2026-10-02
+4192,Bert Oldfield Public School,Primary School,175,150.924537,-33.777505,2026-10-02
+4193,Blacktown South Public School,Primary School,936,150.905175,-33.780193,2026-10-02
+4195,Warrimoo Public School,Primary School,146,150.600217,-33.728056,2026-10-02
+4198,Casula Public School,Primary School,660,150.9092,-33.944218,2026-10-02
+4199,Elanora Heights Public School,Primary School,387,151.284751,-33.703672,2026-10-02
+4200,Allambie Heights Public School,Primary School,406,151.249208,-33.76615,2026-10-02
+4205,St Marys North Public School,Primary School,345,150.782596,-33.756231,2026-10-02
+4210,Mount Pritchard East Public School,Primary School,214,150.912044,-33.905097,2026-10-02
+4212,Quakers Hill East Public School,Primary School,655,150.914359,-33.732484,2026-10-02
+4217,Banksia Road Public School,Primary School,512,151.05011,-33.906898,2026-10-02
+4218,Gosford East Public School,Primary School,334,151.348883,-33.437558,2026-10-02
+4221,Loftus Public School,Primary School,337,151.048886,-34.046979,2026-10-02
+4222,Darcy Road Public School,Primary School,576,150.96599,-33.801954,2026-10-02
+4230,Laguna Street Public School,Primary School,440,151.11285,-34.04634,2026-10-02
+4241,Cromer Public School,Primary School,468,151.274661,-33.738009,2026-10-02
+4248,Vardys Road Public School,Primary School,437,150.942765,-33.757148,2026-10-02
+4249,Wheeler Heights Public School,Primary School,430,151.284764,-33.72779,2026-10-02
+4250,Randwick Public School,Primary School,853,151.241714,-33.910645,2026-10-02
+4257,Ryde East Public School,Primary School,347,151.125864,-33.807139,2026-10-02
+4258,Lynwood Park Public School,Primary School,223,150.926373,-33.754408,2026-10-02
+4259,Burraneer Bay Public School,Primary School,573,151.132781,-34.051026,2026-10-02
+4274,Hornsby Heights Public School,Primary School,420,151.097989,-33.670114,2026-10-02
+4275,Normanhurst West Public School,Primary School,363,151.088436,-33.721061,2026-10-02
+4276,Thornleigh West Public School,Primary School,477,151.072163,-33.723864,2026-10-02
+4277,Campbelltown East Public School,Primary School,380,150.831753,-34.072299,2026-10-02
+4278,Marsden Road Public School,Primary School,726,150.912841,-33.916491,2026-10-02
+4279,St Marys South Public School,Primary School,319,150.776385,-33.780052,2026-10-02
+4282,Marayong Heights Public School,Primary School,283,150.896425,-33.742667,2026-10-02
+4283,West Pymble Public School,Primary School,250,151.124401,-33.763937,2026-10-02
+4285,Bennett Road Public School,Primary School,646,150.792462,-33.783499,2026-10-02
+4286,Camden South Public School,Primary School,712,150.69563,-34.069741,2026-10-02
+4288,Holsworthy Public School,Primary School,563,150.953353,-33.956342,2026-10-02
+4289,Lurnea Public School,Primary School,440,150.891925,-33.932082,2026-10-02
+4290,Mount Druitt Public School,Primary School,565,150.812509,-33.763984,2026-10-02
+4292,Engadine West Public School,Primary School,541,151.002566,-34.059519,2026-10-02
+4293,St Ives North Public School,Primary School,846,151.163635,-33.718672,2026-10-02
+4294,Roselea Public School,Primary School,306,151.05252,-33.765259,2026-10-02
+4298,Yarrawarrah Public School,Primary School,249,151.026137,-34.056574,2026-10-02
+4299,Chifley Public School,Primary School,227,151.242158,-33.96583,2026-10-02
+4310,Walters Road Public School,Primary School,523,150.892148,-33.784758,2026-10-02
+4311,Bardia Public School,Primary School,953,150.857923,-33.97528,2026-10-02
+4312,Ringrose Public School,Primary School,339,150.959399,-33.820181,2026-10-02
+4313,Blaxland East Public School,Primary School,379,150.623632,-33.746937,2026-10-02
+4314,Harrington Street Public School,Primary School,740,150.908725,-33.888595,2026-10-02
+4316,Mannering Park Public School,Primary School,193,151.536785,-33.150794,2026-10-02
+4319,Sadleir Public School,Primary School,351,150.891029,-33.915843,2026-10-02
+4320,Gwandalan Public School,Primary School,351,151.582444,-33.135468,2026-10-02
+4323,Peakhurst South Public School,Primary School,313,151.055986,-33.972923,2026-10-02
+4327,Marayong South Public School,Primary School,286,150.885236,-33.760128,2026-10-02
+4328,Sherwood Grange Public School,Primary School,246,150.960103,-33.836784,2026-10-02
+4329,Woy Woy South Public School,Primary School,648,151.321429,-33.503577,2026-10-02
+4331,St Ives Public School,Primary School,465,151.1665,-33.738199,2026-10-02
+4336,Heckenberg Public School,Primary School,209,150.890543,-33.908784,2026-10-02
+4337,Busby Public School,Primary School,243,150.881313,-33.911561,2026-10-02
+4338,Miller Public School,Primary School,266,150.876881,-33.921454,2026-10-02
+4339,Kingswood South Public School,Primary School,304,150.711849,-33.769287,2026-10-02
+4342,Picnic Point Public School,Primary School,360,151.010243,-33.969119,2026-10-02
+4344,Ashcroft Public School,Primary School,284,150.89839,-33.916395,2026-10-02
+4346,Wadangali Public School,Primary School,166,150.711457,-33.741191,2026-10-02
+4354,Faulconbridge Public School,Primary School,368,150.544693,-33.691022,2026-10-02
+4355,Smithfield West Public School,Primary School,300,150.91788,-33.857608,2026-10-02
+4359,Bilgola Plateau Public School,Primary School,344,151.313406,-33.644021,2026-10-02
+4360,Cartwright Public School,Primary School,241,150.890943,-33.925284,2026-10-02
+4364,Toongabbie West Public School,Primary School,268,150.957238,-33.792593,2026-10-02
+4365,Hornsby North Public School,Primary School,937,151.098865,-33.682646,2026-10-02
+4366,Toongabbie East Public School,Primary School,107,150.980274,-33.797274,2026-10-02
+4368,Wakehurst Public School,Primary School,407,151.218101,-33.738527,2026-10-02
+4369,Lewisham Public School,Primary School,198,151.146076,-33.897746,2026-10-02
+4377,Baulkham Hills North Public School,Primary School,876,150.999957,-33.751927,2026-10-02
+4378,Whalan Public School,Primary School,340,150.809664,-33.752917,2026-10-02
+4381,Shelley Public School,Primary School,435,150.917863,-33.789161,2026-10-02
+4382,Jasper Road Public School,Primary School,803,150.982269,-33.761316,2026-10-02
+4386,Killarney Heights Public School,Primary School,661,151.216151,-33.774942,2026-10-02
+4389,Gymea North Public School,Primary School,362,151.088321,-34.026457,2026-10-02
+4391,Lansvale East Public School,Primary School,117,150.964109,-33.897993,2026-10-02
+4393,Carlingford West Public School,Primary School,1636,151.03717,-33.78237,2026-10-02
+4396,Busby West Public School,Primary School,304,150.87445,-33.906099,2026-10-02
+4397,Wyoming Public School,Primary School,302,151.355782,-33.408202,2026-10-02
+4398,Chertsey Primary School,Primary School,125,151.369267,-33.429911,2026-10-02
+4400,St Ives Park Public School,Primary School,143,151.178775,-33.724082,2026-10-02
+4401,Murray Farm Public School,Primary School,787,151.040173,-33.766119,2026-10-02
+4402,Tregear Public School,Primary School,325,150.794321,-33.745883,2026-10-02
+4403,Bradbury Public School,Primary School,704,150.81269,-34.085998,2026-10-02
+4405,Beresford Road Public School,Primary School,580,150.942945,-33.814864,2026-10-02
+4408,Lethbridge Park Public School,Primary School,437,150.800109,-33.737964,2026-10-02
+4417,Winston Hills Public School,Primary School,636,150.981106,-33.773464,2026-10-02
+4420,Nuwarra Public School,Primary School,508,150.951499,-33.933241,2026-10-02
+4422,Emerton Public School,Primary School,218,150.805478,-33.744738,2026-10-02
+4424,Lapstone Public School,Primary School,158,150.631327,-33.772117,2026-10-02
+4426,Killarney Vale Public School,Primary School,477,151.456103,-33.365221,2026-10-02
+4427,Niagara Park Public School,Primary School,412,151.351096,-33.384122,2026-10-02
+4431,Marton Public School,Primary School,318,151.024232,-34.046492,2026-10-02
+4432,Mimosa Public School,Primary School,562,151.205909,-33.743343,2026-10-02
+4433,Wideview Public School,Primary School,321,151.14151,-33.608499,2026-10-02
+4435,Mount Riverview Public School,Primary School,231,150.632585,-33.72951,2026-10-02
+4436,Winmalee Public School,Primary School,359,150.610783,-33.670272,2026-10-02
+4440,Cherrybrook Public School,Primary School,886,151.042056,-33.731277,2026-10-02
+4441,Crestwood Public School,Primary School,633,150.972197,-33.749141,2026-10-02
+4442,Emu Heights Public School,Primary School,237,150.648818,-33.736652,2026-10-02
+4444,Metella Road Public School,Primary School,676,150.934756,-33.793967,2026-10-02
+4446,Dawson Public School,Primary School,293,150.816017,-33.745369,2026-10-02
+4447,Hebersham Public School,Primary School,515,150.825924,-33.748103,2026-10-02
+4449,Madang Avenue Public School,Primary School,320,150.804846,-33.759958,2026-10-02
+4452,Hobartville Public School,Primary School,355,150.742281,-33.603649,2026-10-02
+4453,Blackett Public School,Primary School,288,150.815858,-33.739605,2026-10-02
+4458,Briar Road Public School,Primary School,263,150.827673,-34.089103,2026-10-02
+4460,Curran Public School,Primary School,275,150.899426,-33.993145,2026-10-02
+4461,Guise Public School,Primary School,221,150.89692,-33.987448,2026-10-02
+4466,Mawarra Public School,Primary School,386,150.7122,-34.061245,2026-10-02
+4467,King Park Public School,Primary School,396,150.910701,-33.879147,2026-10-02
+4470,Willmot Public School,Primary School,162,150.794401,-33.725747,2026-10-02
+4471,Winston Heights Public School,Primary School,304,150.967894,-33.77485,2026-10-02
+4473,Werrington Public School,Primary School,519,150.745293,-33.755125,2026-10-02
+4474,Widemere Public School,Primary School,169,150.939897,-33.834174,2026-10-02
+4475,Leonay Public School,Primary School,191,150.650498,-33.76432,2026-10-02
+4476,Shalvey Public School,Primary School,258,150.809439,-33.726605,2026-10-02
+4479,John Warby Public School,Primary School,228,150.834434,-34.082225,2026-10-02
+4480,Bidwill Public School,Primary School,410,150.825934,-33.733547,2026-10-02
+4481,St Andrews Public School,Primary School,761,150.831362,-34.022532,2026-10-02
+4482,York Public School,Primary School,515,150.698124,-33.777111,2026-10-02
+4483,Grose View Public School,Primary School,265,150.66485,-33.594468,2026-10-02
+4484,Cambridge Gardens Public School,Primary School,341,150.722008,-33.737224,2026-10-02
+4488,Kareela Public School,Primary School,272,151.081991,-34.012894,2026-10-02
+4489,Ruse Public School,Primary School,483,150.841573,-34.066949,2026-10-02
+4490,Campbellfield Public School,Primary School,351,150.847422,-34.037684,2026-10-02
+4491,Sackville Street Public School,Primary School,474,150.863607,-34.011068,2026-10-02
+4492,Woodland Road Public School,Primary School,275,150.815078,-34.097072,2026-10-02
+4493,Noumea Public School,Primary School,260,150.809892,-33.732606,2026-10-02
+4494,Hampden Park Public School,Primary School,859,151.074029,-33.914957,2026-10-02
+4496,Dulwich Hill Public School,Primary School,358,151.140287,-33.906163,2026-10-02
+4499,Newbridge Heights Public School,Primary School,440,150.952069,-33.926068,2026-10-02
+4502,Petersham Public School,Primary School,232,151.150175,-33.895647,2026-10-02
+4504,Crawford Public School,Primary School,387,150.868825,-33.75479,2026-10-02
+4505,Ambarvale Public School,Primary School,433,150.798192,-34.086423,2026-10-02
+4507,Bonnet Bay Public School,Primary School,197,151.056257,-34.012607,2026-10-02
+4508,Valley View Public School,Primary School,325,151.361943,-33.400215,2026-10-02
+4509,Sarah Redfern Public School,Primary School,311,150.85091,-34.02765,2026-10-02
+4510,Claymore Public School,Primary School,236,150.809517,-34.043125,2026-10-02
+4516,Eastlakes Public School,Primary School,154,151.213836,-33.928065,2026-10-02
+4517,Gorokan Public School,Primary School,620,151.510205,-33.252454,2026-10-02
+4518,The Grange Public School,Primary School,282,150.857358,-34.022051,2026-10-02
+4520,Bateau Bay Public School,Primary School,614,151.476143,-33.391771,2026-10-02
+4522,Wamberal Public School,Primary School,475,151.448258,-33.412197,2026-10-02
+4525,Braddock Public School,Primary School,332,150.708382,-33.722492,2026-10-02
+4526,Matthew Pearce Public School,Primary School,1270,150.963554,-33.758183,2026-10-02
+4527,Clairgate Public School,Primary School,409,150.799228,-33.796329,2026-10-02
+4528,Kings Langley Public School,Primary School,567,150.924433,-33.745131,2026-10-02
+4529,Glenwood Public School,Primary School,216,150.903028,-33.974542,2026-10-02
+4531,St Clair Public School,Primary School,325,150.786899,-33.796324,2026-10-02
+4535,Blairmount Public School,Primary School,450,150.802444,-34.048007,2026-10-02
+4536,Bangor Public School,Primary School,503,151.029118,-34.019534,2026-10-02
+4537,Rosemeadow Public School,Primary School,724,150.794537,-34.104647,2026-10-02
+4539,Thomas Acres Public School,Primary School,495,150.789247,-34.093621,2026-10-02
+4541,Werrington County Public School,Primary School,319,150.747554,-33.74513,2026-10-02
+4542,Chittaway Bay Public School,Primary School,479,151.43201,-33.325978,2026-10-02
+4543,Wilkins Public School,Primary School,508,151.155086,-33.901967,2026-10-02
+4544,Jamisontown Public School,Primary School,317,150.683083,-33.77306,2026-10-02
+4545,Bonnyrigg Public School,Primary School,238,150.888962,-33.887728,2026-10-02
+4546,Katoomba Public School,Primary School,210,150.313708,-33.718645,2026-10-02
+4548,Copacabana Public School,Primary School,259,151.436848,-33.485042,2026-10-02
+4551,Plunkett Street Public School,Primary School,73,151.22024,-33.870879,2026-10-02
+4553,Wiley Park Public School,Primary School,550,151.068761,-33.924753,2026-10-02
+4554,Prairievale Public School,Primary School,419,150.890898,-33.866464,2026-10-02
+4558,Eschol Park Public School,Primary School,326,150.810838,-34.02834,2026-10-02
+4559,Blackwell Public School,Primary School,480,150.783052,-33.806328,2026-10-02
+4560,Samuel Terry Public School,Primary School,521,150.708745,-33.713307,2026-10-02
+4563,William Stimson Public School,Primary School,459,150.905782,-33.854623,2026-10-02
+4566,Brooke Avenue Public School,Primary School,420,151.466133,-33.37611,2026-10-02
+4567,Governor Philip King Public School,Primary School,568,150.879107,-33.873793,2026-10-02
+4568,Ellison Public School,Primary School,283,150.585327,-33.69035,2026-10-02
+4569,Robert Townson Public School,Primary School,430,150.818892,-34.016173,2026-10-02
+4571,Banks Public School,Primary School,417,150.773098,-33.793717,2026-10-02
+4572,John Purchase Public School,Primary School,550,151.038895,-33.718798,2026-10-02
+4573,Tharawal Public School,Primary School,328,151.025929,-34.003289,2026-10-02
+4574,Samuel Gilbert Public School,Primary School,643,150.992027,-33.713106,2026-10-02
+4576,William Dean Public School,Primary School,382,150.858693,-33.734259,2026-10-02
+4577,Minchinbury Public School,Primary School,439,150.832427,-33.78862,2026-10-02
+4579,James Erskine Public School,Primary School,486,150.803884,-33.805167,2026-10-02
+4580,Kariong Public School,Primary School,502,151.289632,-33.441014,2026-10-02
+4583,Edensor Park Public School,Primary School,286,150.876121,-33.882056,2026-10-02
+4585,Bligh Park Public School,Primary School,283,150.794565,-33.639133,2026-10-02
+4586,Sydney Distance Education Primary School,Primary School,124,151.212706,-33.88627,2026-10-02
+4588,Northlakes Public School,Primary School,341,151.514788,-33.214542,2026-10-02
+4590,Hambledon Public School,Primary School,633,150.887211,-33.71645,2026-10-02
+4591,Glenmore Park Public School,Primary School,455,150.681117,-33.783388,2026-10-02
+4593,Kearns Public School,Primary School,178,150.804446,-34.021486,2026-10-02
+4594,Bonnyrigg Heights Public School,Primary School,769,150.867681,-33.88935,2026-10-02
+4597,Mount Annan Public School,Primary School,653,150.760497,-34.061714,2026-10-02
+4598,Hassall Grove Public School,Primary School,623,150.838504,-33.73548,2026-10-02
+4599,Barnier Public School,Primary School,788,150.901824,-33.72051,2026-10-02
+4603,St Helens Park Public School,Primary School,363,150.804035,-34.110232,2026-10-02
+4604,Oakhill Drive Public School,Primary School,756,151.022997,-33.721563,2026-10-02
+4605,Alfords Point Public School,Primary School,165,151.02399,-33.992403,2026-10-02
+4608,Glendenning Public School,Primary School,440,150.852638,-33.74223,2026-10-02
+4613,Hinchinbrook Public School,Primary School,487,150.85892,-33.912986,2026-10-02
+4614,Windsor Park Public School,Primary School,231,150.813492,-33.640641,2026-10-02
+4615,Caddies Creek Public School,Primary School,868,150.926227,-33.736255,2026-10-02
+4619,Henry Fulton Public School,Primary School,219,150.709665,-33.70473,2026-10-02
+4621,Narellan Vale Public School,Primary School,619,150.744718,-34.056129,2026-10-02
+4622,Claremont Meadows Public School,Primary School,687,150.747014,-33.774178,2026-10-02
+4623,Blue Haven Public School,Primary School,637,151.502826,-33.212499,2026-10-02
+4624,Greenway Park Public School,Primary School,620,150.837554,-33.938001,2026-10-02
+4625,Currans Hill Public School,Primary School,545,150.769197,-34.04785,2026-10-02
+4627,Newington Public School,Primary School,665,151.055228,-33.841151,2026-10-02
+4628,Harrington Park Public School,Primary School,731,150.738527,-34.027145,2026-10-02
+4630,Beaumont Hills Public School,Primary School,466,150.945659,-33.697809,2026-10-02
+4631,Surveyors Creek Public School,Primary School,424,150.689173,-33.787277,2026-10-02
+4634,Dalmeny Public School,Primary School,671,150.871393,-33.947297,2026-10-02
+4635,Cecil Hills Public School,Primary School,721,150.851731,-33.888597,2026-10-02
+4637,Woongarrah Public School,Primary School,385,151.484133,-33.242434,2026-10-02
+4638,Ironbark Ridge Public School,Primary School,754,150.933259,-33.687371,2026-10-02
+4639,Kellyville Ridge Public School,Primary School,671,150.924005,-33.705413,2026-10-02
+4640,Sherwood Ridge Public School,Primary School,584,150.975587,-33.706672,2026-10-02
+4645,Ropes Crossing Public School,Primary School,789,150.7830912,-33.7334423,2026-10-02
+4646,Elderslie Public School,Primary School,539,150.721773,-34.054473,2026-10-02
+4647,Middleton Grange Public School,Primary School,465,150.848199,-33.917335,2026-10-02
+4648,John Palmer Public School,Primary School,950,150.911525,-33.707397,2026-10-02
+4650,Wilton Public School,Primary School,666,150.684833,-34.228678,2026-10-02
+4651,Oran Park Public School,Primary School,1407,150.73485,-33.99728,2026-10-02
+4652,Marie Bashir Public School,Primary School,424,151.079424,-33.875168,2026-10-02
+4653,Riverbank Public School,Primary School,2030,150.899525,-33.703959,2026-10-02
+4655,Victoria Avenue Public School,Primary School,340,151.083379,-33.847748,2026-10-02
+4656,Anzac Park Public School,Primary School,720,151.210731,-33.826566,2026-10-02
+4657,Spring Farm Public School,Primary School,866,150.714957,-34.069638,2026-10-02
+4658,Lindfield College,Central/Community School,801.5,151.160509,-33.790062,2026-10-02
+4660,Bayanami Public School,Primary School,663,151.001264,-33.80993,2026-10-02
+4662,Wentworth Point Public School,Primary School,672,151.080113,-33.823709,2026-10-02
+4663,Bella Vista Public School,Primary School,1104,150.954991,-33.726556,2026-10-02
+4664,North Kellyville Public School,Primary School,1068,150.955059,-33.691337,2026-10-02
+4667,Gledswood Hills Public School,Primary School,976,150.776555,-34.01223,2026-10-02
+4668,Smalls Road Public School,Primary School,494,151.109465,-33.799393,2026-10-02
+4669,Jordan Springs Public School,Primary School,1119,150.725931,-33.724924,2026-10-02
+4670,Galungara Public School,Primary School,882,150.880515,-33.700355,2026-10-02
+4671,Barramurra Public School,Primary School,1182,150.749038,-34.006959,2026-10-02
+4672,Denham Court Public School,Primary School,826,150.8154,-33.9825,2026-10-02
+4673,Northbourne Public School,Primary School,1711,150.8186977,-33.6890866,2026-10-02
+4675,Porters Creek Public School,Primary School,317,151.455534,-33.249773,2026-10-02
+4677,Nangamay Public School,Primary School,413,150.681619,-33.803003,2026-10-02
+4678,Ngarala Public School,Primary School,380,151.069192,-33.78106,2026-10-02
+4679,Edmondson Park Public School,Primary School,897,150.852675,-33.965316,2026-10-02
+4681,Green Square Public School,Primary School,107,151.20668,-33.908383,2026-10-02
+4682,Gregory Hills Public School,Primary School,647,150.78,-34.025,2026-10-02
+4686,Tallawong Public School,Primary School,121,150.8991,-33.6868,2026-10-02
+4687,Gulyangarri Public School,Primary School,267,150.932241,-33.917848,2026-10-02
+4689,Melonba Public School,Primary School,776,150.803617,-33.699759,2026-10-02
+4691,Nirimba Fields Public School,Primary School,210,150.8728,-33.7146,2026-10-02
+4694,Box Hill Public School,Primary School,271,150.892123,-33.64227,2026-10-02
+5103,Arncliffe West Infants School,Infants School,86,151.14516,-33.931832,2026-10-02
+5104,Australia Street Infants School,Infants School,104,151.177607,-33.895783,2026-10-02
+5109,Canterbury South Public School,Primary School,269,151.116013,-33.917776,2026-10-02
+5112,Taverners Hill Infants School,Infants School,20,151.157199,-33.888955,2026-10-02
+5114,Ferncourt Public School,Primary School,285,151.151497,-33.921393,2026-10-02
+5118,Harcourt Public School,Primary School,373,151.095803,-33.90897,2026-10-02
+5120,Yeo Park Infants School,Infants School,48,151.130055,-33.902692,2026-10-02
+5126,Merrylands East Public School,Primary School,347,150.98929,-33.841954,2026-10-02
+5132,Russell Lea Public School,Primary School,428,151.142572,-33.861418,2026-10-02
+5141,Kyeemagh Public School,Primary School,204,151.162305,-33.94902,2026-10-02
+5148,Bardwell Park Infants School,Infants School,33,151.12555,-33.933428,2026-10-02
+5188,Sefton Infants School,Infants School,93,151.009588,-33.889237,2026-10-02
+5191,Hornsby South Public School,Primary School,534,151.095148,-33.713499,2026-10-02
+5195,Hurstville Grove Infants School,Infants School,59,151.090536,-33.973128,2026-10-02
+5212,Beauty Point Public School,Primary School,205,151.241883,-33.812008,2026-10-02
+5220,Lansvale Public School,Primary School,524,150.953555,-33.890977,2026-10-02
+5236,Granville East Public School,Primary School,259,151.009981,-33.84827,2026-10-02
+5241,Mount Lewis Infants School,Infants School,173,151.04976,-33.916084,2026-10-02
+5246,Bankstown South Infants School,Infants School,141,151.038402,-33.93123,2026-10-02
+5251,Homebush West Public School,Primary School,424,151.06671,-33.866461,2026-10-02
+5272,Heathcote East Public School,Primary School,106,151.020259,-34.082071,2026-10-02
+5401,Glenfield Park School,Schools for Specific Purposes,63,150.878601,-33.967931,2026-10-02
+5405,Fisher Road School,Schools for Specific Purposes,62,151.287466,-33.746131,2026-10-02
+5407,Cromehurst School,Schools for Specific Purposes,60,151.172207,-33.773952,2026-10-02
+5411,Rowland Hassall School,Schools for Specific Purposes,63,150.989018,-33.867715,2026-10-02
+5423,John Brotchie Nursery School,Other School,NA,151.196138,-33.942627,2026-10-02
+5428,Field of Mars Environmental Education Centre,Environmental Education Centre,NA,151.132849,-33.816092,2026-10-02
+5429,Camden Park Environmental Education Centre,Environmental Education Centre,NA,150.709685,-34.120004,2026-10-02
+5430,Georges River Environmental Education Centre,Environmental Education Centre,NA,150.961511,-33.910278,2026-10-02
+5453,Putland School,Schools for Specific Purposes,65,150.750385,-33.764297,2026-10-02
+5454,Dorchester School,Schools for Specific Purposes,19,150.826331,-34.088474,2026-10-02
+5456,Girrakool School,Schools for Specific Purposes,54,151.296,-33.4237,2026-10-02
+5459,Tallowood School,Schools for Specific Purposes,98,150.95217,-33.707054,2026-10-02
+5460,Yudi Gunyi School,Schools for Specific Purposes,29,151.203108,-33.904025,2026-10-02
+5504,Royal Far West School,Schools for Specific Purposes,NA,151.288476,-33.798519,2026-10-02
+5508,Beverley Park School,Schools for Specific Purposes,59,150.824219,-34.062208,2026-10-02
+5513,St George Hospital School,Schools for Specific Purposes,NA,151.13399,-33.96671,2026-10-02
+5515,Stewart House School,Schools for Specific Purposes,NA,151.29131,-33.77349,2026-10-02
+5516,Centennial Park School,Schools for Specific Purposes,53,151.243184,-33.910564,2026-10-02
+5527,St George School,Schools for Specific Purposes,64,151.137532,-33.969055,2026-10-02
+5529,Broderick Gillawarna School,Schools for Specific Purposes,100,151.015897,-33.942493,2026-10-02
+5538,Arndell School,Schools for Specific Purposes,17,151.125535,-33.803223,2026-10-02
+5540,Bridge Road School,Schools for Specific Purposes,37,151.175254,-33.887445,2026-10-02
+5543,Royal Prince Alfred Hospital School,Schools for Specific Purposes,NA,151.180245,-33.889314,2026-10-02
+5544,Royal North Shore Hospital School,Schools for Specific Purposes,NA,151.19079,-33.820685,2026-10-02
+5545,Sydney Childrens Hospital School,Schools for Specific Purposes,NA,151.239067,-33.919053,2026-10-02
+5546,Sutherland Hospital School,Schools for Specific Purposes,NA,151.114597,-34.038034,2026-10-02
+5548,Bankstown Hospital School,Schools for Specific Purposes,NA,151.021069,-33.933446000000004,2026-10-02
+5556,Liverpool Hospital School,Schools for Specific Purposes,NA,150.931084,-33.919912,2026-10-02
+5559,Redbank School,Schools for Specific Purposes,46,150.987659,-33.800809,2026-10-02
+5562,Fowler Road School,Schools for Specific Purposes,55,150.975533,-33.841497,2026-10-02
+5563,Passfield Park School,Schools for Specific Purposes,98,150.850907,-34.023862,2026-10-02
+5568,Wangee Park School,Schools for Specific Purposes,51,151.095881,-33.908248,2026-10-02
+5574,Casuarina School,Schools for Specific Purposes,40,150.866346,-33.677516,2026-10-02
+5575,Cook School,Schools for Specific Purposes,66,151.052545,-34.041709,2026-10-02
+5578,Naremburn School,Schools for Specific Purposes,30,151.200343,-33.819372,2026-10-02
+5579,The Beach School,Schools for Specific Purposes,35,151.262488,-33.772011,2026-10-02
+5581,Karningul School,Schools for Specific Purposes,20,151.023804,-33.88501,2026-10-02
+5583,Verona School,Schools for Specific Purposes,89,150.9709,-33.868235,2026-10-02
+5606,Cairnsfoot School,Schools for Specific Purposes,99,151.152168,-33.95457,2026-10-02
+5609,Woniora Road School,Schools for Specific Purposes,46,151.103173,-33.971003,2026-10-02
+5614,William Rose School,Schools for Specific Purposes,86,150.937493,-33.769095,2026-10-02
+5616,Minerva School,Schools for Specific Purposes,47,151.058739,-34.034965,2026-10-02
+5621,Kurrambee School,Schools for Specific Purposes,104,150.757118,-33.766355,2026-10-02
+5627,Glenvale School,Schools for Specific Purposes,159,151.335729,-33.40658,2026-10-02
+5630,Mainsbridge School,Schools for Specific Purposes,125,150.928233,-33.90964,2026-10-02
+5631,Wairoa School,Schools for Specific Purposes,75,151.278496,-33.886632,2026-10-02
+5632,Lawrence Hargrave School,Schools for Specific Purposes,59,150.935355,-33.908215,2026-10-02
+5633,Holroyd School,Schools for Specific Purposes,189,150.981664,-33.828906,2026-10-02
+5637,Coreen School,Schools for Specific Purposes,56,150.911039,-33.77315,2026-10-02
+5642,Halinda School,Schools for Specific Purposes,114,150.807065,-33.75902,2026-10-02
+5643,Niland School,Schools for Specific Purposes,34,150.813357,-33.736791,2026-10-02
+5647,Bates Drive School,Schools for Specific Purposes,62,151.08527,-34.022243,2026-10-02
+5650,Palm Avenue School,Schools for Specific Purposes,NA,150.9851858,-33.80257496,2026-10-02
+5652,Caroline Chisholm School,Schools for Specific Purposes,104,151.02521,-33.936108,2026-10-02
+5654,Rivendell School,Schools for Specific Purposes,65,151.09845,-33.832948,2026-10-02
+5655,Clarke Road School,Schools for Specific Purposes,61,151.095647,-33.712072,2026-10-02
+5656,Arranounbai School,Schools for Specific Purposes,34,151.241291,-33.756784,2026-10-02
+5667,Wooglemai Environmental Education Centre,Environmental Education Centre,NA,150.499162,-34.134567,2026-10-02
+5670,Karonga School,Schools for Specific Purposes,89,151.06064,-33.770806,2026-10-02
+5675,Sir Eric Woodward Memorial School,Schools for Specific Purposes,75,151.179755,-33.719579,2026-10-02
+5688,The Hills School,Schools for Specific Purposes,112,151.003951,-33.779745,2026-10-02
+5690,Longneck Lagoon Environmental Education Centre,Environmental Education Centre,NA,150.892806,-33.576219,2026-10-02
+5691,Royal National Park Environmental Education Centre,Environmental Education Centre,NA,151.057682,-34.06282,2026-10-02
+5694,Brewongle Environmental Education Centre,Environmental Education Centre,NA,150.891511,-33.48167,2026-10-02
+5703,Carinya School,Schools for Specific Purposes,55,151.082222,-33.973766,2026-10-02
+5712,Les Powell School,Schools for Specific Purposes,76,150.91237,-33.90434,2026-10-02
+5713,Lucas Gardens School,Schools for Specific Purposes,78,151.113666,-33.868438,2026-10-02
+5714,Gibberagong Environmental Education Centre,Environmental Education Centre,NA,151.1586004,-33.65937821,2026-10-02
+5721,Mary Brooksbank School,Schools for Specific Purposes,123,150.792742,-34.09782,2026-10-02
+5735,Campbell House School,Schools for Specific Purposes,60,150.882009,-33.968196,2026-10-02
+5737,Edgeware School,Schools for Specific Purposes,31,151.131342,-33.913582,2026-10-02
+5740,Rumbalara Environmental Education Centre,Environmental Education Centre,NA,151.347464,-33.428082,2026-10-02
+5741,Kamay Botany Bay Environmental Education Centre,Environmental Education Centre,NA,151.221169,-34.003706,2026-10-02
+5745,Observatory Hill Environmental Education Centre,Environmental Education Centre,NA,151.204832,-33.860863,2026-10-02
+5748,Ajuga School,Schools for Specific Purposes,53,150.878033,-33.969521,2026-10-02
+5751,The Childrens Hospital School,Schools for Specific Purposes,NA,150.991834,-33.802243,2026-10-02
+5752,Penrith Lakes Environmental Education Centre,Environmental Education Centre,NA,150.686511,-33.728553,2026-10-02
+5753,Lomandra School,Schools for Specific Purposes,75,150.824344,-34.06173,2026-10-02
+5754,Plumpton House School,Schools for Specific Purposes,30,150.840732,-33.75029,2026-10-02
+5755,HopeTown School,Schools for Specific Purposes,43,151.448585,-33.280982,2026-10-02
+5759,Canterbury Vale School,Schools for Specific Purposes,36,151.074514,-33.915685,2026-10-02
+5760,North Gosford Learning Centre,Schools for Specific Purposes,38,151.35037,-33.416874,2026-10-02
+5761,Penrith Valley School,Schools for Specific Purposes,39,150.758761,-33.766554,2026-10-02
+5765,The Ponds School,Schools for Specific Purposes,120,150.911601,-33.698,2026-10-02
+5766,Yandelora School,Schools for Specific Purposes,118,150.732244025,-34.04306214,2026-10-02
+5767,George Bass School,Schools for Specific Purposes,102,150.988237,-33.89794534,2026-10-02
+5768,Fernhill School,Schools for Specific Purposes,129,150.676955842,-33.796286238,2026-10-02
+5771,South Creek School,Schools for Specific Purposes,82,150.8756393,-33.6779475,2026-10-02
+7302,Carlingford Public School,Primary School,644,151.055153,-33.780094,2026-10-02
+7401,Arncliffe Public School,Primary School,373,151.14755,-33.94054,2026-10-02
+7403,Auburn Public School,Primary School,486,151.032953,-33.854,2026-10-02
+7404,Balmain Public School,Primary School,321,151.183417,-33.859166,2026-10-02
+7405,Bankstown Public School,Primary School,736,151.034168,-33.921122,2026-10-02
+7406,Bexley Public School,Primary School,249,151.128861,-33.947687,2026-10-02
+7407,Bondi Public School,Primary School,464,151.264753,-33.892625,2026-10-02
+7408,Bourke Street Public School,Primary School,381,151.215737,-33.890534,2026-10-02
+7409,Chatswood Public School,Primary School,1083,151.17759,-33.798242,2026-10-02
+7411,Croydon Public School,Primary School,576,151.114887,-33.879793,2026-10-02
+7412,Croydon Park Public School,Primary School,325,151.108395,-33.894695,2026-10-02
+7413,Daceyville Public School,Primary School,126,151.227984,-33.929548,2026-10-02
+7414,Darlinghurst Public School,Primary School,210,151.223432,-33.878599,2026-10-02
+7416,Eastwood Public School,Primary School,701,151.078474,-33.792743,2026-10-02
+7418,Gardeners Road Public School,Primary School,393,151.198034,-33.920643,2026-10-02
+7419,Glebe Public School,Primary School,193,151.19097,-33.883685,2026-10-02
+7423,Leichhardt Public School,Primary School,532,151.15814,-33.88427,2026-10-02
+7424,Liverpool Public School,Primary School,562,150.925924,-33.923572,2026-10-02
+7427,Maroubra Junction Public School,Primary School,484,151.2397289,-33.93702706,2026-10-02
+7430,Mosman Public School,Primary School,458,151.241198,-33.828052,2026-10-02
+7431,Newtown Public School,Primary School,272,151.179405,-33.899991,2026-10-02
+7432,Paddington Public School,Primary School,147,151.230188,-33.887603,2026-10-02
+7435,Rozelle Public School,Primary School,507,151.169749,-33.862581,2026-10-02
+7436,Stanmore Public School,Primary School,560,151.165283,-33.895506,2026-10-02
+7442,Woollahra Public School,Primary School,667,151.24119,-33.886379,2026-10-02
+7444,Rosehill Public School,Primary School,550,151.018376,-33.824229,2026-10-02
+7445,Woy Woy Public School,Primary School,365,151.328247,-33.491705,2026-10-02
+8107,Canterbury Boys High School,Secondary School,422,151.123884,-33.904178,2026-10-02
+8115,Gosford High School,Secondary School,1058.1,151.341388,-33.417183,2026-10-02
+8120,Hornsby Girls High School,Secondary School,720.3,151.101083,-33.706627,2026-10-02
+8121,Hurlstone Agricultural High School,Secondary School,933.6,150.893629,-33.970383,2026-10-02
+8132,North Sydney Boys High School,Secondary School,933,151.207734,-33.829336,2026-10-02
+8133,North Sydney Girls High School,Secondary School,911.3,151.203447,-33.830244,2026-10-02
+8135,Parramatta High School,Secondary School,1128,150.996083,-33.817883,2026-10-02
+8136,St George Girls High School,Secondary School,907.9,151.136035,-33.959073,2026-10-02
+8137,Sydney Boys High School,Secondary School,1201.6,151.218904,-33.892165,2026-10-02
+8138,Sydney Girls High School,Secondary School,929,151.220371,-33.894191,2026-10-02
+8141,Sydney Technical High School,Secondary School,905.6,151.114342,-33.963075,2026-10-02
+8147,Conservatorium High School,Secondary School,153,151.21408,-33.863407,2026-10-02
+8150,Katoomba High School,Secondary School,862,150.314399,-33.727402,2026-10-02
+8151,Homebush Boys High School,Secondary School,891,151.077132,-33.866059,2026-10-02
+8152,Burwood Girls High School,Secondary School,1080.4,151.113036,-33.875318,2026-10-02
+8159,Willoughby Girls High School,Secondary School,1035.2,151.199957,-33.803128,2026-10-02
+8163,Penrith High School,Secondary School,927.8,150.706537,-33.756721,2026-10-02
+8166,Wyong High School,Secondary School,672.2,151.417918,-33.281328,2026-10-02
+8169,Strathfield Girls High School,Secondary School,1061.3,151.084571,-33.873901,2026-10-02
+8176,Liverpool Girls High School,Secondary School,704,150.931475,-33.917986,2026-10-02
+8178,Richmond High School,Secondary School,750,150.746715,-33.600535,2026-10-02
+8180,Campbelltown Performing Arts High School,Secondary School,892.8,150.822959,-34.060108,2026-10-02
+8184,Punchbowl Boys High School,Secondary School,472,151.052954,-33.924027,2026-10-02
+8186,Liverpool Boys High School,Secondary School,548.9,150.93154,-33.917157,2026-10-02
+8187,East Hills Girls Technology High School,Secondary School,758.6,150.992016,-33.956866,2026-10-02
+8206,East Hills Boys High School,Secondary School,843,150.994115,-33.957229,2026-10-02
+8207,Hunters Hill High School,Secondary School,789.4,151.148509,-33.832696,2026-10-02
+8208,Cheltenham Girls High School,Secondary School,1432.4,151.074096,-33.75627,2026-10-02
+8209,Cabramatta High School,Secondary School,1622.4,150.928913,-33.901422,2026-10-02
+8211,Normanhurst Boys High School,Secondary School,752,151.101466,-33.721475,2026-10-02
+8213,Birrong Boys High School,Secondary School,366,151.025024,-33.894047,2026-10-02
+8215,Picton High School,Secondary School,1182,150.608418,-34.194467,2026-10-02
+8217,Camden High School,Secondary School,911.6,150.6777325,-34.0793994,2026-10-02
+8221,Kingsgrove North High School,Secondary School,1020,151.097628,-33.93398,2026-10-02
+8222,Asquith High School,Secondary School,668.2,151.11275,-33.689716,2026-10-02
+8223,Bass High School,Secondary School,871.2,150.989379,-33.897941,2026-10-02
+8224,Blacktown Girls High School,Secondary School,1079.1,150.910792,-33.761976,2026-10-02
+8225,Marsden High School,Secondary School,1295.1,151.092237,-33.812981,2026-10-02
+8227,Merrylands High School,Secondary School,851.8,150.96957,-33.840847,2026-10-02
+8229,Northmead Creative and Performing Arts High School,Secondary School,1238.6,150.999661,-33.788092,2026-10-02
+8230,Port Hacking High School,Secondary School,950,151.097257,-34.032395,2026-10-02
+8231,Seven Hills High School,Secondary School,480,150.94487,-33.762705,2026-10-02
+8232,Chatswood High School,Secondary School,2145.8,151.175324,-33.800013,2026-10-02
+8235,James Ruse Agricultural High School,Secondary School,856.9,151.043204,-33.780624,2026-10-02
+8236,Blakehurst High School,Secondary School,1013,151.11324,-33.980406,2026-10-02
+8240,Caringbah High School,Secondary School,900.4,151.120399,-34.034901,2026-10-02
+8243,Riverside Girls High School,Secondary School,660.1,151.141467,-33.840079,2026-10-02
+8244,Blacktown Boys High School,Secondary School,898,150.912543,-33.762057,2026-10-02
+8245,Hornsby High School,Secondary School,541.8,151.103016,-33.692276,2026-10-02
+8246,Heathcote High School,Secondary School,632.6,151.01441,-34.082295,2026-10-02
+8247,Kingsgrove High School,Secondary School,672,151.101653,-33.948519,2026-10-02
+8249,Matraville Sports High School,Secondary School,486.2,151.244548,-33.964747,2026-10-02
+8250,Sir Joseph Banks High School,Secondary School,945,151.020907,-33.939698,2026-10-02
+8252,Strathfield South High School,Secondary School,549,151.071235,-33.885382,2026-10-02
+8253,Auburn Girls High School,Secondary School,853.3,151.033681,-33.84288,2026-10-02
+8254,Bankstown Girls High School,Secondary School,551,151.032138,-33.920754,2026-10-02
+8255,Beverly Hills Girls High School,Secondary School,1003,151.078627,-33.948461,2026-10-02
+8260,Bonnyrigg High School,Secondary School,1641.2,150.893167,-33.894982,2026-10-02
+8261,Cronulla High School,Secondary School,1205,151.159056,-34.038439,2026-10-02
+8262,Ingleburn High School,Secondary School,781.8,150.87152,-34.005121,2026-10-02
+8263,J J Cahill Memorial High School,Secondary School,298,151.201835,-33.927435,2026-10-02
+8265,Sefton High School,Secondary School,1121,151.008799,-33.879538,2026-10-02
+8268,Glenwood High School,Secondary School,1506.2,150.937429,-33.733029,2026-10-02
+8269,Chester Hill High School,Secondary School,1056,150.995411,-33.874032,2026-10-02
+8271,Lucas Heights Community School,Central/Community School,795.4,151.004817,-34.035778,2026-10-02
+8273,Cecil Hills High School,Secondary School,1340.4,150.852043,-33.895704,2026-10-02
+8274,Tuggerah Lakes Secondary College Tumbi Umbi Campus,Secondary School,802,151.454054,-33.395596,2026-10-02
+8276,Glenmore Park High School,Secondary School,956,150.672564,-33.791012,2026-10-02
+8277,Wyndham College,Secondary School,375.5,150.8795746,-33.72608922,2026-10-02
+8278,Wadalba Community School,Central/Community School,1412.2,151.467432,-33.264769,2026-10-02
+8279,Lake Munmorah High School,Secondary School,610,151.573699,-33.189743,2026-10-02
+8284,"Georges River College, Oatley Senior Campus",Secondary School,739.6,151.081391,-33.977001,2026-10-02
+8286,Mount Annan High School,Secondary School,876,150.760739,-34.057371,2026-10-02
+8288,Central Sydney Intensive English High School,Secondary School,142,151.19308,-33.900033,2026-10-02
+8290,John Edmondson High School,Secondary School,1084,150.843226,-33.946,2026-10-02
+8291,Rouse Hill High School,Secondary School,1313.6,150.9317,-33.6864,2026-10-02
+8292,Kariong Mountains High School,Secondary School,419.2,151.296076,-33.43039,2026-10-02
+8320,Kogarah High School,Secondary School,787,151.134227,-33.961161,2026-10-02
+8326,Mosman High School,Secondary School,1085.6,151.243425,-33.829677,2026-10-02
+8372,The Forest High School,Secondary School,767.8,151.24444,-33.75651,2026-10-02
+8374,Brisbane Water Secondary College Woy Woy Campus,Secondary School,639.4,151.323582,-33.492687,2026-10-02
+8377,Picnic Point High School,Secondary School,865,151.011457,-33.964344,2026-10-02
+8379,Pittwater High School,Secondary School,875.6,151.302664,-33.668259,2026-10-02
+8381,Bankstown Senior College,Secondary School,544.4,151.022569,-33.929121,2026-10-02
+8382,Castle Hill High School,Secondary School,1842,150.999534,-33.726635,2026-10-02
+8383,Nepean Creative and Performing Arts High School,Secondary School,802,150.668882,-33.747745,2026-10-02
+8384,Westfields Sports High School,Secondary School,1537.8,150.920432,-33.866933,2026-10-02
+8385,Greystanes High School,Secondary School,1090,150.940352,-33.812495,2026-10-02
+8386,Gymea Technology High School,Secondary School,552.8,151.08338,-34.029985,2026-10-02
+8393,Canley Vale High School,Secondary School,1651,150.951658,-33.884644,2026-10-02
+8394,Miller High School,Secondary School,816,150.881139,-33.923589,2026-10-02
+8395,Pendle Hill High School,Secondary School,692,150.962194,-33.793877,2026-10-02
+8396,Windsor High School,Secondary School,640.6,150.833554,-33.618653,2026-10-02
+8397,Ashcroft High School,Secondary School,701,150.897272,-33.920414,2026-10-02
+8398,Condell Park High School,Secondary School,876,151.001755,-33.923579,2026-10-02
+8399,Doonside High School,Secondary School,715,150.874186,-33.754708,2026-10-02
+8400,St Ives High School,Secondary School,1750.1,151.167078,-33.740147,2026-10-02
+8401,Lurnea High School,Secondary School,694.6,150.896043,-33.941743,2026-10-02
+8403,Mitchell High School,Secondary School,875,150.915971,-33.784795,2026-10-02
+8404,Endeavour Sports High School,Secondary School,1377.6,151.117251,-34.030083,2026-10-02
+8405,Erina High School,Secondary School,780.6,151.381503,-33.440279,2026-10-02
+8408,"Georges River College, Peakhurst Campus",Secondary School,758,151.056013,-33.966882,2026-10-02
+8412,The Hills Sports High School,Secondary School,913,150.93883400000001,-33.782184,2026-10-02
+8415,Ryde Secondary College,Secondary School,1486.3,151.119176,-33.813316,2026-10-02
+8416,Ku-ring-gai High School,Secondary School,535.6,151.153809,-33.690973,2026-10-02
+8420,Evans High School,Secondary School,815,150.889725,-33.786512,2026-10-02
+8422,Killarney Heights High School,Secondary School,968.6,151.215215,-33.771925,2026-10-02
+8424,Holroyd High School,Secondary School,547,150.951137,-33.832906,2026-10-02
+8432,Engadine High School,Secondary School,1062.6,151.019341,-34.062141,2026-10-02
+8433,Woolooware High School,Secondary School,788,151.145595,-34.039811,2026-10-02
+8435,Turramurra High School,Secondary School,985.8,151.114786,-33.757307,2026-10-02
+8436,Granville South Creative and Performing Arts High School,Secondary School,733,150.997598,-33.860626,2026-10-02
+8437,Kirrawee High School,Secondary School,1185,151.073475,-34.04348,2026-10-02
+8438,Pennant Hills High School,Secondary School,1130.3,151.061087,-33.733692,2026-10-02
+8443,Colyton High School,Secondary School,764.9,150.797336,-33.777602,2026-10-02
+8446,Springwood High School,Secondary School,565.2,150.550608,-33.685057,2026-10-02
+8447,Carlingford High School,Secondary School,1771.5,151.050764,-33.765412,2026-10-02
+8454,Barrenjoey High School,Secondary School,859.5,151.333926,-33.63117,2026-10-02
+8456,Fairvale High School,Secondary School,1320,150.929459,-33.873614,2026-10-02
+8457,Killara High School,Secondary School,1800.4,151.174102,-33.756575,2026-10-02
+8458,Kingswood High School,Secondary School,1005,150.715263,-33.770416,2026-10-02
+8459,Chifley College Mount Druitt Campus,Secondary School,648,150.812884,-33.744657,2026-10-02
+8460,James Busby High School,Secondary School,544,150.874039,-33.908964,2026-10-02
+8463,Sylvania High School,Secondary School,750,151.103529,-34.017367,2026-10-02
+8464,Baulkham Hills High School,Secondary School,1222.3,150.991499,-33.750227,2026-10-02
+8465,Tuggerah Lakes Secondary College The Entrance Campus,Secondary School,754,151.476613,-33.371256,2026-10-02
+8467,Henry Kendall High School,Secondary School,789,151.334496,-33.420757,2026-10-02
+8473,Chifley College Senior Campus,Secondary School,499,150.829855,-33.769305,2026-10-02
+8476,Casula High School,Secondary School,1280,150.8937,-33.95123,2026-10-02
+8477,Kellyville High School,Secondary School,869,150.969921,-33.707777,2026-10-02
+8479,Davidson High School,Secondary School,789.4,151.205465,-33.74468,2026-10-02
+8481,Galston High School,Secondary School,570,151.042348,-33.660931,2026-10-02
+8484,Sydney Secondary College Balmain Campus,Secondary School,854,151.170052,-33.858506,2026-10-02
+8485,Hoxton Park High School,Secondary School,894.8,150.86162,-33.92,2026-10-02
+8488,Chifley College Dunheved Campus,Secondary School,586,150.783093,-33.749646,2026-10-02
+8493,Airds High School,Secondary School,542,150.827109,-34.086883,2026-10-02
+8496,Chifley College Shalvey Campus,Secondary School,391,150.80574,-33.730804,2026-10-02
+8497,James Meehan High School,Secondary School,394.6,150.892287,-33.988351,2026-10-02
+8498,Muirfield High School,Secondary School,835.8,151.022294,-33.764695,2026-10-02
+8499,Model Farms High School,Secondary School,1021,150.971394,-33.76943,2026-10-02
+8500,Girraween High School,Secondary School,781.7,150.944577,-33.79989,2026-10-02
+8501,Moorebank High School,Secondary School,992,150.958685,-33.925772,2026-10-02
+8504,Fort Street High School,Secondary School,916.4,151.1529,-33.890196,2026-10-02
+8506,Tempe High School,Secondary School,984.3,151.16094,-33.91975,2026-10-02
+8507,Sydney Secondary College Leichhardt Campus,Secondary School,784,151.159003,-33.879463,2026-10-02
+8511,Northern Beaches Secondary College Cromer Campus,Secondary School,1156,151.284453,-33.737765,2026-10-02
+8512,Narrabeen Sports High School,Secondary School,793.6,151.298401,-33.700941,2026-10-02
+8513,Brisbane Water Secondary College Umina Campus,Secondary School,787,151.308139,-33.507421,2026-10-02
+8514,Plumpton High School,Secondary School,1182,150.835498,-33.748126,2026-10-02
+8515,Gorokan High School,Secondary School,978.5,151.508233,-33.242182,2026-10-02
+8516,Cambridge Park High School,Secondary School,633,150.732892,-33.752164,2026-10-02
+8521,Elderslie High School,Secondary School,857,150.715295,-34.052603,2026-10-02
+8522,Blaxland High School,Secondary School,996.8,150.60859,-33.754247,2026-10-02
+8526,Colo High School,Secondary School,806.6,150.708204,-33.569359,2026-10-02
+8528,Chifley College Bidwill Campus,Secondary School,720,150.827271,-33.733854,2026-10-02
+8530,Newtown High School of Performing Arts,Secondary School,1144.2,151.178338,-33.899534,2026-10-02
+8531,St Johns Park High School,Secondary School,921.2,150.892002,-33.873073,2026-10-02
+8532,Leumeah High School,Secondary School,691,150.84737,-34.054339,2026-10-02
+8533,Terrigal High School,Secondary School,847,151.429342,-33.442167,2026-10-02
+8535,Concord High School,Secondary School,1205,151.109271,-33.864062,2026-10-02
+8539,Sydney Secondary College Blackwattle Bay Campus,Secondary School,786.9,151.188357,-33.875142,2026-10-02
+8540,Marrickville High School,Secondary School,624.2,151.155995,-33.905781,2026-10-02
+8544,Lisarow High School,Secondary School,727.6,151.370354,-33.385327,2026-10-02
+8545,South Sydney High School,Secondary School,793.8,151.234397,-33.944154,2026-10-02
+8547,Northlakes High School,Secondary School,789,151.513395,-33.216762,2026-10-02
+8550,Fairfield High School,Secondary School,1123,150.958647,-33.865214,2026-10-02
+8551,Sarah Redfern High School,Secondary School,652,150.85088,-34.026782,2026-10-02
+8552,Crestwood High School,Secondary School,1020.9,150.975672,-33.743607,2026-10-02
+8553,Macquarie Fields High School,Secondary School,1089,150.884901,-33.996784,2026-10-02
+8555,Rose Bay Secondary College,Secondary School,1125.1,151.276121,-33.878347,2026-10-02
+8556,Alexandria Park Community School,Central/Community School,1311.6,151.196518,-33.901164,2026-10-02
+8559,Jamison High School,Secondary School,833.8,150.698118,-33.775335,2026-10-02
+8560,Prairiewood High School,Secondary School,1283.9,150.901709,-33.85948,2026-10-02
+8563,Tuggerah Lakes Secondary College Berkeley Vale Campus,Secondary School,851,151.424751,-33.341698,2026-10-02
+8564,Holsworthy High School,Secondary School,693,150.95232,-33.955528,2026-10-02
+8565,Hawkesbury High School,Secondary School,417.3,150.798039,-33.559541,2026-10-02
+8567,Northern Beaches Secondary College Manly Campus,Secondary School,764.9,151.281355,-33.762388,2026-10-02
+8568,Northern Beaches Secondary College Freshwater Senior Campus,Secondary School,646.3,151.279975,-33.76751,2026-10-02
+8569,Eagle Vale Sports High School,Secondary School,662,150.803543,-34.039942,2026-10-02
+8570,Ambarvale High School,Secondary School,807,150.801938,-34.099984,2026-10-02
+8571,St Clair High School,Secondary School,716.8,150.786794,-33.794217,2026-10-02
+8573,Winmalee High School,Secondary School,698,150.615138,-33.676047,2026-10-02
+8575,Robert Townson High School,Secondary School,741.8,150.817995,-34.01533,2026-10-02
+8580,Cranebrook High School,Secondary School,871,150.709812,-33.721662,2026-10-02
+8582,Bossley Park High School,Secondary School,1104.9,150.875379,-33.870958,2026-10-02
+8583,Menai High School,Secondary School,1062,151.023851,-34.002904,2026-10-02
+8584,Elizabeth Macarthur High School,Secondary School,1399.2,150.740091,-34.057072,2026-10-02
+8585,Kincumber High School,Secondary School,1002,151.382516,-33.464894,2026-10-02
+8587,Sydney Distance Education High School,Secondary School,560.8,151.22098,-33.871053,2026-10-02
+8588,NSW School of Languages,Secondary School,NA,151.150285,-33.894807,2026-10-02
+8589,Thomas Reddall High School,Secondary School,488,150.801488,-34.082029,2026-10-02
+8590,Erskine Park High School,Secondary School,834.2,150.802962,-33.807899,2026-10-02
+8591,Narara Valley High School,Secondary School,628.8,151.334064,-33.398422,2026-10-02
+8592,Cherrybrook Technology High School,Secondary School,2097.4,151.037583,-33.719852,2026-10-02
+8594,Quakers Hill High School,Secondary School,925,150.89645,-33.729813,2026-10-02
+8599,Bradfield College,Secondary School,292.1,151.188457,-33.820468,2026-10-02
+8600,Secondary College of Languages,Other School,NA,151.0086802,-33.8137843,2026-10-02
+8804,Belmore Boys High School,Secondary School,614,151.085575,-33.910796,2026-10-02
+8806,Canterbury Girls High School,Secondary School,720,151.122631,-33.907264,2026-10-02
+8811,Granville Boys High School,Secondary School,832.5,151.008817,-33.834618,2026-10-02
+8813,"Georges River College, Hurstville Campus",Secondary School,267,151.109808,-33.962826,2026-10-02
+8822,Macarthur Girls High School,Secondary School,996.6,151.012499,-33.813086,2026-10-02
+8831,Northern Beaches Secondary College Mackellar Girls Campus,Secondary School,1021,151.272401,-33.782109,2026-10-02
+8832,Ashfield Boys High School,Secondary School,751,151.129219,-33.889547,2026-10-02
+8833,Dulwich High School of Visual Arts and Design,Secondary School,803.6,151.144871,-33.904038,2026-10-02
+8851,Northern Beaches Secondary College Balgowlah Boys Campus,Secondary School,1099.4,151.254607,-33.796405,2026-10-02
+8852,The Jannali High School,Secondary School,925,151.061927,-34.021612,2026-10-02
+8854,Birrong Girls High School,Secondary School,726,151.025708,-33.88948,2026-10-02
+8857,"Georges River College, Penshurst Campus",Secondary School,488,151.08601,-33.964071,2026-10-02
+8870,St Marys Senior High School,Secondary School,925.1,150.770024,-33.763119,2026-10-02
+8884,Epping Boys High School,Secondary School,1491.4,151.099645,-33.769453,2026-10-02
+8888,Wiley Park Girls High School,Secondary School,588,151.066545,-33.924357,2026-10-02
+8892,Arthur Phillip High School,Secondary School,1636,151.007474,-33.815715,2026-10-02
+8905,Cumberland High School,Secondary School,1171.9,151.036898,-33.785205,2026-10-02
+8907,Riverstone High School,Secondary School,861,150.875744,-33.678883,2026-10-02
+8908,Rooty Hill High School,Secondary School,1108.8,150.838148,-33.770841,2026-10-02
+8910,Cammeraygal High School,Secondary School,905,151.20304,-33.832162,2026-10-02
+8911,The Ponds High School,Secondary School,2318,150.89764,-33.7033,2026-10-02
+8912,Aurora College,Secondary School,NA,151.1607,-33.7897,2026-10-02
+8913,Inner Sydney High School,Secondary School,1159.6,151.20603,-33.889372,2026-10-02
+8914,Richmond Agricultural Centre,Secondary School,11,150.753568,-33.614026,2026-10-02
+8916,Oran Park High School,Secondary School,1579,150.736305,-33.998988,2026-10-02
+8918,Wentworth Point High School,Secondary School,188,151.08074,-33.82399,2026-10-02
+8921,Melonba High School,Secondary School,704,150.802768,-33.697399,2026-10-02
+8926,Randwick High School,Secondary School,1460,151.23944,-33.921832,2026-10-02
+8927,Gledswood Hills High School,Secondary School,87,150.769597,-34.022494,2026-10-02
+8933,Bayside High School,Secondary School,NA,151.1374145,-33.967395499999995,2026-10-02
+8935,Box Hill High School,Secondary School,NA,150.898968,-33.6457,2026-10-02
