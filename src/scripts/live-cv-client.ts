@@ -223,6 +223,16 @@ function attachLiveCv(root: HTMLElement) {
     }, refreshMs);
   };
   retry.addEventListener('click', () => { void refresh(true); });
+  // Recheck the CV when the corrected offline worker takes control.
+  if ('serviceWorker' in navigator) {
+    void navigator.serviceWorker.getRegistration('/').then(registration => registration?.update()).catch(() => undefined);
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (started) void (async () => {
+        await inFlight;
+        await refresh(true);
+      })();
+    });
+  }
   window.document.addEventListener('visibilitychange', () => {
     if (started && window.document.visibilityState === 'visible') void refresh();
   });
