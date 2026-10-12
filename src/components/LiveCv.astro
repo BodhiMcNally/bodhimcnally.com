@@ -1,0 +1,93 @@
+---
+import { liveCv } from '../../config/live-cv.mjs';
+
+interface Props {
+  cv: {
+    previewPages: readonly string[];
+    previewDimensions: readonly { width: number; height: number }[];
+  };
+}
+const { cv } = Astro.props;
+---
+
+<section
+  class="document-section"
+  id="curriculum-vitae"
+  aria-labelledby="cv-title"
+  data-live-cv
+  data-cv-endpoint={liveCv.endpoint}
+  data-cv-pdfjs={liveCv.pdfjsBase}
+  data-cv-refresh-ms={liveCv.cacheSeconds * 1000}
+>
+  <div class="container">
+    <div class="document-panel">
+      <div>
+        <h2 id="cv-title">Curriculum vitae</h2>
+        <p>My academic curriculum vitae.</p>
+      </div>
+      <div class="document-panel__links">
+        <a class="button" href={liveCv.driveHref} target="_blank" rel="noreferrer">View on Google Drive</a>
+        <a class="text-link" href={`${liveCv.endpoint}?download=1`} download={liveCv.filename}>Download PDF</a>
+      </div>
+    </div>
+
+    <section class="cv-preview" aria-labelledby="cv-preview-title">
+      <h3 id="cv-preview-title" class="visually-hidden">Curriculum vitae preview</h3>
+      <div class="cv-loading-message" data-cv-message hidden>
+        <p data-cv-status role="status" aria-live="polite">Loading the latest CV…</p>
+        <button class="text-link" type="button" data-cv-retry hidden>Try again</button>
+      </div>
+      <noscript><p>These are the saved preview pages. View the latest PDF on Google Drive using the link above.</p></noscript>
+      <ol class="cv-pages" data-cv-pages>
+        {cv.previewPages.map((page, index) => (
+          <li>
+            <img
+              src={page}
+              alt={`Page ${index + 1} of Bodhi McNally's curriculum vitae (saved preview)`}
+              width={cv.previewDimensions[index]?.width ?? 1360}
+              height={cv.previewDimensions[index]?.height ?? 1760}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+</section>
+
+<script>
+  import { initialiseLiveCv } from '../scripts/live-cv-client';
+  initialiseLiveCv();
+</script>
+
+<style>
+  .cv-loading-message {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .cv-loading-message[hidden] { display: none; }
+  .cv-loading-message p { margin: 0; }
+  .cv-loading-message button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+  }
+  .cv-loading-message button[hidden] { display: none; }
+  :global([data-live-cv] .cv-page-placeholder) {
+    display: grid;
+    place-items: center;
+    color: #6f625b;
+    background: #fff;
+    font-size: 0.9rem;
+  }
+  :global([data-live-cv] .cv-page-error) { padding: 1rem; color: var(--muted); }
+</style>

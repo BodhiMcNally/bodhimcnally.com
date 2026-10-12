@@ -22,5 +22,10 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/cv.mjs": {
+      "maxDuration": 30
+    }
+  }
 }

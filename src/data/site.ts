@@ -35,7 +35,7 @@ export const site = {
     'My developing research interests are in academic urology, urological oncology, robotic and minimally invasive surgery, surgical outcomes, and the use of clinical data to study treatment selection, perioperative outcomes and patient recovery.',
   cv: {
     driveHref: 'https://drive.google.com/file/d/15gHFVTP9Cgdh4T-KLPsUnEmfxF7kbx50/view?usp=drivesdk',
-    downloadHref: '/cv/Bodhi_McNally_Master_CV.pdf',
+    downloadHref: '/api/cv?download=1',
     previewPages: cvPages.pages,
     previewDimensions: cvPages.dimensions,
     updated: 'September 2026',

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import Portrait from '@/components/Portrait.astro';
+import LiveCv from '@/components/LiveCv.astro';
 import { site } from '@/data/site';
 ---
 
@@ -57,40 +58,5 @@ import { site } from '@/data/site';
     </div>
   </section>
 
-  <section class="document-section" id="curriculum-vitae" aria-labelledby="cv-title">
-    <div class="container">
-      <div class="document-panel">
-        <div>
-          <h2 id="cv-title">Curriculum vitae</h2>
-          <p>My current academic CV, updated {site.cv.updated}.</p>
-        </div>
-        <div class="document-panel__links">
-          <a class="button" href={site.cv.driveHref} target="_blank" rel="noreferrer">
-            View on Google Drive
-          </a>
-          <a class="text-link" href={site.cv.downloadHref} download>Download PDF</a>
-        </div>
-      </div>
-
-      <section class="cv-preview" aria-labelledby="cv-preview-title">
-        <h3 id="cv-preview-title" class="visually-hidden">Curriculum vitae preview</h3>
-        <ol class="cv-pages">
-          {
-            site.cv.previewPages.map((page, index) => (
-              <li>
-                <img
-                  src={page}
-                  alt={`Page ${index + 1} of Bodhi McNally's curriculum vitae`}
-                  width={site.cv.previewDimensions[index]?.width ?? 1360}
-                  height={site.cv.previewDimensions[index]?.height ?? 1760}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                />
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-    </div>
-  </section>
+  <LiveCv cv={site.cv} />
 </BaseLayout>

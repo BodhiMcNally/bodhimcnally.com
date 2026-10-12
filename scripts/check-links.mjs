@@ -69,6 +69,7 @@ for (const htmlFile of htmlFiles) {
     }
 
     const resolved = new URL(href, `https://bodhimcnally.com${route}`);
+    if (resolved.pathname === '/api/cv' && await exists(path.join(projectRoot, 'api/cv.mjs'))) continue;
     const candidates = candidatesForPath(resolved.pathname);
     const matchingFile = (await Promise.all(candidates.map(exists))).findIndex(Boolean);
 
