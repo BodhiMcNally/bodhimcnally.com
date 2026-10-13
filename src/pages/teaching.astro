@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import { site } from '@/data/site';
@@ -10,42 +11,28 @@ const universityProfile = site.profiles.find((profile) => profile.label === 'Uni
   title="Teaching"
   description="Bodhi McNally teaches undergraduate data science and statistics at the University of Sydney, with an emphasis on reasoning, interpretation and reproducibility."
 >
-  <PageHeader title="Teaching" />
+  <PageHeader title="Teaching" cmsTitle="copy-a212baea553ebbcd" />
 
   <section class="teaching-introduction container">
-    <p>
-      I work as a Casual Academic in the School of Mathematics and Statistics at the University of Sydney, teaching undergraduate data science and statistics.
-    </p>
+    <EditableCopy copyId="copy-69d0b182adfe4ae7" as="p" />
     {universityProfile && <a class="arrow-link" href={universityProfile.href}>University teaching profile</a>}
   </section>
 
   <section class="reading-section" aria-labelledby="philosophy-title">
     <div class="reading-section__inner container">
-      <h2 id="philosophy-title">Teaching philosophy</h2>
+      <EditableCopy copyId="copy-08d73641c15fca4e" as="h2" id="philosophy-title" />
       <div class="teaching-philosophy">
-        <p>
-          My learning and teaching philosophy is grounded in the belief that students learn most effectively when they are active participants in the learning process rather than passive recipients of information.
-        </p>
+        <EditableCopy copyId="copy-119c3ccd5401f2b3" as="p" />
 
-        <p>
-          When I first arrived at university, I quickly discovered that success in quantitative disciplines required more than simply attending lectures and tutorials. Data science, statistics and mathematics can be intimidating subjects, and many students approach them believing that they are “not mathematical people”. Early in my degree, I often found myself focusing on individual formulas, coding functions or assessment tasks without fully understanding how they connected to the broader discipline or to real-world problems.
-        </p>
+        <EditableCopy copyId="copy-d7ec9451ca4abf3a" as="p" />
 
-        <p>
-          I often think about learning as the difference between shopping at Aldi and shopping at an Apple Store. At Aldi, products are stacked on pallets, minimally presented, and customers are expected to work things out for themselves. The experience is efficient, but largely transactional. By contrast, Apple Stores are designed around engagement. Staff guide customers through products, explain how different components work together and help them understand the broader ecosystem. The experience is educational as much as it is transactional.
-        </p>
+        <EditableCopy copyId="copy-b8ef5f788c254e20" as="p" />
 
-        <p>
-          As an educator, I strive to create the “Apple Store” experience for my students. My goal is not simply to teach statistical methods, programming techniques or mathematical concepts. Rather, I aim to help students understand how these ideas connect to one another, how they can be applied to meaningful problems and why they matter beyond the classroom. Whether teaching hypothesis testing in an interdisciplinary science unit, data wrangling in an intensive course or introductory data science to large first-year cohorts, I seek to move beyond procedural knowledge and foster genuine understanding.
-        </p>
+        <EditableCopy copyId="copy-b3f96489a8f5e178" as="p" />
 
-        <p>
-          This philosophy has naturally led me towards Students-as-Partners initiatives and curriculum development work. I believe students are not merely consumers of education but valuable contributors to it. Through curriculum review, assessment redesign and educational scholarship, I have sought to create opportunities for students to influence and improve their own learning experiences. Feedback is therefore central to my practice, not only as a mechanism for supporting student learning, but also as a means of continuously improving my own teaching.
-        </p>
+        <EditableCopy copyId="copy-6521975e0b77de21" as="p" />
 
-        <p>
-          Ultimately, my goal as an educator is to help students develop confidence, curiosity and independence. By creating supportive learning environments, encouraging active participation and connecting concepts to authentic problems, I hope to equip students with the skills and mindset required for lifelong learning long after they leave the classroom.
-        </p>
+        <EditableCopy copyId="copy-523f39408748334e" as="p" />
       </div>
     </div>
   </section>
@@ -54,8 +41,8 @@ const universityProfile = site.profiles.find((profile) => profile.label === 'Uni
     <div class="container">
       <div class="document-panel">
         <div>
-          <h2 id="portfolio-title">Teaching portfolio</h2>
-          <p>My teaching philosophy, experience, curriculum work and educational scholarship.</p>
+          <EditableCopy copyId="copy-282ae82ed7eea509" as="h2" id="portfolio-title" />
+          <EditableCopy copyId="copy-323ccd230512bbdb" as="p" />
         </div>
         <a class="button" href={site.teachingPortfolio.href} target="_blank" rel="noreferrer">View teaching portfolio</a>
       </div>
@@ -65,26 +52,18 @@ const universityProfile = site.profiles.find((profile) => profile.label === 'Uni
   <section class="student-resources-section" aria-labelledby="student-resources-title">
     <div class="container student-resources-section__inner">
       <div>
-        <h2 id="student-resources-title">Student resources</h2>
-        <p>
-          I have developed the resources on this site to supplement my classroom teaching. They are independently prepared and are not affiliated with or endorsed by the University of Sydney.
-        </p>
+        <EditableCopy copyId="copy-52d991952e65dd8d" as="h2" id="student-resources-title" />
+        <EditableCopy copyId="copy-52b383edeea99b2d" as="p" />
         <a class="arrow-link" href="/resources/">Go to the resource library</a>
       </div>
 
       <div class="resource-rationale">
-        <h3>Why I publish material here</h3>
+        <EditableCopy copyId="copy-59146d041eb03e04" as="h3" />
         <ul>
-          <li>
-            I can share code after tutorials and laboratories so students can concentrate on the explanation while I am demonstrating it. A student who encounters a bug during a live demonstration can otherwise spend the rest of the discussion trying to solve that bug and miss what follows.
-          </li>
-          <li>
-            I can collect additional explanations, examples and useful links in one place for students who want to revisit a concept or approach it from another direction.
-          </li>
+          <EditableCopy copyId="copy-dd101c53be416718" as="li" />
+          <EditableCopy copyId="copy-6320824e63e3b9c5" as="li" />
         </ul>
-        <p class="small-print">
-          All content is provided for educational purposes. I do my best to keep it accurate and up to date, but students should use it alongside the official materials and guidance for their course.
-        </p>
+        <EditableCopy copyId="copy-0969348ddf1f49e7" as="p" class="small-print" />
       </div>
     </div>
   </section>

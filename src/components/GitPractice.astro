@@ -1,6 +1,9 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="git-practice" data-git-practice aria-labelledby="git-practice-title">
   <div class="git-practice__header">
-    <div><p class="eyebrow">Safe practice terminal</p><h2 id="git-practice-title">Git and shell sandbox</h2></div>
+    <div><EditableCopy copyId="copy-31120731af0c66fa" as="p" class="eyebrow" /><EditableCopy copyId="copy-6d727078bfccc8c0" as="h2" id="git-practice-title" /></div>
     <button type="button" data-git-reset>Reset repository</button>
   </div>
   <div class="git-practice__workspace">
@@ -9,20 +12,20 @@
         <p><span>$</span> Start with <code>git status</code>, or type <code>help</code>.</p>
       </div>
       <form class="git-practice__prompt" data-git-form>
-        <label class="visually-hidden" for="git-command">Git or shell command</label>
+        <EditableCopy copyId="copy-cc094b43ebf62acf" as="label" class="visually-hidden" for="git-command" />
         <span aria-hidden="true">$</span>
         <input id="git-command" autocomplete="off" spellcheck="false" placeholder="git status" data-git-input>
         <button type="submit">Run</button>
       </form>
     </div>
     <aside class="git-practice__state" aria-label="Repository state">
-      <div><p>Branch</p><strong data-git-branch>main</strong></div>
-      <div><p>Working tree</p><ul data-git-working></ul></div>
-      <div><p>Staging area</p><ul data-git-staged></ul></div>
-      <div><p>Commit history</p><ol data-git-history></ol></div>
+      <div><EditableCopy copyId="copy-9cbb8e55711f0542" as="p" /><strong data-git-branch>main</strong></div>
+      <div><EditableCopy copyId="copy-47214da0897546c4" as="p" /><ul data-git-working></ul></div>
+      <div><EditableCopy copyId="copy-68a107a0a25a2502" as="p" /><ul data-git-staged></ul></div>
+      <div><EditableCopy copyId="copy-33b4d82351aee5bc" as="p" /><ol data-git-history></ol></div>
     </aside>
   </div>
-  <p class="git-practice__note">This is an isolated teaching model of a filesystem and Git repository. It does not access your computer, execute native Bash, contact GitHub or use credentials.</p>
+  <EditableCopy copyId="copy-2baaf9c4f70e4f9f" as="p" class="git-practice__note" />
 </section>
 
 <script>

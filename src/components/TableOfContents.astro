@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import type { MarkdownHeading } from 'astro';
 
 interface Props {
@@ -12,7 +13,7 @@ const visibleHeadings = headings.filter((heading) => heading.depth === 2);
 {
   visibleHeadings.length > 1 && (
     <nav class="toc" aria-label="On this page">
-      <p class="toc__title">On this page</p>
+      <EditableCopy copyId="copy-16f050972ba68912" as="p" class="toc__title" />
       <ol data-toc-list>
         {visibleHeadings.map((heading) => (
           <li><a href={`#${heading.slug}`} data-toc-link={heading.slug}>{heading.text}</a></li>

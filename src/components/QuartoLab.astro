@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 const presets = [
   {
     id: 'first-report',
@@ -217,22 +218,18 @@ const initialSource = presets[0]?.source ?? '';
 <section class="quarto-lab" aria-labelledby="quarto-lab-title" data-quarto-lab>
   <div class="quarto-lab__introduction">
     <div>
-      <p class="eyebrow">Interactive</p>
-      <h2 id="quarto-lab-title">QMD laboratory</h2>
+      <EditableCopy copyId="copy-17c36213f605848a" as="p" class="eyebrow" />
+      <EditableCopy copyId="copy-cad05adadedac591" as="h2" id="quarto-lab-title" />
     </div>
     <div>
-      <p>
-        Edit the source and watch the guided preview respond. It recognises the Quarto features taught in this lesson, but it is not the Quarto compiler and does not execute arbitrary code.
-      </p>
-      <p class="quarto-lab__note">
-        Use RStudio's <strong>Render</strong> button for the authoritative result. Runnable R examples later in this resource execute separately in your browser.
-      </p>
+      <EditableCopy copyId="copy-7fa26782c4aec351" as="p" />
+      <EditableCopy copyId="copy-686fc420070a95b6" as="p" class="quarto-lab__note" />
     </div>
   </div>
 
   <div class="quarto-lab__toolbar">
     <div class="quarto-lab__field">
-      <label for="quarto-example">Example</label>
+      <EditableCopy copyId="copy-d095483d296c9149" as="label" for="quarto-example" />
       <select id="quarto-example" data-quarto-example>
         {presets.map((preset) => <option value={preset.id}>{preset.label}</option>)}
       </select>
@@ -247,10 +244,10 @@ const initialSource = presets[0]?.source ?? '';
   <div class="quarto-lab__workspace">
     <section class="quarto-lab__pane quarto-lab__pane--source" aria-labelledby="quarto-source-title">
       <div class="quarto-lab__pane-header">
-        <h3 id="quarto-source-title">QMD source</h3>
+        <EditableCopy copyId="copy-b8868d6c33a5f2ba" as="h3" id="quarto-source-title" />
         <span>report.qmd</span>
       </div>
-      <label class="visually-hidden" for="quarto-source">Editable Quarto source</label>
+      <EditableCopy copyId="copy-5d69aa45b581c9cf" as="label" class="visually-hidden" for="quarto-source" />
       <textarea
         id="quarto-source"
         data-quarto-source
@@ -262,7 +259,7 @@ const initialSource = presets[0]?.source ?? '';
 
     <section class="quarto-lab__pane quarto-lab__pane--preview" aria-labelledby="quarto-preview-title">
       <div class="quarto-lab__pane-header">
-        <h3 id="quarto-preview-title">Guided HTML preview</h3>
+        <EditableCopy copyId="copy-399fff228d20e9d9" as="h3" id="quarto-preview-title" />
         <span data-quarto-status aria-live="polite">Preview ready</span>
       </div>
       <div class="quarto-preview" data-quarto-preview></div>

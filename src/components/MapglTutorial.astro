@@ -1,5 +1,8 @@
 ---
-import tutorial from '@/data/mapgl/tutorial.html?raw';
+import siteCopy from '@/data/site-copy.json';
+import { applyHtmlCopies } from '../../server/editor/markdown.mjs';
+import originalLesson from '@/data/mapgl/tutorial.html?raw';
+const tutorial = await applyHtmlCopies(originalLesson, siteCopy);
 ---
 
 <link rel="stylesheet" href="/resources/mapgl/runtime/mapgl.css" />

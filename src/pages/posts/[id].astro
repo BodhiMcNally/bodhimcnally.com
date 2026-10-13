@@ -1,0 +1,23 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+export async function getStaticPaths() {
+  return (await getCollection('updates', ({ data }) => !data.draft)).map(entry => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<BaseLayout title={entry.data.title} description={entry.data.summary} ogType="article" {...(entry.data.published ? { publishedTime: entry.data.published.toISOString() } : {})}>
+  <PageHeader title={entry.data.title} />
+  <article class="container standalone-post">
+    {entry.data.published && <p class="post-date">{entry.data.published.toLocaleDateString('en-AU', { dateStyle: 'long', timeZone: 'UTC' })}</p>}
+    {entry.data.source === 'linkedin' && entry.data.linkedinEmbedUrl && <iframe class="linkedin-embed" src={entry.data.linkedinEmbedUrl} title={`LinkedIn post: ${entry.data.title}`} loading="lazy" allowfullscreen />}
+    <EditableCopy copyId="copy-1e1ff88598d18aca" as="h2" class="visually-hidden" />
+    <div class="prose"><Content /></div>
+    {entry.data.linkedinUrl && <p><a href={entry.data.linkedinUrl} target="_blank" rel="noreferrer">View on LinkedIn</a></p>}
+    <EditableCopy copyId="copy-d85404dcc622b37f" as="p" />
+  </article>
+</BaseLayout>
+<style>.standalone-post{padding-bottom:5rem}.post-date{color:var(--muted)}.standalone-post .linkedin-embed{max-width:45rem}.standalone-post .prose{max-width:55rem}</style>

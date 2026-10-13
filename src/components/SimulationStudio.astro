@@ -1,10 +1,13 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="simulation-studio" data-simulation-studio aria-labelledby="simulation-title">
   <div class="simulation-studio__topbar">
     <div>
-      <p class="eyebrow">Browser laboratory</p>
-      <h2 id="simulation-title">Statistical simulation studio</h2>
+      <EditableCopy copyId="copy-ae14e96cb6fd929a" as="p" class="eyebrow" />
+      <EditableCopy copyId="copy-4c20767fd8ffe79f" as="h2" id="simulation-title" />
     </div>
-    <p>Calculations run on this device using a reproducible random seed.</p>
+    <EditableCopy copyId="copy-561f4b8b12cf70b4" as="p" />
   </div>
 
   <div class="simulation-tabs" role="tablist" aria-label="Choose an experiment">
@@ -38,7 +41,7 @@
           <input id="sampling-n" type="range" min="1" max="150" value="10" step="1" data-parameter="n" />
         </div>
         <div class="simulation-field">
-          <label for="sampling-distribution">Population distribution</label>
+          <EditableCopy copyId="copy-4a4c7a10bf96fbc9" as="label" for="sampling-distribution" />
           <select id="sampling-distribution" data-parameter="distribution">
             <option value="normal">Normal</option><option value="uniform">Uniform</option><option value="exponential" selected>Right-skewed exponential</option>
           </select>
@@ -59,7 +62,7 @@
           <input id="power-effect" type="range" min="0" max="1.5" value="0.4" step="0.05" data-parameter="effect" />
         </div>
         <div class="simulation-field">
-          <label for="power-alpha">Significance level</label>
+          <EditableCopy copyId="copy-c47141cde8c48d1b" as="label" for="power-alpha" />
           <select id="power-alpha" data-parameter="alpha">
             <option value="0.01">0.01</option><option value="0.05" selected>0.05</option><option value="0.1">0.10</option>
           </select>
@@ -71,7 +74,7 @@
       </section>
 
       <div class="simulation-seed">
-        <label for="simulation-seed">Random seed</label>
+        <EditableCopy copyId="copy-4e39d995c3128612" as="label" for="simulation-seed" />
         <input id="simulation-seed" type="number" value="2026" min="1" max="2147483646" data-seed />
       </div>
       <div class="simulation-primary-actions">
@@ -82,8 +85,8 @@
 
     <div class="simulation-output" aria-live="polite" aria-busy="false" data-simulation-output>
       <div class="simulation-summary" data-simulation-summary>
-        <p class="eyebrow">Result</p>
-        <p>Run the experiment to generate a result.</p>
+        <EditableCopy copyId="copy-b730f843605c850c" as="p" class="eyebrow" />
+        <EditableCopy copyId="copy-4e7211fd681df057" as="p" />
       </div>
       <div class="simulation-chart" data-simulation-chart aria-label="Simulation chart"></div>
       <p class="simulation-interpretation" data-simulation-interpretation></p>

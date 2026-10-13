@@ -1,0 +1,8 @@
+---
+import { renderEditorMarkdown, inlineParagraph } from '../../server/editor/markdown.mjs';
+interface Props { text: string; class?: string; }
+const html = await renderEditorMarkdown(Astro.props.text);
+const paragraph = inlineParagraph(html);
+const Tag = paragraph === null ? 'div' : 'p';
+---
+<Tag class={Astro.props.class} set:html={paragraph ?? html} />

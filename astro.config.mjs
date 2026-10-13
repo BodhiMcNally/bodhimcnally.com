@@ -10,7 +10,7 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: page => !new URL(page).pathname.startsWith('/admin/') }) /* SITE_EDITOR_ADMIN_SITEMAP */],
   markdown: {
     processor: unified({
       remarkPlugins: [remarkMath],

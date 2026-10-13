@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import { getCollection } from 'astro:content';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -28,24 +29,17 @@ const offlineUrls = [
 >
   <PageHeader
     title="Resources"
-    introduction="Notes, code and additional material developed to supplement my classroom teaching."
-  />
+    introduction="Notes, code and additional material developed to supplement my classroom teaching." cmsTitle="copy-9181c8611d0a5753" />
 
   <section class="resource-purpose" aria-labelledby="resource-purpose-title">
     <div class="container resource-purpose__inner">
       <div>
-        <h2 id="resource-purpose-title">Why these resources are here</h2>
-        <p>
-          During coding demonstrations, students can lose the thread of an explanation when a local error draws their attention away from what is being discussed. Publishing the code after class means students can listen first and return to a working reference afterwards.
-        </p>
+        <EditableCopy copyId="copy-ec99c436c40702c7" as="h2" id="resource-purpose-title" />
+        <EditableCopy copyId="copy-198354d33c163c59" as="p" />
       </div>
       <div>
-        <p>
-          This library also provides additional explanations, worked examples and useful links for concepts that often need more than one pass. It is intended to supplement classroom teaching, not replace official course material.
-        </p>
-        <p class="small-print">
-          All content is provided for educational purposes. I do my best to keep it accurate and up to date, but students should check it against their course guidance and remain responsible for meeting applicable academic-integrity requirements.
-        </p>
+        <EditableCopy copyId="copy-6a5f78ca9747eec9" as="p" />
+        <EditableCopy copyId="copy-cf7ea3f18e8cf049" as="p" class="small-print" />
       </div>
     </div>
   </section>
@@ -53,18 +47,18 @@ const offlineUrls = [
   <section class="resource-workbench" aria-labelledby="workbench-title">
     <div class="container">
       <div class="section-heading">
-        <p class="eyebrow">Interactive tools</p>
-        <h2 id="workbench-title">Resource workbench</h2>
-        <p>Purpose-built tools for exploring statistical ideas and improving reproducible work. Calculations, notes and uploaded files remain in your browser.</p>
+        <EditableCopy copyId="copy-62e53e63dc66d386" as="p" class="eyebrow" />
+        <EditableCopy copyId="copy-c3721e1365cfff9e" as="h2" id="workbench-title" />
+        <EditableCopy copyId="copy-667ce99401ab31ef" as="p" />
       </div>
       <ol class="workbench-list">
-        <li><a href="/resources/lab/"><span>01</span><div><h3>Statistical simulation studio</h3><p>Change sample size, confidence level, effect size and distribution; rerun seeded simulations and export the result.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/prediction-lab/"><span>02</span><div><h3>Clinical prediction laboratory</h3><p>Translate diagnostic accuracy into patient counts, predictive values, likelihood ratios and net benefit.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/interpretation-clinic/"><span>03</span><div><h3>Statistical interpretation clinic</h3><p>Practise interpreting coefficients, odds ratios, interactions and p-values with immediate feedback.</p></div><strong aria-hidden="true">→</strong></a></li>
-        <li><a href="/resources/quarto-documents-in-rstudio/"><span>04</span><div><h3>Quarto document workshop</h3><p>Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project.</p></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/lab/"><span>01</span><div><EditableCopy copyId="copy-066d55cacddc2718" as="h3" /><EditableCopy copyId="copy-59007bfc6035c501" as="p" /></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/prediction-lab/"><span>02</span><div><EditableCopy copyId="copy-a47e99ff6c620dfa" as="h3" /><EditableCopy copyId="copy-3723167bccf835db" as="p" /></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/interpretation-clinic/"><span>03</span><div><EditableCopy copyId="copy-68fdb82bc5d8e110" as="h3" /><EditableCopy copyId="copy-58c8cd9ad04a5bc2" as="p" /></div><strong aria-hidden="true">→</strong></a></li>
+        <li><a href="/resources/quarto-documents-in-rstudio/"><span>04</span><div><EditableCopy copyId="copy-4b081541483ee946" as="h3" /><EditableCopy copyId="copy-7dc58ccb75f591cd" as="p" /></div><strong aria-hidden="true">→</strong></a></li>
       </ol>
       <div class="offline-resources">
-        <div><h3>Offline resource mode</h3><p>Save the current teaching library and interactive tools for reading without a connection. Executable R chunks may still require a connection the first time their runtime is loaded.</p></div>
+        <div><EditableCopy copyId="copy-05b7ca4e162a0828" as="h3" /><EditableCopy copyId="copy-f2a902995b18564a" as="p" /></div>
         <button class="button button--quiet" type="button" data-cache-resources>Save resources offline</button>
         <p aria-live="polite" data-cache-status></p>
       </div>
@@ -75,7 +69,7 @@ const offlineUrls = [
   <section class="resources-library" aria-labelledby="browse-title">
     <div class="container">
       <div class="section-heading section-heading--with-action">
-        <h2 id="browse-title">Available resources</h2>
+        <EditableCopy copyId="copy-5b161afdb34a0b9e" as="h2" id="browse-title" />
         <a class="text-link" href="/resources/notebook/">My resource notebook</a>
       </div>
 
@@ -84,7 +78,7 @@ const offlineUrls = [
           <div class="resource-toolbar" data-resource-toolbar>
             <div class="resource-toolbar__fields">
               <div class="field">
-                <label for="resource-search">Search</label>
+                <EditableCopy copyId="copy-06ea292de11bd2d4" as="label" for="resource-search" />
                 <input
                   id="resource-search"
                   type="search"
@@ -94,14 +88,14 @@ const offlineUrls = [
                 />
               </div>
               <div class="field">
-                <label for="resource-category">Category</label>
+                <EditableCopy copyId="copy-9cfbddb6dde6951c" as="label" for="resource-category" />
                 <select id="resource-category" data-resource-category>
                   <option value="">All categories</option>
                   {categories.map((category) => <option value={category.toLowerCase()}>{category}</option>)}
                 </select>
               </div>
               <div class="field">
-                <label for="resource-tag">Tag</label>
+                <EditableCopy copyId="copy-39a71e77c7afdfbd" as="label" for="resource-tag" />
                 <select id="resource-tag" data-resource-tag>
                   <option value="">All tags</option>
                   {tags.map((tag) => <option value={tag.toLowerCase()}>{tag}</option>)}
@@ -144,19 +138,14 @@ const offlineUrls = [
         }
       </ol>
 
-      <p class="empty-state" data-resource-empty data-visible="false">
-        No resources match those filters. Try a broader search or reset the library.
-      </p>
+      <EditableCopy copyId="copy-d341d8e3ca31c159" as="p" class="empty-state" data-resource-empty data-visible="false" />
     </div>
   </section>
 
   <section class="resource-disclaimer" aria-labelledby="resource-note-title">
     <div class="container disclaimer">
-      <h2 id="resource-note-title">A note for students</h2>
-      <p>
-        <strong>These resources are independently prepared and are not official University of Sydney course materials.</strong>
-        Use them alongside your course guidance and remain responsible for meeting the academic-integrity requirements that apply to your work.
-      </p>
+      <EditableCopy copyId="copy-a23a7e7de46d152b" as="h2" id="resource-note-title" />
+      <EditableCopy copyId="copy-8142a3401d0e4c9e" as="p" />
     </div>
   </section>
 

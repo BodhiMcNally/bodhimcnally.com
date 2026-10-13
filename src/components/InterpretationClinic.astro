@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 const cases = [
   { id: 'coefficient', label: 'Linear coefficient', prompt: 'A model estimates a coefficient of −3.4 mmHg (95% CI −5.8 to −1.0) for treatment versus control.', choices: ['The treatment causes everyone’s blood pressure to fall by 3.4 mmHg.', 'The treatment group had an estimated mean outcome 3.4 mmHg lower than control, conditional on the model covariates.', 'There is a 95% probability that the true effect is between −5.8 and −1.0.'], answer: 1, feedback: 'Interpret the comparison, units and adjustment set. Avoid individual-level or causal language unless the design and assumptions support it.' },
   { id: 'odds', label: 'Odds ratio', prompt: 'Adjusted OR 1.60 (95% CI 1.12–2.29) for postoperative complication among exposed versus unexposed patients.', choices: ['The exposed group has a 60 percentage-point higher risk.', 'The odds of complication are estimated to be 60% higher in the exposed group, conditional on included covariates.', '60% of exposed patients experienced a complication.'], answer: 1, feedback: 'An odds ratio is a ratio of odds, not risks or percentage points. When outcomes are common, ORs can look further from 1 than risk ratios.' },
@@ -7,7 +8,7 @@ const cases = [
 ];
 ---
 <section class="academic-tool clinic" data-clinic aria-labelledby="clinic-title">
-  <header class="tool-intro"><div><p class="eyebrow">Practice with feedback</p><h2 id="clinic-title">Statistical interpretation clinic</h2></div><p>Choose the most defensible interpretation, then examine why the alternatives fail.</p></header>
+  <header class="tool-intro"><div><EditableCopy copyId="copy-54df92495f43150c" as="p" class="eyebrow" /><EditableCopy copyId="copy-a211b9bc77eb621a" as="h2" id="clinic-title" /></div><EditableCopy copyId="copy-982385a9c676cc7f" as="p" /></header>
   <div class="clinic-progress"><span data-clinic-progress>Case 1 of {cases.length}</span><progress value="1" max={cases.length} data-clinic-progressbar></progress></div>
   <article class="clinic-case" data-clinic-case><p class="eyebrow" data-clinic-label></p><h3 data-clinic-prompt></h3><div data-clinic-choices></div><div class="clinic-feedback" data-clinic-feedback hidden></div></article>
   <div class="tool-actions"><button type="button" data-clinic-prev>Previous</button><button type="button" data-clinic-next>Next case</button><button type="button" data-clinic-reset>Reset progress</button></div>

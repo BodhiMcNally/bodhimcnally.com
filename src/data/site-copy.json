@@ -1,0 +1,2248 @@
+{
+  "copy-323007f27bd27170": {
+    "markdown": "Private workspace",
+    "element": "p",
+    "source": "src/components/AnnotationLayer.astro",
+    "label": "Private workspace"
+  },
+  "copy-ddf9a3df3df5aa14": {
+    "markdown": "My notes",
+    "element": "h2",
+    "source": "src/components/AnnotationLayer.astro",
+    "label": "My notes"
+  },
+  "copy-ab16bdf039902c58": {
+    "markdown": "Saved only in this browser. Nothing is sent to the website.",
+    "element": "p",
+    "source": "src/components/AnnotationLayer.astro",
+    "label": "Saved only in this browser. Nothing is sent to the website."
+  },
+  "copy-0d2186903135686f": {
+    "markdown": "No highlights or notes on this resource yet.",
+    "element": "p",
+    "source": "src/components/AnnotationLayer.astro",
+    "label": "No highlights or notes on this resource yet."
+  },
+  "copy-1a5467cc22a0d101": {
+    "markdown": "Search this site",
+    "element": "label",
+    "source": "src/components/CommandPalette.astro",
+    "label": "Search this site"
+  },
+  "copy-7564372f39e82f86": {
+    "markdown": "Navigate",
+    "element": "p",
+    "source": "src/components/CommandPalette.astro",
+    "label": "Navigate"
+  },
+  "copy-beef6e2b6e5d6750": {
+    "markdown": "No matching pages or resources.",
+    "element": "p",
+    "source": "src/components/CommandPalette.astro",
+    "label": "No matching pages or resources."
+  },
+  "copy-4e6ddfbaeb328c3a": {
+    "markdown": "Page tools",
+    "element": "p",
+    "source": "src/components/CommandPalette.astro",
+    "label": "Page tools"
+  },
+  "copy-e7c41e6ea23950d2": {
+    "markdown": "Interpretation scaffold",
+    "element": "p",
+    "source": "src/components/ExplainResult.astro",
+    "label": "Interpretation scaffold"
+  },
+  "copy-9e22c97e72e37469": {
+    "markdown": "Explain this result",
+    "element": "h2",
+    "source": "src/components/ExplainResult.astro",
+    "label": "Explain this result"
+  },
+  "copy-81b8c5eb4d7d13b9": {
+    "markdown": "Build a precise statistical interpretation without turning an association into a causal claim.",
+    "element": "p",
+    "source": "src/components/ExplainResult.astro",
+    "label": "Build a precise statistical interpretation without turning an association into a causal claim."
+  },
+  "copy-b21e109eca617123": {
+    "markdown": "Draft interpretation",
+    "element": "p",
+    "source": "src/components/ExplainResult.astro",
+    "label": "Draft interpretation"
+  },
+  "copy-31120731af0c66fa": {
+    "markdown": "Safe practice terminal",
+    "element": "p",
+    "source": "src/components/GitPractice.astro",
+    "label": "Safe practice terminal"
+  },
+  "copy-6d727078bfccc8c0": {
+    "markdown": "Git and shell sandbox",
+    "element": "h2",
+    "source": "src/components/GitPractice.astro",
+    "label": "Git and shell sandbox"
+  },
+  "copy-cc094b43ebf62acf": {
+    "markdown": "Git or shell command",
+    "element": "label",
+    "source": "src/components/GitPractice.astro",
+    "label": "Git or shell command"
+  },
+  "copy-9cbb8e55711f0542": {
+    "markdown": "Branch",
+    "element": "p",
+    "source": "src/components/GitPractice.astro",
+    "label": "Branch"
+  },
+  "copy-47214da0897546c4": {
+    "markdown": "Working tree",
+    "element": "p",
+    "source": "src/components/GitPractice.astro",
+    "label": "Working tree"
+  },
+  "copy-68a107a0a25a2502": {
+    "markdown": "Staging area",
+    "element": "p",
+    "source": "src/components/GitPractice.astro",
+    "label": "Staging area"
+  },
+  "copy-33b4d82351aee5bc": {
+    "markdown": "Commit history",
+    "element": "p",
+    "source": "src/components/GitPractice.astro",
+    "label": "Commit history"
+  },
+  "copy-2baaf9c4f70e4f9f": {
+    "markdown": "This is an isolated teaching model of a filesystem and Git repository. It does not access your computer, execute native Bash, contact GitHub or use credentials.",
+    "element": "p",
+    "source": "src/components/GitPractice.astro",
+    "label": "This is an isolated teaching model of a filesystem and Git repository. It does not access your compu"
+  },
+  "copy-54df92495f43150c": {
+    "markdown": "Practice with feedback",
+    "element": "p",
+    "source": "src/components/InterpretationClinic.astro",
+    "label": "Practice with feedback"
+  },
+  "copy-a211b9bc77eb621a": {
+    "markdown": "Statistical interpretation clinic",
+    "element": "h2",
+    "source": "src/components/InterpretationClinic.astro",
+    "label": "Statistical interpretation clinic"
+  },
+  "copy-982385a9c676cc7f": {
+    "markdown": "Choose the most defensible interpretation, then examine why the alternatives fail.",
+    "element": "p",
+    "source": "src/components/InterpretationClinic.astro",
+    "label": "Choose the most defensible interpretation, then examine why the alternatives fail."
+  },
+  "copy-43a0e5d0539a38a5": {
+    "markdown": "Curriculum vitae",
+    "element": "h2",
+    "source": "src/components/LiveCv.astro",
+    "label": "Curriculum vitae"
+  },
+  "copy-8f6c80c895d38c96": {
+    "markdown": "My academic curriculum vitae.",
+    "element": "p",
+    "source": "src/components/LiveCv.astro",
+    "label": "My academic curriculum vitae."
+  },
+  "copy-4130352548fcc709": {
+    "markdown": "Curriculum vitae preview",
+    "element": "h3",
+    "source": "src/components/LiveCv.astro",
+    "label": "Curriculum vitae preview"
+  },
+  "copy-05450e6d5c2b95c8": {
+    "markdown": "Loading the latest CV…",
+    "element": "p",
+    "source": "src/components/LiveCv.astro",
+    "label": "Loading the latest CV…"
+  },
+  "copy-57e37a42dd831eb7": {
+    "markdown": "Interactive methods",
+    "element": "p",
+    "source": "src/components/MethodsPlayground.astro",
+    "label": "Interactive methods"
+  },
+  "copy-fdc51338efa84cc4": {
+    "markdown": "Research methods playground",
+    "element": "h2",
+    "source": "src/components/MethodsPlayground.astro",
+    "label": "Research methods playground"
+  },
+  "copy-122d54ac13573f5d": {
+    "markdown": "Change one assumption at a time and observe how the statistical result changes.",
+    "element": "p",
+    "source": "src/components/MethodsPlayground.astro",
+    "label": "Change one assumption at a time and observe how the statistical result changes."
+  },
+  "copy-8af620ce04c6535b": {
+    "markdown": "Clinical prediction",
+    "element": "p",
+    "source": "src/components/PredictionLab.astro",
+    "label": "Clinical prediction"
+  },
+  "copy-f56c9c9a29611ca8": {
+    "markdown": "Threshold laboratory",
+    "element": "h2",
+    "source": "src/components/PredictionLab.astro",
+    "label": "Threshold laboratory"
+  },
+  "copy-d4bf58c72f4bff8b": {
+    "markdown": "Explore how discrimination, prevalence and decision thresholds change what a test result means.",
+    "element": "p",
+    "source": "src/components/PredictionLab.astro",
+    "label": "Explore how discrimination, prevalence and decision thresholds change what a test result means."
+  },
+  "copy-e398169f23aa4d0b": {
+    "markdown": "Site provenance",
+    "element": "p",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Site provenance"
+  },
+  "copy-45fa5308f0ec5ef0": {
+    "markdown": "How this site works",
+    "element": "h2",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "How this site works"
+  },
+  "copy-5d2e938caba43a23": {
+    "markdown": "Architecture",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Architecture"
+  },
+  "copy-540c42c3e58b9989": {
+    "markdown": "Static Astro site",
+    "element": "dd",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Static Astro site"
+  },
+  "copy-abe9529c058c4617": {
+    "markdown": "Generated",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Generated"
+  },
+  "copy-e74ca95761a1d4e8": {
+    "markdown": "Source revision",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Source revision"
+  },
+  "copy-0c5be508243d26e2": {
+    "markdown": "Published resources",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Published resources"
+  },
+  "copy-8ca7313726f465c2": {
+    "markdown": "Published updates",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Published updates"
+  },
+  "copy-531a2f2419f390b3": {
+    "markdown": "Offline worker",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Offline worker"
+  },
+  "copy-f595ed14fde4f8c8": {
+    "markdown": "Checking…",
+    "element": "dd",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Checking…"
+  },
+  "copy-8b285dbf44c16284": {
+    "markdown": "Local storage used",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Local storage used"
+  },
+  "copy-8f1d21eaf91f2a1a": {
+    "markdown": "Checking…",
+    "element": "dd",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Checking…"
+  },
+  "copy-1b5ac3c176bbf590": {
+    "markdown": "Network status",
+    "element": "dt",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Network status"
+  },
+  "copy-d3612cfd24b933a3": {
+    "markdown": "Checking…",
+    "element": "dd",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Checking…"
+  },
+  "copy-53a39bdf8d5186dc": {
+    "markdown": "Privacy by design",
+    "element": "h3",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Privacy by design"
+  },
+  "copy-eaf5e1a075d27004": {
+    "markdown": "Annotations, saved resources, clinic progress and project drafts remain in this browser. The statistical simulations run in a Web Worker. The reproducibility inspector reads selected files locally and does not upload them.",
+    "element": "p",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Annotations, saved resources, clinic progress and project drafts remain in this browser. The statist"
+  },
+  "copy-03a4f91aa6f6c87b": {
+    "markdown": "Verification",
+    "element": "h3",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "Verification"
+  },
+  "copy-ee8c1fe5725f5b56": {
+    "markdown": "The production workflow checks TypeScript and Astro diagnostics, builds every static route, validates internal links and runs baseline metadata and accessibility checks.",
+    "element": "p",
+    "source": "src/components/ProvenancePanel.astro",
+    "label": "The production workflow checks TypeScript and Astro diagnostics, builds every static route, validate"
+  },
+  "copy-17c36213f605848a": {
+    "markdown": "Interactive",
+    "element": "p",
+    "source": "src/components/QuartoLab.astro",
+    "label": "Interactive"
+  },
+  "copy-cad05adadedac591": {
+    "markdown": "QMD laboratory",
+    "element": "h2",
+    "source": "src/components/QuartoLab.astro",
+    "label": "QMD laboratory"
+  },
+  "copy-7fa26782c4aec351": {
+    "markdown": "Edit the source and watch the guided preview respond. It recognises the Quarto features taught in this lesson, but it is not the Quarto compiler and does not execute arbitrary code.",
+    "element": "p",
+    "source": "src/components/QuartoLab.astro",
+    "label": "Edit the source and watch the guided preview respond. It recognises the Quarto features taught in th"
+  },
+  "copy-686fc420070a95b6": {
+    "markdown": "Use RStudio's **Render** button for the authoritative result. Runnable R examples later in this resource execute separately in your browser.",
+    "element": "p",
+    "source": "src/components/QuartoLab.astro",
+    "label": "Use RStudio's Render button for the authoritative result. Runnable R examples later in this resource"
+  },
+  "copy-d095483d296c9149": {
+    "markdown": "Example",
+    "element": "label",
+    "source": "src/components/QuartoLab.astro",
+    "label": "Example"
+  },
+  "copy-b8868d6c33a5f2ba": {
+    "markdown": "QMD source",
+    "element": "h3",
+    "source": "src/components/QuartoLab.astro",
+    "label": "QMD source"
+  },
+  "copy-5d69aa45b581c9cf": {
+    "markdown": "Editable Quarto source",
+    "element": "label",
+    "source": "src/components/QuartoLab.astro",
+    "label": "Editable Quarto source"
+  },
+  "copy-399fff228d20e9d9": {
+    "markdown": "Guided HTML preview",
+    "element": "h3",
+    "source": "src/components/QuartoLab.astro",
+    "label": "Guided HTML preview"
+  },
+  "copy-26e01019cd520844": {
+    "markdown": "Private browser audit",
+    "element": "p",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "Private browser audit"
+  },
+  "copy-48bc557b44d542e2": {
+    "markdown": "Reproducibility inspector",
+    "element": "h2",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "Reproducibility inspector"
+  },
+  "copy-36a6979fe99224e9": {
+    "markdown": "**Your files stay on this device.** They are read by your browser and are never sent to this website.",
+    "element": "p",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "Your files stay on this device. They are read by your browser and are never sent to this website."
+  },
+  "copy-dc94f9cefaf41641": {
+    "markdown": "No files selected.",
+    "element": "p",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "No files selected."
+  },
+  "copy-0c2e75ef5b2aa1a4": {
+    "markdown": "Show",
+    "element": "label",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "Show"
+  },
+  "copy-727fd2f61e266bfb": {
+    "markdown": "File references",
+    "element": "h3",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "File references"
+  },
+  "copy-09b6daa513f5318d": {
+    "markdown": "Files detected in code, documents and Markdown image links.",
+    "element": "p",
+    "source": "src/components/ReproducibilityInspector.astro",
+    "label": "Files detected in code, documents and Markdown image links."
+  },
+  "copy-ae14e96cb6fd929a": {
+    "markdown": "Browser laboratory",
+    "element": "p",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Browser laboratory"
+  },
+  "copy-4c20767fd8ffe79f": {
+    "markdown": "Statistical simulation studio",
+    "element": "h2",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Statistical simulation studio"
+  },
+  "copy-561f4b8b12cf70b4": {
+    "markdown": "Calculations run on this device using a reproducible random seed.",
+    "element": "p",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Calculations run on this device using a reproducible random seed."
+  },
+  "copy-4a4c7a10bf96fbc9": {
+    "markdown": "Population distribution",
+    "element": "label",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Population distribution"
+  },
+  "copy-c47141cde8c48d1b": {
+    "markdown": "Significance level",
+    "element": "label",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Significance level"
+  },
+  "copy-4e39d995c3128612": {
+    "markdown": "Random seed",
+    "element": "label",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Random seed"
+  },
+  "copy-b730f843605c850c": {
+    "markdown": "Result",
+    "element": "p",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Result"
+  },
+  "copy-4e7211fd681df057": {
+    "markdown": "Run the experiment to generate a result.",
+    "element": "p",
+    "source": "src/components/SimulationStudio.astro",
+    "label": "Run the experiment to generate a result."
+  },
+  "copy-556a60cb7ee1ff9c": {
+    "markdown": "Private protocol builder",
+    "element": "p",
+    "source": "src/components/StudyPlanner.astro",
+    "label": "Private protocol builder"
+  },
+  "copy-793d2c2c4b5c075e": {
+    "markdown": "Research project workspace",
+    "element": "h2",
+    "source": "src/components/StudyPlanner.astro",
+    "label": "Research project workspace"
+  },
+  "copy-4dfaa19612427605": {
+    "markdown": "Your draft is saved in this browser. Export it before changing devices or clearing site data.",
+    "element": "p",
+    "source": "src/components/StudyPlanner.astro",
+    "label": "Your draft is saved in this browser. Export it before changing devices or clearing site data."
+  },
+  "copy-6dba4447f5346bce": {
+    "markdown": "Protocol outline",
+    "element": "p",
+    "source": "src/components/StudyPlanner.astro",
+    "label": "Protocol outline"
+  },
+  "copy-99d0cac9807a9fea": {
+    "markdown": "Restore JSON",
+    "element": "label",
+    "source": "src/components/StudyPlanner.astro",
+    "label": "Restore JSON"
+  },
+  "copy-16f050972ba68912": {
+    "markdown": "On this page",
+    "element": "p",
+    "source": "src/components/TableOfContents.astro",
+    "label": "On this page"
+  },
+  "copy-7fad76a2261c1dfe": {
+    "markdown": "Figure clinic",
+    "element": "p",
+    "source": "src/components/VisualisationCritique.astro",
+    "label": "Figure clinic"
+  },
+  "copy-a6694be1a9ae0309": {
+    "markdown": "Data visualisation critique studio",
+    "element": "h2",
+    "source": "src/components/VisualisationCritique.astro",
+    "label": "Data visualisation critique studio"
+  },
+  "copy-a22c1cc63dd6fdbf": {
+    "markdown": "Repair a deliberately weak figure and watch the corresponding ggplot2 decisions appear.",
+    "element": "p",
+    "source": "src/components/VisualisationCritique.astro",
+    "label": "Repair a deliberately weak figure and watch the corresponding ggplot2 decisions appear."
+  },
+  "copy-3f89adceffc7f753": {
+    "markdown": "404",
+    "element": "p",
+    "source": "src/pages/404.astro",
+    "label": "404"
+  },
+  "copy-7ebe63029b2f23e1": {
+    "markdown": "Page not found",
+    "element": "h1",
+    "source": "src/pages/404.astro",
+    "label": "Page not found"
+  },
+  "copy-97890a2691df470f": {
+    "markdown": "The page may have moved or the address may be incomplete.",
+    "element": "p",
+    "source": "src/pages/404.astro",
+    "label": "The page may have moved or the address may be incomplete."
+  },
+  "copy-218b61edbe8addfd": {
+    "markdown": "[Return home](/)",
+    "element": "p",
+    "source": "src/pages/404.astro",
+    "label": "[Return home](/)"
+  },
+  "copy-572324a8fbdae9cf": {
+    "markdown": "About",
+    "element": "h1",
+    "source": "src/pages/about.astro",
+    "label": "Page heading: About"
+  },
+  "copy-1f62f8b1c9e51714": {
+    "markdown": "I’ll be here…",
+    "element": "h2",
+    "source": "src/pages/about.astro",
+    "label": "I’ll be here…"
+  },
+  "copy-01927021dac2e6b9": {
+    "markdown": "I am a Doctor of Medicine student at the University of Sydney, based at Westmead Clinical School. Before commencing medicine, I completed a Bachelor of Science at the University of Sydney with majors in Data Science and Genetics & Genomics.",
+    "element": "p",
+    "source": "src/pages/about.astro",
+    "label": "I am a Doctor of Medicine student at the University of Sydney, based at Westmead Clinical School. Be"
+  },
+  "copy-dc60790a14a664a5": {
+    "markdown": "My quantitative background preceded medicine. Prior to commencing the MD, I worked at AstraZeneca applying statistical and computational methods to real-world healthcare data across multiple therapeutic areas. The work gave me practical experience with the strengths and limitations of routinely collected health data and reinforced the importance of understanding how data are generated before deciding how they should be analysed.",
+    "element": "p",
+    "source": "src/pages/about.astro",
+    "label": "My quantitative background preceded medicine. Prior to commencing the MD, I worked at AstraZeneca ap"
+  },
+  "copy-21f14744d51b43c4": {
+    "markdown": "I now want to apply that background to clinically useful questions in surgery. My developing research interests are focused on urology, particularly urological oncology, robotic and minimally invasive surgery, perioperative and functional outcomes, patient-reported outcomes, clinical prediction and the use of real-world clinical data. I hope to pursue a future career as an academic surgeon.",
+    "element": "p",
+    "source": "src/pages/about.astro",
+    "label": "I now want to apply that background to clinically useful questions in surgery. My developing researc"
+  },
+  "copy-8230ce21c407961c": {
+    "markdown": "Alongside medicine, I work as a Casual Academic in the University of Sydney’s School of Mathematics and Statistics, teaching undergraduate data science and statistics. Teaching remains an important part of my academic work and has led to broader interests in curriculum development, educational scholarship and Students-as-Partners initiatives.",
+    "element": "p",
+    "source": "src/pages/about.astro",
+    "label": "Alongside medicine, I work as a Casual Academic in the University of Sydney’s School of Mathematics "
+  },
+  "copy-756df4f8282afb45": {
+    "markdown": "I am also a Surgical Research Scholar with RISE, where I have been matched to a surgical mentor and a research project aligned with urology. Over time, I would like to help strengthen pathways into research during medical school and the prevocational years, giving students and junior doctors opportunities to contribute meaningfully while developing the skills needed for academic practice.",
+    "element": "p",
+    "source": "src/pages/about.astro",
+    "label": "I am also a Surgical Research Scholar with RISE, where I have been matched to a surgical mentor and "
+  },
+  "copy-70945e8dce92e490": {
+    "markdown": "Website editor",
+    "element": "p",
+    "source": "src/pages/admin/index.astro",
+    "label": "Website editor"
+  },
+  "copy-e2980b576c21ba99": {
+    "markdown": "Write. Preview. Publish.",
+    "element": "h1",
+    "source": "src/pages/admin/index.astro",
+    "label": "Write. Preview. Publish."
+  },
+  "copy-9672cc0ed87e7ecf": {
+    "markdown": "Log in",
+    "element": "h2",
+    "source": "src/pages/admin/index.astro",
+    "label": "Log in"
+  },
+  "copy-79bddfe1c4345f88": {
+    "markdown": "Make small content changes here, then publish them to your website.",
+    "element": "p",
+    "source": "src/pages/admin/index.astro",
+    "label": "Make small content changes here, then publish them to your website."
+  },
+  "copy-53d07ff2831ba98d": {
+    "markdown": "Select something to edit",
+    "element": "h2",
+    "source": "src/pages/admin/index.astro",
+    "label": "Select something to edit"
+  },
+  "copy-68f1afd24d2f8ec5": {
+    "markdown": "Use the list, or click highlighted text in the page preview.",
+    "element": "p",
+    "source": "src/pages/admin/index.astro",
+    "label": "Use the list, or click highlighted text in the page preview."
+  },
+  "copy-b48b97fd1ec883f7": {
+    "markdown": "Markdown text",
+    "element": "label",
+    "source": "src/pages/admin/index.astro",
+    "label": "Markdown text"
+  },
+  "copy-067d675034b6f6d9": {
+    "markdown": "Page preview",
+    "element": "h2",
+    "source": "src/pages/admin/index.astro",
+    "label": "Page preview"
+  },
+  "copy-90754f24abc40d8f": {
+    "markdown": "Click an outlined text block to edit it. This preview shows the published website; the Markdown preview above shows your unsaved text.",
+    "element": "p",
+    "source": "src/pages/admin/index.astro",
+    "label": "Click an outlined text block to edit it. This preview shows the published website; the Markdown prev"
+  },
+  "copy-bd50f5a4784a739d": {
+    "markdown": "Contact",
+    "element": "h1",
+    "source": "src/pages/contact.astro",
+    "label": "Page heading: Contact"
+  },
+  "copy-fa63fee6e5d485fd": {
+    "markdown": "Get in touch",
+    "element": "h2",
+    "source": "src/pages/contact.astro",
+    "label": "Get in touch"
+  },
+  "copy-b077a1fd8edb3c67": {
+    "markdown": "If you would like to discuss or collaborate on a research, teaching or educational project, you are welcome to contact me through either email address below.",
+    "element": "p",
+    "source": "src/pages/contact.astro",
+    "label": "If you would like to discuss or collaborate on a research, teaching or educational project, you are "
+  },
+  "copy-0bfd20e941259f93": {
+    "markdown": "Bodhi McNally",
+    "element": "h1",
+    "source": "src/pages/index.astro",
+    "label": "Bodhi McNally"
+  },
+  "copy-fb83c254119c4940": {
+    "markdown": "*One of my university students?*",
+    "element": "p",
+    "source": "src/pages/index.astro",
+    "label": "One of my university students?"
+  },
+  "copy-11d2400ff126b200": {
+    "markdown": "You may be looking for the [teaching resources page](/resources/).",
+    "element": "p",
+    "source": "src/pages/index.astro",
+    "label": "You may be looking for the [teaching resources page](/resources/)."
+  },
+  "copy-45d980789e3ddd51": {
+    "markdown": "Updates",
+    "element": "p",
+    "source": "src/pages/index.astro",
+    "label": "Updates"
+  },
+  "copy-dcc096d6e3437329": {
+    "markdown": "Recent posts",
+    "element": "h2",
+    "source": "src/pages/index.astro",
+    "label": "Recent posts"
+  },
+  "copy-5cd5fe316c1ede64": {
+    "markdown": "Read the full post",
+    "element": "summary",
+    "source": "src/pages/index.astro",
+    "label": "Read the full post"
+  },
+  "copy-2add4e0a476e926f": {
+    "markdown": "Professional links",
+    "element": "h2",
+    "source": "src/pages/index.astro",
+    "label": "Professional links"
+  },
+  "copy-a558a8ca58d1a6e9": {
+    "markdown": "Posts",
+    "element": "h1",
+    "source": "src/pages/posts/index.astro",
+    "label": "Page heading: Posts"
+  },
+  "copy-1e1ff88598d18aca": {
+    "markdown": "Full post",
+    "element": "h2",
+    "source": "src/pages/posts/[id].astro",
+    "label": "Full post"
+  },
+  "copy-d85404dcc622b37f": {
+    "markdown": "[All posts](/posts/)",
+    "element": "p",
+    "source": "src/pages/posts/[id].astro",
+    "label": "[All posts](/posts/)"
+  },
+  "copy-74ca513267f4d243": {
+    "markdown": "Research",
+    "element": "h1",
+    "source": "src/pages/research.astro",
+    "label": "Page heading: Research"
+  },
+  "copy-73a8b48b5df7f012": {
+    "markdown": "Research interests",
+    "element": "h2",
+    "source": "src/pages/research.astro",
+    "label": "Research interests"
+  },
+  "copy-6d73fc181fa73bbd": {
+    "markdown": "My developing interests lie in academic urology, surgical outcomes and quantitative clinical research. I am particularly interested in urological oncology, especially prostate and renal cancer; robotic and minimally invasive surgery; and the evaluation of perioperative, functional and patient-reported outcomes. My quantitative background also informs an interest in using real-world clinical data, prediction modelling and health-services research to study treatment selection, variation in care and patient recovery. I am most interested in methods that begin with a clear clinical question, reflect how the data were generated and communicate uncertainty honestly.",
+    "element": "p",
+    "source": "src/pages/research.astro",
+    "label": "My developing interests lie in academic urology, surgical outcomes and quantitative clinical researc"
+  },
+  "copy-e88e596b062b24d7": {
+    "markdown": "Current work",
+    "element": "p",
+    "source": "src/pages/research.astro",
+    "label": "Current work"
+  },
+  "copy-85193cee5ea7d17b": {
+    "markdown": "Research projects",
+    "element": "h2",
+    "source": "src/pages/research.astro",
+    "label": "Research projects"
+  },
+  "copy-f8030c4b51fa352e": {
+    "markdown": "Publications",
+    "element": "h2",
+    "source": "src/pages/research.astro",
+    "label": "Publications"
+  },
+  "copy-1c0925b176e8d110": {
+    "markdown": "Search publications",
+    "element": "label",
+    "source": "src/pages/research.astro",
+    "label": "Search publications"
+  },
+  "copy-f6cefdb7d6d4598c": {
+    "markdown": "Explain this result",
+    "element": "h1",
+    "source": "src/pages/resources/explain-result.astro",
+    "label": "Page heading: Explain this result"
+  },
+  "copy-672d4b21f955343f": {
+    "markdown": "Check the model, not only the sentence",
+    "element": "h2",
+    "source": "src/pages/resources/explain-result.astro",
+    "label": "Check the model, not only the sentence"
+  },
+  "copy-64b61f92900f823e": {
+    "markdown": "A well-written interpretation can still be wrong if the design, model or assumptions are unsuitable. Review the estimate’s scale and adjustment set before using the draft.",
+    "element": "p",
+    "source": "src/pages/resources/explain-result.astro",
+    "label": "A well-written interpretation can still be wrong if the design, model or assumptions are unsuitable."
+  },
+  "copy-9181c8611d0a5753": {
+    "markdown": "Resources",
+    "element": "h1",
+    "source": "src/pages/resources/index.astro",
+    "label": "Page heading: Resources"
+  },
+  "copy-ec99c436c40702c7": {
+    "markdown": "Why these resources are here",
+    "element": "h2",
+    "source": "src/pages/resources/index.astro",
+    "label": "Why these resources are here"
+  },
+  "copy-198354d33c163c59": {
+    "markdown": "During coding demonstrations, students can lose the thread of an explanation when a local error draws their attention away from what is being discussed. Publishing the code after class means students can listen first and return to a working reference afterwards.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "During coding demonstrations, students can lose the thread of an explanation when a local error draw"
+  },
+  "copy-6a5f78ca9747eec9": {
+    "markdown": "This library also provides additional explanations, worked examples and useful links for concepts that often need more than one pass. It is intended to supplement classroom teaching, not replace official course material.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "This library also provides additional explanations, worked examples and useful links for concepts th"
+  },
+  "copy-cf7ea3f18e8cf049": {
+    "markdown": "All content is provided for educational purposes. I do my best to keep it accurate and up to date, but students should check it against their course guidance and remain responsible for meeting applicable academic-integrity requirements.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "All content is provided for educational purposes. I do my best to keep it accurate and up to date, b"
+  },
+  "copy-62e53e63dc66d386": {
+    "markdown": "Interactive tools",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Interactive tools"
+  },
+  "copy-c3721e1365cfff9e": {
+    "markdown": "Resource workbench",
+    "element": "h2",
+    "source": "src/pages/resources/index.astro",
+    "label": "Resource workbench"
+  },
+  "copy-667ce99401ab31ef": {
+    "markdown": "Purpose-built tools for exploring statistical ideas and improving reproducible work. Calculations, notes and uploaded files remain in your browser.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Purpose-built tools for exploring statistical ideas and improving reproducible work. Calculations, n"
+  },
+  "copy-066d55cacddc2718": {
+    "markdown": "Statistical simulation studio",
+    "element": "h3",
+    "source": "src/pages/resources/index.astro",
+    "label": "Statistical simulation studio"
+  },
+  "copy-59007bfc6035c501": {
+    "markdown": "Change sample size, confidence level, effect size and distribution; rerun seeded simulations and export the result.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Change sample size, confidence level, effect size and distribution; rerun seeded simulations and exp"
+  },
+  "copy-a47e99ff6c620dfa": {
+    "markdown": "Clinical prediction laboratory",
+    "element": "h3",
+    "source": "src/pages/resources/index.astro",
+    "label": "Clinical prediction laboratory"
+  },
+  "copy-3723167bccf835db": {
+    "markdown": "Translate diagnostic accuracy into patient counts, predictive values, likelihood ratios and net benefit.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Translate diagnostic accuracy into patient counts, predictive values, likelihood ratios and net bene"
+  },
+  "copy-68fdb82bc5d8e110": {
+    "markdown": "Statistical interpretation clinic",
+    "element": "h3",
+    "source": "src/pages/resources/index.astro",
+    "label": "Statistical interpretation clinic"
+  },
+  "copy-58c8cd9ad04a5bc2": {
+    "markdown": "Practise interpreting coefficients, odds ratios, interactions and p-values with immediate feedback.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Practise interpreting coefficients, odds ratios, interactions and p-values with immediate feedback."
+  },
+  "copy-4b081541483ee946": {
+    "markdown": "Quarto document workshop",
+    "element": "h3",
+    "source": "src/pages/resources/index.astro",
+    "label": "Quarto document workshop"
+  },
+  "copy-7dc58ccb75f591cd": {
+    "markdown": "Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project."
+  },
+  "copy-05b7ca4e162a0828": {
+    "markdown": "Offline resource mode",
+    "element": "h3",
+    "source": "src/pages/resources/index.astro",
+    "label": "Offline resource mode"
+  },
+  "copy-f2a902995b18564a": {
+    "markdown": "Save the current teaching library and interactive tools for reading without a connection. Executable R chunks may still require a connection the first time their runtime is loaded.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "Save the current teaching library and interactive tools for reading without a connection. Executable"
+  },
+  "copy-5b161afdb34a0b9e": {
+    "markdown": "Available resources",
+    "element": "h2",
+    "source": "src/pages/resources/index.astro",
+    "label": "Available resources"
+  },
+  "copy-06ea292de11bd2d4": {
+    "markdown": "Search",
+    "element": "label",
+    "source": "src/pages/resources/index.astro",
+    "label": "Search"
+  },
+  "copy-9cfbddb6dde6951c": {
+    "markdown": "Category",
+    "element": "label",
+    "source": "src/pages/resources/index.astro",
+    "label": "Category"
+  },
+  "copy-39a71e77c7afdfbd": {
+    "markdown": "Tag",
+    "element": "label",
+    "source": "src/pages/resources/index.astro",
+    "label": "Tag"
+  },
+  "copy-d341d8e3ca31c159": {
+    "markdown": "No resources match those filters. Try a broader search or reset the library.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "No resources match those filters. Try a broader search or reset the library."
+  },
+  "copy-a23a7e7de46d152b": {
+    "markdown": "A note for students",
+    "element": "h2",
+    "source": "src/pages/resources/index.astro",
+    "label": "A note for students"
+  },
+  "copy-8142a3401d0e4c9e": {
+    "markdown": "**These resources are independently prepared and are not official University of Sydney course materials.** Use them alongside your course guidance and remain responsible for meeting the academic-integrity requirements that apply to your work.",
+    "element": "p",
+    "source": "src/pages/resources/index.astro",
+    "label": "These resources are independently prepared and are not official University of Sydney course material"
+  },
+  "copy-0c18e4d8c23227be": {
+    "markdown": "Statistical interpretation clinic",
+    "element": "h1",
+    "source": "src/pages/resources/interpretation-clinic.astro",
+    "label": "Page heading: Statistical interpretation clinic"
+  },
+  "copy-6cb0ced04c9f39b5": {
+    "markdown": "Statistical simulation studio",
+    "element": "h1",
+    "source": "src/pages/resources/lab.astro",
+    "label": "Page heading: Statistical simulation studio"
+  },
+  "copy-c2091c3319b6f238": {
+    "markdown": "About the simulations",
+    "element": "h2",
+    "source": "src/pages/resources/lab.astro",
+    "label": "About the simulations"
+  },
+  "copy-5687df8ed4e8286b": {
+    "markdown": "These experiments simplify some assumptions so that the underlying ideas remain visible. They are teaching demonstrations rather than substitutes for an appropriate analysis of real data.",
+    "element": "p",
+    "source": "src/pages/resources/lab.astro",
+    "label": "These experiments simplify some assumptions so that the underlying ideas remain visible. They are te"
+  },
+  "copy-972f178bcc18d8bb": {
+    "markdown": "Research methods playground",
+    "element": "h1",
+    "source": "src/pages/resources/methods-playground.astro",
+    "label": "Page heading: Research methods playground"
+  },
+  "copy-91a7a366ef00ef41": {
+    "markdown": "Interpret with care",
+    "element": "h2",
+    "source": "src/pages/resources/methods-playground.astro",
+    "label": "Interpret with care"
+  },
+  "copy-e74beb869fc123fb": {
+    "markdown": "These demonstrations isolate one concept at a time. Real analyses require a defensible design, appropriate estimand, diagnostic checks and subject-matter knowledge.",
+    "element": "p",
+    "source": "src/pages/resources/methods-playground.astro",
+    "label": "These demonstrations isolate one concept at a time. Real analyses require a defensible design, appro"
+  },
+  "copy-dfdaeb28f6f5a354": {
+    "markdown": "My resource notebook",
+    "element": "h1",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "Page heading: My resource notebook"
+  },
+  "copy-5323ec8538b92fe7": {
+    "markdown": "This notebook is private to this browser. Its contents are stored on this device and are never sent to the website.",
+    "element": "p",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "This notebook is private to this browser. Its contents are stored on this device and are never sent "
+  },
+  "copy-7e2778b8dd5434fb": {
+    "markdown": "Import JSON",
+    "element": "label",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "Import JSON"
+  },
+  "copy-4171e7a7a6eb71c0": {
+    "markdown": "Saved resources",
+    "element": "h2",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "Saved resources"
+  },
+  "copy-f928e73497940146": {
+    "markdown": "No resources have been saved on this device.",
+    "element": "p",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "No resources have been saved on this device."
+  },
+  "copy-6164ea9e1d336498": {
+    "markdown": "Highlights and notes",
+    "element": "h2",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "Highlights and notes"
+  },
+  "copy-0a34fb3f274ec631": {
+    "markdown": "Select text in any teaching resource to create your first highlight.",
+    "element": "p",
+    "source": "src/pages/resources/notebook.astro",
+    "label": "Select text in any teaching resource to create your first highlight."
+  },
+  "copy-fc4e11c0de515ac6": {
+    "markdown": "Clinical prediction laboratory",
+    "element": "h1",
+    "source": "src/pages/resources/prediction-lab.astro",
+    "label": "Page heading: Clinical prediction laboratory"
+  },
+  "copy-176e44cb66c00909": {
+    "markdown": "Teaching demonstration",
+    "element": "h2",
+    "source": "src/pages/resources/prediction-lab.astro",
+    "label": "Teaching demonstration"
+  },
+  "copy-01cc5a491adbf40c": {
+    "markdown": "This tool does not evaluate a real clinical model and must not be used for patient care. Its purpose is to make the arithmetic and assumptions visible.",
+    "element": "p",
+    "source": "src/pages/resources/prediction-lab.astro",
+    "label": "This tool does not evaluate a real clinical model and must not be used for patient care. Its purpose"
+  },
+  "copy-2972f53e0454c00a": {
+    "markdown": "Research project workspace",
+    "element": "h1",
+    "source": "src/pages/resources/project-workspace.astro",
+    "label": "Page heading: Research project workspace"
+  },
+  "copy-69f1098ef634106e": {
+    "markdown": "Before using the draft",
+    "element": "h2",
+    "source": "src/pages/resources/project-workspace.astro",
+    "label": "Before using the draft"
+  },
+  "copy-e6692364a20099cd": {
+    "markdown": "This workspace helps organise thinking; it does not replace supervisor input, statistical advice, ethics review or a complete protocol. Do not enter patient information, confidential data or credentials.",
+    "element": "p",
+    "source": "src/pages/resources/project-workspace.astro",
+    "label": "This workspace helps organise thinking; it does not replace supervisor input, statistical advice, et"
+  },
+  "copy-de0c34d3d60415ed": {
+    "markdown": "Reproducibility inspector",
+    "element": "h1",
+    "source": "src/pages/resources/reproducibility-inspector.astro",
+    "label": "Page heading: Reproducibility inspector"
+  },
+  "copy-7cead2b0d46cdf6c": {
+    "markdown": "What this can—and cannot—check",
+    "element": "h2",
+    "source": "src/pages/resources/reproducibility-inspector.astro",
+    "label": "What this can—and cannot—check"
+  },
+  "copy-825da852313b6148": {
+    "markdown": "The inspector recognises common problems in R, R Markdown and Quarto source files. It does not execute code, validate statistical choices or guarantee that a project will run elsewhere. The strongest test remains rendering the project in a clean environment.",
+    "element": "p",
+    "source": "src/pages/resources/reproducibility-inspector.astro",
+    "label": "The inspector recognises common problems in R, R Markdown and Quarto source files. It does not execu"
+  },
+  "copy-286006543154a3e0": {
+    "markdown": "Data visualisation critique studio",
+    "element": "h1",
+    "source": "src/pages/resources/visualisation-critique.astro",
+    "label": "Page heading: Data visualisation critique studio"
+  },
+  "copy-f397f6b0f7ead592": {
+    "markdown": "Example",
+    "element": "p",
+    "source": "src/pages/resources/[id].astro",
+    "label": "Example"
+  },
+  "copy-051fd55435b09853": {
+    "markdown": "Downloads",
+    "element": "h2",
+    "source": "src/pages/resources/[id].astro",
+    "label": "Downloads"
+  },
+  "copy-bb63c249b37285e7": {
+    "markdown": "Independent resource",
+    "element": "h2",
+    "source": "src/pages/resources/[id].astro",
+    "label": "Independent resource"
+  },
+  "copy-618c94e247519516": {
+    "markdown": "**These resources are independently prepared and are not official University of Sydney course materials.** Check your course guidance and comply with its academic-integrity requirements.",
+    "element": "p",
+    "source": "src/pages/resources/[id].astro",
+    "label": "These resources are independently prepared and are not official University of Sydney course material"
+  },
+  "copy-a212baea553ebbcd": {
+    "markdown": "Teaching",
+    "element": "h1",
+    "source": "src/pages/teaching.astro",
+    "label": "Page heading: Teaching"
+  },
+  "copy-69d0b182adfe4ae7": {
+    "markdown": "I work as a Casual Academic in the School of Mathematics and Statistics at the University of Sydney, teaching undergraduate data science and statistics.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "I work as a Casual Academic in the School of Mathematics and Statistics at the University of Sydney,"
+  },
+  "copy-08d73641c15fca4e": {
+    "markdown": "Teaching philosophy",
+    "element": "h2",
+    "source": "src/pages/teaching.astro",
+    "label": "Teaching philosophy"
+  },
+  "copy-119c3ccd5401f2b3": {
+    "markdown": "My learning and teaching philosophy is grounded in the belief that students learn most effectively when they are active participants in the learning process rather than passive recipients of information.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "My learning and teaching philosophy is grounded in the belief that students learn most effectively w"
+  },
+  "copy-d7ec9451ca4abf3a": {
+    "markdown": "When I first arrived at university, I quickly discovered that success in quantitative disciplines required more than simply attending lectures and tutorials. Data science, statistics and mathematics can be intimidating subjects, and many students approach them believing that they are “not mathematical people”. Early in my degree, I often found myself focusing on individual formulas, coding functions or assessment tasks without fully understanding how they connected to the broader discipline or to real-world problems.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "When I first arrived at university, I quickly discovered that success in quantitative disciplines re"
+  },
+  "copy-b8ef5f788c254e20": {
+    "markdown": "I often think about learning as the difference between shopping at Aldi and shopping at an Apple Store. At Aldi, products are stacked on pallets, minimally presented, and customers are expected to work things out for themselves. The experience is efficient, but largely transactional. By contrast, Apple Stores are designed around engagement. Staff guide customers through products, explain how different components work together and help them understand the broader ecosystem. The experience is educational as much as it is transactional.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "I often think about learning as the difference between shopping at Aldi and shopping at an Apple Sto"
+  },
+  "copy-b3f96489a8f5e178": {
+    "markdown": "As an educator, I strive to create the “Apple Store” experience for my students. My goal is not simply to teach statistical methods, programming techniques or mathematical concepts. Rather, I aim to help students understand how these ideas connect to one another, how they can be applied to meaningful problems and why they matter beyond the classroom. Whether teaching hypothesis testing in an interdisciplinary science unit, data wrangling in an intensive course or introductory data science to large first-year cohorts, I seek to move beyond procedural knowledge and foster genuine understanding.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "As an educator, I strive to create the “Apple Store” experience for my students. My goal is not simp"
+  },
+  "copy-6521975e0b77de21": {
+    "markdown": "This philosophy has naturally led me towards Students-as-Partners initiatives and curriculum development work. I believe students are not merely consumers of education but valuable contributors to it. Through curriculum review, assessment redesign and educational scholarship, I have sought to create opportunities for students to influence and improve their own learning experiences. Feedback is therefore central to my practice, not only as a mechanism for supporting student learning, but also as a means of continuously improving my own teaching.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "This philosophy has naturally led me towards Students-as-Partners initiatives and curriculum develop"
+  },
+  "copy-523f39408748334e": {
+    "markdown": "Ultimately, my goal as an educator is to help students develop confidence, curiosity and independence. By creating supportive learning environments, encouraging active participation and connecting concepts to authentic problems, I hope to equip students with the skills and mindset required for lifelong learning long after they leave the classroom.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "Ultimately, my goal as an educator is to help students develop confidence, curiosity and independenc"
+  },
+  "copy-282ae82ed7eea509": {
+    "markdown": "Teaching portfolio",
+    "element": "h2",
+    "source": "src/pages/teaching.astro",
+    "label": "Teaching portfolio"
+  },
+  "copy-323ccd230512bbdb": {
+    "markdown": "My teaching philosophy, experience, curriculum work and educational scholarship.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "My teaching philosophy, experience, curriculum work and educational scholarship."
+  },
+  "copy-52d991952e65dd8d": {
+    "markdown": "Student resources",
+    "element": "h2",
+    "source": "src/pages/teaching.astro",
+    "label": "Student resources"
+  },
+  "copy-52b383edeea99b2d": {
+    "markdown": "I have developed the resources on this site to supplement my classroom teaching. They are independently prepared and are not affiliated with or endorsed by the University of Sydney.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "I have developed the resources on this site to supplement my classroom teaching. They are independen"
+  },
+  "copy-59146d041eb03e04": {
+    "markdown": "Why I publish material here",
+    "element": "h3",
+    "source": "src/pages/teaching.astro",
+    "label": "Why I publish material here"
+  },
+  "copy-dd101c53be416718": {
+    "markdown": "I can share code after tutorials and laboratories so students can concentrate on the explanation while I am demonstrating it. A student who encounters a bug during a live demonstration can otherwise spend the rest of the discussion trying to solve that bug and miss what follows.",
+    "element": "li",
+    "source": "src/pages/teaching.astro",
+    "label": "I can share code after tutorials and laboratories so students can concentrate on the explanation whi"
+  },
+  "copy-6320824e63e3b9c5": {
+    "markdown": "I can collect additional explanations, examples and useful links in one place for students who want to revisit a concept or approach it from another direction.",
+    "element": "li",
+    "source": "src/pages/teaching.astro",
+    "label": "I can collect additional explanations, examples and useful links in one place for students who want "
+  },
+  "copy-0969348ddf1f49e7": {
+    "markdown": "All content is provided for educational purposes. I do my best to keep it accurate and up to date, but students should use it alongside the official materials and guidance for their course.",
+    "element": "p",
+    "source": "src/pages/teaching.astro",
+    "label": "All content is provided for educational purposes. I do my best to keep it accurate and up to date, b"
+  },
+  "profile-name": {
+    "markdown": "Bodhi McNally",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "name"
+  },
+  "profile-shortName": {
+    "markdown": "BM",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "shortName"
+  },
+  "profile-defaultTitle": {
+    "markdown": "Bodhi McNally",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "defaultTitle"
+  },
+  "profile-defaultDescription": {
+    "markdown": "Bodhi McNally is a Doctor of Medicine student at the University of Sydney with a background in data science, healthcare analytics and university teaching.",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "defaultDescription"
+  },
+  "profile-location": {
+    "markdown": "Sydney, Australia",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "location"
+  },
+  "profile-currentRole": {
+    "markdown": "Doctor of Medicine student",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "currentRole"
+  },
+  "profile-institution": {
+    "markdown": "University of Sydney",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "institution"
+  },
+  "profile-clinicalSchool": {
+    "markdown": "Westmead Clinical School",
+    "element": "plain",
+    "source": "src/data/site.ts",
+    "label": "clinicalSchool"
+  },
+  "profile-introduction": {
+    "markdown": "I am a Doctor of Medicine student at the University of Sydney, based at Westmead Clinical School.",
+    "element": "p",
+    "source": "src/data/site.ts",
+    "label": "introduction"
+  },
+  "profile-researchSummary": {
+    "markdown": "My developing research interests are in academic urology, urological oncology, robotic and minimally invasive surgery, surgical outcomes, and the use of clinical data to study treatment selection, perioperative outcomes and patient recovery.",
+    "element": "p",
+    "source": "src/data/site.ts",
+    "label": "researchSummary"
+  },
+  "copy-1b3f2f32da7975e6": {
+    "markdown": "I discovered **mapgl** while working with geospatial data at AstraZeneca, where I was building an in-house solution for sales territory and workforce planning for a new product and team launch. Being able to put data on a map, explore it interactively, and explain what the geography meant made it much easier to connect an analysis to a practical decision.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "I discovered mapgl while working with geospatial data at AstraZeneca, where I was building an in-hou",
+    "kind": "html"
+  },
+  "copy-66f60a9416916e42": {
+    "markdown": "This tutorial brings that approach into **DATA1X01 Project 2**. You will learn how to turn a table or spatial file into an interactive map, embed it in your Quarto report, and explain the pattern it shows. You do not need previous experience with geographic information systems.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "This tutorial brings that approach into DATA1X01 Project 2. You will learn how to turn a table or sp",
+    "kind": "html"
+  },
+  "copy-179ca6f44f1d75db": {
+    "markdown": "The maps below are actual outputs of the R code, rather than screenshots. Drag to pan, use the **+ / −** buttons to zoom, and try the popups and other controls. Mouse-wheel zoom is disabled in most examples so you can scroll through the lesson comfortably.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The maps below are actual outputs of the R code, rather than screenshots. Drag to pan, use the + / −",
+    "kind": "html"
+  },
+  "copy-adeca42de081380c": {
+    "markdown": "**R runs when Quarto renders this page.** The published maps run JavaScript in your browser. To change the R code and recompute an example, download the source and run it in RStudio. A static website does not provide a live R session. These examples use MapLibre and OpenFreeMap without an API key; the basemap still needs an internet connection.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "R runs when Quarto renders this page. The published maps run JavaScript in your browser. To change t",
+    "kind": "html"
+  },
+  "copy-3469f2243e142dea": {
+    "markdown": "Our real Sydney case study",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Our real Sydney case study",
+    "kind": "html",
+    "headingId": "our-real-sydney-case-study"
+  },
+  "copy-ca5d08b12b1e8193": {
+    "markdown": "We will use **Greater Sydney**, as defined by the ABS Greater Capital City Statistical Area (`1GSYD`). This includes the Central Coast and Blue Mountains; it is broader than the City of Sydney council area. The polygon maps use **373 real Statistical Areas Level 2 (SA2s)**. An SA2 is a statistical area, not necessarily a suburb or a school catchment.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "We will use Greater Sydney, as defined by the ABS Greater Capital City Statistical Area (1GSYD). Thi",
+    "kind": "html"
+  },
+  "copy-521176182e1dc733": {
+    "markdown": "The school snapshot includes environmental education centres and other government education sites as well as primary and secondary schools. We retain the provider’s types. It covers government education, rather than all schools. The enrolment field is **latest reported FTE**, not a count measured on the extraction date; the source does not supply an enrolment-year column. Population estimates for 2025 are preliminary. These periods and populations cannot be treated as interchangeable.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The school snapshot includes environmental education centres and other government education sites as",
+    "kind": "html"
+  },
+  "copy-350bd6cd0d579451": {
+    "markdown": "The prepared CSV, GeoJSON, GeoPackage, and GeoTIFF files are bundled with the source. [The data guide](/resources/mapgl/data/README.md) records attribution, original URLs, transformations, exclusions, and checksums. None of the maps uses simulated observations.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The prepared CSV, GeoJSON, GeoPackage, and GeoTIFF files are bundled with the source. [The data guid",
+    "kind": "html"
+  },
+  "copy-b8593204e1beaaf1": {
+    "markdown": "You can work through the core sections first, then choose an extension that suits your data. An effective project might need only one well-designed map and a supporting chart. This is an optional teaching resource: follow the assessment instructions for the required data, methods, and submission format.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "You can work through the core sections first, then choose an extension that suits your data. An effe",
+    "kind": "html"
+  },
+  "copy-0ab5fd0d9870df6c": {
+    "markdown": "1. Set up R and Quarto",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "1. Set up R and Quarto",
+    "kind": "html",
+    "headingId": "set-up-r-and-quarto"
+  },
+  "copy-90120a43ea9aadfe": {
+    "markdown": "Use **R 4.1 or later**, RStudio, and the [Quarto CLI](https://quarto.org/docs/get-started/). The examples use R’s native `|>` pipe: read it as “take the result on the left and pass it to the next function”. Install packages once in the **Console**, outside your report’s code chunks:",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Use R 4.1 or later, RStudio, and the [Quarto CLI](https://quarto.org/docs/get-started/). The example",
+    "kind": "html"
+  },
+  "copy-8116ee706e7ab5d0": {
+    "markdown": "Now load the packages in the report. Unlike installation, this step must run whenever you render it.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Now load the packages in the report. Unlike installation, this step must run whenever you render it.",
+    "kind": "html"
+  },
+  "copy-bf698f0a66285b97": {
+    "markdown": "**mapgl** creates the maps; **sf** stores vector geometries and performs spatial operations; **dplyr** prepares tables; **readr** imports CSV files. Later, **terra** handles raster data. Package names and R functions are case-sensitive.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "mapgl creates the maps; sf stores vector geometries and performs spatial operations; dplyr prepares ",
+    "kind": "html"
+  },
+  "copy-fb87d95cdbf279cc": {
+    "markdown": "The [mapgl documentation](https://walker-data.com/mapgl/) describes two interfaces: `maplibre()` and `mapboxgl()`. We will use `maplibre()` throughout. Mapbox requires an access token and its own service terms; it is an optional alternative, rather than a requirement for this lesson.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The [mapgl documentation](https://walker-data.com/mapgl/) describes two interfaces: maplibre() and m",
+    "kind": "html"
+  },
+  "copy-9e21dc8069e84039": {
+    "markdown": "2. Make your first map",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "2. Make your first map",
+    "kind": "html",
+    "headingId": "make-your-first-map"
+  },
+  "copy-d29cd1fd587bfb1d": {
+    "markdown": "Try it: click the marker, zoom in, then use the fullscreen control.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: click the marker, zoom in, then use the fullscreen control.",
+    "kind": "html"
+  },
+  "copy-b325ceb795a6b3ba": {
+    "markdown": "The final line displays the object. If you finish a chunk with `first_map <- ...`, R stores the map but does not automatically display it.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The final line displays the object. If you finish a chunk with firstmap <- ..., R stores the map but",
+    "kind": "html"
+  },
+  "copy-a5e99fda1fb00304": {
+    "markdown": "A marker is convenient for one or a few locations. For a dataset of points, use a **circle layer**, which supports styling, filtering, and clustering. See the [`maplibre()` reference](https://walker-data.com/mapgl/reference/maplibre.html) and [available OpenFreeMap styles](https://walker-data.com/mapgl/reference/openfreemap_style.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A marker is convenient for one or a few locations. For a dataset of points, use a circle layer, whic",
+    "kind": "html"
+  },
+  "copy-e6f3669db523c1b2": {
+    "markdown": "3. Put geospatial data into the right form",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "3. Put geospatial data into the right form",
+    "kind": "html",
+    "headingId": "put-geospatial-data-into-the-right-form"
+  },
+  "copy-879d0c641788e1bb": {
+    "markdown": "You need either coordinates, geometries, or an identifier that can be joined to boundaries. A place name on its own is not a geometry.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "You need either coordinates, geometries, or an identifier that can be joined to boundaries. A place ",
+    "kind": "html"
+  },
+  "copy-49ad3045624b94b5": {
+    "markdown": "Geocoding is a separate step, with possible ambiguity, service limits, and costs. “Sydney” could mean a city, an administrative area, or a suburb. Document how you resolved it. A map cannot supply geographic precision that your source data does not contain.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Geocoding is a separate step, with possible ambiguity, service limits, and costs. “Sydney” could mea",
+    "kind": "html"
+  },
+  "copy-ea46c0b8d6c8531f": {
+    "markdown": "Convert a CSV into spatial points",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Convert a CSV into spatial points",
+    "kind": "html",
+    "headingId": "convert-a-csv-into-spatial-points"
+  },
+  "copy-5035efd019d59ad6": {
+    "markdown": "The bundled CSV contains **1,033 real government education locations in Greater Sydney**. It is a spatial subset of the NSW master dataset, with only the fields needed for this lesson. A public school location does not identify where its students live. All relative paths in this lesson assume that you extracted the complete source bundle and opened its folder as your project.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The bundled CSV contains 1,033 real government education locations in Greater Sydney. It is a spatia",
+    "kind": "html"
+  },
+  "copy-fc315d2037dca579": {
+    "markdown": "Validate coordinates before converting them. This retains an explicit record of excluded rows rather than silently losing them.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Validate coordinates before converting them. This retains an explicit record of excluded rows rather",
+    "kind": "html"
+  },
+  "copy-9e9e881bf23c0476": {
+    "markdown": "`sf` adds a **geometry column** to the table. `coords` identifies the coordinate columns, and `crs = 4326` declares that these are WGS84 longitude and latitude in degrees. Use that declaration only when it matches the source metadata. `remove = FALSE` keeps the coordinate columns for inspection.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "sf adds a geometry column to the table. coords identifies the coordinate columns, and crs = 4326 dec",
+    "kind": "html"
+  },
+  "copy-f31ae270f50d5cc0": {
+    "markdown": "Range checks catch obvious errors, but cannot prove that a valid coordinate is the correct one. Check the map’s extent against your study area, look for swapped columns, and investigate suspicious points. The NSW dictionary describes latitude and longitude but does not specify their geodetic datum; this teaching example treats them as WGS84 web coordinates. Do not use that assumption for survey accuracy or legal boundary decisions.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Range checks catch obvious errors, but cannot prove that a valid coordinate is the correct one. Chec",
+    "kind": "html"
+  },
+  "copy-846b431631dcd8dc": {
+    "markdown": "Understand coordinate reference systems",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Understand coordinate reference systems",
+    "kind": "html",
+    "headingId": "understand-coordinate-reference-systems"
+  },
+  "copy-3b559371afef7386": {
+    "markdown": "A **coordinate reference system (CRS)** describes what your coordinate numbers mean. Geographic coordinates use angular units; projected coordinates often use metres. Inspect an imported file’s CRS and geometry type:",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A coordinate reference system (CRS) describes what your coordinate numbers mean. Geographic coordina",
+    "kind": "html"
+  },
+  "copy-430c45c4716fa538": {
+    "markdown": "If a spatial file has a known projected CRS, convert its coordinates with `st_transform(x, 4326)` before passing it to a web map. **Assigning a CRS and transforming coordinates are different operations.** `st_set_crs()` changes the declared meaning of the existing numbers; it does not recalculate them. If the CRS is missing, find the original metadata before assigning one.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "If a spatial file has a known projected CRS, convert its coordinates with sttransform(x, 4326) befor",
+    "kind": "html"
+  },
+  "copy-b7992e7d07f83d5e": {
+    "markdown": "For the following import patterns, replace the paths with your own existing files. These are intentionally unexecuted templates.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "For the following import patterns, replace the paths with your own existing files. These are intenti",
+    "kind": "html"
+  },
+  "copy-e91a670d5efceabf": {
+    "markdown": "The [`sf` import reference](https://r-spatial.github.io/sf/reference/st_read.html) covers supported file formats; the [`st_transform()` reference](https://r-spatial.github.io/sf/reference/st_transform.html) explains transformations. For distance, buffers, or area calculations, choose an appropriate analytical CRS or understand `sf`’s geographic calculation methods. Do not interpret degrees as metres.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The [sf import reference](https://r-spatial.github.io/sf/reference/stread.html) covers supported fil",
+    "kind": "html"
+  },
+  "copy-a719aba81cbe5651": {
+    "markdown": "4. Add points, tooltips, and popups",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "4. Add points, tooltips, and popups",
+    "kind": "html",
+    "headingId": "add-points-tooltips-and-popups"
+  },
+  "copy-e32ef364820bc775": {
+    "markdown": "A map contains **sources** and **layers**. A source holds the data. A layer tells the browser how to draw those data. Here, providing an `sf` object directly to `source` lets mapgl register the source for us.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A map contains sources and layers. A source holds the data. A layer tells the browser how to draw th",
+    "kind": "html"
+  },
+  "copy-cb98a1e14140f6d3": {
+    "markdown": "Try it: hover over a school for its name, then click for its school type and enrolment figure. Source: NSW Department of Education, snapshot 2 October 2026.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: hover over a school for its name, then click for its school type and enrolment figure. Sourc",
+    "kind": "html"
+  },
+  "copy-067b13faa264a482": {
+    "markdown": "`bounds = schools` fits the starting view to the data. `id` is a unique **layer identifier**, not a column name. `tooltip` and `popup` identify columns used for hover and click content. Popup columns can contain HTML, so escape text imported from other sources before adding your own markup.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "bounds = schools fits the starting view to the data. id is a unique layer identifier, not a column n",
+    "kind": "html"
+  },
+  "copy-5eb07d80d127a668": {
+    "markdown": "`fitBoundsOptions = list(padding = 40)` leaves room around the fitted data so circles at the edges are fully visible. It is a MapLibre option passed through by `maplibre()`.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "fitBoundsOptions = list(padding = 40) leaves room around the fitted data so circles at the edges are",
+    "kind": "html"
+  },
+  "copy-c10076b5aecfee09": {
+    "markdown": "Read the [sources and layers overview](https://walker-data.com/mapgl/articles/layers-overview.html) and [`add_circle_layer()` reference](https://walker-data.com/mapgl/reference/add_circle_layer.html) for more options.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Read the [sources and layers overview](https://walker-data.com/mapgl/articles/layers-overview.html) ",
+    "kind": "html"
+  },
+  "copy-a5382b62961cb29c": {
+    "markdown": "A quick map for exploration",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A quick map for exploration",
+    "kind": "html",
+    "headingId": "a-quick-map-for-exploration"
+  },
+  "copy-db86eb480a51eab2": {
+    "markdown": "When you mainly want to inspect a spatial dataset, `maplibre_view()` chooses a layer and colour scale for you:",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "When you mainly want to inspect a spatial dataset, maplibreview() chooses a layer and colour scale f",
+    "kind": "html"
+  },
+  "copy-c5260255b99199a0": {
+    "markdown": "This quick view excludes the 29 records without reported enrolments; it does not replace them with zero. This is useful during exploration. For your final report, control the scale, legend title, units, and missing-value treatment deliberately. See the [`maplibre_view()` reference](https://walker-data.com/mapgl/reference/maplibre_view.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "This quick view excludes the 29 records without reported enrolments; it does not replace them with z",
+    "kind": "html"
+  },
+  "copy-2f3122522afd9b32": {
+    "markdown": "5. Map categories and quantities",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "5. Map categories and quantities",
+    "kind": "html",
+    "headingId": "map-categories-and-quantities"
+  },
+  "copy-2b633ca2a6beaa3e": {
+    "markdown": "Styling expressions connect an attribute to an appearance. A constant gives every feature the same style; an expression calculates a style from a feature or map property.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Styling expressions connect an attribute to an appearance. A constant gives every feature the same s",
+    "kind": "html"
+  },
+  "copy-d02e9b5ba81d3b26": {
+    "markdown": "Category colours and proportional circles",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Category colours and proportional circles",
+    "kind": "html",
+    "headingId": "category-colours-and-proportional-circles"
+  },
+  "copy-d8246683b992c297": {
+    "markdown": "We group primary and infants schools together, retain secondary schools separately, and put the provider’s remaining categories in an explicitly labelled group. The original school type remains in the popup. For proportional circles, **area** should represent enrolment, so radius is proportional to the square root of FTE.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "We group primary and infants schools together, retain secondary schools separately, and put the prov",
+    "kind": "html"
+  },
+  "copy-cd02f760ca25c1b2": {
+    "markdown": "Try it: click a group in the top legend, then inspect a popup. The map includes 1,004 locations with reported FTE; 29 records with missing FTE are excluded from this view. Source: NSW Department of Education.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: click a group in the top legend, then inspect a popup. The map includes 1,004 locations with",
+    "kind": "html"
+  },
+  "copy-c967b896ba74d173": {
+    "markdown": "A location with 2,000 FTE has twice the radius and four times the area of a location with 500 FTE. Legend `sizes` are diameters. A true zero has zero radius here; if you must show zeros, add a separate symbol with a clear key. FTE describes enrolment, not building capacity, local child population, or students’ home locations.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A location with 2,000 FTE has twice the radius and four times the area of a location with 500 FTE. L",
+    "kind": "html"
+  },
+  "copy-26fc872baa1eff88": {
+    "markdown": "The second legend uses `add = TRUE` to supplement the first. Clicking a legend changes browser visibility; it does not change the R data or recompute your analysis. See [`match_expr()`](https://walker-data.com/mapgl/reference/match_expr.html) and [map legends](https://walker-data.com/mapgl/reference/map_legends.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The second legend uses add = TRUE to supplement the first. Clicking a legend changes browser visibil",
+    "kind": "html"
+  },
+  "copy-a3443005e59b7ebb": {
+    "markdown": "6. Combine real SA2 polygons, lines, and points",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "6. Combine real SA2 polygons, lines, and points",
+    "kind": "html",
+    "headingId": "combine-real-sa2-polygons-lines-and-points"
+  },
+  "copy-8dac89e9039a61ef": {
+    "markdown": "Use **fill layers** for areas, **line layers** for outlines or paths, and **circle layers** for points. We will draw actual SA2 polygons, derive line geometries from their boundaries, and overlay the school locations. These lines represent boundaries; they do not imply travel routes.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Use fill layers for areas, line layers for outlines or paths, and circle layers for points. We will ",
+    "kind": "html"
+  },
+  "copy-9a0572ad4f2894c0": {
+    "markdown": "Registering a source once lets several layers reuse it. Add fills first, then lines and points so the points remain visible.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Registering a source once lets several layers reuse it. Add fills first, then lines and points so th",
+    "kind": "html"
+  },
+  "copy-0fee54ec7b8928e0": {
+    "markdown": "Try it: switch the school points and boundary lines off independently. Zoom in to see the SA2 detail. Sources: ABS ASGS 2021 and NSW Department of Education.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: switch the school points and boundary lines off independently. Zoom in to see the SA2 detail",
+    "kind": "html"
+  },
+  "copy-1749d96ad69861ed": {
+    "markdown": "`source = \"sa2-data\"` names a **source ID**. A layer control uses **layer IDs**. Here the layers are independent so you can inspect fills, outlines, and points separately. To switch fill and outline together, group their IDs in one vector. See [`add_source()`](https://walker-data.com/mapgl/reference/add_source.html) and [`add_layers_control()`](https://walker-data.com/mapgl/reference/add_layers_control.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "source = \"sa2-data\" names a source ID. A layer control uses layer IDs. Here the layers are independe",
+    "kind": "html"
+  },
+  "copy-cd46be21bc02ef90": {
+    "markdown": "7. Join population statistics to SA2 boundaries",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "7. Join population statistics to SA2 boundaries",
+    "kind": "html",
+    "headingId": "join-population-statistics-to-sa2-boundaries"
+  },
+  "copy-fea86f89a94e9106": {
+    "markdown": "Population is supplied as a table, while geometry is supplied separately. Join them on the **nine-character SA2 code**, checking uniqueness and unmatched keys in both directions. Keep identifiers as character values; area names can change or be spelled differently.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Population is supplied as a table, while geometry is supplied separately. Join them on the nine-char",
+    "kind": "html"
+  },
+  "copy-01aeec4a680dbd43": {
+    "markdown": "The boundary vintage is **ASGS 2021**, matching the geography used for these population estimates. Using a newer boundary file just because it is newer can break comparability. The bundled snapshot contains population values for all 373 polygons; unmatched keys and missing measurements are still separate problems that you must check in your own data.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The boundary vintage is ASGS 2021, matching the geography used for these population estimates. Using",
+    "kind": "html"
+  },
+  "copy-0d838e87f0f28504": {
+    "markdown": "Why map density rather than population count?",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Why map density rather than population count?",
+    "kind": "html",
+    "headingId": "why-map-density-rather-than-population-count"
+  },
+  "copy-e3649f4b37d245fa": {
+    "markdown": "A large SA2 can contain many people spread over a large area. Population density is `population / area_km2`, measured in **residents per square kilometre**. It answers a question about geographic concentration. A count answers a question about how many residents an area contains. Neither is a measure of school access or capacity.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A large SA2 can contain many people spread over a large area. Population density is population / are",
+    "kind": "html"
+  },
+  "copy-03a26fb873e58bf5": {
+    "markdown": "We use the official ABS `area_albers_sqkm` value, renamed `area_km2`. We do not recompute area from the simplified display polygons. The denominator includes the area represented by the ABS boundary definition; density does not mean that population is evenly spread inside the polygon.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "We use the official ABS areaalberssqkm value, renamed areakm2. We do not recompute area from the sim",
+    "kind": "html"
+  },
+  "copy-2a9e84574c7b5c0b": {
+    "markdown": "8. Build a choropleth of population density",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "8. Build a choropleth of population density",
+    "kind": "html",
+    "headingId": "build-a-choropleth-of-population-density"
+  },
+  "copy-3ed7c1fec611f518": {
+    "markdown": "A **choropleth** shades areas according to a statistic. A sequential colour scale suits a non-negative density. A diverging scale can suit change around zero. Explain the units and the limits of your colour scale.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A choropleth shades areas according to a statistic. A sequential colour scale suits a non-negative d",
+    "kind": "html"
+  },
+  "copy-28eb57677d918584": {
+    "markdown": "A continuous colour scale",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A continuous colour scale",
+    "kind": "html",
+    "headingId": "a-continuous-colour-scale"
+  },
+  "copy-a593506f3e9566b4": {
+    "markdown": "Try it: zoom towards central Sydney and click an SA2. Its popup reports the real population, official area, and calculated density. Source: ABS Regional population 2024–25 and ASGS 2021.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: zoom towards central Sydney and click an SA2. Its popup reports the real population, officia",
+    "kind": "html"
+  },
+  "copy-dfc8744453133825": {
+    "markdown": "`interpolate()` blends between stops and holds endpoint colours beyond the specified limits. The 0–25,000 scale covers this snapshot’s densities and will also be used for comparisons. The 5,000 stop is a colour anchor, not a class boundary. If your data exceed the upper limit, extend the scale or disclose that values saturate. The missing-value colour is specified for future adaptation; this snapshot has no missing density values, so it has no missing-data legend key. See [`interpolate()`](https://walker-data.com/mapgl/reference/interpolate.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "interpolate() blends between stops and holds endpoint colours beyond the specified limits. The 0–25,",
+    "kind": "html"
+  },
+  "copy-268b524b56f58550": {
+    "markdown": "Fixed bands and an accurate legend",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Fixed bands and an accurate legend",
+    "kind": "html",
+    "headingId": "fixed-bands-and-an-accurate-legend"
+  },
+  "copy-3d990bad111f4dc4": {
+    "markdown": "At exactly 500 the second colour begins; at 2,000 the third begins. Fixed thresholds discard within-band differences. Automatic helpers such as `step_quantile()` or `step_jenks()` can aid exploration, but separately recalculating breaks for each year makes identical colours represent different values. See [`step_expr()`](https://walker-data.com/mapgl/reference/step_expr.html) and [classification helpers](https://walker-data.com/mapgl/reference/step_classification.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "At exactly 500 the second colour begins; at 2,000 the third begins. Fixed thresholds discard within-",
+    "kind": "html"
+  },
+  "copy-52258c8b0102320c": {
+    "markdown": "In the bundled June 2025 data, **Sydney (South) - Haymarket** has 24,758 residents across 1.0810 km², approximately **22,903 residents/km²**. Chippendale and Ultimo follow at approximately 20,476 and 18,851 residents/km². These values are calculated from the table and official area field, rather than read off a colour.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "In the bundled June 2025 data, Sydney (South) - Haymarket has 24,758 residents across 1.0810 km², ap",
+    "kind": "html"
+  },
+  "copy-c2b969f5de6ebdf0": {
+    "markdown": "Discuss the pattern relevant to your question. Population estimates are not exact headcounts, and the 2025 estimates are preliminary. Area-level differences do not establish causation or describe every person within an area. Large, sparsely populated polygons can dominate visual attention.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Discuss the pattern relevant to your question. Population estimates are not exact headcounts, and th",
+    "kind": "html"
+  },
+  "copy-62217e296d7ead01": {
+    "markdown": "9. Use a spatial join when there is no area code",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "9. Use a spatial join when there is no area code",
+    "kind": "html",
+    "headingId": "use-a-spatial-join-when-there-is-no-area-code"
+  },
+  "copy-bb4dc3ac9497c162": {
+    "markdown": "The school table has coordinates but no SA2 code. A **spatial join** attaches the code using location. Use the full-resolution analytical boundaries for this operation, not the simplified display copy.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The school table has coordinates but no SA2 code. A spatial join attaches the code using location. U",
+    "kind": "html"
+  },
+  "copy-bfcdf3a49d87f312": {
+    "markdown": "Zero means no locations from this government dataset were assigned to the SA2. It does not mean no schools of any kind, no school-age residents, or no access to education. School catchments and student residence can cross SA2 boundaries.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Zero means no locations from this government dataset were assigned to the SA2. It does not mean no s",
+    "kind": "html"
+  },
+  "copy-a2079ab64054ea2d": {
+    "markdown": "Points on boundaries, outside the study area, or inside overlapping polygons need an explicit rule. `st_within()` excludes boundary points in this projected example; a different predicate can match more than one polygon. Investigate exceptions before joining instead of dropping duplicate assignments arbitrarily. See [`st_join()`](https://r-spatial.github.io/sf/reference/st_join.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Points on boundaries, outside the study area, or inside overlapping polygons need an explicit rule. ",
+    "kind": "html"
+  },
+  "copy-0c617012c7cf3288": {
+    "markdown": "10. Explore point concentration with a heatmap",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "10. Explore point concentration with a heatmap",
+    "kind": "html",
+    "headingId": "explore-point-concentration-with-a-heatmap"
+  },
+  "copy-fa709ef92817f071": {
+    "markdown": "A heatmap smooths nearby points across screen pixels. Its appearance depends on zoom, radius, and weighting. We give each government education location the same weight, including those without an enrolment figure.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A heatmap smooths nearby points across screen pixels. Its appearance depends on zoom, radius, and we",
+    "kind": "html"
+  },
+  "copy-0d9a98eb4aad50d8": {
+    "markdown": "Try it: zoom in and out. The legend is qualitative; it does not report schools per km² or enrolments. Source: NSW Department of Education, 2 October 2026 snapshot.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: zoom in and out. The legend is qualitative; it does not report schools per km² or enrolments",
+    "kind": "html"
+  },
+  "copy-66387fbcdbf9bf36": {
+    "markdown": "This is a visual concentration map, not a population-adjusted rate or a test of a statistically significant hotspot. For a defined density, calculate a statistic on documented areas or use an appropriate density estimator. See [`add_heatmap_layer()`](https://walker-data.com/mapgl/reference/add_heatmap_layer.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "This is a visual concentration map, not a population-adjusted rate or a test of a statistically sign",
+    "kind": "html"
+  },
+  "copy-a60818a8d09fb15e": {
+    "markdown": "11. Cluster crowded school points",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "11. Cluster crowded school points",
+    "kind": "html",
+    "headingId": "cluster-crowded-school-points"
+  },
+  "copy-20ff553d724deaa8": {
+    "markdown": "Clustering groups nearby points at the current zoom and displays their feature counts. It reduces overplotting; these groups are visual, rather than fixed statistical clusters.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Clustering groups nearby points at the current zoom and displays their feature counts. It reduces ov",
+    "kind": "html"
+  },
+  "copy-8f09b34f9a6c955f": {
+    "markdown": "Try it: click a numbered cluster to zoom towards its locations, then click an individual point. The label counts locations, not enrolled students. Source: NSW Department of Education.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: click a numbered cluster to zoom towards its locations, then click an individual point. The ",
+    "kind": "html"
+  },
+  "copy-bee3e9831e306e94": {
+    "markdown": "Supply the `sf` points directly to `add_circle_layer()` with [`cluster_options()`](https://walker-data.com/mapgl/reference/cluster_options.html). The shortcut creates a separate `schools-cluster-count` symbol layer. We use [`set_layout_property()`](https://walker-data.com/mapgl/reference/set_layout_property.html) to select Noto Sans Regular, available from the OpenFreeMap glyph service. An unavailable font can leave labels blank while circles still render.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Supply the sf points directly to addcirclelayer() with [clusteroptions()](https://walker-data.com/ma",
+    "kind": "html"
+  },
+  "copy-7ab85d8fa8a3dff1": {
+    "markdown": "12. Add a population year slider without a server",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "12. Add a population year slider without a server",
+    "kind": "html",
+    "headingId": "add-a-population-year-slider-without-a-server"
+  },
+  "copy-6a1adbfafda0ab27": {
+    "markdown": "A slider filters features in the browser, so it works on a static website. The filter property must be **numeric**. We build one polygon record per SA2 and year from the real 2021–2025 population series; the slider shows only one year’s records at a time.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A slider filters features in the browser, so it works on a static website. The filter property must ",
+    "kind": "html"
+  },
+  "copy-ad1e5b6a6af410c0": {
+    "markdown": "Try it: move the slider to 2025 or press play. The colours use a fixed scale and the geography is fixed to ASGS 2021. Source: ABS Regional population 2024–25, annual series.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: move the slider to 2025 or press play. The colours use a fixed scale and the geography is fi",
+    "kind": "html"
+  },
+  "copy-7fe979672117eac2": {
+    "markdown": "These are annual population snapshots, so **sequential** filtering suits the question. Cumulative mode would overlap several estimates of the same area and should not be used to add resident populations across years. The browser reveals existing records; it does not estimate missing years or fit a trend model.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "These are annual population snapshots, so sequential filtering suits the question. Cumulative mode w",
+    "kind": "html"
+  },
+  "copy-dee650f24b9828aa": {
+    "markdown": "For dates, use `as_time_property(date_column, unit = \"date\")` to produce a numeric property: GeoJSON serializes R dates as strings. For large datasets, avoid repeating complex geometries unnecessarily; the slider also supports changing paint expressions on a single geometry source. See [`add_slider_control()`](https://walker-data.com/mapgl/reference/add_slider_control.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "For dates, use astimeproperty(datecolumn, unit = \"date\") to produce a numeric property: GeoJSON seri",
+    "kind": "html"
+  },
+  "copy-78c0376713bf5c7b": {
+    "markdown": "13. Compare 2021 and 2025 using a shared scale",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "13. Compare 2021 and 2025 using a shared scale",
+    "kind": "html",
+    "headingId": "compare-2021-and-2025-using-a-shared-scale"
+  },
+  "copy-9838fc3fc33ea030": {
+    "markdown": "A swipe comparison helps inspect changes. Both maps must use comparable statistics, units, geography, and colour limits. Here density uses the same official area denominator and the same 0–25,000 scale.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "A swipe comparison helps inspect changes. Both maps must use comparable statistics, units, geography",
+    "kind": "html"
+  },
+  "copy-84b057da66a687c1": {
+    "markdown": "Try it: drag the central handle. Left shows June 2021; right shows June 2025. Source: ABS Regional population 2024–25.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: drag the central handle. Left shows June 2021; right shows June 2025. Source: ABS Regional p",
+    "kind": "html"
+  },
+  "copy-266b08fcd27da3e7": {
+    "markdown": "Use `mode = \"sync\"` for synchronized views. Quantify changes in a table or chart as well: colour differences do not establish why population changed. For example, compute `population_2025 - population_2021`; for percentage change, check for a zero baseline before dividing. See [`compare()`](https://walker-data.com/mapgl/reference/compare.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Use mode = \"sync\" for synchronized views. Quantify changes in a table or chart as well: colour diffe",
+    "kind": "html"
+  },
+  "copy-acb45d568a7b8b7a": {
+    "markdown": "14. Explore 3D extrusion",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "14. Explore 3D extrusion",
+    "kind": "html",
+    "headingId": "explore-3d-extrusion"
+  },
+  "copy-8fcfcdeed0f2ff70": {
+    "markdown": "Extrusion assigns display heights to polygons. Perspective and occlusion make precise comparisons difficult, so retain a 2D map or table. This example focuses on central Sydney while drawing the real SA2 dataset.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Extrusion assigns display heights to polygons. Perspective and occlusion make precise comparisons di",
+    "kind": "html"
+  },
+  "copy-bf783e7bdd362fa6": {
+    "markdown": "The heights encode population density; they are not measured building heights or terrain. A density of 10,000 residents/km² produces a display height of 1,000 metres. Source: ABS.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The heights encode population density; they are not measured building heights or terrain. A density ",
+    "kind": "html"
+  },
+  "copy-300f7d682070eb2c": {
+    "markdown": "`fill_extrusion_height` expects metres, so the display conversion is explicit. `projection = \"mercator\"` avoids globe-related extrusion artefacts described in the [layer overview](https://walker-data.com/mapgl/articles/layers-overview.html). See [`add_fill_extrusion_layer()`](https://walker-data.com/mapgl/reference/add_fill_extrusion_layer.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "fillextrusionheight expects metres, so the display conversion is explicit. projection = \"mercator\" a",
+    "kind": "html"
+  },
+  "copy-22173dcf793359b4": {
+    "markdown": "15. Display the real ABS population raster",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "15. Display the real ABS population raster",
+    "kind": "html",
+    "headingId": "display-the-real-abs-population-raster"
+  },
+  "copy-bf379e66ae4d40b5": {
+    "markdown": "Vector data describe distinct features. **Raster data** describe values in grid cells. The bundled GeoTIFF is the ABS 2025 population grid cropped and masked to Greater Sydney, retaining its native **1 km cells in EPSG:3577**. Its values are modelled residents per km², not observations of individuals at cell centres.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Vector data describe distinct features. Raster data describe values in grid cells. The bundled GeoTI",
+    "kind": "html"
+  },
+  "copy-752f1c087b89c9cf": {
+    "markdown": "Try it: zoom in to inspect the grid cells. The classes retain exact threshold meanings; unmodelled or masked cells are transparent. Source: ABS Australian population grid 2025.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try it: zoom in to inspect the grid cells. The classes retain exact threshold meanings; unmodelled o",
+    "kind": "html"
+  },
+  "copy-9e6c89bda3142274": {
+    "markdown": "The colour table makes this a categorical display raster. Mapgl uses nearest-neighbour reprojection for this path; `raster_resampling = \"nearest\"` also prevents blended class colours when zooming. Zero is distinct from missing data. The retained analytical GeoTIFF still contains its original numeric density values.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The colour table makes this a categorical display raster. Mapgl uses nearest-neighbour reprojection ",
+    "kind": "html"
+  },
+  "copy-6466abd246bdbf76": {
+    "markdown": "Mapgl turns the raster into an image; this example does not provide cell-value popups. A display image is not a substitute for the original grid in analysis. Cropping by a region and masking edge cells is approximate at the 1 km grid scale, so do not expect the masked grid to reproduce the exact SA2 population total. See [`add_image_source()`](https://walker-data.com/mapgl/reference/add_image_source.html) and [`add_raster_layer()`](https://walker-data.com/mapgl/reference/add_raster_layer.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Mapgl turns the raster into an image; this example does not provide cell-value popups. A display ima",
+    "kind": "html"
+  },
+  "copy-6a76fe5e4464f103": {
+    "markdown": "Use `terra::` explicitly: terra and mapgl share function names including `interpolate()` and `compare()`. If you attach both packages, qualify the intended function with `mapgl::` or `terra::`. For a large raster, crop or reduce a display copy, or consider a tiled source.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Use terra:: explicitly: terra and mapgl share function names including interpolate() and compare(). ",
+    "kind": "html"
+  },
+  "copy-38173c4439341e9d": {
+    "markdown": "16. Put the map in your Quarto report",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "16. Put the map in your Quarto report",
+    "kind": "html",
+    "headingId": "put-the-map-in-your-quarto-report"
+  },
+  "copy-27f7d63cab8b303a": {
+    "markdown": "Interactive htmlwidgets belong in an **HTML report**. A normal mapgl map returned from an R chunk becomes an interactive widget when Quarto renders the document. No iframe, screenshot, or Shiny server is needed for that workflow. See [Quarto’s htmlwidgets guide](https://quarto.org/docs/interactive/widgets/htmlwidgets.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Interactive htmlwidgets belong in an HTML report. A normal mapgl map returned from an R chunk become",
+    "kind": "html"
+  },
+  "copy-49b691e79861c0d4": {
+    "markdown": "Use this YAML at the top of an independent report:",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Use this YAML at the top of an independent report:",
+    "kind": "html"
+  },
+  "copy-7872e342cce03251": {
+    "markdown": "Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish the map chunk with the map object. For example, a report can use this pattern:",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish ",
+    "kind": "html"
+  },
+  "copy-37bb03900dd9de31": {
+    "markdown": "Do not set `eval: false`, `include: false`, or `output: false` on a chunk whose map should appear. Avoid placing maps inside collapsed tabs during initial troubleshooting. A `fig-*` label and `fig-cap` provide a caption and cross-reference. Follow your course’s instructions about showing code and submitting supporting files.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Do not set eval: false, include: false, or output: false on a chunk whose map should appear. Avoid p",
+    "kind": "html"
+  },
+  "copy-9b51635f0364d9e3": {
+    "markdown": "Render and verify the report",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Render and verify the report",
+    "kind": "html",
+    "headingId": "render-and-verify-the-report"
+  },
+  "copy-0d0f6f1e9a5658d0": {
+    "markdown": "Run these commands in a **terminal**, from your project folder:",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Run these commands in a terminal, from your project folder:",
+    "kind": "html"
+  },
+  "copy-fa5fc21a6bfc8b8a": {
+    "markdown": "Start from a fresh R session before the final render, and check the resulting HTML in a browser. A report must not rely on objects that happen to exist in your Console. Test at least one popup, one zoom control, and any filter or slider you added.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Start from a fresh R session before the final render, and check the resulting HTML in a browser. A r",
+    "kind": "html"
+  },
+  "copy-0992911dde44e508": {
+    "markdown": "`embed-resources: true` puts the document’s local JavaScript and CSS dependencies into the HTML. It does **not** download the complete remote basemap or guarantee offline maps. Send the rendered HTML and any files required by the assessment instructions. For a website, also publish linked downloads and any supporting assets. See [Quarto’s HTML documentation](https://quarto.org/docs/output-formats/html-basics.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "embed-resources: true puts the document’s local JavaScript and CSS dependencies into the HTML. It do",
+    "kind": "html"
+  },
+  "copy-947f527d40a62060": {
+    "markdown": "PDF and Word need a static alternative",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "PDF and Word need a static alternative",
+    "kind": "html",
+    "headingId": "pdf-and-word-need-a-static-alternative"
+  },
+  "copy-e86cb25158e0eb0e": {
+    "markdown": "PDF and Word cannot preserve these interactive maps. Mapgl’s `print_map()` can produce a static figure during rendering, using **chromote** and an installed Chrome/Chromium browser. The following is an optional export pattern; it is not executed in this HTML tutorial.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "PDF and Word cannot preserve these interactive maps. Mapgl’s printmap() can produce a static figure ",
+    "kind": "html"
+  },
+  "copy-d0a72ec84da4a226": {
+    "markdown": "The helper script `scripts/export-example.R` provides a complete HTML export example. If you use static output, inspect it after export: check the extent, legend, missing-value key, and attribution. See [`print_map()`](https://walker-data.com/mapgl/reference/print_map.html) and [`save_map()`](https://walker-data.com/mapgl/reference/save_map.html).",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "The helper script scripts/export-example.R provides a complete HTML export example. If you use stati",
+    "kind": "html"
+  },
+  "copy-48b63cfca9e412fa": {
+    "markdown": "17. Adapt the workflow to Project 2",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "17. Adapt the workflow to Project 2",
+    "kind": "html",
+    "headingId": "adapt-the-workflow-to-project-2"
+  },
+  "copy-c026d7d08982b3fb": {
+    "markdown": "Start with the analytical question, then choose a geometry and an encoding that help answer it. For example, point locations can support a question about distribution, while area rates can support a comparison between regions. The appearance of the map should follow from that question.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Start with the analytical question, then choose a geometry and an encoding that help answer it. For ",
+    "kind": "html"
+  },
+  "copy-507303a81edd0478": {
+    "markdown": "**Identify the geographic unit.** Is each row a location, an event, a route, or an area? Check the data period and coverage.",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Identify the geographic unit. Is each row a location, an event, a route, or an area? Check the data ",
+    "kind": "html"
+  },
+  "copy-923007d9aeaaa011": {
+    "markdown": "**Prepare and validate the data.** Read files reproducibly, verify the CRS, inspect invalid or empty geometries, and account for excluded rows.",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Prepare and validate the data. Read files reproducibly, verify the CRS, inspect invalid or empty geo",
+    "kind": "html"
+  },
+  "copy-8a7e2c527f29a3e6": {
+    "markdown": "**Join only what is needed.** Check unique identifiers and unmatched keys. Keep only columns that are appropriate to publish.",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Join only what is needed. Check unique identifiers and unmatched keys. Keep only columns that are ap",
+    "kind": "html"
+  },
+  "copy-e93bca9d01dc2d7b": {
+    "markdown": "**Choose the encoding.** Use category colours for categories, a sequential scale for a rate, or proportional circle areas for suitable counts. Explain the units.",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Choose the encoding. Use category colours for categories, a sequential scale for a rate, or proporti",
+    "kind": "html"
+  },
+  "copy-60c747d6b30b7914": {
+    "markdown": "**Write the finding.** Describe a relevant pattern, quantify it, and discuss the source’s limitations. Pair the map with a chart or table when precise comparison matters.",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Write the finding. Describe a relevant pattern, quantify it, and discuss the source’s limitations. P",
+    "kind": "html"
+  },
+  "copy-e63ee7244e3b34c3": {
+    "markdown": "**Render and check the result.** Make sure the HTML opens and the map works in the same format the reader or marker will receive.",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Render and check the result. Make sure the HTML opens and the map works in the same format the reade",
+    "kind": "html"
+  },
+  "copy-a7bbc58c1b4f7fd1": {
+    "markdown": "Performance and responsible publication",
+    "element": "h3",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Performance and responsible publication",
+    "kind": "html",
+    "headingId": "performance-and-responsible-publication"
+  },
+  "copy-db3afafd75e18e28": {
+    "markdown": "Every attribute retained in a displayed `sf` object may be serialized into the map’s GeoJSON. Hiding a column from a popup does not remove it from the published HTML. Select only approved fields before mapping, and do not publish confidential data or precise personal locations.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Every attribute retained in a displayed sf object may be serialized into the map’s GeoJSON. Hiding a",
+    "kind": "html"
+  },
+  "copy-2700a6f6142e6738": {
+    "markdown": "For a slow map, first reduce unnecessary columns, crop to the study region, and inspect file size. Simplify **a display copy** of large geometries using a defensible tolerance; retain the originals for analysis. A clustering control reduces visual crowding but still sends the underlying points to the browser. Large projects may need vector tiles or PMTiles rather than an embedded GeoJSON dataset.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "For a slow map, first reduce unnecessary columns, crop to the study region, and inspect file size. S",
+    "kind": "html"
+  },
+  "copy-450c14ce46650813": {
+    "markdown": "Keep basemap attribution visible. Provide a useful caption and a table or chart so that colour perception, a small screen, or an unavailable basemap does not prevent a reader from understanding your result. Avoid adding many maps when one answers the question clearly.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Keep basemap attribution visible. Provide a useful caption and a table or chart so that colour perce",
+    "kind": "html"
+  },
+  "copy-ff243d63173fd06f": {
+    "markdown": "18. Troubleshoot common problems",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "18. Troubleshoot common problems",
+    "kind": "html",
+    "headingId": "troubleshoot-common-problems"
+  },
+  "copy-0a5fa3aad297c7b2": {
+    "markdown": "If the basemap service is temporarily unavailable, you can construct a map using `style = basemap_style(\"#f5f5f2\")` and your local data layers. This provides a plain background for debugging or a deliberately basemap-free design. It lacks place labels and other basemap context, and the mapping library still needs to be available.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "If the basemap service is temporarily unavailable, you can construct a map using style = basemapstyl",
+    "kind": "html"
+  },
+  "copy-c4c996ff704f527b": {
+    "markdown": "Documentation and reproducibility",
+    "element": "h2",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Documentation and reproducibility",
+    "kind": "html",
+    "headingId": "documentation-and-reproducibility"
+  },
+  "copy-2f93acf4989a10f4": {
+    "markdown": "This lesson uses original examples informed by **Kyle Walker’s mapgl documentation**. It targets mapgl **0.5.2** and explicitly selects its basemap to avoid relying on a default that may change between versions. Refer to the current documentation when extending the examples.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "This lesson uses original examples informed by Kyle Walker’s mapgl documentation. It targets mapgl 0",
+    "kind": "html"
+  },
+  "copy-4c3d27e4422190bb": {
+    "markdown": "[mapgl home and getting started](https://walker-data.com/mapgl/)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[mapgl home and getting started](https://walker-data.com/mapgl/)",
+    "kind": "html"
+  },
+  "copy-5095d53d3694dc6d": {
+    "markdown": "[Sources and layers](https://walker-data.com/mapgl/articles/layers-overview.html)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[Sources and layers](https://walker-data.com/mapgl/articles/layers-overview.html)",
+    "kind": "html"
+  },
+  "copy-541a7c22727d819f": {
+    "markdown": "[Map design](https://walker-data.com/mapgl/articles/map-design.html)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[Map design](https://walker-data.com/mapgl/articles/map-design.html)",
+    "kind": "html"
+  },
+  "copy-df12927dea02a101": {
+    "markdown": "[Complete function reference](https://walker-data.com/mapgl/reference/index.html)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[Complete function reference](https://walker-data.com/mapgl/reference/index.html)",
+    "kind": "html"
+  },
+  "copy-e392d7e8e33053a4": {
+    "markdown": "[mapgl release notes](https://walker-data.com/mapgl/news/index.html)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[mapgl release notes](https://walker-data.com/mapgl/news/index.html)",
+    "kind": "html"
+  },
+  "copy-3b9eedf72d56e005": {
+    "markdown": "[`sf` documentation](https://r-spatial.github.io/sf/)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[sf documentation](https://r-spatial.github.io/sf/)",
+    "kind": "html"
+  },
+  "copy-83d1b279189366a2": {
+    "markdown": "[`terra` documentation](https://rspatial.github.io/terra/)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[terra documentation](https://rspatial.github.io/terra/)",
+    "kind": "html"
+  },
+  "copy-ff959902fd9007fc": {
+    "markdown": "[Quarto and htmlwidgets](https://quarto.org/docs/interactive/widgets/htmlwidgets.html)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[Quarto and htmlwidgets](https://quarto.org/docs/interactive/widgets/htmlwidgets.html)",
+    "kind": "html"
+  },
+  "copy-9ccf5dd0064ed7b4": {
+    "markdown": "[OpenFreeMap and basemap attribution](https://openfreemap.org/)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[OpenFreeMap and basemap attribution](https://openfreemap.org/)",
+    "kind": "html"
+  },
+  "copy-3ea3f1fce793be38": {
+    "markdown": "[ABS population methodology](https://www.abs.gov.au/methodologies/regional-population-methodology/2024-25)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[ABS population methodology](https://www.abs.gov.au/methodologies/regional-population-methodology/20",
+    "kind": "html"
+  },
+  "copy-2e37766540bbdd8d": {
+    "markdown": "[NSW school data and dictionary](https://data.nsw.gov.au/data/dataset/nsw-education-nsw-public-schools-master-dataset)",
+    "element": "li",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "[NSW school data and dictionary](https://data.nsw.gov.au/data/dataset/nsw-education-nsw-public-schoo",
+    "kind": "html"
+  },
+  "copy-9dee83b5b4686b72": {
+    "markdown": "To record your own environment, run `sessionInfo()` and retain the output with your project. The supplied `R/prepare-sydney-data.R` rebuilds the teaching files from bundled official-source snapshots. `scripts/fetch-sydney-data.R` documents how to download those sources again; a later school snapshot may differ. `data/README.md` documents the fields, periods, licences, and transformations.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "To record your own environment, run sessionInfo() and retain the output with your project. The suppl",
+    "kind": "html"
+  },
+  "copy-f17c84d244b1c926": {
+    "markdown": "Try one extension at a time: change the school colour palette and update its legend; compare population counts with density; find which schools fall in each SA2; change the heatmap radius and describe the visual effect; or quantify the SA2 with the largest population change between 2021 and 2025. Explain why cumulative filtering would be inappropriate for repeated annual population snapshots.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Try one extension at a time: change the school colour palette and update its legend; compare populat",
+    "kind": "html"
+  },
+  "copy-8d5f9a7e65681cff": {
+    "markdown": "Then choose one map appropriate to your own data and write a paragraph that explains a specific finding, its magnitude, and its limitations.",
+    "element": "p",
+    "source": "src/data/mapgl/tutorial.html",
+    "label": "Then choose one map appropriate to your own data and write a paragraph that explains a specific find",
+    "kind": "html"
+  }
+}

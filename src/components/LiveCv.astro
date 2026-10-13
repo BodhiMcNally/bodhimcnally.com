@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import { liveCv } from '../../config/live-cv.mjs';
 
 interface Props {
@@ -22,8 +23,8 @@ const { cv } = Astro.props;
   <div class="container">
     <div class="document-panel">
       <div>
-        <h2 id="cv-title">Curriculum vitae</h2>
-        <p>My academic curriculum vitae.</p>
+        <EditableCopy copyId="copy-43a0e5d0539a38a5" as="h2" id="cv-title" />
+        <EditableCopy copyId="copy-8f6c80c895d38c96" as="p" />
       </div>
       <div class="document-panel__links">
         <a class="button" href={liveCv.driveHref} target="_blank" rel="noreferrer">View on Google Drive</a>
@@ -32,9 +33,9 @@ const { cv } = Astro.props;
     </div>
 
     <section class="cv-preview" aria-labelledby="cv-preview-title">
-      <h3 id="cv-preview-title" class="visually-hidden">Curriculum vitae preview</h3>
+      <EditableCopy copyId="copy-4130352548fcc709" as="h3" id="cv-preview-title" class="visually-hidden" />
       <div class="cv-loading-message" data-cv-message hidden>
-        <p data-cv-status role="status" aria-live="polite">Loading the latest CV…</p>
+        <EditableCopy copyId="copy-05450e6d5c2b95c8" as="p" data-cv-status role="status" aria-live="polite" />
         <button class="text-link" type="button" data-cv-retry hidden>Try again</button>
       </div>
       <noscript><p>These are the saved preview pages. View the latest PDF on Google Drive using the link above.</p></noscript>

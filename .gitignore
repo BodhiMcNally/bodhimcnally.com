@@ -8,3 +8,11 @@ dist/
 .vercel/
 *.log
 preview/
+
+public/editor-build.json
+
+public/cv/runtime/
+
+public/admin/katex.min.css
+
+public/admin/fonts/

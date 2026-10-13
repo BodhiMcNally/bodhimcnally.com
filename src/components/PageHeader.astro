@@ -1,15 +1,17 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 interface Props {
   title: string;
+  cmsTitle?: string;
   introduction?: string;
 }
 
-const { title, introduction } = Astro.props;
+const { title, introduction, cmsTitle } = Astro.props;
 ---
 
 <header class="page-header-shell">
   <div class="page-header container">
-    <h1>{title}</h1>
+    {cmsTitle ? <EditableCopy copyId={cmsTitle} as="h1" /> : <h1>{title}</h1>}
     {introduction && <p class="page-header__introduction">{introduction}</p>}
   </div>
 </header>

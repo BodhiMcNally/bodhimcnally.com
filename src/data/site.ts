@@ -1,3 +1,4 @@
+import siteCopy from './site-copy.json';
 import cvPages from './cv-pages.json';
 
 export type ProfileLink = {
@@ -19,20 +20,20 @@ export type Appearance = {
 };
 
 export const site = {
-  name: 'Bodhi McNally',
-  shortName: 'BM',
+  name: siteCopy['profile-name'].markdown,
+  shortName: siteCopy['profile-shortName'].markdown,
   canonicalUrl: 'https://bodhimcnally.com',
-  defaultTitle: 'Bodhi McNally',
+  defaultTitle: siteCopy['profile-defaultTitle'].markdown,
   defaultDescription:
-    'Bodhi McNally is a Doctor of Medicine student at the University of Sydney with a background in data science, healthcare analytics and university teaching.',
-  location: 'Sydney, Australia',
-  currentRole: 'Doctor of Medicine student',
-  institution: 'University of Sydney',
-  clinicalSchool: 'Westmead Clinical School',
+    siteCopy['profile-defaultDescription'].markdown,
+  location: siteCopy['profile-location'].markdown,
+  currentRole: siteCopy['profile-currentRole'].markdown,
+  institution: siteCopy['profile-institution'].markdown,
+  clinicalSchool: siteCopy['profile-clinicalSchool'].markdown,
   introduction:
-    'I am a Doctor of Medicine student at the University of Sydney, based at Westmead Clinical School.',
+    siteCopy['profile-introduction'].markdown,
   researchSummary:
-    'My developing research interests are in academic urology, urological oncology, robotic and minimally invasive surgery, surgical outcomes, and the use of clinical data to study treatment selection, perioperative outcomes and patient recovery.',
+    siteCopy['profile-researchSummary'].markdown,
   cv: {
     driveHref: 'https://drive.google.com/file/d/15gHFVTP9Cgdh4T-KLPsUnEmfxF7kbx50/view?usp=drivesdk',
     downloadHref: '/api/cv?download=1',

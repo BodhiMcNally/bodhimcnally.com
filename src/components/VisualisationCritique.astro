@@ -1,5 +1,8 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="academic-tool viz-critique" data-viz-critique aria-labelledby="viz-title">
-  <header class="tool-intro"><div><p class="eyebrow">Figure clinic</p><h2 id="viz-title">Data visualisation critique studio</h2></div><p>Repair a deliberately weak figure and watch the corresponding ggplot2 decisions appear.</p></header>
+  <header class="tool-intro"><div><EditableCopy copyId="copy-7fad76a2261c1dfe" as="p" class="eyebrow" /><EditableCopy copyId="copy-a6694be1a9ae0309" as="h2" id="viz-title" /></div><EditableCopy copyId="copy-a22c1cc63dd6fdbf" as="p" /></header>
   <div class="tool-grid"><form class="tool-controls"><label><input type="checkbox" data-viz="zero"> Begin the bar axis at zero</label><label><input type="checkbox" data-viz="order"> Order groups by value</label><label><input type="checkbox" data-viz="direct"> Label values directly</label><label><input type="checkbox" data-viz="accessible"> Use an accessible palette</label><label><input type="checkbox" data-viz="uncertainty"> Show uncertainty intervals</label><label><input type="checkbox" data-viz="title"> Write a specific title</label></form><div class="tool-output"><div class="tool-figure" data-viz-figure></div><div class="viz-score"><span data-viz-score>0</span><p data-viz-message></p></div><pre><code data-viz-code></code></pre></div></div>
 </section>
 <script>

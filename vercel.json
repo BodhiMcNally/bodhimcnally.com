@@ -26,6 +26,9 @@
   "functions": {
     "api/cv.mjs": {
       "maxDuration": 30
+    },
+    "api/editor.mjs": {
+      "maxDuration": 30
     }
   }
 }

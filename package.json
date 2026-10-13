@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node scripts/prepare-live-cv.mjs && node scripts/render-cv-pages.mjs && node scripts/render-icons.mjs",
+    "predev": "node scripts/prepare-site-editor.mjs && node scripts/prepare-live-cv.mjs && node scripts/render-cv-pages.mjs && node scripts/render-icons.mjs",
     "dev": "astro dev",
     "check": "astro check",
-    "prebuild": "node scripts/prepare-live-cv.mjs && node scripts/render-cv-pages.mjs && node scripts/render-icons.mjs",
+    "prebuild": "node scripts/prepare-site-editor.mjs && node scripts/prepare-live-cv.mjs && node scripts/render-cv-pages.mjs && node scripts/render-icons.mjs",
     "build": "npm run check && astro build",
     "preview": "astro preview",
     "verify": "npm run build && node scripts/check-links.mjs && node scripts/audit-html.mjs",

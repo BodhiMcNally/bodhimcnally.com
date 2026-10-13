@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 interface Props {
   resourceTitle: string;
   resourceId: string;
@@ -29,14 +30,14 @@ const { resourceTitle, resourceId } = Astro.props;
   <dialog class="annotation-dialog" data-annotation-dialog aria-labelledby="annotation-dialog-title">
     <div class="annotation-dialog__header">
       <div>
-        <p class="eyebrow">Private workspace</p>
-        <h2 id="annotation-dialog-title">My notes</h2>
+        <EditableCopy copyId="copy-323007f27bd27170" as="p" class="eyebrow" />
+        <EditableCopy copyId="copy-ddf9a3df3df5aa14" as="h2" id="annotation-dialog-title" />
       </div>
       <button type="button" data-close-annotations aria-label="Close notes">×</button>
     </div>
-    <p class="annotation-dialog__privacy">Saved only in this browser. Nothing is sent to the website.</p>
+    <EditableCopy copyId="copy-ab16bdf039902c58" as="p" class="annotation-dialog__privacy" />
     <ol class="annotation-list" data-annotation-list></ol>
-    <p class="annotation-empty" data-annotation-empty>No highlights or notes on this resource yet.</p>
+    <EditableCopy copyId="copy-0d2186903135686f" as="p" class="annotation-empty" data-annotation-empty />
     <div class="annotation-dialog__footer">
       <a href="/resources/notebook/">Open notebook</a>
       <button type="button" data-export-page-notes>Export this page</button>

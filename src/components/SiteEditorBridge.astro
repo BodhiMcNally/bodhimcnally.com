@@ -1,0 +1,26 @@
+<script>
+  const requested = new URL(location.href).searchParams.get('edit') === '1';
+  if (requested && window.parent !== window) {
+    void fetch('/api/editor?action=session', { cache: 'no-store' }).then(response => response.json()).then(session => {
+      if (!session.authenticated) return;
+      document.documentElement.classList.add('site-edit-mode');
+      document.querySelectorAll<HTMLElement>('[data-edit-copy]').forEach(element => {
+        element.setAttribute('tabindex', '0');
+        element.setAttribute('title', 'Edit this text');
+      });
+      const select = (event: Event) => {
+        const target = (event.target as Element)?.closest<HTMLElement>('[data-edit-copy]');
+        if (!target || (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key))) return;
+        event.preventDefault();
+        event.stopPropagation();
+        window.parent.postMessage({ type: 'SITE_EDITOR_COPY', id: target.dataset['editCopy'] }, location.origin);
+      };
+      document.addEventListener('click', select, true);
+      document.addEventListener('keydown', select, true);
+    }).catch(() => undefined);
+  }
+</script>
+<style is:global>
+  .site-edit-mode [data-edit-copy] { outline: 1px dashed #9a6a74; outline-offset: 4px; cursor: pointer; }
+  .site-edit-mode [data-edit-copy]:hover, .site-edit-mode [data-edit-copy]:focus { outline: 2px solid #831b37; background-color: #fff8de; }
+</style>

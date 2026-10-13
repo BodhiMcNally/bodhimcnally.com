@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import { getCollection, render } from 'astro:content';
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -60,9 +61,9 @@ const structuredData = [
 <BaseLayout structuredData={structuredData}>
   <section class="home-introduction container" aria-labelledby="home-title">
     <div class="home-introduction__copy">
-      <h1 id="home-title">Bodhi McNally</h1>
-      <p class="home-introduction__lead">{site.introduction}</p>
-      <p class="home-introduction__research">{site.researchSummary}</p>
+      <EditableCopy copyId="copy-0bfd20e941259f93" as="h1" id="home-title" />
+      <EditableCopy copyId="profile-introduction" as="p" class="home-introduction__lead" />
+      <EditableCopy copyId="profile-researchSummary" as="p" class="home-introduction__research" />
 
       <nav class="home-directory" aria-label="Main links">
         <a href="/about/">
@@ -89,16 +90,17 @@ const structuredData = [
 
   <section class="student-prompt">
     <div class="container student-prompt__inner">
-      <p><em>One of my university students?</em></p>
-      <p>You may be looking for the <a href="/resources/">teaching resources page</a>.</p>
+      <EditableCopy copyId="copy-fb83c254119c4940" as="p" />
+      <EditableCopy copyId="copy-11d2400ff126b200" as="p" />
     </div>
   </section>
 
   <section class="home-updates container" aria-labelledby="updates-title">
+    <a class="text-link" href="/posts/">All posts</a>
     <header class="home-updates__header">
       <div>
-        <p class="eyebrow">Updates</p>
-        <h2 id="updates-title">Recent posts</h2>
+        <EditableCopy copyId="copy-45d980789e3ddd51" as="p" class="eyebrow" />
+        <EditableCopy copyId="copy-dcc096d6e3437329" as="h2" id="updates-title" />
       </div>
       <div class="update-carousel__controls" aria-label="Post navigation">
         <button type="button" data-update-previous aria-controls="recent-posts">
@@ -143,7 +145,7 @@ const structuredData = [
                 <>
                   <p class="update-entry__summary">{entry.data.summary}</p>
                   <details class="update-entry__details">
-                    <summary>Read the full post</summary>
+                    <EditableCopy copyId="copy-5cd5fe316c1ede64" as="summary" />
                     <div class="update-entry__body">
                       <Content />
                     </div>
@@ -189,7 +191,7 @@ const structuredData = [
   </section>
 
   <section class="home-profiles container" aria-labelledby="profiles-title">
-    <h2 class="visually-hidden" id="profiles-title">Professional links</h2>
+    <EditableCopy copyId="copy-2add4e0a476e926f" as="h2" class="visually-hidden" id="profiles-title" />
     <ProfileList />
   </section>
 

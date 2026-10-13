@@ -1,4 +1,6 @@
 ---
+import SiteEditorBridge from '@/components/SiteEditorBridge.astro';
+import 'katex/dist/katex.min.css';
 import '@/styles/global.scss';
 
 import Footer from '@/components/Footer.astro';
@@ -80,6 +82,7 @@ const canonicalUrl = new URL(canonicalPath, site.canonicalUrl).toString();
     <CommandPalette />
     <ProvenancePanel />
     <Footer />
+    <SiteEditorBridge />
     <script is:inline>
       if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
         window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));

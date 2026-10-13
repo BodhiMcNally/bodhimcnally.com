@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+const posts = (await getCollection('updates', ({ data }) => !data.draft)).sort((a, b) => b.data.sortOrder - a.data.sortOrder || (b.data.published?.getTime() ?? 0) - (a.data.published?.getTime() ?? 0));
+---
+<BaseLayout title="Posts" description="Updates on Bodhi McNally’s research, teaching and academic work.">
+  <PageHeader title="Posts" introduction="Updates on research, teaching and academic work." cmsTitle="copy-a558a8ca58d1a6e9" />
+  <section class="container post-archive" aria-label="All posts">
+    <ol>
+      {posts.map(post => <li><span>{post.data.source === 'linkedin' ? 'LinkedIn' : 'Website'}{post.data.published && ` · ${post.data.published.toLocaleDateString('en-AU', { timeZone: 'UTC' })}`}</span><h2><a href={`/posts/${post.id}/`}>{post.data.title}</a></h2><p>{post.data.summary}</p></li>)}
+    </ol>
+  </section>
+</BaseLayout>
+<style>.post-archive{padding-block:1rem 5rem}.post-archive ol{list-style:none;margin:0;padding:0;display:grid;gap:2rem}.post-archive li{padding-block:1.5rem;border-bottom:1px solid var(--line)}.post-archive h2{font-size:var(--step-2);margin:.5rem 0}.post-archive span{color:var(--muted);font-size:.9rem}.post-archive p{max-width:55rem;color:var(--ink-soft)}</style>

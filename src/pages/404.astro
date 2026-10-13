@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
@@ -8,9 +9,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   noindex={true}
 >
   <section class="not-found container" aria-labelledby="not-found-title">
-    <p class="eyebrow">404</p>
-    <h1 id="not-found-title">Page not found</h1>
-    <p>The page may have moved or the address may be incomplete.</p>
-    <p><a class="arrow-link" href="/">Return home</a></p>
+    <EditableCopy copyId="copy-3f89adceffc7f753" as="p" class="eyebrow" />
+    <EditableCopy copyId="copy-7ebe63029b2f23e1" as="h1" id="not-found-title" />
+    <EditableCopy copyId="copy-97890a2691df470f" as="p" />
+    <EditableCopy copyId="copy-218b61edbe8addfd" as="p" />
   </section>
 </BaseLayout>

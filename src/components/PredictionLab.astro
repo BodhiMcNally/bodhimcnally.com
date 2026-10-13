@@ -1,5 +1,8 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="academic-tool" data-prediction-lab aria-labelledby="prediction-title">
-  <header class="tool-intro"><div><p class="eyebrow">Clinical prediction</p><h2 id="prediction-title">Threshold laboratory</h2></div><p>Explore how discrimination, prevalence and decision thresholds change what a test result means.</p></header>
+  <header class="tool-intro"><div><EditableCopy copyId="copy-8af620ce04c6535b" as="p" class="eyebrow" /><EditableCopy copyId="copy-f56c9c9a29611ca8" as="h2" id="prediction-title" /></div><EditableCopy copyId="copy-d4bf58c72f4bff8b" as="p" /></header>
   <div class="tool-grid">
     <form class="tool-controls"><label>Population size <input type="number" min="100" max="100000" step="100" value="1000" data-prediction="population"></label><label>Prevalence <output data-prediction-output="prevalence">20%</output><input type="range" min="1" max="80" value="20" data-prediction="prevalence"></label><label>Sensitivity <output data-prediction-output="sensitivity">85%</output><input type="range" min="1" max="100" value="85" data-prediction="sensitivity"></label><label>Specificity <output data-prediction-output="specificity">80%</output><input type="range" min="1" max="100" value="80" data-prediction="specificity"></label><label>Decision threshold <output data-prediction-output="threshold">20%</output><input type="range" min="1" max="80" value="20" data-prediction="threshold"></label></form>
     <div class="tool-output"><div class="prediction-metrics" data-prediction-metrics></div><div class="prediction-matrix" data-prediction-matrix></div><div class="tool-reading" data-prediction-reading></div></div>

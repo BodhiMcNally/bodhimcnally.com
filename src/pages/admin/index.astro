@@ -1,0 +1,74 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+<BaseLayout title="Website editor" description="Private content editor for Bodhi McNally’s academic website." noindex={true}>
+  <link rel="stylesheet" href="/admin/editor.css" />
+  <section class="editor-shell container" aria-labelledby="editor-title">
+    <header class="editor-heading">
+      <div><EditableCopy copyId="copy-70945e8dce92e490" as="p" class="eyebrow" /><EditableCopy copyId="copy-e2980b576c21ba99" as="h1" id="editor-title" /></div>
+      <div class="editor-account" hidden data-editor-account><span data-editor-user></span><button class="button button--quiet" type="button" data-editor-logout>Log out</button></div>
+    </header>
+
+    <form class="editor-login" data-editor-login>
+      <EditableCopy copyId="copy-9672cc0ed87e7ecf" as="h2" /><EditableCopy copyId="copy-79bddfe1c4345f88" as="p" />
+      <label>Username<input name="username" value="BodhiMcNally" autocomplete="username" required /></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+      <button class="button" type="submit">Log in</button>
+    </form>
+
+    <div class="editor-notice" role="status" aria-live="polite" data-editor-notice></div>
+    <div class="editor-deployment" hidden data-editor-deployment></div>
+
+    <div class="editor-workspace" hidden data-editor-workspace>
+      <aside class="editor-sidebar" aria-label="Content navigation">
+        <div class="editor-tabs" role="group" aria-label="Content type">
+          <button type="button" class="is-active" data-editor-tab="copy">Page text</button>
+          <button type="button" data-editor-tab="publications">Publications</button>
+          <button type="button" data-editor-tab="projects">Research projects</button>
+          <button type="button" data-editor-tab="posts">Posts</button>
+          <button type="button" data-editor-tab="resources">Resources</button>
+        </div>
+        <label class="editor-search">Find content<input type="search" data-editor-search placeholder="Search text or titles" /></label>
+        <label data-editor-copy-filter>Page or component<select data-editor-source><option value="">All text</option></select></label>
+        <button class="button editor-new" type="button" hidden data-editor-new>Add new</button>
+        <div class="editor-items" data-editor-items></div>
+      </aside>
+
+      <section class="editor-writing" aria-labelledby="editor-current-title">
+        <header class="editor-writing__heading"><div><EditableCopy copyId="copy-53d07ff2831ba98d" as="h2" id="editor-current-title" data-editor-current-title /><EditableCopy copyId="copy-68f1afd24d2f8ec5" as="p" data-editor-current-detail /></div><button class="button" type="button" disabled data-editor-publish>Publish changes</button></header>
+        <div data-editor-form></div>
+        <div class="editor-markdown" hidden data-editor-markdown>
+          <div class="editor-toolbar" role="toolbar" aria-label="Markdown formatting">
+            <button type="button" data-markdown="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+            <button type="button" data-markdown="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+            <button type="button" data-markdown="strike" title="Strikethrough"><s>S</s></button>
+            <button type="button" data-markdown="heading" title="Heading">H2</button>
+            <button type="button" data-markdown="bullets" title="Bullet list">• List</button>
+            <button type="button" data-markdown="numbers" title="Numbered list">1. List</button>
+            <button type="button" data-markdown="quote" title="Block quote">Quote</button>
+            <button type="button" data-markdown="link" title="Link">Link</button>
+            <button type="button" data-markdown="image" title="Image">Image</button>
+            <button type="button" data-markdown="code" title="Inline code">Code</button>
+            <button type="button" data-markdown="fence" title="Code block">Block</button>
+            <button type="button" data-markdown="table" title="Table">Table</button>
+            <button type="button" data-markdown="rule" title="Horizontal rule">Rule</button>
+            <button type="button" data-markdown="footnote" title="Footnote">Note</button>
+            <button type="button" data-markdown="math" title="Mathematics">Math</button>
+          </div>
+          <EditableCopy copyId="copy-b48b97fd1ec883f7" as="label" class="visually-hidden" for="editor-body" />
+          <textarea id="editor-body" data-editor-body spellcheck="true"></textarea>
+          <div class="editor-preview-heading"><span>Markdown preview</span><button type="button" class="text-link" data-editor-render>Refresh preview</button></div>
+          <iframe title="Markdown preview" class="editor-markdown-preview" sandbox="" data-editor-rendered></iframe>
+        </div>
+      </section>
+    </div>
+
+    <section class="editor-live-preview" hidden data-editor-live-preview aria-labelledby="editor-preview-title">
+      <header><EditableCopy copyId="copy-067d675034b6f6d9" as="h2" id="editor-preview-title" /><label>Page<select data-editor-page><option value="/">Home</option><option value="/about/">About</option><option value="/research/">Research</option><option value="/teaching/">Teaching</option><option value="/contact/">Contact</option><option value="/resources/">Resources</option><option value="/resources/interactive-maps-in-r-with-mapgl/">Mapgl tutorial</option><option value="/posts/">Posts</option></select></label><button class="button button--quiet" type="button" data-editor-refresh-page>Reload page</button></header>
+      <EditableCopy copyId="copy-90754f24abc40d8f" as="p" />
+      <iframe title="Published page with editable text" data-editor-page-frame loading="lazy"></iframe>
+    </section>
+  </section>
+  <script is:inline src="/admin/editor.js"></script>
+</BaseLayout>

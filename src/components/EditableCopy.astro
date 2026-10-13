@@ -1,0 +1,19 @@
+---
+import siteCopy from '@/data/site-copy.json';
+import { renderEditorMarkdown, inlineParagraph } from '../../server/editor/markdown.mjs';
+
+interface Props {
+  copyId: string;
+  as?: string;
+  [attribute: string]: unknown;
+}
+const { copyId, as = 'p', ...attributes } = Astro.props as Props;
+const copies = siteCopy as Record<string, { markdown: string }>;
+const entry = copies[copyId];
+if (!entry) throw new Error(`Missing editable copy: ${copyId}`);
+const rendered = await renderEditorMarkdown(entry.markdown);
+const paragraph = inlineParagraph(rendered);
+const Tag = (as === 'p' && paragraph === null ? 'div' : as) as 'p';
+const html = paragraph ?? rendered;
+---
+<Tag {...attributes} data-edit-copy={copyId} set:html={html} />

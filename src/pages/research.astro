@@ -1,4 +1,6 @@
 ---
+import MarkdownText from '@/components/MarkdownText.astro';
+import EditableCopy from '@/components/EditableCopy.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import { projects, publications } from '@/data/research';
@@ -16,22 +18,20 @@ const filterFor = (publicationType: (typeof publications)[number]['publicationTy
   title="Research"
   description="Bodhi McNally’s developing research interests in academic urology, surgical outcomes and quantitative clinical research."
 >
-  <PageHeader title="Research" />
+  <PageHeader title="Research" cmsTitle="copy-74ca513267f4d243" />
 
   <section class="research-overview container" aria-labelledby="research-interests-title">
     <div class="research-overview__introduction">
-      <h2 id="research-interests-title">Research interests</h2>
-      <p>
-        My developing interests lie in academic urology, surgical outcomes and quantitative clinical research. I am particularly interested in urological oncology, especially prostate and renal cancer; robotic and minimally invasive surgery; and the evaluation of perioperative, functional and patient-reported outcomes. My quantitative background also informs an interest in using real-world clinical data, prediction modelling and health-services research to study treatment selection, variation in care and patient recovery. I am most interested in methods that begin with a clear clinical question, reflect how the data were generated and communicate uncertainty honestly.
-      </p>
+      <EditableCopy copyId="copy-73a8b48b5df7f012" as="h2" id="research-interests-title" />
+      <EditableCopy copyId="copy-6d73fc181fa73bbd" as="p" />
     </div>
   </section>
 
   <section class="current-research" aria-labelledby="current-research-title">
     <div class="container">
       <header class="section-heading">
-        <p class="eyebrow">Current work</p>
-        <h2 id="current-research-title">Research projects</h2>
+        <EditableCopy copyId="copy-e88e596b062b24d7" as="p" class="eyebrow" />
+        <EditableCopy copyId="copy-85193cee5ea7d17b" as="h2" id="current-research-title" />
       </header>
 
       <div class="research-projects">
@@ -46,7 +46,7 @@ const filterFor = (publicationType: (typeof publications)[number]['publicationTy
               <p class="research-project__affiliation">
                 {[project.role, project.institution].filter(Boolean).join(' · ')}
               </p>
-              <p>{project.shortDescription}</p>
+              <MarkdownText text={project.shortDescription} />
               {project.collaborators?.length && (
                 <p class="research-project__collaborators">
                   Collaborating with {project.collaborators.join(', ')}
@@ -62,12 +62,12 @@ const filterFor = (publicationType: (typeof publications)[number]['publicationTy
   <section class="publications-section" id="publications" aria-labelledby="publications-title">
     <div class="container">
       <header class="section-heading">
-        <h2 id="publications-title">Publications</h2>
+        <EditableCopy copyId="copy-f8030c4b51fa352e" as="h2" id="publications-title" />
       </header>
 
       <div class="publication-tools" data-publication-tools>
         <div class="field publication-search">
-          <label for="publication-search">Search publications</label>
+          <EditableCopy copyId="copy-1c0925b176e8d110" as="label" for="publication-search" />
           <input
             id="publication-search"
             type="search"
@@ -103,7 +103,7 @@ const filterFor = (publicationType: (typeof publications)[number]['publicationTy
               <div>
                 <p class="publication-list__type">{publication.publicationType} · {publication.year}</p>
                 <h3>{publication.title}</h3>
-                <p class="publication-list__citation">{publication.citation}</p>
+                <MarkdownText class="publication-list__citation" text={publication.citation} />
               </div>
               <div class="publication-list__links">
                 {publication.doi && <a href={`https://doi.org/${publication.doi}`}>DOI</a>}

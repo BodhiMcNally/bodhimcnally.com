@@ -4,8 +4,8 @@
 
 
 <div class="lesson-intro">
-<p>I discovered <strong>mapgl</strong> while working with geospatial data at AstraZeneca, where I was building an in-house solution for sales territory and workforce planning for a new product and team launch. Being able to put data on a map, explore it interactively, and explain what the geography meant made it much easier to connect an analysis to a practical decision.</p>
-<p>This tutorial brings that approach into <strong>DATA1X01 Project 2</strong>. You will learn how to turn a table or spatial file into an interactive map, embed it in your Quarto report, and explain the pattern it shows. You do not need previous experience with geographic information systems.</p>
+<p data-edit-copy="copy-1b3f2f32da7975e6">I discovered <strong>mapgl</strong> while working with geospatial data at AstraZeneca, where I was building an in-house solution for sales territory and workforce planning for a new product and team launch. Being able to put data on a map, explore it interactively, and explain what the geography meant made it much easier to connect an analysis to a practical decision.</p>
+<p data-edit-copy="copy-66f60a9416916e42">This tutorial brings that approach into <strong>DATA1X01 Project 2</strong>. You will learn how to turn a table or spatial file into an interactive map, embed it in your Quarto report, and explain the pattern it shows. You do not need previous experience with geographic information systems.</p>
 </div>
 
 <div class="callout callout-style-default callout-note callout-titled" title="How the examples work">
@@ -16,13 +16,13 @@
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The maps below are actual outputs of the R code, rather than screenshots. Drag to pan, use the <strong>+ / −</strong> buttons to zoom, and try the popups and other controls. Mouse-wheel zoom is disabled in most examples so you can scroll through the lesson comfortably.</p>
-<p><strong>R runs when Quarto renders this page.</strong> The published maps run JavaScript in your browser. To change the R code and recompute an example, download the source and run it in RStudio. A static website does not provide a live R session. These examples use MapLibre and OpenFreeMap without an API key; the basemap still needs an internet connection.</p>
+<p data-edit-copy="copy-179ca6f44f1d75db">The maps below are actual outputs of the R code, rather than screenshots. Drag to pan, use the <strong>+ / −</strong> buttons to zoom, and try the popups and other controls. Mouse-wheel zoom is disabled in most examples so you can scroll through the lesson comfortably.</p>
+<p data-edit-copy="copy-adeca42de081380c"><strong>R runs when Quarto renders this page.</strong> The published maps run JavaScript in your browser. To change the R code and recompute an example, download the source and run it in RStudio. A static website does not provide a live R session. These examples use MapLibre and OpenFreeMap without an API key; the basemap still needs an internet connection.</p>
 </div>
 </div>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="our-real-sydney-case-study" id="our-real-sydney-case-study">Our real Sydney case study</h2>
-<p>We will use <strong>Greater Sydney</strong>, as defined by the ABS Greater Capital City Statistical Area (<code>1GSYD</code>). This includes the Central Coast and Blue Mountains; it is broader than the City of Sydney council area. The polygon maps use <strong>373 real Statistical Areas Level 2 (SA2s)</strong>. An SA2 is a statistical area, not necessarily a suburb or a school catchment.</p>
+<h2 class="anchored" data-anchor-id="our-real-sydney-case-study" id="our-real-sydney-case-study" data-edit-copy="copy-3469f2243e142dea">Our real Sydney case study</h2>
+<p data-edit-copy="copy-ca5d08b12b1e8193">We will use <strong>Greater Sydney</strong>, as defined by the ABS Greater Capital City Statistical Area (<code>1GSYD</code>). This includes the Central Coast and Blue Mountains; it is broader than the City of Sydney council area. The polygon maps use <strong>373 real Statistical Areas Level 2 (SA2s)</strong>. An SA2 is a statistical area, not necessarily a suburb or a school catchment.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -54,20 +54,20 @@
 </tr>
 </tbody>
 </table>
-<p>The school snapshot includes environmental education centres and other government education sites as well as primary and secondary schools. We retain the provider’s types. It covers government education, rather than all schools. The enrolment field is <strong>latest reported FTE</strong>, not a count measured on the extraction date; the source does not supply an enrolment-year column. Population estimates for 2025 are preliminary. These periods and populations cannot be treated as interchangeable.</p>
-<p>The prepared CSV, GeoJSON, GeoPackage, and GeoTIFF files are bundled with the source. <a href="/resources/mapgl/data/README.md">The data guide</a> records attribution, original URLs, transformations, exclusions, and checksums. None of the maps uses simulated observations.</p>
-<p>You can work through the core sections first, then choose an extension that suits your data. An effective project might need only one well-designed map and a supporting chart. This is an optional teaching resource: follow the assessment instructions for the required data, methods, and submission format.</p>
+<p data-edit-copy="copy-521176182e1dc733">The school snapshot includes environmental education centres and other government education sites as well as primary and secondary schools. We retain the provider’s types. It covers government education, rather than all schools. The enrolment field is <strong>latest reported FTE</strong>, not a count measured on the extraction date; the source does not supply an enrolment-year column. Population estimates for 2025 are preliminary. These periods and populations cannot be treated as interchangeable.</p>
+<p data-edit-copy="copy-350bd6cd0d579451">The prepared CSV, GeoJSON, GeoPackage, and GeoTIFF files are bundled with the source. <a href="/resources/mapgl/data/README.md">The data guide</a> records attribution, original URLs, transformations, exclusions, and checksums. None of the maps uses simulated observations.</p>
+<p data-edit-copy="copy-b8593204e1beaaf1">You can work through the core sections first, then choose an extension that suits your data. An effective project might need only one well-designed map and a supporting chart. This is an optional teaching resource: follow the assessment instructions for the required data, methods, and submission format.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="set-up-r-and-quarto" id="set-up-r-and-quarto">1. Set up R and Quarto</h2>
-<p>Use <strong>R 4.1 or later</strong>, RStudio, and the <a href="https://quarto.org/docs/get-started/">Quarto CLI</a>. The examples use R’s native <code>|&gt;</code> pipe: read it as “take the result on the left and pass it to the next function”. Install packages once in the <strong>Console</strong>, outside your report’s code chunks:</p>
+<h2 class="anchored" data-anchor-id="set-up-r-and-quarto" id="set-up-r-and-quarto" data-edit-copy="copy-0ab5fd0d9870df6c">1. Set up R and Quarto</h2>
+<p data-edit-copy="copy-90120a43ea9aadfe">Use <strong>R 4.1 or later</strong>, RStudio, and the <a href="https://quarto.org/docs/get-started/">Quarto CLI</a>. The examples use R’s native <code>|&gt;</code> pipe: read it as “take the result on the left and pass it to the next function”. Install packages once in the <strong>Console</strong>, outside your report’s code chunks:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mapgl"</span>, <span class="st">"sf"</span>, <span class="st">"dplyr"</span>, <span class="st">"readr"</span>, <span class="st">"htmltools"</span>, <span class="st">"htmlwidgets"</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"terra"</span>, <span class="st">"viridisLite"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"jsonlite"</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div></div>
 </div>
-<p>Now load the packages in the report. Unlike installation, this step must run whenever you render it.</p>
+<p data-edit-copy="copy-8116ee706e7ab5d0">Now load the packages in the report. Unlike installation, this step must run whenever you render it.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapgl)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div></div>
@@ -94,11 +94,11 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This tutorial uses the mapgl 0.5.2 API.</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">packageVersion</span>(<span class="st">"mapgl"</span>) <span class="sc">&gt;=</span> <span class="st">"0.5.2"</span>)</span></code></pre></div></div>
 </div>
-<p><strong>mapgl</strong> creates the maps; <strong>sf</strong> stores vector geometries and performs spatial operations; <strong>dplyr</strong> prepares tables; <strong>readr</strong> imports CSV files. Later, <strong>terra</strong> handles raster data. Package names and R functions are case-sensitive.</p>
-<p>The <a href="https://walker-data.com/mapgl/">mapgl documentation</a> describes two interfaces: <code>maplibre()</code> and <code>mapboxgl()</code>. We will use <code>maplibre()</code> throughout. Mapbox requires an access token and its own service terms; it is an optional alternative, rather than a requirement for this lesson.</p>
+<p data-edit-copy="copy-bf698f0a66285b97"><strong>mapgl</strong> creates the maps; <strong>sf</strong> stores vector geometries and performs spatial operations; <strong>dplyr</strong> prepares tables; <strong>readr</strong> imports CSV files. Later, <strong>terra</strong> handles raster data. Package names and R functions are case-sensitive.</p>
+<p data-edit-copy="copy-fb87d95cdbf279cc">The <a href="https://walker-data.com/mapgl/">mapgl documentation</a> describes two interfaces: <code>maplibre()</code> and <code>mapboxgl()</code>. We will use <code>maplibre()</code> throughout. Mapbox requires an access token and its own service terms; it is an optional alternative, rather than a requirement for this lesson.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="make-your-first-map" id="make-your-first-map">2. Make your first map</h2>
+<h2 class="anchored" data-anchor-id="make-your-first-map" id="make-your-first-map" data-edit-copy="copy-9e21dc8069e84039">2. Make your first map</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start with one actual record from the bundled NSW snapshot.</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>first_school <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-public-schools.csv"</span>,</span>
@@ -131,9 +131,9 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: click the marker, zoom in, then use the fullscreen control.</p>
+<p data-edit-copy="copy-d29cd1fd587bfb1d">Try it: click the marker, zoom in, then use the fullscreen control.</p>
 </div>
-<p>The final line displays the object. If you finish a chunk with <code>first_map &lt;- ...</code>, R stores the map but does not automatically display it.</p>
+<p data-edit-copy="copy-b325ceb795a6b3ba">The final line displays the object. If you finish a chunk with <code>first_map &lt;- ...</code>, R stores the map but does not automatically display it.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -172,11 +172,11 @@ Attaching package: 'dplyr'</code></pre>
 </tr>
 </tbody>
 </table>
-<p>A marker is convenient for one or a few locations. For a dataset of points, use a <strong>circle layer</strong>, which supports styling, filtering, and clustering. See the <a href="https://walker-data.com/mapgl/reference/maplibre.html"><code>maplibre()</code> reference</a> and <a href="https://walker-data.com/mapgl/reference/openfreemap_style.html">available OpenFreeMap styles</a>.</p>
+<p data-edit-copy="copy-a5e99fda1fb00304">A marker is convenient for one or a few locations. For a dataset of points, use a <strong>circle layer</strong>, which supports styling, filtering, and clustering. See the <a href="https://walker-data.com/mapgl/reference/maplibre.html"><code>maplibre()</code> reference</a> and <a href="https://walker-data.com/mapgl/reference/openfreemap_style.html">available OpenFreeMap styles</a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="put-geospatial-data-into-the-right-form" id="put-geospatial-data-into-the-right-form">3. Put geospatial data into the right form</h2>
-<p>You need either coordinates, geometries, or an identifier that can be joined to boundaries. A place name on its own is not a geometry.</p>
+<h2 class="anchored" data-anchor-id="put-geospatial-data-into-the-right-form" id="put-geospatial-data-into-the-right-form" data-edit-copy="copy-e6f3669db523c1b2">3. Put geospatial data into the right form</h2>
+<p data-edit-copy="copy-879d0c641788e1bb">You need either coordinates, geometries, or an identifier that can be joined to boundaries. A place name on its own is not a geometry.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -223,10 +223,10 @@ Attaching package: 'dplyr'</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Geocoding is a separate step, with possible ambiguity, service limits, and costs. “Sydney” could mean a city, an administrative area, or a suburb. Document how you resolved it. A map cannot supply geographic precision that your source data does not contain.</p>
+<p data-edit-copy="copy-49ad3045624b94b5">Geocoding is a separate step, with possible ambiguity, service limits, and costs. “Sydney” could mean a city, an administrative area, or a suburb. Document how you resolved it. A map cannot supply geographic precision that your source data does not contain.</p>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="convert-a-csv-into-spatial-points" id="convert-a-csv-into-spatial-points">Convert a CSV into spatial points</h3>
-<p>The bundled CSV contains <strong>1,033 real government education locations in Greater Sydney</strong>. It is a spatial subset of the NSW master dataset, with only the fields needed for this lesson. A public school location does not identify where its students live. All relative paths in this lesson assume that you extracted the complete source bundle and opened its folder as your project.</p>
+<h3 class="anchored" data-anchor-id="convert-a-csv-into-spatial-points" id="convert-a-csv-into-spatial-points" data-edit-copy="copy-ea46c0b8d6c8531f">Convert a CSV into spatial points</h3>
+<p data-edit-copy="copy-5035efd019d59ad6">The bundled CSV contains <strong>1,033 real government education locations in Greater Sydney</strong>. It is a spatial subset of the NSW master dataset, with only the fields needed for this lesson. A public school location does not identify where its students live. All relative paths in this lesson assume that you extracted the complete source bundle and opened its folder as your project.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>schools_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-public-schools.csv"</span>,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">school_code =</span> <span class="fu">col_character</span>()))</span>
@@ -287,7 +287,7 @@ Attaching package: 'dplyr'</code></pre>
 </table>
 </div>
 </div>
-<p>Validate coordinates before converting them. This retains an explicit record of excluded rows rather than silently losing them.</p>
+<p data-edit-copy="copy-fc315d2037dca579">Validate coordinates before converting them. This retains an explicit record of excluded rows rather than silently losing them.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coordinate_ok <span class="ot">&lt;-</span> <span class="fu">with</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  schools_raw,</span>
@@ -331,12 +331,12 @@ Attaching package: 'dplyr'</code></pre>
 </table>
 </div>
 </div>
-<p><code>sf</code> adds a <strong>geometry column</strong> to the table. <code>coords</code> identifies the coordinate columns, and <code>crs = 4326</code> declares that these are WGS84 longitude and latitude in degrees. Use that declaration only when it matches the source metadata. <code>remove = FALSE</code> keeps the coordinate columns for inspection.</p>
-<p>Range checks catch obvious errors, but cannot prove that a valid coordinate is the correct one. Check the map’s extent against your study area, look for swapped columns, and investigate suspicious points. The NSW dictionary describes latitude and longitude but does not specify their geodetic datum; this teaching example treats them as WGS84 web coordinates. Do not use that assumption for survey accuracy or legal boundary decisions.</p>
+<p data-edit-copy="copy-9e9e881bf23c0476"><code>sf</code> adds a <strong>geometry column</strong> to the table. <code>coords</code> identifies the coordinate columns, and <code>crs = 4326</code> declares that these are WGS84 longitude and latitude in degrees. Use that declaration only when it matches the source metadata. <code>remove = FALSE</code> keeps the coordinate columns for inspection.</p>
+<p data-edit-copy="copy-f31ae270f50d5cc0">Range checks catch obvious errors, but cannot prove that a valid coordinate is the correct one. Check the map’s extent against your study area, look for swapped columns, and investigate suspicious points. The NSW dictionary describes latitude and longitude but does not specify their geodetic datum; this teaching example treats them as WGS84 web coordinates. Do not use that assumption for survey accuracy or legal boundary decisions.</p>
 </section>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="understand-coordinate-reference-systems" id="understand-coordinate-reference-systems">Understand coordinate reference systems</h3>
-<p>A <strong>coordinate reference system (CRS)</strong> describes what your coordinate numbers mean. Geographic coordinates use angular units; projected coordinates often use metres. Inspect an imported file’s CRS and geometry type:</p>
+<h3 class="anchored" data-anchor-id="understand-coordinate-reference-systems" id="understand-coordinate-reference-systems" data-edit-copy="copy-846b431631dcd8dc">Understand coordinate reference systems</h3>
+<p data-edit-copy="copy-3b559371afef7386">A <strong>coordinate reference system (CRS)</strong> describes what your coordinate numbers mean. Geographic coordinates use angular units; projected coordinates often use metres. Inspect an imported file’s CRS and geometry type:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(schools)<span class="sc">$</span>input</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
@@ -353,8 +353,8 @@ Attaching package: 'dplyr'</code></pre>
 150.23258 -34.32048 151.58244 -33.13547 </code></pre>
 </div>
 </div>
-<p>If a spatial file has a known projected CRS, convert its coordinates with <code>st_transform(x, 4326)</code> before passing it to a web map. <strong>Assigning a CRS and transforming coordinates are different operations.</strong> <code>st_set_crs()</code> changes the declared meaning of the existing numbers; it does not recalculate them. If the CRS is missing, find the original metadata before assigning one.</p>
-<p>For the following import patterns, replace the paths with your own existing files. These are intentionally unexecuted templates.</p>
+<p data-edit-copy="copy-430c45c4716fa538">If a spatial file has a known projected CRS, convert its coordinates with <code>st_transform(x, 4326)</code> before passing it to a web map. <strong>Assigning a CRS and transforming coordinates are different operations.</strong> <code>st_set_crs()</code> changes the declared meaning of the existing numbers; it does not recalculate them. If the CRS is missing, find the original metadata before assigning one.</p>
+<p data-edit-copy="copy-b7992e7d07f83d5e">For the following import patterns, replace the paths with your own existing files. These are intentionally unexecuted templates.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>areas <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/my-boundaries.geojson"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">st_crs</span>(areas)))</span>
@@ -369,12 +369,12 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">crs =</span> verified_source_crs)</span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>web_points <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(projected_points, <span class="dv">4326</span>)</span></code></pre></div></div>
 </div>
-<p>The <a href="https://r-spatial.github.io/sf/reference/st_read.html"><code>sf</code> import reference</a> covers supported file formats; the <a href="https://r-spatial.github.io/sf/reference/st_transform.html"><code>st_transform()</code> reference</a> explains transformations. For distance, buffers, or area calculations, choose an appropriate analytical CRS or understand <code>sf</code>’s geographic calculation methods. Do not interpret degrees as metres.</p>
+<p data-edit-copy="copy-e91a670d5efceabf">The <a href="https://r-spatial.github.io/sf/reference/st_read.html"><code>sf</code> import reference</a> covers supported file formats; the <a href="https://r-spatial.github.io/sf/reference/st_transform.html"><code>st_transform()</code> reference</a> explains transformations. For distance, buffers, or area calculations, choose an appropriate analytical CRS or understand <code>sf</code>’s geographic calculation methods. Do not interpret degrees as metres.</p>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="add-points-tooltips-and-popups" id="add-points-tooltips-and-popups">4. Add points, tooltips, and popups</h2>
-<p>A map contains <strong>sources</strong> and <strong>layers</strong>. A source holds the data. A layer tells the browser how to draw those data. Here, providing an <code>sf</code> object directly to <code>source</code> lets mapgl register the source for us.</p>
+<h2 class="anchored" data-anchor-id="add-points-tooltips-and-popups" id="add-points-tooltips-and-popups" data-edit-copy="copy-a719aba81cbe5651">4. Add points, tooltips, and popups</h2>
+<p data-edit-copy="copy-e32ef364820bc775">A map contains <strong>sources</strong> and <strong>layers</strong>. A source holds the data. A layer tells the browser how to draw those data. Here, providing an <code>sf</code> object directly to <code>source</code> lets mapgl register the source for us.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escape text before placing it inside popup HTML.</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>schools <span class="ot">&lt;-</span> schools <span class="sc">|&gt;</span></span>
@@ -413,14 +413,14 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: hover over a school for its name, then click for its school type and enrolment figure. Source: NSW Department of Education, snapshot 2 October 2026.</p>
+<p data-edit-copy="copy-cb98a1e14140f6d3">Try it: hover over a school for its name, then click for its school type and enrolment figure. Source: NSW Department of Education, snapshot 2 October 2026.</p>
 </div>
-<p><code>bounds = schools</code> fits the starting view to the data. <code>id</code> is a unique <strong>layer identifier</strong>, not a column name. <code>tooltip</code> and <code>popup</code> identify columns used for hover and click content. Popup columns can contain HTML, so escape text imported from other sources before adding your own markup.</p>
-<p><code>fitBoundsOptions = list(padding = 40)</code> leaves room around the fitted data so circles at the edges are fully visible. It is a MapLibre option passed through by <code>maplibre()</code>.</p>
-<p>Read the <a href="https://walker-data.com/mapgl/articles/layers-overview.html">sources and layers overview</a> and <a href="https://walker-data.com/mapgl/reference/add_circle_layer.html"><code>add_circle_layer()</code> reference</a> for more options.</p>
+<p data-edit-copy="copy-067b13faa264a482"><code>bounds = schools</code> fits the starting view to the data. <code>id</code> is a unique <strong>layer identifier</strong>, not a column name. <code>tooltip</code> and <code>popup</code> identify columns used for hover and click content. Popup columns can contain HTML, so escape text imported from other sources before adding your own markup.</p>
+<p data-edit-copy="copy-5eb07d80d127a668"><code>fitBoundsOptions = list(padding = 40)</code> leaves room around the fitted data so circles at the edges are fully visible. It is a MapLibre option passed through by <code>maplibre()</code>.</p>
+<p data-edit-copy="copy-c10076b5aecfee09">Read the <a href="https://walker-data.com/mapgl/articles/layers-overview.html">sources and layers overview</a> and <a href="https://walker-data.com/mapgl/reference/add_circle_layer.html"><code>add_circle_layer()</code> reference</a> for more options.</p>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="a-quick-map-for-exploration" id="a-quick-map-for-exploration">A quick map for exploration</h3>
-<p>When you mainly want to inspect a spatial dataset, <code>maplibre_view()</code> chooses a layer and colour scale for you:</p>
+<h3 class="anchored" data-anchor-id="a-quick-map-for-exploration" id="a-quick-map-for-exploration" data-edit-copy="copy-a5382b62961cb29c">A quick map for exploration</h3>
+<p data-edit-copy="copy-db86eb480a51eab2">When you mainly want to inspect a spatial dataset, <code>maplibre_view()</code> chooses a layer and colour scale for you:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">maplibre_view</span>(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(schools, <span class="sc">!</span><span class="fu">is.na</span>(enrolment_fte)),</span>
@@ -437,12 +437,12 @@ Attaching package: 'dplyr'</code></pre>
 <script type="application/json" data-for="htmlwidget-56d1c51397159dce4ab1" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-56d1c51397159dce4ab1.json"></script>
 </div>
 </div>
-<p>This quick view excludes the 29 records without reported enrolments; it does not replace them with zero. This is useful during exploration. For your final report, control the scale, legend title, units, and missing-value treatment deliberately. See the <a href="https://walker-data.com/mapgl/reference/maplibre_view.html"><code>maplibre_view()</code> reference</a>.</p>
+<p data-edit-copy="copy-c5260255b99199a0">This quick view excludes the 29 records without reported enrolments; it does not replace them with zero. This is useful during exploration. For your final report, control the scale, legend title, units, and missing-value treatment deliberately. See the <a href="https://walker-data.com/mapgl/reference/maplibre_view.html"><code>maplibre_view()</code> reference</a>.</p>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="map-categories-and-quantities" id="map-categories-and-quantities">5. Map categories and quantities</h2>
-<p>Styling expressions connect an attribute to an appearance. A constant gives every feature the same style; an expression calculates a style from a feature or map property.</p>
+<h2 class="anchored" data-anchor-id="map-categories-and-quantities" id="map-categories-and-quantities" data-edit-copy="copy-2f3122522afd9b32">5. Map categories and quantities</h2>
+<p data-edit-copy="copy-2b633ca2a6beaa3e">Styling expressions connect an attribute to an appearance. A constant gives every feature the same style; an expression calculates a style from a feature or map property.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -480,8 +480,8 @@ Attaching package: 'dplyr'</code></pre>
 </tbody>
 </table>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="category-colours-and-proportional-circles" id="category-colours-and-proportional-circles">Category colours and proportional circles</h3>
-<p>We group primary and infants schools together, retain secondary schools separately, and put the provider’s remaining categories in an explicitly labelled group. The original school type remains in the popup. For proportional circles, <strong>area</strong> should represent enrolment, so radius is proportional to the square root of FTE.</p>
+<h3 class="anchored" data-anchor-id="category-colours-and-proportional-circles" id="category-colours-and-proportional-circles" data-edit-copy="copy-d02e9b5ba81d3b26">Category colours and proportional circles</h3>
+<p data-edit-copy="copy-d8246683b992c297">We group primary and infants schools together, retain secondary schools separately, and put the provider’s remaining categories in an explicitly labelled group. The original school type remains in the popup. For proportional circles, <strong>area</strong> should represent enrolment, so radius is proportional to the square root of FTE.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>school_groups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Primary / infants"</span>, <span class="st">"Secondary"</span>, <span class="st">"Other government sites"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>school_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#009E73"</span>)</span>
@@ -556,15 +556,15 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: click a group in the top legend, then inspect a popup. The map includes 1,004 locations with reported FTE; 29 records with missing FTE are excluded from this view. Source: NSW Department of Education.</p>
+<p data-edit-copy="copy-cd02f760ca25c1b2">Try it: click a group in the top legend, then inspect a popup. The map includes 1,004 locations with reported FTE; 29 records with missing FTE are excluded from this view. Source: NSW Department of Education.</p>
 </div>
-<p>A location with 2,000 FTE has twice the radius and four times the area of a location with 500 FTE. Legend <code>sizes</code> are diameters. A true zero has zero radius here; if you must show zeros, add a separate symbol with a clear key. FTE describes enrolment, not building capacity, local child population, or students’ home locations.</p>
-<p>The second legend uses <code>add = TRUE</code> to supplement the first. Clicking a legend changes browser visibility; it does not change the R data or recompute your analysis. See <a href="https://walker-data.com/mapgl/reference/match_expr.html"><code>match_expr()</code></a> and <a href="https://walker-data.com/mapgl/reference/map_legends.html">map legends</a>.</p>
+<p data-edit-copy="copy-c967b896ba74d173">A location with 2,000 FTE has twice the radius and four times the area of a location with 500 FTE. Legend <code>sizes</code> are diameters. A true zero has zero radius here; if you must show zeros, add a separate symbol with a clear key. FTE describes enrolment, not building capacity, local child population, or students’ home locations.</p>
+<p data-edit-copy="copy-26fc872baa1eff88">The second legend uses <code>add = TRUE</code> to supplement the first. Clicking a legend changes browser visibility; it does not change the R data or recompute your analysis. See <a href="https://walker-data.com/mapgl/reference/match_expr.html"><code>match_expr()</code></a> and <a href="https://walker-data.com/mapgl/reference/map_legends.html">map legends</a>.</p>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="combine-real-sa2-polygons-lines-and-points" id="combine-real-sa2-polygons-lines-and-points">6. Combine real SA2 polygons, lines, and points</h2>
-<p>Use <strong>fill layers</strong> for areas, <strong>line layers</strong> for outlines or paths, and <strong>circle layers</strong> for points. We will draw actual SA2 polygons, derive line geometries from their boundaries, and overlay the school locations. These lines represent boundaries; they do not imply travel routes.</p>
+<h2 class="anchored" data-anchor-id="combine-real-sa2-polygons-lines-and-points" id="combine-real-sa2-polygons-lines-and-points" data-edit-copy="copy-a3443005e59b7ebb">6. Combine real SA2 polygons, lines, and points</h2>
+<p data-edit-copy="copy-8dac89e9039a61ef">Use <strong>fill layers</strong> for areas, <strong>line layers</strong> for outlines or paths, and <strong>circle layers</strong> for points. We will draw actual SA2 polygons, derive line geometries from their boundaries, and overlay the school locations. These lines represent boundaries; they do not imply travel routes.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Small display copy: simplified by 25 metres in a projected CRS.</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sa2 <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/greater-sydney-sa2-display.geojson"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
@@ -573,7 +573,7 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>          <span class="sc">!</span><span class="fu">any</span>(<span class="fu">st_is_empty</span>(sa2)), <span class="fu">all</span>(<span class="fu">st_is_valid</span>(sa2)))</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>sa2_lines <span class="ot">&lt;-</span> <span class="fu">st_boundary</span>(sa2)</span></code></pre></div></div>
 </div>
-<p>Registering a source once lets several layers reuse it. Add fills first, then lines and points so the points remain visible.</p>
+<p data-edit-copy="copy-9a0572ad4f2894c0">Registering a source once lets several layers reuse it. Add fills first, then lines and points so the points remain visible.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>layered_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> sa2,</span>
@@ -611,13 +611,13 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: switch the school points and boundary lines off independently. Zoom in to see the SA2 detail. Sources: ABS ASGS 2021 and NSW Department of Education.</p>
+<p data-edit-copy="copy-0fee54ec7b8928e0">Try it: switch the school points and boundary lines off independently. Zoom in to see the SA2 detail. Sources: ABS ASGS 2021 and NSW Department of Education.</p>
 </div>
-<p><code>source = "sa2-data"</code> names a <strong>source ID</strong>. A layer control uses <strong>layer IDs</strong>. Here the layers are independent so you can inspect fills, outlines, and points separately. To switch fill and outline together, group their IDs in one vector. See <a href="https://walker-data.com/mapgl/reference/add_source.html"><code>add_source()</code></a> and <a href="https://walker-data.com/mapgl/reference/add_layers_control.html"><code>add_layers_control()</code></a>.</p>
+<p data-edit-copy="copy-1749d96ad69861ed"><code>source = "sa2-data"</code> names a <strong>source ID</strong>. A layer control uses <strong>layer IDs</strong>. Here the layers are independent so you can inspect fills, outlines, and points separately. To switch fill and outline together, group their IDs in one vector. See <a href="https://walker-data.com/mapgl/reference/add_source.html"><code>add_source()</code></a> and <a href="https://walker-data.com/mapgl/reference/add_layers_control.html"><code>add_layers_control()</code></a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="join-population-statistics-to-sa2-boundaries" id="join-population-statistics-to-sa2-boundaries">7. Join population statistics to SA2 boundaries</h2>
-<p>Population is supplied as a table, while geometry is supplied separately. Join them on the <strong>nine-character SA2 code</strong>, checking uniqueness and unmatched keys in both directions. Keep identifiers as character values; area names can change or be spelled differently.</p>
+<h2 class="anchored" data-anchor-id="join-population-statistics-to-sa2-boundaries" id="join-population-statistics-to-sa2-boundaries" data-edit-copy="copy-cd46be21bc02ef90">7. Join population statistics to SA2 boundaries</h2>
+<p data-edit-copy="copy-fea86f89a94e9106">Population is supplied as a table, while geometry is supplied separately. Join them on the <strong>nine-character SA2 code</strong>, checking uniqueness and unmatched keys in both directions. Keep identifiers as character values; area names can change or be spelled differently.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-sa2-population.csv"</span>,</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">sa2_code =</span> <span class="fu">col_character</span>()))</span>
@@ -704,18 +704,18 @@ Attaching package: 'dplyr'</code></pre>
 </table>
 </div>
 </div>
-<p>The boundary vintage is <strong>ASGS 2021</strong>, matching the geography used for these population estimates. Using a newer boundary file just because it is newer can break comparability. The bundled snapshot contains population values for all 373 polygons; unmatched keys and missing measurements are still separate problems that you must check in your own data.</p>
+<p data-edit-copy="copy-01aeec4a680dbd43">The boundary vintage is <strong>ASGS 2021</strong>, matching the geography used for these population estimates. Using a newer boundary file just because it is newer can break comparability. The bundled snapshot contains population values for all 373 polygons; unmatched keys and missing measurements are still separate problems that you must check in your own data.</p>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="why-map-density-rather-than-population-count" id="why-map-density-rather-than-population-count">Why map density rather than population count?</h3>
-<p>A large SA2 can contain many people spread over a large area. Population density is <code>population / area_km2</code>, measured in <strong>residents per square kilometre</strong>. It answers a question about geographic concentration. A count answers a question about how many residents an area contains. Neither is a measure of school access or capacity.</p>
-<p>We use the official ABS <code>area_albers_sqkm</code> value, renamed <code>area_km2</code>. We do not recompute area from the simplified display polygons. The denominator includes the area represented by the ABS boundary definition; density does not mean that population is evenly spread inside the polygon.</p>
+<h3 class="anchored" data-anchor-id="why-map-density-rather-than-population-count" id="why-map-density-rather-than-population-count" data-edit-copy="copy-0d838e87f0f28504">Why map density rather than population count?</h3>
+<p data-edit-copy="copy-e3649f4b37d245fa">A large SA2 can contain many people spread over a large area. Population density is <code>population / area_km2</code>, measured in <strong>residents per square kilometre</strong>. It answers a question about geographic concentration. A count answers a question about how many residents an area contains. Neither is a measure of school access or capacity.</p>
+<p data-edit-copy="copy-03a26fb873e58bf5">We use the official ABS <code>area_albers_sqkm</code> value, renamed <code>area_km2</code>. We do not recompute area from the simplified display polygons. The denominator includes the area represented by the ABS boundary definition; density does not mean that population is evenly spread inside the polygon.</p>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="build-a-choropleth-of-population-density" id="build-a-choropleth-of-population-density">8. Build a choropleth of population density</h2>
-<p>A <strong>choropleth</strong> shades areas according to a statistic. A sequential colour scale suits a non-negative density. A diverging scale can suit change around zero. Explain the units and the limits of your colour scale.</p>
+<h2 class="anchored" data-anchor-id="build-a-choropleth-of-population-density" id="build-a-choropleth-of-population-density" data-edit-copy="copy-2a9e84574c7b5c0b">8. Build a choropleth of population density</h2>
+<p data-edit-copy="copy-3ed7c1fec611f518">A <strong>choropleth</strong> shades areas according to a statistic. A sequential colour scale suits a non-negative density. A diverging scale can suit change around zero. Explain the units and the limits of your colour scale.</p>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="a-continuous-colour-scale" id="a-continuous-colour-scale">A continuous colour scale</h3>
+<h3 class="anchored" data-anchor-id="a-continuous-colour-scale" id="a-continuous-colour-scale" data-edit-copy="copy-28eb57677d918584">A continuous colour scale</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>density_limits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5000</span>, <span class="dv">25000</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>density_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#f7fbff"</span>, <span class="st">"#6baed6"</span>, <span class="st">"#08306b"</span>)</span>
@@ -752,12 +752,12 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: zoom towards central Sydney and click an SA2. Its popup reports the real population, official area, and calculated density. Source: ABS Regional population 2024–25 and ASGS 2021.</p>
+<p data-edit-copy="copy-a593506f3e9566b4">Try it: zoom towards central Sydney and click an SA2. Its popup reports the real population, official area, and calculated density. Source: ABS Regional population 2024–25 and ASGS 2021.</p>
 </div>
-<p><code>interpolate()</code> blends between stops and holds endpoint colours beyond the specified limits. The 0–25,000 scale covers this snapshot’s densities and will also be used for comparisons. The 5,000 stop is a colour anchor, not a class boundary. If your data exceed the upper limit, extend the scale or disclose that values saturate. The missing-value colour is specified for future adaptation; this snapshot has no missing density values, so it has no missing-data legend key. See <a href="https://walker-data.com/mapgl/reference/interpolate.html"><code>interpolate()</code></a>.</p>
+<p data-edit-copy="copy-dfc8744453133825"><code>interpolate()</code> blends between stops and holds endpoint colours beyond the specified limits. The 0–25,000 scale covers this snapshot’s densities and will also be used for comparisons. The 5,000 stop is a colour anchor, not a class boundary. If your data exceed the upper limit, extend the scale or disclose that values saturate. The missing-value colour is specified for future adaptation; this snapshot has no missing density values, so it has no missing-data legend key. See <a href="https://walker-data.com/mapgl/reference/interpolate.html"><code>interpolate()</code></a>.</p>
 </section>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="fixed-bands-and-an-accurate-legend" id="fixed-bands-and-an-accurate-legend">Fixed bands and an accurate legend</h3>
+<h3 class="anchored" data-anchor-id="fixed-bands-and-an-accurate-legend" id="fixed-bands-and-an-accurate-legend" data-edit-copy="copy-268b524b56f58550">Fixed bands and an accurate legend</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>band_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#eff3ff"</span>, <span class="st">"#bdd7e7"</span>, <span class="st">"#6baed6"</span>, <span class="st">"#2171b5"</span>, <span class="st">"#08306b"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>band_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
@@ -786,7 +786,7 @@ Attaching package: 'dplyr'</code></pre>
 <script type="application/json" data-for="htmlwidget-022ace4e657033a46c47" data-mapgl-src="/resources/mapgl/widgets/htmlwidget-022ace4e657033a46c47.json"></script>
 </div>
 </div>
-<p>At exactly 500 the second colour begins; at 2,000 the third begins. Fixed thresholds discard within-band differences. Automatic helpers such as <code>step_quantile()</code> or <code>step_jenks()</code> can aid exploration, but separately recalculating breaks for each year makes identical colours represent different values. See <a href="https://walker-data.com/mapgl/reference/step_expr.html"><code>step_expr()</code></a> and <a href="https://walker-data.com/mapgl/reference/step_classification.html">classification helpers</a>.</p>
+<p data-edit-copy="copy-3d990bad111f4dc4">At exactly 500 the second colour begins; at 2,000 the third begins. Fixed thresholds discard within-band differences. Automatic helpers such as <code>step_quantile()</code> or <code>step_jenks()</code> can aid exploration, but separately recalculating breaks for each year makes identical colours represent different values. See <a href="https://walker-data.com/mapgl/reference/step_expr.html"><code>step_expr()</code></a> and <a href="https://walker-data.com/mapgl/reference/step_classification.html">classification helpers</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="A map still needs an analytical finding">
 <div class="callout-header d-flex align-content-center">
 
@@ -795,15 +795,15 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the bundled June 2025 data, <strong>Sydney (South) - Haymarket</strong> has 24,758 residents across 1.0810 km², approximately <strong>22,903 residents/km²</strong>. Chippendale and Ultimo follow at approximately 20,476 and 18,851 residents/km². These values are calculated from the table and official area field, rather than read off a colour.</p>
-<p>Discuss the pattern relevant to your question. Population estimates are not exact headcounts, and the 2025 estimates are preliminary. Area-level differences do not establish causation or describe every person within an area. Large, sparsely populated polygons can dominate visual attention.</p>
+<p data-edit-copy="copy-52258c8b0102320c">In the bundled June 2025 data, <strong>Sydney (South) - Haymarket</strong> has 24,758 residents across 1.0810 km², approximately <strong>22,903 residents/km²</strong>. Chippendale and Ultimo follow at approximately 20,476 and 18,851 residents/km². These values are calculated from the table and official area field, rather than read off a colour.</p>
+<p data-edit-copy="copy-c2b969f5de6ebdf0">Discuss the pattern relevant to your question. Population estimates are not exact headcounts, and the 2025 estimates are preliminary. Area-level differences do not establish causation or describe every person within an area. Large, sparsely populated polygons can dominate visual attention.</p>
 </div>
 </div>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="use-a-spatial-join-when-there-is-no-area-code" id="use-a-spatial-join-when-there-is-no-area-code">9. Use a spatial join when there is no area code</h2>
-<p>The school table has coordinates but no SA2 code. A <strong>spatial join</strong> attaches the code using location. Use the full-resolution analytical boundaries for this operation, not the simplified display copy.</p>
+<h2 class="anchored" data-anchor-id="use-a-spatial-join-when-there-is-no-area-code" id="use-a-spatial-join-when-there-is-no-area-code" data-edit-copy="copy-62217e296d7ead01">9. Use a spatial join when there is no area code</h2>
+<p data-edit-copy="copy-bb4dc3ac9497c162">The school table has coordinates but no SA2 code. A <strong>spatial join</strong> attaches the code using location. Use the full-resolution analytical boundaries for this operation, not the simplified display copy.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sa2_full <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/greater-sydney-sa2.gpkg"</span>, <span class="at">layer =</span> <span class="st">"sa2"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A local projected CRS makes the boundary predicate explicit.</span></span>
@@ -872,12 +872,12 @@ Attaching package: 'dplyr'</code></pre>
 </table>
 </div>
 </div>
-<p>Zero means no locations from this government dataset were assigned to the SA2. It does not mean no schools of any kind, no school-age residents, or no access to education. School catchments and student residence can cross SA2 boundaries.</p>
-<p>Points on boundaries, outside the study area, or inside overlapping polygons need an explicit rule. <code>st_within()</code> excludes boundary points in this projected example; a different predicate can match more than one polygon. Investigate exceptions before joining instead of dropping duplicate assignments arbitrarily. See <a href="https://r-spatial.github.io/sf/reference/st_join.html"><code>st_join()</code></a>.</p>
+<p data-edit-copy="copy-bfcdf3a49d87f312">Zero means no locations from this government dataset were assigned to the SA2. It does not mean no schools of any kind, no school-age residents, or no access to education. School catchments and student residence can cross SA2 boundaries.</p>
+<p data-edit-copy="copy-a2079ab64054ea2d">Points on boundaries, outside the study area, or inside overlapping polygons need an explicit rule. <code>st_within()</code> excludes boundary points in this projected example; a different predicate can match more than one polygon. Investigate exceptions before joining instead of dropping duplicate assignments arbitrarily. See <a href="https://r-spatial.github.io/sf/reference/st_join.html"><code>st_join()</code></a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="explore-point-concentration-with-a-heatmap" id="explore-point-concentration-with-a-heatmap">10. Explore point concentration with a heatmap</h2>
-<p>A heatmap smooths nearby points across screen pixels. Its appearance depends on zoom, radius, and weighting. We give each government education location the same weight, including those without an enrolment figure.</p>
+<h2 class="anchored" data-anchor-id="explore-point-concentration-with-a-heatmap" id="explore-point-concentration-with-a-heatmap" data-edit-copy="copy-0c617012c7cf3288">10. Explore point concentration with a heatmap</h2>
+<p data-edit-copy="copy-fa709ef92817f071">A heatmap smooths nearby points across screen pixels. Its appearance depends on zoom, radius, and weighting. We give each government education location the same weight, including those without an enrolment figure.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>heat_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> schools,</span>
@@ -908,13 +908,13 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: zoom in and out. The legend is qualitative; it does not report schools per km² or enrolments. Source: NSW Department of Education, 2 October 2026 snapshot.</p>
+<p data-edit-copy="copy-0d9a98eb4aad50d8">Try it: zoom in and out. The legend is qualitative; it does not report schools per km² or enrolments. Source: NSW Department of Education, 2 October 2026 snapshot.</p>
 </div>
-<p>This is a visual concentration map, not a population-adjusted rate or a test of a statistically significant hotspot. For a defined density, calculate a statistic on documented areas or use an appropriate density estimator. See <a href="https://walker-data.com/mapgl/reference/add_heatmap_layer.html"><code>add_heatmap_layer()</code></a>.</p>
+<p data-edit-copy="copy-66387fbcdbf9bf36">This is a visual concentration map, not a population-adjusted rate or a test of a statistically significant hotspot. For a defined density, calculate a statistic on documented areas or use an appropriate density estimator. See <a href="https://walker-data.com/mapgl/reference/add_heatmap_layer.html"><code>add_heatmap_layer()</code></a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="cluster-crowded-school-points" id="cluster-crowded-school-points">11. Cluster crowded school points</h2>
-<p>Clustering groups nearby points at the current zoom and displays their feature counts. It reduces overplotting; these groups are visual, rather than fixed statistical clusters.</p>
+<h2 class="anchored" data-anchor-id="cluster-crowded-school-points" id="cluster-crowded-school-points" data-edit-copy="copy-a60818a8d09fb15e">11. Cluster crowded school points</h2>
+<p data-edit-copy="copy-20ff553d724deaa8">Clustering groups nearby points at the current zoom and displays their feature counts. It reduces overplotting; these groups are visual, rather than fixed statistical clusters.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cluster_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">style =</span> <span class="fu">openfreemap_style</span>(<span class="st">"positron"</span>), <span class="at">bounds =</span> schools,</span>
@@ -946,13 +946,13 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: click a numbered cluster to zoom towards its locations, then click an individual point. The label counts locations, not enrolled students. Source: NSW Department of Education.</p>
+<p data-edit-copy="copy-8f09b34f9a6c955f">Try it: click a numbered cluster to zoom towards its locations, then click an individual point. The label counts locations, not enrolled students. Source: NSW Department of Education.</p>
 </div>
-<p>Supply the <code>sf</code> points directly to <code>add_circle_layer()</code> with <a href="https://walker-data.com/mapgl/reference/cluster_options.html"><code>cluster_options()</code></a>. The shortcut creates a separate <code>schools-cluster-count</code> symbol layer. We use <a href="https://walker-data.com/mapgl/reference/set_layout_property.html"><code>set_layout_property()</code></a> to select Noto Sans Regular, available from the OpenFreeMap glyph service. An unavailable font can leave labels blank while circles still render.</p>
+<p data-edit-copy="copy-bee3e9831e306e94">Supply the <code>sf</code> points directly to <code>add_circle_layer()</code> with <a href="https://walker-data.com/mapgl/reference/cluster_options.html"><code>cluster_options()</code></a>. The shortcut creates a separate <code>schools-cluster-count</code> symbol layer. We use <a href="https://walker-data.com/mapgl/reference/set_layout_property.html"><code>set_layout_property()</code></a> to select Noto Sans Regular, available from the OpenFreeMap glyph service. An unavailable font can leave labels blank while circles still render.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="add-a-population-year-slider-without-a-server" id="add-a-population-year-slider-without-a-server">12. Add a population year slider without a server</h2>
-<p>A slider filters features in the browser, so it works on a static website. The filter property must be <strong>numeric</strong>. We build one polygon record per SA2 and year from the real 2021–2025 population series; the slider shows only one year’s records at a time.</p>
+<h2 class="anchored" data-anchor-id="add-a-population-year-slider-without-a-server" id="add-a-population-year-slider-without-a-server" data-edit-copy="copy-7ab85d8fa8a3dff1">12. Add a population year slider without a server</h2>
+<p data-edit-copy="copy-6a1adbfafda0ab27">A slider filters features in the browser, so it works on a static website. The filter property must be <strong>numeric</strong>. We build one polygon record per SA2 and year from the real 2021–2025 population series; the slider shows only one year’s records at a time.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>population_long <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/sydney-sa2-population-long.csv"</span>,</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">sa2_code =</span> <span class="fu">col_character</span>(), <span class="at">year =</span> <span class="fu">col_integer</span>()))</span>
@@ -996,14 +996,14 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: move the slider to 2025 or press play. The colours use a fixed scale and the geography is fixed to ASGS 2021. Source: ABS Regional population 2024–25, annual series.</p>
+<p data-edit-copy="copy-ad1e5b6a6af410c0">Try it: move the slider to 2025 or press play. The colours use a fixed scale and the geography is fixed to ASGS 2021. Source: ABS Regional population 2024–25, annual series.</p>
 </div>
-<p>These are annual population snapshots, so <strong>sequential</strong> filtering suits the question. Cumulative mode would overlap several estimates of the same area and should not be used to add resident populations across years. The browser reveals existing records; it does not estimate missing years or fit a trend model.</p>
-<p>For dates, use <code>as_time_property(date_column, unit = "date")</code> to produce a numeric property: GeoJSON serializes R dates as strings. For large datasets, avoid repeating complex geometries unnecessarily; the slider also supports changing paint expressions on a single geometry source. See <a href="https://walker-data.com/mapgl/reference/add_slider_control.html"><code>add_slider_control()</code></a>.</p>
+<p data-edit-copy="copy-7fe979672117eac2">These are annual population snapshots, so <strong>sequential</strong> filtering suits the question. Cumulative mode would overlap several estimates of the same area and should not be used to add resident populations across years. The browser reveals existing records; it does not estimate missing years or fit a trend model.</p>
+<p data-edit-copy="copy-dee650f24b9828aa">For dates, use <code>as_time_property(date_column, unit = "date")</code> to produce a numeric property: GeoJSON serializes R dates as strings. For large datasets, avoid repeating complex geometries unnecessarily; the slider also supports changing paint expressions on a single geometry source. See <a href="https://walker-data.com/mapgl/reference/add_slider_control.html"><code>add_slider_control()</code></a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="compare-2021-and-2025-using-a-shared-scale" id="compare-2021-and-2025-using-a-shared-scale">13. Compare 2021 and 2025 using a shared scale</h2>
-<p>A swipe comparison helps inspect changes. Both maps must use comparable statistics, units, geography, and colour limits. Here density uses the same official area denominator and the same 0–25,000 scale.</p>
+<h2 class="anchored" data-anchor-id="compare-2021-and-2025-using-a-shared-scale" id="compare-2021-and-2025-using-a-shared-scale" data-edit-copy="copy-78c0376713bf5c7b">13. Compare 2021 and 2025 using a shared scale</h2>
+<p data-edit-copy="copy-9838fc3fc33ea030">A swipe comparison helps inspect changes. Both maps must use comparable statistics, units, geography, and colour limits. Here density uses the same official area denominator and the same 0–25,000 scale.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>make_year_map <span class="ot">&lt;-</span> <span class="cf">function</span>(data, year) {</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  density_column <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"density_"</span>, year)</span>
@@ -1038,13 +1038,13 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: drag the central handle. Left shows June 2021; right shows June 2025. Source: ABS Regional population 2024–25.</p>
+<p data-edit-copy="copy-84b057da66a687c1">Try it: drag the central handle. Left shows June 2021; right shows June 2025. Source: ABS Regional population 2024–25.</p>
 </div>
-<p>Use <code>mode = "sync"</code> for synchronized views. Quantify changes in a table or chart as well: colour differences do not establish why population changed. For example, compute <code>population_2025 - population_2021</code>; for percentage change, check for a zero baseline before dividing. See <a href="https://walker-data.com/mapgl/reference/compare.html"><code>compare()</code></a>.</p>
+<p data-edit-copy="copy-266b08fcd27da3e7">Use <code>mode = "sync"</code> for synchronized views. Quantify changes in a table or chart as well: colour differences do not establish why population changed. For example, compute <code>population_2025 - population_2021</code>; for percentage change, check for a zero baseline before dividing. See <a href="https://walker-data.com/mapgl/reference/compare.html"><code>compare()</code></a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="explore-3d-extrusion" id="explore-3d-extrusion">14. Explore 3D extrusion</h2>
-<p>Extrusion assigns display heights to polygons. Perspective and occlusion make precise comparisons difficult, so retain a 2D map or table. This example focuses on central Sydney while drawing the real SA2 dataset.</p>
+<h2 class="anchored" data-anchor-id="explore-3d-extrusion" id="explore-3d-extrusion" data-edit-copy="copy-acb45d568a7b8b7a">14. Explore 3D extrusion</h2>
+<p data-edit-copy="copy-8fcfcdeed0f2ff70">Extrusion assigns display heights to polygons. Perspective and occlusion make precise comparisons difficult, so retain a 2D map or table. This example focuses on central Sydney while drawing the real SA2 dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sa2_3d <span class="ot">&lt;-</span> sa2_data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">height_m =</span> density_2025 <span class="sc">/</span> <span class="dv">10</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>extrusion_map <span class="ot">&lt;-</span> <span class="fu">maplibre</span>(</span>
@@ -1071,13 +1071,13 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>The heights encode population density; they are not measured building heights or terrain. A density of 10,000 residents/km² produces a display height of 1,000 metres. Source: ABS.</p>
+<p data-edit-copy="copy-bf783e7bdd362fa6">The heights encode population density; they are not measured building heights or terrain. A density of 10,000 residents/km² produces a display height of 1,000 metres. Source: ABS.</p>
 </div>
-<p><code>fill_extrusion_height</code> expects metres, so the display conversion is explicit. <code>projection = "mercator"</code> avoids globe-related extrusion artefacts described in the <a href="https://walker-data.com/mapgl/articles/layers-overview.html">layer overview</a>. See <a href="https://walker-data.com/mapgl/reference/add_fill_extrusion_layer.html"><code>add_fill_extrusion_layer()</code></a>.</p>
+<p data-edit-copy="copy-300f7d682070eb2c"><code>fill_extrusion_height</code> expects metres, so the display conversion is explicit. <code>projection = "mercator"</code> avoids globe-related extrusion artefacts described in the <a href="https://walker-data.com/mapgl/articles/layers-overview.html">layer overview</a>. See <a href="https://walker-data.com/mapgl/reference/add_fill_extrusion_layer.html"><code>add_fill_extrusion_layer()</code></a>.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="display-the-real-abs-population-raster" id="display-the-real-abs-population-raster">15. Display the real ABS population raster</h2>
-<p>Vector data describe distinct features. <strong>Raster data</strong> describe values in grid cells. The bundled GeoTIFF is the ABS 2025 population grid cropped and masked to Greater Sydney, retaining its native <strong>1 km cells in EPSG:3577</strong>. Its values are modelled residents per km², not observations of individuals at cell centres.</p>
+<h2 class="anchored" data-anchor-id="display-the-real-abs-population-raster" id="display-the-real-abs-population-raster" data-edit-copy="copy-22173dcf793359b4">15. Display the real ABS population raster</h2>
+<p data-edit-copy="copy-bf379e66ae4d40b5">Vector data describe distinct features. <strong>Raster data</strong> describe values in grid cells. The bundled GeoTIFF is the ABS 2025 population grid cropped and masked to Greater Sydney, retaining its native <strong>1 km cells in EPSG:3577</strong>. Its values are modelled residents per km², not observations of individuals at cell centres.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>population_grid <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">"data/sydney-population-grid-2025.tif"</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">res</span>(population_grid)</span></code></pre></div></div>
@@ -1129,16 +1129,16 @@ population_density_2025   0 24015.78</code></pre>
 </div>
 </div>
 <div class="map-note">
-<p>Try it: zoom in to inspect the grid cells. The classes retain exact threshold meanings; unmodelled or masked cells are transparent. Source: ABS Australian population grid 2025.</p>
+<p data-edit-copy="copy-752f1c087b89c9cf">Try it: zoom in to inspect the grid cells. The classes retain exact threshold meanings; unmodelled or masked cells are transparent. Source: ABS Australian population grid 2025.</p>
 </div>
-<p>The colour table makes this a categorical display raster. Mapgl uses nearest-neighbour reprojection for this path; <code>raster_resampling = "nearest"</code> also prevents blended class colours when zooming. Zero is distinct from missing data. The retained analytical GeoTIFF still contains its original numeric density values.</p>
-<p>Mapgl turns the raster into an image; this example does not provide cell-value popups. A display image is not a substitute for the original grid in analysis. Cropping by a region and masking edge cells is approximate at the 1 km grid scale, so do not expect the masked grid to reproduce the exact SA2 population total. See <a href="https://walker-data.com/mapgl/reference/add_image_source.html"><code>add_image_source()</code></a> and <a href="https://walker-data.com/mapgl/reference/add_raster_layer.html"><code>add_raster_layer()</code></a>.</p>
-<p>Use <code>terra::</code> explicitly: terra and mapgl share function names including <code>interpolate()</code> and <code>compare()</code>. If you attach both packages, qualify the intended function with <code>mapgl::</code> or <code>terra::</code>. For a large raster, crop or reduce a display copy, or consider a tiled source.</p>
+<p data-edit-copy="copy-9e6c89bda3142274">The colour table makes this a categorical display raster. Mapgl uses nearest-neighbour reprojection for this path; <code>raster_resampling = "nearest"</code> also prevents blended class colours when zooming. Zero is distinct from missing data. The retained analytical GeoTIFF still contains its original numeric density values.</p>
+<p data-edit-copy="copy-6466abd246bdbf76">Mapgl turns the raster into an image; this example does not provide cell-value popups. A display image is not a substitute for the original grid in analysis. Cropping by a region and masking edge cells is approximate at the 1 km grid scale, so do not expect the masked grid to reproduce the exact SA2 population total. See <a href="https://walker-data.com/mapgl/reference/add_image_source.html"><code>add_image_source()</code></a> and <a href="https://walker-data.com/mapgl/reference/add_raster_layer.html"><code>add_raster_layer()</code></a>.</p>
+<p data-edit-copy="copy-6a76fe5e4464f103">Use <code>terra::</code> explicitly: terra and mapgl share function names including <code>interpolate()</code> and <code>compare()</code>. If you attach both packages, qualify the intended function with <code>mapgl::</code> or <code>terra::</code>. For a large raster, crop or reduce a display copy, or consider a tiled source.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="put-the-map-in-your-quarto-report" id="put-the-map-in-your-quarto-report">16. Put the map in your Quarto report</h2>
-<p>Interactive htmlwidgets belong in an <strong>HTML report</strong>. A normal mapgl map returned from an R chunk becomes an interactive widget when Quarto renders the document. No iframe, screenshot, or Shiny server is needed for that workflow. See <a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">Quarto’s htmlwidgets guide</a>.</p>
-<p>Use this YAML at the top of an independent report:</p>
+<h2 class="anchored" data-anchor-id="put-the-map-in-your-quarto-report" id="put-the-map-in-your-quarto-report" data-edit-copy="copy-38173c4439341e9d">16. Put the map in your Quarto report</h2>
+<p data-edit-copy="copy-27f7d63cab8b303a">Interactive htmlwidgets belong in an <strong>HTML report</strong>. A normal mapgl map returned from an R chunk becomes an interactive widget when Quarto renders the document. No iframe, screenshot, or Shiny server is needed for that workflow. See <a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">Quarto’s htmlwidgets guide</a>.</p>
+<p data-edit-copy="copy-49b691e79861c0d4">Use this YAML at the top of an independent report:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My DATA1X01 Project 2 report"</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
@@ -1151,7 +1151,7 @@ population_density_2025   0 24015.78</code></pre>
 <span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
 <span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">error</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div></div>
-<p>Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish the map chunk with the map object. For example, a report can use this pattern:</p>
+<p data-edit-copy="copy-7872e342cce03251">Then put your setup, data preparation, and map construction in ordinary executable R chunks. Finish the map chunk with the map object. For example, a report can use this pattern:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-schools</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Greater Sydney government education locations. Source: NSW Department of Education, 2 October 2026 snapshot."</span></span>
@@ -1167,18 +1167,18 @@ population_density_2025   0 24015.78</code></pre>
 <span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>@fig-schools shows the education locations included in this analysis.</span></code></pre></div></div>
-<p>Do not set <code>eval: false</code>, <code>include: false</code>, or <code>output: false</code> on a chunk whose map should appear. Avoid placing maps inside collapsed tabs during initial troubleshooting. A <code>fig-*</code> label and <code>fig-cap</code> provide a caption and cross-reference. Follow your course’s instructions about showing code and submitting supporting files.</p>
+<p data-edit-copy="copy-37bb03900dd9de31">Do not set <code>eval: false</code>, <code>include: false</code>, or <code>output: false</code> on a chunk whose map should appear. Avoid placing maps inside collapsed tabs during initial troubleshooting. A <code>fig-*</code> label and <code>fig-cap</code> provide a caption and cross-reference. Follow your course’s instructions about showing code and submitting supporting files.</p>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="render-and-verify-the-report" id="render-and-verify-the-report">Render and verify the report</h3>
-<p>Run these commands in a <strong>terminal</strong>, from your project folder:</p>
+<h3 class="anchored" data-anchor-id="render-and-verify-the-report" id="render-and-verify-the-report" data-edit-copy="copy-9b51635f0364d9e3">Render and verify the report</h3>
+<p data-edit-copy="copy-0d0f6f1e9a5658d0">Run these commands in a <strong>terminal</strong>, from your project folder:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview index.qmd</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render index.qmd <span class="at">--to</span> html</span></code></pre></div></div>
-<p>Start from a fresh R session before the final render, and check the resulting HTML in a browser. A report must not rely on objects that happen to exist in your Console. Test at least one popup, one zoom control, and any filter or slider you added.</p>
-<p><code>embed-resources: true</code> puts the document’s local JavaScript and CSS dependencies into the HTML. It does <strong>not</strong> download the complete remote basemap or guarantee offline maps. Send the rendered HTML and any files required by the assessment instructions. For a website, also publish linked downloads and any supporting assets. See <a href="https://quarto.org/docs/output-formats/html-basics.html">Quarto’s HTML documentation</a>.</p>
+<p data-edit-copy="copy-fa5fc21a6bfc8b8a">Start from a fresh R session before the final render, and check the resulting HTML in a browser. A report must not rely on objects that happen to exist in your Console. Test at least one popup, one zoom control, and any filter or slider you added.</p>
+<p data-edit-copy="copy-0992911dde44e508"><code>embed-resources: true</code> puts the document’s local JavaScript and CSS dependencies into the HTML. It does <strong>not</strong> download the complete remote basemap or guarantee offline maps. Send the rendered HTML and any files required by the assessment instructions. For a website, also publish linked downloads and any supporting assets. See <a href="https://quarto.org/docs/output-formats/html-basics.html">Quarto’s HTML documentation</a>.</p>
 </section>
 <section class="level3">
-<h3 class="anchored" data-anchor-id="pdf-and-word-need-a-static-alternative" id="pdf-and-word-need-a-static-alternative">PDF and Word need a static alternative</h3>
-<p>PDF and Word cannot preserve these interactive maps. Mapgl’s <code>print_map()</code> can produce a static figure during rendering, using <strong>chromote</strong> and an installed Chrome/Chromium browser. The following is an optional export pattern; it is not executed in this HTML tutorial.</p>
+<h3 class="anchored" data-anchor-id="pdf-and-word-need-a-static-alternative" id="pdf-and-word-need-a-static-alternative" data-edit-copy="copy-947f527d40a62060">PDF and Word need a static alternative</h3>
+<p data-edit-copy="copy-e86cb25158e0eb0e">PDF and Word cannot preserve these interactive maps. Mapgl’s <code>print_map()</code> can produce a static figure during rendering, using <strong>chromote</strong> and an installed Chrome/Chromium browser. The following is an optional export pattern; it is not executed in this HTML tutorial.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run once in the Console if needed: install.packages("chromote")</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>()) {</span>
@@ -1191,30 +1191,30 @@ population_density_2025   0 24015.78</code></pre>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save_map</span>(density_map, <span class="st">"density-map.png"</span>, <span class="at">width =</span> <span class="dv">1000</span>, <span class="at">height =</span> <span class="dv">600</span>)</span>
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>htmlwidgets<span class="sc">::</span><span class="fu">saveWidget</span>(density_map, <span class="st">"density-map.html"</span>, <span class="at">selfcontained =</span> <span class="cn">TRUE</span>)</span></code></pre></div></div>
 </div>
-<p>The helper script <code>scripts/export-example.R</code> provides a complete HTML export example. If you use static output, inspect it after export: check the extent, legend, missing-value key, and attribution. See <a href="https://walker-data.com/mapgl/reference/print_map.html"><code>print_map()</code></a> and <a href="https://walker-data.com/mapgl/reference/save_map.html"><code>save_map()</code></a>.</p>
+<p data-edit-copy="copy-d0a72ec84da4a226">The helper script <code>scripts/export-example.R</code> provides a complete HTML export example. If you use static output, inspect it after export: check the extent, legend, missing-value key, and attribution. See <a href="https://walker-data.com/mapgl/reference/print_map.html"><code>print_map()</code></a> and <a href="https://walker-data.com/mapgl/reference/save_map.html"><code>save_map()</code></a>.</p>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="adapt-the-workflow-to-project-2" id="adapt-the-workflow-to-project-2">17. Adapt the workflow to Project 2</h2>
-<p>Start with the analytical question, then choose a geometry and an encoding that help answer it. For example, point locations can support a question about distribution, while area rates can support a comparison between regions. The appearance of the map should follow from that question.</p>
+<h2 class="anchored" data-anchor-id="adapt-the-workflow-to-project-2" id="adapt-the-workflow-to-project-2" data-edit-copy="copy-48b63cfca9e412fa">17. Adapt the workflow to Project 2</h2>
+<p data-edit-copy="copy-c026d7d08982b3fb">Start with the analytical question, then choose a geometry and an encoding that help answer it. For example, point locations can support a question about distribution, while area rates can support a comparison between regions. The appearance of the map should follow from that question.</p>
 <ol type="1">
-<li><strong>Identify the geographic unit.</strong> Is each row a location, an event, a route, or an area? Check the data period and coverage.</li>
-<li><strong>Prepare and validate the data.</strong> Read files reproducibly, verify the CRS, inspect invalid or empty geometries, and account for excluded rows.</li>
-<li><strong>Join only what is needed.</strong> Check unique identifiers and unmatched keys. Keep only columns that are appropriate to publish.</li>
-<li><strong>Choose the encoding.</strong> Use category colours for categories, a sequential scale for a rate, or proportional circle areas for suitable counts. Explain the units.</li>
-<li><strong>Write the finding.</strong> Describe a relevant pattern, quantify it, and discuss the source’s limitations. Pair the map with a chart or table when precise comparison matters.</li>
-<li><strong>Render and check the result.</strong> Make sure the HTML opens and the map works in the same format the reader or marker will receive.</li>
+<li data-edit-copy="copy-507303a81edd0478"><strong>Identify the geographic unit.</strong> Is each row a location, an event, a route, or an area? Check the data period and coverage.</li>
+<li data-edit-copy="copy-923007d9aeaaa011"><strong>Prepare and validate the data.</strong> Read files reproducibly, verify the CRS, inspect invalid or empty geometries, and account for excluded rows.</li>
+<li data-edit-copy="copy-8a7e2c527f29a3e6"><strong>Join only what is needed.</strong> Check unique identifiers and unmatched keys. Keep only columns that are appropriate to publish.</li>
+<li data-edit-copy="copy-e93bca9d01dc2d7b"><strong>Choose the encoding.</strong> Use category colours for categories, a sequential scale for a rate, or proportional circle areas for suitable counts. Explain the units.</li>
+<li data-edit-copy="copy-60c747d6b30b7914"><strong>Write the finding.</strong> Describe a relevant pattern, quantify it, and discuss the source’s limitations. Pair the map with a chart or table when precise comparison matters.</li>
+<li data-edit-copy="copy-e63ee7244e3b34c3"><strong>Render and check the result.</strong> Make sure the HTML opens and the map works in the same format the reader or marker will receive.</li>
 </ol>
 
 <section class="level3">
-<h3 class="anchored" data-anchor-id="performance-and-responsible-publication" id="performance-and-responsible-publication">Performance and responsible publication</h3>
-<p>Every attribute retained in a displayed <code>sf</code> object may be serialized into the map’s GeoJSON. Hiding a column from a popup does not remove it from the published HTML. Select only approved fields before mapping, and do not publish confidential data or precise personal locations.</p>
-<p>For a slow map, first reduce unnecessary columns, crop to the study region, and inspect file size. Simplify <strong>a display copy</strong> of large geometries using a defensible tolerance; retain the originals for analysis. A clustering control reduces visual crowding but still sends the underlying points to the browser. Large projects may need vector tiles or PMTiles rather than an embedded GeoJSON dataset.</p>
-<p>Keep basemap attribution visible. Provide a useful caption and a table or chart so that colour perception, a small screen, or an unavailable basemap does not prevent a reader from understanding your result. Avoid adding many maps when one answers the question clearly.</p>
+<h3 class="anchored" data-anchor-id="performance-and-responsible-publication" id="performance-and-responsible-publication" data-edit-copy="copy-a7bbc58c1b4f7fd1">Performance and responsible publication</h3>
+<p data-edit-copy="copy-db3afafd75e18e28">Every attribute retained in a displayed <code>sf</code> object may be serialized into the map’s GeoJSON. Hiding a column from a popup does not remove it from the published HTML. Select only approved fields before mapping, and do not publish confidential data or precise personal locations.</p>
+<p data-edit-copy="copy-2700a6f6142e6738">For a slow map, first reduce unnecessary columns, crop to the study region, and inspect file size. Simplify <strong>a display copy</strong> of large geometries using a defensible tolerance; retain the originals for analysis. A clustering control reduces visual crowding but still sends the underlying points to the browser. Large projects may need vector tiles or PMTiles rather than an embedded GeoJSON dataset.</p>
+<p data-edit-copy="copy-450c14ce46650813">Keep basemap attribution visible. Provide a useful caption and a table or chart so that colour perception, a small screen, or an unavailable basemap does not prevent a reader from understanding your result. Avoid adding many maps when one answers the question clearly.</p>
 </section>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="troubleshoot-common-problems" id="troubleshoot-common-problems">18. Troubleshoot common problems</h2>
+<h2 class="anchored" data-anchor-id="troubleshoot-common-problems" id="troubleshoot-common-problems" data-edit-copy="copy-ff243d63173fd06f">18. Troubleshoot common problems</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1285,25 +1285,25 @@ population_density_2025   0 24015.78</code></pre>
 </tr>
 </tbody>
 </table>
-<p>If the basemap service is temporarily unavailable, you can construct a map using <code>style = basemap_style("#f5f5f2")</code> and your local data layers. This provides a plain background for debugging or a deliberately basemap-free design. It lacks place labels and other basemap context, and the mapping library still needs to be available.</p>
+<p data-edit-copy="copy-0a5fa3aad297c7b2">If the basemap service is temporarily unavailable, you can construct a map using <code>style = basemap_style("#f5f5f2")</code> and your local data layers. This provides a plain background for debugging or a deliberately basemap-free design. It lacks place labels and other basemap context, and the mapping library still needs to be available.</p>
 </section>
 <section class="level2">
-<h2 class="anchored" data-anchor-id="documentation-and-reproducibility" id="documentation-and-reproducibility">Documentation and reproducibility</h2>
-<p>This lesson uses original examples informed by <strong>Kyle Walker’s mapgl documentation</strong>. It targets mapgl <strong>0.5.2</strong> and explicitly selects its basemap to avoid relying on a default that may change between versions. Refer to the current documentation when extending the examples.</p>
+<h2 class="anchored" data-anchor-id="documentation-and-reproducibility" id="documentation-and-reproducibility" data-edit-copy="copy-c4c996ff704f527b">Documentation and reproducibility</h2>
+<p data-edit-copy="copy-2f93acf4989a10f4">This lesson uses original examples informed by <strong>Kyle Walker’s mapgl documentation</strong>. It targets mapgl <strong>0.5.2</strong> and explicitly selects its basemap to avoid relying on a default that may change between versions. Refer to the current documentation when extending the examples.</p>
 <ul>
-<li><a href="https://walker-data.com/mapgl/">mapgl home and getting started</a></li>
-<li><a href="https://walker-data.com/mapgl/articles/layers-overview.html">Sources and layers</a></li>
-<li><a href="https://walker-data.com/mapgl/articles/map-design.html">Map design</a></li>
-<li><a href="https://walker-data.com/mapgl/reference/index.html">Complete function reference</a></li>
-<li><a href="https://walker-data.com/mapgl/news/index.html">mapgl release notes</a></li>
-<li><a href="https://r-spatial.github.io/sf/"><code>sf</code> documentation</a></li>
-<li><a href="https://rspatial.github.io/terra/"><code>terra</code> documentation</a></li>
-<li><a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">Quarto and htmlwidgets</a></li>
-<li><a href="https://openfreemap.org/">OpenFreeMap and basemap attribution</a></li>
-<li><a href="https://www.abs.gov.au/methodologies/regional-population-methodology/2024-25">ABS population methodology</a></li>
-<li><a href="https://data.nsw.gov.au/data/dataset/nsw-education-nsw-public-schools-master-dataset">NSW school data and dictionary</a></li>
+<li data-edit-copy="copy-4c3d27e4422190bb"><a href="https://walker-data.com/mapgl/">mapgl home and getting started</a></li>
+<li data-edit-copy="copy-5095d53d3694dc6d"><a href="https://walker-data.com/mapgl/articles/layers-overview.html">Sources and layers</a></li>
+<li data-edit-copy="copy-541a7c22727d819f"><a href="https://walker-data.com/mapgl/articles/map-design.html">Map design</a></li>
+<li data-edit-copy="copy-df12927dea02a101"><a href="https://walker-data.com/mapgl/reference/index.html">Complete function reference</a></li>
+<li data-edit-copy="copy-e392d7e8e33053a4"><a href="https://walker-data.com/mapgl/news/index.html">mapgl release notes</a></li>
+<li data-edit-copy="copy-3b9eedf72d56e005"><a href="https://r-spatial.github.io/sf/"><code>sf</code> documentation</a></li>
+<li data-edit-copy="copy-83d1b279189366a2"><a href="https://rspatial.github.io/terra/"><code>terra</code> documentation</a></li>
+<li data-edit-copy="copy-ff959902fd9007fc"><a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">Quarto and htmlwidgets</a></li>
+<li data-edit-copy="copy-9ccf5dd0064ed7b4"><a href="https://openfreemap.org/">OpenFreeMap and basemap attribution</a></li>
+<li data-edit-copy="copy-3ea3f1fce793be38"><a href="https://www.abs.gov.au/methodologies/regional-population-methodology/2024-25">ABS population methodology</a></li>
+<li data-edit-copy="copy-2e37766540bbdd8d"><a href="https://data.nsw.gov.au/data/dataset/nsw-education-nsw-public-schools-master-dataset">NSW school data and dictionary</a></li>
 </ul>
-<p>To record your own environment, run <code>sessionInfo()</code> and retain the output with your project. The supplied <code>R/prepare-sydney-data.R</code> rebuilds the teaching files from bundled official-source snapshots. <code>scripts/fetch-sydney-data.R</code> documents how to download those sources again; a later school snapshot may differ. <code>data/README.md</code> documents the fields, periods, licences, and transformations.</p>
+<p data-edit-copy="copy-9dee83b5b4686b72">To record your own environment, run <code>sessionInfo()</code> and retain the output with your project. The supplied <code>R/prepare-sydney-data.R</code> rebuilds the teaching files from bundled official-source snapshots. <code>scripts/fetch-sydney-data.R</code> documents how to download those sources again; a later school snapshot may differ. <code>data/README.md</code> documents the fields, periods, licences, and transformations.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Practice tasks">
 <div class="callout-header d-flex align-content-center">
 
@@ -1312,8 +1312,8 @@ population_density_2025   0 24015.78</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Try one extension at a time: change the school colour palette and update its legend; compare population counts with density; find which schools fall in each SA2; change the heatmap radius and describe the visual effect; or quantify the SA2 with the largest population change between 2021 and 2025. Explain why cumulative filtering would be inappropriate for repeated annual population snapshots.</p>
-<p>Then choose one map appropriate to your own data and write a paragraph that explains a specific finding, its magnitude, and its limitations.</p>
+<p data-edit-copy="copy-f17c84d244b1c926">Try one extension at a time: change the school colour palette and update its legend; compare population counts with density; find which schools fall in each SA2; change the heatmap radius and describe the visual effect; or quantify the SA2 with the largest population change between 2021 and 2025. Explain why cumulative filtering would be inappropriate for repeated annual population snapshots.</p>
+<p data-edit-copy="copy-8d5f9a7e65681cff">Then choose one map appropriate to your own data and write a paragraph that explains a specific finding, its magnitude, and its limitations.</p>
 </div>
 </div>
 

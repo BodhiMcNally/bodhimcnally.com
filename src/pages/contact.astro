@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import ProfileList from '@/components/ProfileList.astro';
@@ -8,15 +9,13 @@ import ProfileList from '@/components/ProfileList.astro';
   title="Contact"
   description="Verified academic and professional profile links for Bodhi McNally, including ORCID, University of Sydney and LinkedIn."
 >
-  <PageHeader title="Contact" />
+  <PageHeader title="Contact" cmsTitle="copy-bd50f5a4784a739d" />
 
   <section class="contact-page" aria-labelledby="contact-links-title">
     <div class="container contact-page__inner">
       <div>
-        <h2 id="contact-links-title">Get in touch</h2>
-        <p>
-          If you would like to discuss or collaborate on a research, teaching or educational project, you are welcome to contact me through either email address below.
-        </p>
+        <EditableCopy copyId="copy-fa63fee6e5d485fd" as="h2" id="contact-links-title" />
+        <EditableCopy copyId="copy-b077a1fd8edb3c67" as="p" />
       </div>
       <ProfileList includeEmails={true} />
     </div>

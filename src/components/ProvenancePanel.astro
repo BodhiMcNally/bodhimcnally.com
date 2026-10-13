@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import { getCollection } from 'astro:content';
 const resourceCount = (await getCollection('resources', ({ data }) => !data.draft)).length;
 const updateCount = (await getCollection('updates', ({ data }) => !data.draft)).length;
@@ -7,12 +8,12 @@ const commit = import.meta.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? '';
 ---
 <dialog class="provenance-panel" data-provenance-dialog aria-labelledby="provenance-title">
   <div class="provenance-panel__inner">
-    <header><div><p class="eyebrow">Site provenance</p><h2 id="provenance-title">How this site works</h2></div><button type="button" data-provenance-close aria-label="Close site details">×</button></header>
+    <header><div><EditableCopy copyId="copy-e398169f23aa4d0b" as="p" class="eyebrow" /><EditableCopy copyId="copy-45fa5308f0ec5ef0" as="h2" id="provenance-title" /></div><button type="button" data-provenance-close aria-label="Close site details">×</button></header>
     <dl>
-      <div><dt>Architecture</dt><dd>Static Astro site</dd></div><div><dt>Generated</dt><dd><time datetime={builtAt}>{builtAt.replace('T',' ').slice(0,16)} UTC</time></dd></div><div><dt>Source revision</dt><dd>{commit || 'Local build'}</dd></div><div><dt>Published resources</dt><dd>{resourceCount}</dd></div><div><dt>Published updates</dt><dd>{updateCount}</dd></div><div><dt>Offline worker</dt><dd data-provenance-worker>Checking…</dd></div><div><dt>Local storage used</dt><dd data-provenance-storage>Checking…</dd></div><div><dt>Network status</dt><dd data-provenance-network>Checking…</dd></div>
+      <div><EditableCopy copyId="copy-5d2e938caba43a23" as="dt" /><EditableCopy copyId="copy-540c42c3e58b9989" as="dd" /></div><div><EditableCopy copyId="copy-abe9529c058c4617" as="dt" /><dd><time datetime={builtAt}>{builtAt.replace('T',' ').slice(0,16)} UTC</time></dd></div><div><EditableCopy copyId="copy-e74ca95761a1d4e8" as="dt" /><dd>{commit || 'Local build'}</dd></div><div><EditableCopy copyId="copy-0c5be508243d26e2" as="dt" /><dd>{resourceCount}</dd></div><div><EditableCopy copyId="copy-8ca7313726f465c2" as="dt" /><dd>{updateCount}</dd></div><div><EditableCopy copyId="copy-531a2f2419f390b3" as="dt" /><EditableCopy copyId="copy-f595ed14fde4f8c8" as="dd" data-provenance-worker /></div><div><EditableCopy copyId="copy-8b285dbf44c16284" as="dt" /><EditableCopy copyId="copy-8f1d21eaf91f2a1a" as="dd" data-provenance-storage /></div><div><EditableCopy copyId="copy-1b5ac3c176bbf590" as="dt" /><EditableCopy copyId="copy-d3612cfd24b933a3" as="dd" data-provenance-network /></div>
     </dl>
-    <section><h3>Privacy by design</h3><p>Annotations, saved resources, clinic progress and project drafts remain in this browser. The statistical simulations run in a Web Worker. The reproducibility inspector reads selected files locally and does not upload them.</p></section>
-    <section><h3>Verification</h3><p>The production workflow checks TypeScript and Astro diagnostics, builds every static route, validates internal links and runs baseline metadata and accessibility checks.</p></section>
+    <section><EditableCopy copyId="copy-53a39bdf8d5186dc" as="h3" /><EditableCopy copyId="copy-eaf5e1a075d27004" as="p" /></section>
+    <section><EditableCopy copyId="copy-03a4f91aa6f6c87b" as="h3" /><EditableCopy copyId="copy-ee8c1fe5725f5b56" as="p" /></section>
   </div>
 </dialog>
 <script>

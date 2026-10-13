@@ -1,10 +1,13 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="repro-inspector" data-repro-inspector aria-labelledby="inspector-title">
   <div class="repro-inspector__intro">
     <div>
-      <p class="eyebrow">Private browser audit</p>
-      <h2 id="inspector-title">Reproducibility inspector</h2>
+      <EditableCopy copyId="copy-26e01019cd520844" as="p" class="eyebrow" />
+      <EditableCopy copyId="copy-48bc557b44d542e2" as="h2" id="inspector-title" />
     </div>
-    <p><strong>Your files stay on this device.</strong> They are read by your browser and are never sent to this website.</p>
+    <EditableCopy copyId="copy-36a6979fe99224e9" as="p" />
   </div>
 
   <div class="repro-drop" data-repro-drop>
@@ -12,7 +15,7 @@
     <label for="repro-files"><strong>Choose files or a project ZIP</strong><span>or drag them here · maximum 25 MB per file</span></label>
   </div>
   <div class="repro-filebar">
-    <p aria-live="polite" data-repro-file-status>No files selected.</p>
+    <EditableCopy copyId="copy-dc94f9cefaf41641" as="p" aria-live="polite" data-repro-file-status />
     <button class="button" type="button" data-repro-run disabled>Run audit</button>
   </div>
 
@@ -24,15 +27,15 @@
       <p data-repro-summary-text></p>
     </div>
     <div class="repro-actions">
-      <label for="repro-filter">Show</label>
+      <EditableCopy copyId="copy-0c2e75ef5b2aa1a4" as="label" for="repro-filter" />
       <select id="repro-filter" data-repro-filter><option value="all">All findings</option><option value="error">Errors</option><option value="warning">Warnings</option><option value="info">Notes</option></select>
       <button type="button" data-repro-export="markdown">Export report</button>
       <button type="button" data-repro-export="json">Export JSON</button>
     </div>
     <ol class="repro-findings" data-repro-findings></ol>
     <section class="repro-dependencies" data-repro-dependencies hidden>
-      <h3>File references</h3>
-      <p>Files detected in code, documents and Markdown image links.</p>
+      <EditableCopy copyId="copy-727fd2f61e266bfb" as="h3" />
+      <EditableCopy copyId="copy-09b6daa513f5318d" as="p" />
       <ul data-repro-dependency-list></ul>
     </section>
   </div>

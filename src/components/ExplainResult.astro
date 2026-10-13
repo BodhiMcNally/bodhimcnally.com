@@ -1,9 +1,12 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="academic-tool explain-result" data-explain-result aria-labelledby="explain-title">
-  <header class="tool-intro"><div><p class="eyebrow">Interpretation scaffold</p><h2 id="explain-title">Explain this result</h2></div><p>Build a precise statistical interpretation without turning an association into a causal claim.</p></header>
+  <header class="tool-intro"><div><EditableCopy copyId="copy-e7c41e6ea23950d2" as="p" class="eyebrow" /><EditableCopy copyId="copy-9e22c97e72e37469" as="h2" id="explain-title" /></div><EditableCopy copyId="copy-81b8c5eb4d7d13b9" as="p" /></header>
   <div class="tool-grid"><form class="tool-controls">
     <label>Model output<select data-explain="kind"><option value="linear">Linear coefficient</option><option value="odds">Odds ratio</option><option value="risk">Risk ratio</option></select></label>
     <label>Exposure or comparison<input data-explain="exposure" value="the intervention group compared with the control group"></label><label>Outcome<input data-explain="outcome" value="mean systolic blood pressure"></label><label>Estimate<input type="number" step="0.01" data-explain="estimate" value="-3.4"></label><div class="inline-fields"><label>Lower CI<input type="number" step="0.01" data-explain="lower" value="-5.8"></label><label>Upper CI<input type="number" step="0.01" data-explain="upper" value="-1.0"></label></div><label>Units<input data-explain="units" value="mmHg"></label><label>Adjustment/context<input data-explain="context" value="after adjustment for age and baseline blood pressure"></label><label><input type="checkbox" data-explain="causal"> The design and assumptions justify causal language</label>
-  </form><div class="tool-output"><div class="explanation-preview"><p class="eyebrow">Draft interpretation</p><blockquote data-explain-preview></blockquote></div><ul class="explanation-checks" data-explain-checks></ul></div></div>
+  </form><div class="tool-output"><div class="explanation-preview"><EditableCopy copyId="copy-b21e109eca617123" as="p" class="eyebrow" /><blockquote data-explain-preview></blockquote></div><ul class="explanation-checks" data-explain-checks></ul></div></div>
   <div class="tool-actions"><button type="button" data-explain-copy>Copy interpretation</button></div>
 </section>
 <script>

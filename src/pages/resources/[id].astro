@@ -1,4 +1,7 @@
 ---
+import siteCopy from '@/data/site-copy.json';
+import { editableHeadings } from '../../../server/editor/markdown.mjs';
+import EditableCopy from '@/components/EditableCopy.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
 import 'katex/dist/katex.min.css';
@@ -9,7 +12,8 @@ import QuartoLab from '@/components/QuartoLab.astro';
 import GitPractice from '@/components/GitPractice.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import MapglTutorial from '@/components/MapglTutorial.astro';
-import mapglHeadings from '@/data/mapgl/headings.json';
+import originalMapglHeadings from '@/data/mapgl/headings.json';
+const mapglHeadings = await editableHeadings(originalMapglHeadings, siteCopy);
 import { site } from '@/data/site';
 
 export async function getStaticPaths() {
@@ -136,7 +140,7 @@ const structuredData = {
 
     <div class="resource-layout container">
       <aside class="resource-layout__aside">
-        {entry.data.template && <p class="badge">Example</p>}
+        {entry.data.template && <EditableCopy copyId="copy-f397f6b0f7ead592" as="p" class="badge" />}
         <TableOfContents headings={resourceHeadings} />
       </aside>
       <div>
@@ -150,7 +154,7 @@ const structuredData = {
         {
           entry.data.downloadableAssets.length > 0 && (
             <section class="output-group" aria-labelledby="downloads-title">
-              <h2 id="downloads-title">Downloads</h2>
+              <EditableCopy copyId="copy-051fd55435b09853" as="h2" id="downloads-title" />
               <ul class="output-list">
                 {entry.data.downloadableAssets.map((asset) => (
                   <li>
@@ -167,11 +171,8 @@ const structuredData = {
         }
 
         <aside class="disclaimer" aria-labelledby="resource-disclaimer-title">
-          <h2 id="resource-disclaimer-title">Independent resource</h2>
-          <p>
-            <strong>These resources are independently prepared and are not official University of Sydney course materials.</strong>
-            Check your course guidance and comply with its academic-integrity requirements.
-          </p>
+          <EditableCopy copyId="copy-bb63c249b37285e7" as="h2" id="resource-disclaimer-title" />
+          <EditableCopy copyId="copy-618c94e247519516" as="p" />
         </aside>
       </div>
     </div>

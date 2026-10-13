@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import { getCollection } from 'astro:content';
 
 import { navigation } from '@/data/site';
@@ -80,7 +81,7 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
         <circle cx="11" cy="11" r="6.5"></circle>
         <path d="m16 16 4 4"></path>
       </svg>
-      <label class="visually-hidden" for="site-command-search" id="command-title">Search this site</label>
+      <EditableCopy copyId="copy-1a5467cc22a0d101" as="label" class="visually-hidden" for="site-command-search" id="command-title" />
       <input
         id="site-command-search"
         type="search"
@@ -96,13 +97,11 @@ const serialisedSearchIndex = JSON.stringify(searchIndex).replace(/</g, '\\u003c
     </header>
 
     <div class="command-palette__body">
-      <p class="command-palette__label" data-command-label>Navigate</p>
+      <EditableCopy copyId="copy-7564372f39e82f86" as="p" class="command-palette__label" data-command-label />
       <ol class="command-palette__results" role="listbox" data-command-results></ol>
-      <p class="command-palette__empty" data-command-empty hidden>
-        No matching pages or resources.
-      </p>
+      <EditableCopy copyId="copy-beef6e2b6e5d6750" as="p" class="command-palette__empty" data-command-empty hidden />
       <div class="command-palette__quick" data-command-quick>
-        <p>Page tools</p>
+        <EditableCopy copyId="copy-4e6ddfbaeb328c3a" as="p" />
         <div>
           <button type="button" data-copy-page-link>Copy link</button>
           <button type="button" data-share-page>Share</button>

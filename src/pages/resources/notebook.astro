@@ -1,4 +1,5 @@
 ---
+import EditableCopy from '@/components/EditableCopy.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/PageHeader.astro';
 ---
@@ -10,20 +11,17 @@ import PageHeader from '@/components/PageHeader.astro';
 >
   <PageHeader
     title="My resource notebook"
-    introduction="Highlights, notes and saved resources from this browser."
-  />
+    introduction="Highlights, notes and saved resources from this browser." cmsTitle="copy-dfdaeb28f6f5a354" />
 
   <section class="notebook-introduction container">
     <div>
-      <p>
-        This notebook is private to this browser. Its contents are stored on this device and are never sent to the website.
-      </p>
+      <EditableCopy copyId="copy-5323ec8538b92fe7" as="p" />
       <a class="arrow-link" href="/resources/">Return to resources</a>
     </div>
     <div class="notebook-actions">
       <button class="button button--quiet" type="button" data-notebook-export-markdown>Export Markdown</button>
       <button class="button button--quiet" type="button" data-notebook-export-json>Back up as JSON</button>
-      <label class="button button--quiet" for="notebook-import">Import JSON</label>
+      <EditableCopy copyId="copy-7e2778b8dd5434fb" as="label" class="button button--quiet" for="notebook-import" />
       <input class="visually-hidden" id="notebook-import" type="file" accept="application/json,.json" data-notebook-import />
     </div>
   </section>
@@ -31,22 +29,22 @@ import PageHeader from '@/components/PageHeader.astro';
   <section class="notebook-section" aria-labelledby="saved-title">
     <div class="container">
       <div class="section-heading">
-        <h2 id="saved-title">Saved resources</h2>
+        <EditableCopy copyId="copy-4171e7a7a6eb71c0" as="h2" id="saved-title" />
         <p data-saved-count></p>
       </div>
       <ol class="notebook-saved-list" data-saved-list></ol>
-      <p class="notebook-empty" data-saved-empty>No resources have been saved on this device.</p>
+      <EditableCopy copyId="copy-f928e73497940146" as="p" class="notebook-empty" data-saved-empty />
     </div>
   </section>
 
   <section class="notebook-section notebook-section--notes" aria-labelledby="notes-title">
     <div class="container">
       <div class="section-heading">
-        <h2 id="notes-title">Highlights and notes</h2>
+        <EditableCopy copyId="copy-6164ea9e1d336498" as="h2" id="notes-title" />
         <p data-notes-count></p>
       </div>
       <ol class="notebook-notes-list" data-notes-list></ol>
-      <p class="notebook-empty" data-notes-empty>Select text in any teaching resource to create your first highlight.</p>
+      <EditableCopy copyId="copy-0a34fb3f274ec631" as="p" class="notebook-empty" data-notes-empty />
     </div>
   </section>
 

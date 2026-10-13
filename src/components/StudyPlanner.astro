@@ -1,5 +1,8 @@
+---
+import EditableCopy from '@/components/EditableCopy.astro';
+---
 <section class="academic-tool study-planner" data-study-planner aria-labelledby="planner-title">
-  <header class="tool-intro"><div><p class="eyebrow">Private protocol builder</p><h2 id="planner-title">Research project workspace</h2></div><p>Your draft is saved in this browser. Export it before changing devices or clearing site data.</p></header>
+  <header class="tool-intro"><div><EditableCopy copyId="copy-556a60cb7ee1ff9c" as="p" class="eyebrow" /><EditableCopy copyId="copy-793d2c2c4b5c075e" as="h2" id="planner-title" /></div><EditableCopy copyId="copy-4dfaa19612427605" as="p" /></header>
   <div class="planner-layout">
     <form class="planner-form" data-planner-form>
       <label>Working title<input name="title" placeholder="A concise, descriptive project title"></label>
@@ -11,9 +14,9 @@
       <label>Analysis plan<textarea name="analysis" rows="4" placeholder="Estimand, descriptive analysis, model, uncertainty and sensitivity analyses"></textarea></label>
       <label>Biases and limitations<textarea name="biases" rows="3" placeholder="Selection, measurement, confounding, missing data…"></textarea></label>
     </form>
-    <aside class="planner-preview"><p class="eyebrow">Protocol outline</p><div data-planner-preview></div></aside>
+    <aside class="planner-preview"><EditableCopy copyId="copy-6dba4447f5346bce" as="p" class="eyebrow" /><div data-planner-preview></div></aside>
   </div>
-  <div class="tool-actions"><span data-planner-status aria-live="polite">Not yet saved</span><button type="button" data-planner-export="md">Download Markdown</button><button type="button" data-planner-export="qmd">Download Quarto</button><button type="button" data-planner-export="json">Back up JSON</button><label class="tool-file-label" for="planner-import">Restore JSON</label><input id="planner-import" class="visually-hidden" type="file" accept=".json" data-planner-import></div>
+  <div class="tool-actions"><span data-planner-status aria-live="polite">Not yet saved</span><button type="button" data-planner-export="md">Download Markdown</button><button type="button" data-planner-export="qmd">Download Quarto</button><button type="button" data-planner-export="json">Back up JSON</button><EditableCopy copyId="copy-99d0cac9807a9fea" as="label" class="tool-file-label" for="planner-import" /><input id="planner-import" class="visually-hidden" type="file" accept=".json" data-planner-import></div>
 </section>
 <script>
   const root = document.querySelector<HTMLElement>('[data-study-planner]');
