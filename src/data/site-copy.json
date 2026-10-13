@@ -570,7 +570,7 @@
     "label": "Website editor"
   },
   "copy-e2980b576c21ba99": {
-    "markdown": "Write. Preview. Publish.",
+    "markdown": "Admin Centre",
     "element": "h1",
     "source": "src/pages/admin/index.astro",
     "label": "Write. Preview. Publish."
