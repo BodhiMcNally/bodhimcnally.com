@@ -1,187 +1,181 @@
 # bodhimcnally.com
 
-Source code for my personal academic website, [bodhimcnally.com](https://bodhimcnally.com).
+Source for [my academic website](https://bodhimcnally.com): research, teaching, publications and a collection of interactive resources for students.
 
-The site is built with Astro, TypeScript and SCSS and deployed as a static site through Vercel.
+The site uses Astro, TypeScript and SCSS, with Markdown content collections and a small set of Vercel functions. Most pages are generated at build time. R exercises, statistical tools and maps run in the browser; the server handles authenticated publishing and retrieval of the current CV.
 
-## Running the site locally
+## Architecture
 
-Install [Node.js](https://nodejs.org/) 22 or later, open this folder in VS Code and run:
+Content, presentation and computation have separate responsibilities:
+
+- **Astro** builds the pages, search index, metadata, sitemap and responsive images. Content schemas live in `src/content.config.ts`.
+- **Browser code** provides webR execution, Plotly rendering, mapgl widgets, study tools, annotations and offline reading. Heavier runtimes load when needed.
+- **Vercel functions** expose `/api/editor` for authenticated GitHub writes and `/api/cv` for the live PDF. Credentials remain on the server.
+
+GitHub is the source of truth. Both VS Code changes and browser edits become commits in the same repository, and Vercel deploys `main`. There is no separate CMS database to reconcile with the source tree.
+
+## Development
+
+Use Node.js **22.12 or later** and the committed npm lockfile:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Astro will print a local address, usually `http://localhost:4321`.
-
-Before pushing a change, run:
+The development server normally runs at `http://localhost:4321`. Before committing:
 
 ```bash
 npm run verify
+node --test tests/site-editor.test.mjs
 ```
 
-This builds the site and checks its internal links and basic metadata.
+`verify` runs Astro's diagnostics, builds the site, checks internal links and audits the generated HTML for baseline accessibility and metadata issues. The editor tests cover authentication, source-file boundaries, conflicting writes, content validation, Markdown rendering and cache behaviour.
 
-## Editing the main details
+The build hooks prepare the PDF.js renderer, editor preview assets, deployment revision, saved CV previews and PWA icons. Generated runtime assets are recreated during deployment. `scripts/configure-mapgl-build.mjs` excludes static vendor assets and Quarto authoring files from TypeScript's scan; application source remains checked.
 
-Most information that changes over time is kept in `src/data/site.ts`, including:
+The public site can be developed without publishing credentials. Astro's dev server does not run the root Vercel functions. To exercise the editor locally with its API:
 
-- my current role and institution;
-- the homepage introduction;
-- email addresses and profile links;
-- CV and teaching portfolio links; and
-- the conference list on the About page.
+```bash
+npm run build
+node scripts/preview-site-editor.mjs
+```
 
-Longer text is kept on the page where it appears:
+This serves the editor at `http://127.0.0.1:4323/admin/` and reads `.env.editor.local`. Publishing from that preview writes to the configured GitHub branch.
 
-- `src/pages/about.astro`
-- `src/pages/research.astro`
-- `src/pages/teaching.astro`
+## Content and browser editing
 
-The headshot is `src/assets/images/Bodhi_McNally_Portrait.jpg`. Replacing that file without changing its name is enough; Astro creates the web-sized versions automatically.
+The private editor is available at `/admin/`. It supports selecting text from a page preview, editing existing copy, adding publications and research projects, and creating posts or teaching resources. Markdown provides formatting, lists, links, images, tables, code, footnotes and mathematics. Headings accept inline formatting; profile metadata uses plain text.
 
-## CV and teaching portfolio
+| Content | Source |
+| --- | --- |
+| Editable page text, profile strings and mapgl lesson prose | `src/data/site-copy.json` |
+| Publications, presentations and research projects | `src/data/research-content.json` |
+| Posts and LinkedIn updates | `src/content/updates/` |
+| Teaching resources and their metadata | `src/content/resources/` |
+| Navigation, external links, appearances and profile configuration | `src/data/site.ts` |
+| Layouts, components and interactive behaviour | `src/pages/`, `src/components/`, `src/scripts/` |
 
-The downloadable CV is:
+`EditableCopy.astro` connects page elements to stable copy IDs. `research.ts` supplies the types and exports for the JSON research records. Layout changes, application logic, media assets and presentation records are maintained in VS Code.
+
+A browser publish validates the content and writes it through GitHub's Contents API. Each save includes the file SHA from when the edit was opened. If the source has changed, the write is rejected and the unsaved draft remains available. The editor then tracks the deployed commit through the generated `editor-build.json`.
+
+Authentication uses a scrypt password hash, signed sessions, HttpOnly cookies and Origin/CSRF checks. Only the configured content paths are writable. Markdown previews are sanitised, document bodies reject active HTML, and LinkedIn embeds use a dedicated validated field.
+
+For a new installation, run `node scripts/apply-site-editor.mjs`, then `node scripts/setup-site-editor.mjs`. The setup script creates an ignored `.env.editor.local` file. Add its values to Vercel's Production environment:
 
 ```text
-public/cv/Bodhi_McNally_Master_CV.pdf
+CMS_USERNAME
+CMS_PASSWORD_HASH
+CMS_SESSION_SECRET
+CMS_GITHUB_TOKEN
+CMS_REPOSITORY
+CMS_BRANCH
+CMS_ORIGIN
 ```
 
-The About page displays WebP page images from `public/cv/pages/`, avoiding browser-specific PDF embedding. Replace the master PDF using the same filename, then run either `npm run dev` or `npm run build`. The site will detect that the PDF contents changed, regenerate every page image and update the page list automatically. Old page images are removed if the replacement CV is shorter.
+The GitHub token needs Contents read/write permission for this repository. `CMS_ORIGIN` must match the production origin. Keep secrets out of Git and client-side variables. Redeploy after changing the environment. `node scripts/check-site-editor.mjs https://bodhimcnally.com` checks the deployed login, assets, anonymous session endpoint, revision marker and footer.
 
-The conversion is handled by `scripts/render-cv-pages.mjs`. Its generated manifest, `src/data/cv-pages.json`, and the WebP files should be committed with the replacement PDF. If the PDF has not changed, the conversion step is skipped.
+## Keeping the local checkout current
 
-The Google Drive URL and the displayed update date also live in `src/data/site.ts`. When replacing the CV, update `cv.updated` and check that the Drive file is still shared for public viewing.
+Browser publishing updates GitHub. A local helper brings those commits into the laptop checkout:
 
-The teaching portfolio is:
-
-```text
-public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf
+```bash
+node scripts/sync-site.mjs --watch
 ```
 
-## Homepage posts
+It checks every 30 seconds and fast-forwards a clean `main` branch. Saved tracked changes, divergent commits or another branch pause synchronization. Git also refuses an incoming change that would overwrite a colliding untracked file. The helper does not reset, stash or discard local work. Unsaved editor buffers are outside Git's view.
 
-Posts shown on the homepage live in `src/content/updates/`. `sortOrder` controls their position: higher numbers appear first. Add `published` only when the exact date is known. Ordinary website posts use Markdown:
+On Windows, install the background helper at login with:
 
-```md
----
-title: Post title
-summary: One-sentence description.
-published: 2026-09-06
-sortOrder: 400
-source: site
-draft: false
----
-
-Write the post here.
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-SiteSync.ps1
 ```
 
-LinkedIn supports embedding individual public posts rather than an unrestricted profile feed. In LinkedIn, open the public post, choose **Embed this post**, and copy the `src` URL from the supplied iframe code. Then add an entry using:
+It uses the existing Git remote and credentials. Logs are written to `site-sync.log` and `site-sync-errors.log`. `Stop-SiteSync.ps1` stops the helper and removes its startup shortcut. Run `node scripts/sync-site.mjs` for a single update.
 
-```md
----
-title: Post title
-summary: One-sentence description.
-published: 2026-09-06
-sortOrder: 300
-source: linkedin
-linkedinUrl: https://www.linkedin.com/feed/update/...
-linkedinEmbedUrl: https://www.linkedin.com/embed/feed/update/...
-draft: false
----
-```
+For larger changes, use the normal VS Code workflow: save and commit local work, reconcile incoming browser commits, verify, then push.
 
-The embed fields are optional. If LinkedIn does not provide an embed URL, omit `linkedinEmbedUrl`; the post will be rendered from the Markdown file and retain its link to LinkedIn. Add `collapsed: true` to a long entry to show a short introduction with an expandable full post.
+## Live CV
 
-## Publications
+The About page retrieves the current PDF from a fixed Google Drive file through `/api/cv`. PDF.js renders its pages in the browser, replacing the saved preview images when the live document loads. Updating the existing Drive file therefore updates the displayed CV without a repository commit or site rebuild.
 
-Publication records live in `src/data/research.ts`.
+The file must remain publicly viewable and retain its Drive ID. Upload a new version of that file rather than deleting it and creating a replacement. Configuration is in `config/live-cv.mjs`.
 
-```ts
-{
-  id: 'short-stable-slug',
-  title: 'Exact publication title',
-  authors: ['Author One', 'Bodhi McNally'],
-  journal: 'Journal name',
-  year: 2027,
-  doi: '10.xxxx/example',
-  pubmedUrl: 'https://pubmed.ncbi.nlm.nih.gov/00000000/',
-  citation: 'Preferred full citation.',
-  publicationType: 'Journal article',
-  selected: true,
-}
-```
+The endpoint validates the PDF, enforces a size limit and derives an ETag from its contents. Vercel may cache the response for five minutes. The browser refreshes while the page is visible and when it becomes visible again. CV requests bypass the offline cache, so a previously saved response cannot pin the preview to an old version.
 
-Remove the DOI or PubMed fields if they do not exist. Presentations and projects can be stored in the typed arrays in the same file if they are needed later.
+The local PDF at `public/cv/Bodhi_McNally_Master_CV.pdf` and WebP images under `public/cv/pages/` provide the saved fallback. Updating the Drive file does not update that fallback. `scripts/render-cv-pages.mjs` regenerates it when the local PDF changes; commit the PDF, page images and `src/data/cv-pages.json` together when refreshing the fallback. PDF.js libraries and workers are prepared automatically by `scripts/prepare-live-cv.mjs`.
+
+The teaching portfolio remains at `public/teaching/Bodhi_McNally_Teaching_Portfolio.pdf`. Astro generates responsive versions of the portrait from `src/assets/images/Bodhi_McNally_Portrait.jpg`.
 
 ## Teaching resources
 
-Resources are Markdown or MDX files in `src/content/resources/`. The confidence-interval note is a working example of the format.
+The teaching library combines Markdown explanations with executable examples and browser-based exercises. Resources support equations, highlighted code, copy controls, downloadable assets, reading progress and a section-aware table of contents.
 
-To add another resource:
+R blocks can run through **webR** in the reader's browser. The runtime loads on demand. Table results are converted to sanitised HTML; Plotly results are converted to JSON and rendered with Plotly.js. The plotting environment also registers the bundled Ubuntu fonts. Set `browserR: false` when a lesson requires packages or outputs the browser runner cannot reproduce.
 
-1. Copy an existing file and give it a short lowercase filename.
-2. Replace its frontmatter and body.
-3. Keep `draft: true` while working on it.
-4. Change this to `draft: false` when it is ready to publish.
+The interactive workbench includes:
 
-The available metadata fields and categories are defined in `src/content.config.ts`. Equations use standard `$...$` or `$$...$$` notation. Fenced code blocks receive syntax highlighting and a copy button.
+| Tool | Purpose |
+| --- | --- |
+| Statistical simulation studio | Seeded experiments for confidence intervals, sampling distributions and power, with data exports, equivalent R code and shareable settings |
+| Clinical prediction laboratory | Sensitivity, specificity, predictive values, likelihood ratios, thresholds and net benefit |
+| Statistical interpretation clinic | Exercises in interpreting statistical output |
+| Quarto laboratory | Editable QMD examples, a guided document preview and source downloads |
+| Git practice environment | A virtual filesystem and repository for learning staging, commits, branches and remotes |
+| Additional workspaces | Method comparison, reproducibility inspection, visualisation critique, result explanation and research protocol planning |
 
-R code blocks also receive a **Run R** button. The site loads webR 0.6.0 from its official distribution only when that button is used, and the calculation runs in the reader's browser.
+The Git environment does not execute system commands or access visitors' files. The Quarto laboratory models supported document features; a full Quarto render still belongs in the local authoring environment.
 
-Set `browserR: false` in a resource's frontmatter when its examples depend on HTML widgets or specialised packages that the browser runner cannot display faithfully. The code remains highlighted and copyable without presenting a misleading run control.
+## mapgl tutorial
 
-The Git resource mounts `src/components/GitPractice.astro`, an isolated virtual filesystem and repository for practising basic shell and Git commands. It models file edits, diffs, staging, commits, branches and remotes without executing system commands or accessing the visitor's files.
+The mapgl lesson supports DATA1X01 Project 2 and the use of interactive maps in Quarto reports. It is embedded directly in `/resources/interactive-maps-in-r-with-mapgl/`, using the site's navigation, typography, table of contents and copy controls. Its 13 interactive maps initialise as the reader reaches them.
 
-The table and Plotly resources also use webR. Table objects are converted to HTML in R and inserted into a sanitised output viewport. Plotly objects are converted to JSON in R and rendered with Plotly.js. These package-heavy examples need an internet connection on first use.
+Examples use real Greater Sydney data: 373 ABS SA2 polygons with population estimates, 1,033 NSW government education locations and the ABS population grid. The lesson progresses from spatial data preparation and coordinate systems to layered maps, choropleths, legends and more advanced interaction. Data provenance and preparation are documented alongside the source.
 
-The exact Ubuntu font files used by the plotting environment are stored in `public/fonts/`. Keep their filenames unchanged: the resource runner copies them into webR and registers them with its plotting worker when a code block uses Ubuntu.
+The executable lesson is `teaching/mapgl-source/index.qmd`. R computes the examples during Quarto rendering; the published site serves the resulting HTML, widget payloads and JavaScript dependencies. Vercel does not need R or Quarto. Maps require WebGL, and external basemaps require network access.
 
-Files offered for download from a resource belong under `public/resources/` and can be linked through the resource's `downloadableAssets` frontmatter.
+To change the calculations or map definitions, install the lesson's R dependencies and Quarto locally, then run:
 
-## Site search and navigation
+```bash
+node scripts/update-mapgl.mjs
+node scripts/apply-site-editor.mjs
+npm run verify
+```
 
-The search palette is available from the header, by pressing `/`, or with `Ctrl+K` on Windows and `Command+K` on macOS. Its index is assembled automatically from the navigation, the full text and metadata of published teaching resources, and any future records in `src/data/research.ts`. Headings from the page currently open are added in the browser.
+The update script renders the lesson, extracts its native content and widgets, and rebuilds the student source download. Commit the authoring source, generated `src/data/mapgl/` content, `public/resources/mapgl/` assets and copy changes together. Browser edits to lesson prose live in `site-copy.json`; they are not written back into the QMD, so reconcile them when regenerating the lesson.
 
-Page tools are available inside the search palette. They support copying a link, native sharing and printing. Individual teaching resources also display direct actions for copying an APA citation and saving the resource to a device-local reading list. The palette, heading links, page actions and return-to-top control are implemented in `src/components/CommandPalette.astro`; their styles are in `src/styles/_command-palette.scss`. Recently viewed and saved pages are kept only in the visitor's browser.
+Students can download the complete source and prepared data, then render the same lesson independently. See [the lesson README](teaching/mapgl-source/README.md) and [data documentation](teaching/mapgl-source/data/README.md).
 
-Teaching resources display reading progress, estimated time remaining and a table of contents that follows the reader's position. The table-of-contents behaviour lives in `src/components/TableOfContents.astro`; progress is handled by `src/pages/resources/[id].astro`.
+## Posts and research records
 
-Readers can select text in a resource to highlight it or attach a note. Notes, highlights and saved resources are stored in that browser only; the private notebook at `/resources/notebook/` can export them as Markdown or JSON. Importing the JSON restores a backup on another browser.
+Posts appear in the homepage feed, `/posts/` archive and individual `/posts/<slug>/` pages. Higher `sortOrder` values appear first; `draft: true` excludes an entry from public pages. `collapsed: true` keeps a long homepage entry compact.
 
-## Interactive workbench
+LinkedIn entries retain the original post link and can include an official embed URL. The editor accepts the supplied iframe code and extracts its permitted source. Embeds depend on LinkedIn's availability and the visitor's browser settings.
 
-The Resources page links to four browser-based tools:
+Publications record the title, authors, journal, year, citation and publication type, with optional DOI and PubMed links. Citations and research project descriptions support Markdown. Stable IDs keep records identifiable when their titles change.
 
-- `/resources/lab/` runs seeded simulations for confidence intervals, sampling distributions and statistical power. It can copy equivalent R code, export the simulated data and copy a URL that recreates the chosen settings.
-- `/resources/prediction-lab/` demonstrates predictive values, likelihood ratios and threshold decisions.
-- `/resources/interpretation-clinic/` provides short exercises in interpreting statistical output.
-- `/resources/quarto-documents-in-rstudio/` contains the editable QMD laboratory.
+## Reading, search and offline use
 
-The private notebook at `/resources/notebook/` remains available from the library heading, individual-resource annotation controls and site search, but is not listed as a workbench demonstration.
+The command palette opens with `/`, `Ctrl+K` or `Command+K`. Its build-time index includes navigation, published resource text and research records; headings on the current page are added in the browser. It also provides sharing, printing, page links and build/storage diagnostics. The footer no longer includes the Site details action.
 
-The site registers `public/sw.js` on HTTPS. Students can use **Save resources offline** on the Resources page to cache the teaching library on their device. Change the cache name in `public/sw.js` when making a significant caching change so older caches are replaced. The site-details panel in the footer reports the current build, content counts, network state, offline-worker state and approximate local-storage use.
+Readers can save resources, highlight passages and attach notes. The notebook at `/resources/notebook/` exports Markdown or JSON and can restore a JSON backup. These records are stored in that browser, not in server-side accounts.
 
-## Updating the live site
+**Save resources offline** caches teaching pages and assets through `public/sw.js`. First-time package downloads, external basemaps and third-party embeds still need a connection. The live CV, editor endpoints, editor code and deployment marker bypass offline storage. Bump the worker's cache name when changing its caching policy.
 
-The Vercel project is connected to the GitHub repository. Once a change is ready:
+## Deployment
+
+Vercel builds commits to `main` using `npm run build`, with `dist` as the static output directory. The root `api/` directory supplies the two serverless endpoints.
+
+For source changes, review and stage the intended files, then commit and push:
 
 ```bash
 git status
-git add -A
+git diff
+git add <changed-files>
+git diff --cached
 git commit -m "Describe the change"
-git push
+git push origin main
 ```
 
-Vercel should build and deploy the new commit automatically. Its build command is `npm run build` and its output directory is `dist`.
-
-If applying a downloaded full-site revision over an older local copy, keep the existing `.git` folder. Copy the new files over the old ones, then check `git status` carefully for files that the revision intentionally removed.
-
-## Useful files
-
-- `src/data/site.ts` — personal details and external links
-- `src/data/research.ts` — publications, presentations and projects
-- `src/content/resources/` — teaching resources
-- `src/styles/` — typography, colour and layout
+Content changes follow the same deployment path whether they originate in VS Code or the browser editor. Failed builds leave the previous successful deployment in place; a GitHub save and a live deployment are separate states.
