@@ -624,7 +624,7 @@
     "label": "Page heading: Contact"
   },
   "copy-fa63fee6e5d485fd": {
-    "markdown": "Get in touch",
+    "markdown": "Get in touch :)",
     "element": "h2",
     "source": "src/pages/contact.astro",
     "label": "Get in touch"
