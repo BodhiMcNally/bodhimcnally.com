@@ -654,7 +654,7 @@
     "label": "You may be looking for the [teaching resources page](/resources/)."
   },
   "copy-45d980789e3ddd51": {
-    "markdown": "Updates",
+    "markdown": "",
     "element": "p",
     "source": "src/pages/index.astro",
     "label": "Updates"
