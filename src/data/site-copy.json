@@ -1308,7 +1308,7 @@
     "headingId": "set-up-r-and-quarto"
   },
   "copy-90120a43ea9aadfe": {
-    "markdown": "Use **R 4.1 or later**, RStudio, and the [Quarto CLI](https://quarto.org/docs/get-started/). The examples use R’s native `|>` pipe: read it as “take the result on the left and pass it to the next function”. Install packages once in the **Console**, outside your report’s code chunks:",
+    "markdown": "Use **R 4.1 or later**, RStudio, and the [Quarto CLI](https://quarto.org/docs/get-started/).",
     "element": "p",
     "source": "src/data/mapgl/tutorial.html",
     "label": "Use R 4.1 or later, RStudio, and the [Quarto CLI](https://quarto.org/docs/get-started/). The example",
