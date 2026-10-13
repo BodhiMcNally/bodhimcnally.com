@@ -630,7 +630,7 @@
     "label": "Get in touch"
   },
   "copy-b077a1fd8edb3c67": {
-    "markdown": "I welcome enquiries about research collaborations, teaching and educational projects, as well as NSW HSC and GAMSAT tutoring, medical school applications and admissions guidance. Whether you're interested in working together or seeking advice on your academic or medical pathway, please feel free to get in touch using either email address below.",
+    "markdown": "I welcome enquiries about research collaborations, teaching and educational projects, as well as NSW HSC and GAMSAT tutoring, medical school applications and admissions guidance. Whether you're interested in working together or seeking advice on your academic or medical pathway, please feel free to get in touch using either email addresses provided.",
     "element": "p",
     "source": "src/pages/contact.astro",
     "label": "If you would like to discuss or collaborate on a research, teaching or educational project, you are "
