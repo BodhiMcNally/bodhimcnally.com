@@ -846,7 +846,7 @@
     "label": "Quarto document workshop"
   },
   "copy-7dc58ccb75f591cd": {
-    "markdown": "Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project.",
+    "markdown": "Edit QMD examples, inspect the guided output, run R code and download a starter project.",
     "element": "p",
     "source": "src/pages/resources/index.astro",
     "label": "Edit QMD examples, inspect the guided output, run R code and download a multi-file starter project."
